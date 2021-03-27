@@ -1,31 +1,32 @@
 package com.genaku.reduce.books
 
-import com.genaku.reduce.knot.CoroutineKnotState
-import com.genaku.reduce.knot.coroutineKnot
+import com.genaku.reduce.CoroutineKnotState
+import com.genaku.reduce.coroutineKnot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 
 class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
-    private val commonState = CoroutineKnotState<BooksState>(BooksState.Empty)
+    private val commonState = com.genaku.reduce.CoroutineKnotState<BooksState>(BooksState.Empty)
 
-    private val clearKnot = coroutineKnot<BooksState, ClearBookChange, ClearBooksAction> {
+    private val clearKnot =
+        com.genaku.reduce.coroutineKnot<BooksState, ClearBookChange, ClearBooksAction> {
 
-        knotState = commonState
+            knotState = commonState
 
-        changes { change ->
-            when(change) {
-                ClearBookChange.Clear -> when (this) {
-                    is BooksState.Content -> BooksState.Empty.only
-                    is BooksState.Empty -> only
-                    else -> unexpected(change)
+            changes { change ->
+                when (change) {
+                    ClearBookChange.Clear -> when (this) {
+                        is BooksState.Content -> BooksState.Empty.only
+                        is BooksState.Empty -> only
+                        else -> unexpected(change)
+                    }
                 }
             }
         }
-    }
 
-    private val loadKnot = coroutineKnot<BooksState, BooksChange, BooksAction> {
+    private val loadKnot = com.genaku.reduce.coroutineKnot<BooksState, BooksChange, BooksAction> {
 
         knotState = commonState
 

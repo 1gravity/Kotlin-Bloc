@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         val txt = findViewById<TextView>(R.id.tvText)
         lifecycleScope.launch {
             viewModel.state.collect {
-                PLog.d("state ${it.name}")
                 txt.text = it.name
             }
         }

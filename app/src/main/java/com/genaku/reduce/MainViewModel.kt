@@ -2,8 +2,8 @@ package com.genaku.reduce
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.genaku.reduce.knot.CoroutineKnotState
-import com.genaku.reduce.knot.coroutineKnot
+import com.genaku.reduce.CoroutineKnotState
+import com.genaku.reduce.coroutineKnot
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -11,9 +11,9 @@ import org.mym.plog.PLog
 
 class MainViewModel : ViewModel() {
 
-    private val commonState = CoroutineKnotState(SampleState.FIRST)
+    private val commonState = com.genaku.reduce.CoroutineKnotState(SampleState.FIRST)
 
-    private val knot = coroutineKnot<SampleState, SampleChange, SampleAction> {
+    private val knot = com.genaku.reduce.coroutineKnot<SampleState, SampleChange, SampleAction> {
 
         knotState = commonState
 
@@ -26,7 +26,6 @@ class MainViewModel : ViewModel() {
         }
 
         suspendActions { action ->
-            PLog.d("performAction $action")
             delay(200)
             when (action) {
                 SampleAction.YES -> SampleChange.THREE
@@ -44,12 +43,10 @@ class MainViewModel : ViewModel() {
 
     fun d() {
         viewModelScope.launch {
-            PLog.d("begin")
             repeat(7) {
                 knot.offerChange(SampleChange.ONE)
                 knot.offerChange(SampleChange.TWO)
             }
-            PLog.d("end")
         }
     }
 

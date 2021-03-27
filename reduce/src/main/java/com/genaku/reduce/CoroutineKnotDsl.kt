@@ -1,4 +1,4 @@
-package com.genaku.reduce.knot
+package com.genaku.reduce
 
 /** Creates a [Knot] instance. */
 @Suppress("UNCHECKED_CAST")

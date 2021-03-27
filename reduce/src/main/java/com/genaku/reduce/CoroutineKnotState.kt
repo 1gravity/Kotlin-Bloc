@@ -1,4 +1,4 @@
-package com.genaku.reduce.knot
+package com.genaku.reduce
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

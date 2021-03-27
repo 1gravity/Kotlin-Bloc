@@ -1,11 +1,10 @@
-package com.genaku.reduce.knot
+package com.genaku.reduce
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.launch
-import org.mym.plog.PLog
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.CoroutineContext
 
@@ -26,7 +25,6 @@ class CoroutineKnot<State : Any, Change : Any, Action : Any>(
         _running.set(true)
         coroutineScope.observeWith {
             val change = _changesChannel.receive()
-            PLog.d("change $change")
             val newActions = mutableListOf<Action>()
             knotState.changeState { state ->
                 val effect = reducer(state, change)
@@ -37,14 +35,12 @@ class CoroutineKnot<State : Any, Change : Any, Action : Any>(
         }
         coroutineScope.observeWith {
             val action = _actionsChannel.receive()
-            PLog.d("action $action")
             val change = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
             change?.run { _changesChannel.offer(change) }
         }
     }
 
     override fun offerChange(change: Change) {
-        PLog.d("emit $change")
         _changesChannel.offer(change)
     }
 
