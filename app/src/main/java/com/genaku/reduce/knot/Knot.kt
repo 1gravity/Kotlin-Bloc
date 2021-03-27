@@ -1,10 +1,13 @@
-package com.genaku.reduce
+package com.genaku.reduce.knot
 
 import kotlinx.coroutines.flow.StateFlow
 
-interface Knot<State : Any, Change : Any> {
-    val state: StateFlow<State>
+interface Knot<State : Any, Change : Any>: KnotState<State> {
     fun offerChange(change: Change)
+}
+
+interface KnotState<State: Any>{
+    val state: StateFlow<State>
 }
 
 /** A function accepting the `State` and a `Change` and returning a new `State` with `Actions`. */

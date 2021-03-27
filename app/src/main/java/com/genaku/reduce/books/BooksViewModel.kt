@@ -1,4 +1,4 @@
-package com.genaku.reduce
+package com.genaku.reduce.books
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

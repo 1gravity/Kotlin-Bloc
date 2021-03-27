@@ -1,4 +1,4 @@
-package com.genaku.reduce
+package com.genaku.reduce.books
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.genaku.reduce.R
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -31,21 +32,21 @@ class BooksActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.state.collect { state ->
                 when (state) {
-                    is State.Content -> showContent(state)
-                    State.Empty -> pageEmpty.show()
-                    is State.Error -> showError(state)
-                    State.Loading -> pageLoading.show()
+                    is BooksState.Content -> showContent(state)
+                    BooksState.Empty -> pageEmpty.show()
+                    is BooksState.Error -> showError(state)
+                    BooksState.Loading -> pageLoading.show()
                 }
             }
         }
     }
 
-    private fun showError(state: State.Error) {
+    private fun showError(state: BooksState.Error) {
         pageError.show()
         errorMessage.text = state.message
     }
 
-    private fun showContent(state: State.Content) {
+    private fun showContent(state: BooksState.Content) {
         pageContent.show()
         val text = state.books.joinToString(separator = "\n") {
             "${it.title} (${it.year})"

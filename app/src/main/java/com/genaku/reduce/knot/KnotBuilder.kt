@@ -1,4 +1,4 @@
-package com.genaku.reduce
+package com.genaku.reduce.knot
 
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
@@ -9,6 +9,7 @@ abstract class KnotBuilder<State : Any, Change : Any, Action : Any> {
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
     protected var _initialState: State? = null
+    protected var _knotState: CoroutineKnotState<State>? = null
     protected var _reducer: Reducer<State, Change, Action>? = null
     protected var _performer: Performer<Action, Change>? = null
 
@@ -19,6 +20,13 @@ abstract class KnotBuilder<State : Any, Change : Any, Action : Any> {
         get() = throw UnsupportedOperationException()
         set(value) {
             _initialState = value
+        }
+
+    var knotState: CoroutineKnotState<State>
+        @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
+        get() = throw UnsupportedOperationException()
+        set(value) {
+            _knotState = value
         }
 
     /** A section for [Change] related declarations. */

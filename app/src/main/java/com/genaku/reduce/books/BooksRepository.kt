@@ -1,4 +1,4 @@
-package com.genaku.reduce
+package com.genaku.reduce.books
 
 class BooksRepository : IBooksRepository {
 

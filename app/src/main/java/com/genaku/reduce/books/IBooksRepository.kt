@@ -1,6 +1,7 @@
-package com.genaku.reduce
+package com.genaku.reduce.books
 
 interface IBooksRepository {
+
     fun loadBooks(): LoadBooksResult
 
     sealed class LoadBooksResult {
