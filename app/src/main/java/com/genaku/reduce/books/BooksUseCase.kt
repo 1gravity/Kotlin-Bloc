@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
-    private val commonState = com.genaku.reduce.CoroutineKnotState<BooksState>(BooksState.Empty)
+    private val commonState = CoroutineKnotState<BooksState>(BooksState.Empty)
 
     private val clearKnot =
-        com.genaku.reduce.coroutineKnot<BooksState, ClearBookChange, ClearBooksAction> {
+        coroutineKnot<BooksState, ClearBookChange, ClearBooksAction> {
 
             knotState = commonState
 
@@ -26,7 +26,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
             }
         }
 
-    private val loadKnot = com.genaku.reduce.coroutineKnot<BooksState, BooksChange, BooksAction> {
+    private val loadKnot = coroutineKnot<BooksState, BooksChange, BooksAction> {
 
         knotState = commonState
 
