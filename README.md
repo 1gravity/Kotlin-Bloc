@@ -141,6 +141,11 @@ If your knot becomes complex and you want to improve its readability and maintai
     }
 ```
 
+# Scalability
+
+Through 'Actions' single knots can be combined togetheк
+
+<img src="docs/scalable_knot_diagram.png" width="452" />
 
 # Why Reduce?
 
