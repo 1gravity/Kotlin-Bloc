@@ -74,7 +74,7 @@ val knot = knot<BooksState, BooksIntent, BooksAction> {
         actions { action ->
             when (action) {
                 BooksAction.Load -> {
-                    repository.loadBooks().toChange()
+                    repository.loadBooks().toIntent()
                 }
             }
         }
