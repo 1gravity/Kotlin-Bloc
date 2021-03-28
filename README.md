@@ -14,7 +14,7 @@ But it is written for RxJava. I decided to write it based on Kotlin corutines.
 
 Reduce helps managing application state by reacting on events and performing asynchronous actions in a structured way. There are five core concepts Knot defines: `State`, `Intent`, `Action`, `Reducer` and `Effect`.
 
-<img src="docs/knot_diagram.png" width="625" />
+<img src="docs/knot_diagram.png" width="621" />
 
 `State` represents an immutable state of an application. It can be a state of a screen or a state of an internal statefull headless component.
 
@@ -87,7 +87,7 @@ Notice how inside the `reduce` function a new `State` can be combined with an `A
 
 If your knot becomes complex and you want to improve its readability and maintainability, you may consider to write a composite knot. You start composition by grouping related functionality into, in a certain sense, indecomposable pieces called `Delegates`. Each `Delegate` is isolated from the other `Delegates`. It defines its own set of `Intents`, `Actions` and `Reducers`. It's only the `State`, what is shared between the `Delegates`. In that respect each `Delegate` can be seen as a separate `Knot` working on a shared `State`.
 
-<img src="docs/delegated_knot_diagram.png" width="625" />
+<img src="docs/delegated_knot_diagram.png" width="961" />
 
 ```kotlin
     private val commonState = CoroutineKnotState<BooksState>(BooksState.Empty)
