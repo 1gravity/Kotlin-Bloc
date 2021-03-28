@@ -145,7 +145,7 @@ If your knot becomes complex and you want to improve its readability and maintai
 
 Through 'performActions()' part single knots can be combined together.
 
-<img src="docs/scalable_knot_diagram.png" width="473" />
+<img src="docs/scalable_knot_diagram.png" width="477" />
 
 # Why Reduce?
 
