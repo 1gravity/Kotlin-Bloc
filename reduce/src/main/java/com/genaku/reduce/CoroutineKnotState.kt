@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.StateFlow
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.write
 
-class CoroutineKnotState<State : Any>(initialState: State) : KnotState<State> {
+class CoroutineKnotState<S : State>(initialState: S) : KnotState<S> {
 
     private val lock = ReentrantReadWriteLock()
     private val _state = MutableStateFlow(initialState)
 
-    override val state: StateFlow<State> = _state
+    override val state: StateFlow<S> = _state
 
-    suspend fun changeState(newState: (State) -> State) {
+    suspend fun changeState(newState: (S) -> S) {
         lock.write {
             _state.emit(newState(_state.value))
         }

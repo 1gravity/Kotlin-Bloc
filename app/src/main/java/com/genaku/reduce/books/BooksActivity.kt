@@ -34,14 +34,14 @@ class BooksActivity : AppCompatActivity() {
                 when (state) {
                     is BooksState.Content -> showContent(state)
                     BooksState.Empty -> pageEmpty.show()
-                    is BooksState.Error -> showError(state)
+                    is BooksState.BooksError -> showError(state)
                     BooksState.Loading -> pageLoading.show()
                 }
             }
         }
     }
 
-    private fun showError(state: BooksState.Error) {
+    private fun showError(state: BooksState.BooksError) {
         pageError.show()
         errorMessage.text = state.message
     }

@@ -3,14 +3,14 @@ package com.genaku.reduce
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
-class CoroutineKnotBuilder<State : Any, Change : Any, Action : Any> :
-    KnotBuilder<State, Change, Action>() {
+class CoroutineKnotBuilder<S : State, C : Intent, A : Action> :
+    KnotBuilder<S, C, A>() {
 
     private var _dispatcher: CoroutineContext = Dispatchers.Default
-    private var _suspendPerformer: SuspendPerformer<Action, Change>? = null
+    private var _suspendPerformer: SuspendPerformer<A, C>? = null
 
-    override fun build(): Knot<State, Change> {
-        return CoroutineKnot(
+    override fun build(): Knot<S, C> {
+        return KnotImpl(
             knotState = _knotState ?: createKnotState(),
             reducer = checkNotNull(_reducer) { "changes {  } must be declared" },
             performer = _performer,
@@ -23,8 +23,8 @@ class CoroutineKnotBuilder<State : Any, Change : Any, Action : Any> :
         checkNotNull(_initialState) { "initialState must be defined" }
     )
 
-    /** A section for [Action] related declarations. */
-    fun suspendActions(performer: SuspendPerformer<Action, Change>?) {
+    /** A section for [A] related declarations. */
+    fun suspendActions(performer: SuspendPerformer<A, C>?) {
         _suspendPerformer = performer
     }
 }

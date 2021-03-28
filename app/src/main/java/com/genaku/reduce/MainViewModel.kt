@@ -10,22 +10,22 @@ class MainViewModel : ViewModel() {
 
     private val commonState = CoroutineKnotState(SampleState.FIRST)
 
-    private val knot = coroutineKnot<SampleState, SampleChange, SampleAction> {
+    private val knot = knot<SampleState, SampleIntent, SampleAction> {
 
         knotState = commonState
 
-        changes { change ->
-            when (change) {
-                SampleChange.ONE -> SampleState.FIRST.only
-                SampleChange.TWO -> SampleState.SECOND + SampleAction.YES + SampleAction.NO
-                SampleChange.THREE -> SampleState.THIRD.only
+        intents { intent ->
+            when (intent) {
+                SampleIntent.ONE -> SampleState.FIRST.stateOnly
+                SampleIntent.TWO -> SampleState.SECOND + SampleAction.YES + SampleAction.NO
+                SampleIntent.THREE -> SampleState.THIRD.stateOnly
             }
         }
 
         suspendActions { action ->
             delay(200)
             when (action) {
-                SampleAction.YES -> SampleChange.THREE
+                SampleAction.YES -> SampleIntent.THREE
                 SampleAction.NO -> null
             }
         }
@@ -41,8 +41,8 @@ class MainViewModel : ViewModel() {
     fun d() {
         viewModelScope.launch {
             repeat(7) {
-                knot.offerChange(SampleChange.ONE)
-                knot.offerChange(SampleChange.TWO)
+                knot.offerIntent(SampleIntent.ONE)
+                knot.offerIntent(SampleIntent.TWO)
             }
         }
     }
@@ -53,19 +53,19 @@ class MainViewModel : ViewModel() {
     }
 }
 
-enum class SampleState {
+enum class SampleState : State {
     FIRST,
     SECOND,
     THIRD
 }
 
-enum class SampleChange {
+enum class SampleIntent : Intent {
     ONE,
     TWO,
     THREE
 }
 
-enum class SampleAction {
+enum class SampleAction : Action {
     YES,
     NO
 }

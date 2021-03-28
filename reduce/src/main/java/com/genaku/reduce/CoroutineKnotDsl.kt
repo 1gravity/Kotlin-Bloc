@@ -2,8 +2,8 @@ package com.genaku.reduce
 
 /** Creates a [Knot] instance. */
 @Suppress("UNCHECKED_CAST")
-fun <State : Any, Change : Any, Action : Any> coroutineKnot(
-    block: CoroutineKnotBuilder<State, Change, Action>.() -> Unit
-): CoroutineKnot<State, Change, Action> = CoroutineKnotBuilder<State, Change, Action>()
+fun <S : State, C : Intent, A : Action> knot(
+    block: CoroutineKnotBuilder<S, C, A>.() -> Unit
+): KnotImpl<S, C, A> = CoroutineKnotBuilder<S, C, A>()
     .also(block)
-    .build() as CoroutineKnot<State, Change, Action>
+    .build() as KnotImpl<S, C, A>

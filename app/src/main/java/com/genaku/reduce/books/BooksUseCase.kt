@@ -1,7 +1,7 @@
 package com.genaku.reduce.books
 
 import com.genaku.reduce.CoroutineKnotState
-import com.genaku.reduce.coroutineKnot
+import com.genaku.reduce.knot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
@@ -11,42 +11,40 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     private val commonState = CoroutineKnotState<BooksState>(BooksState.Empty)
 
     private val clearKnot =
-        coroutineKnot<BooksState, ClearBookChange, ClearBooksAction> {
+        knot<BooksState, ClearBookIntent, ClearBooksAction> {
 
             knotState = commonState
 
-            changes { change ->
-                when (change) {
-                    ClearBookChange.Clear -> when (this) {
-                        is BooksState.Content -> BooksState.Empty.only
-                        is BooksState.Empty -> only
-                        else -> unexpected(change)
+            intents { intent ->
+                when (intent) {
+                    ClearBookIntent.Clear -> when (this) {
+                        is BooksState.Content -> BooksState.Empty.stateOnly
+                        is BooksState.Empty -> stateOnly
+                        else -> unexpected(intent)
                     }
                 }
             }
         }
 
-    private val loadKnot = coroutineKnot<BooksState, BooksChange, BooksAction> {
+    private val loadKnot = knot<BooksState, BooksIntent, BooksAction> {
 
         knotState = commonState
 
-        changes { change ->
-            when (change) {
-                BooksChange.Load -> when (this) {
+        intents { intent ->
+            when (intent) {
+                BooksIntent.Load -> when (this) {
                     BooksState.Empty,
                     is BooksState.Content,
-                    is BooksState.Error -> BooksState.Loading + BooksAction.Load
-                    else -> only
+                    is BooksState.BooksError -> BooksState.Loading + BooksAction.Load
+                    else -> stateOnly
                 }
-
-                is BooksChange.Load.Success -> when (this) {
-                    BooksState.Loading -> BooksState.Content(change.books).only
-                    else -> unexpected(change)
+                is BooksIntent.Success -> when (this) {
+                    BooksState.Loading -> BooksState.Content(intent.books).stateOnly
+                    else -> unexpected(intent)
                 }
-
-                is BooksChange.Load.Failure -> when (this) {
-                    BooksState.Loading -> BooksState.Error(change.message).only
-                    else -> unexpected(change)
+                is BooksIntent.Failure ->  when (this) {
+                    BooksState.Loading -> BooksState.BooksError(intent.message).stateOnly
+                    else -> unexpected(intent)
                 }
             }
         }
@@ -70,20 +68,20 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     }
 
     override fun load() {
-        loadKnot.offerChange(BooksChange.Load)
+        loadKnot.offerIntent(BooksIntent.Load)
     }
 
     override fun clear() {
-        clearKnot.offerChange(ClearBookChange.Clear)
+        clearKnot.offerIntent(ClearBookIntent.Clear)
     }
 
     private fun IBooksRepository.LoadBooksResult.toChange() =
         when (this) {
             is IBooksRepository.LoadBooksResult.Success ->
-                BooksChange.Load.Success(books)
+                BooksIntent.Success(books)
             is IBooksRepository.LoadBooksResult.Failure.Network ->
-                BooksChange.Load.Failure("Network error. Check Internet connection and try again.")
+                BooksIntent.Failure("Network error. Check Internet connection and try again.")
             IBooksRepository.LoadBooksResult.Failure.Generic ->
-                BooksChange.Load.Failure("Generic error, please try again.")
+                BooksIntent.Failure("Generic error, please try again.")
         }
 }

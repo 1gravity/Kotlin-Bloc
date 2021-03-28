@@ -8,26 +8,26 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.CoroutineContext
 
-class CoroutineKnot<State : Any, Change : Any, Action : Any>(
-    private val knotState: CoroutineKnotState<State>,
-    private val reducer: Reducer<State, Change, Action>,
-    private val performer: Performer<Action, Change>?,
-    private val suspendPerformer: SuspendPerformer<Action, Change>?,
+class KnotImpl<S : State, C : Intent, A : Action>(
+    private val knotState: CoroutineKnotState<S>,
+    private val reducer: Reducer<S, C, A>,
+    private val performer: Performer<A, C>?,
+    private val suspendPerformer: SuspendPerformer<A, C>?,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Knot<State, Change>, KnotState<State> by knotState {
+) : Knot<S, C>, KnotState<S> by knotState {
 
     private val _running = AtomicBoolean(false)
 
-    private val _changesChannel = Channel<Change>(UNLIMITED)
-    private val _actionsChannel = Channel<Action>(UNLIMITED)
+    private val _intentsChannel = Channel<C>(UNLIMITED)
+    private val _actionsChannel = Channel<A>(UNLIMITED)
 
     fun start(coroutineScope: CoroutineScope) {
         _running.set(true)
         coroutineScope.observeWith {
-            val change = _changesChannel.receive()
-            val newActions = mutableListOf<Action>()
+            val intent = _intentsChannel.receive()
+            val newActions = mutableListOf<A>()
             knotState.changeState { state ->
-                val effect = reducer(state, change)
+                val effect = reducer(state, intent)
                 newActions.addAll(effect.actions)
                 effect.state
             }
@@ -35,13 +35,13 @@ class CoroutineKnot<State : Any, Change : Any, Action : Any>(
         }
         coroutineScope.observeWith {
             val action = _actionsChannel.receive()
-            val change = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
-            change?.run { _changesChannel.offer(change) }
+            val intent = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
+            intent?.run { _intentsChannel.offer(intent) }
         }
     }
 
-    override fun offerChange(change: Change) {
-        _changesChannel.offer(change)
+    override fun offerIntent(intent: C) {
+        _intentsChannel.offer(intent)
     }
 
     fun stop() {

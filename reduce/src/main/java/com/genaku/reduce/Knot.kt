@@ -2,27 +2,32 @@ package com.genaku.reduce
 
 import kotlinx.coroutines.flow.StateFlow
 
-interface Knot<State : Any, Change : Any>: KnotState<State> {
-    fun offerChange(change: Change)
+interface State
+interface Intent
+interface Action
+
+interface Knot<S : State, C : Intent> : KnotState<S> {
+    fun offerIntent(intent: C)
 }
 
-interface KnotState<State: Any>{
-    val state: StateFlow<State>
+/** **/
+interface KnotState<S : State> {
+    val state: StateFlow<S>
 }
 
-/** A function accepting the `State` and a `Change` and returning a new `State` with `Actions`. */
-typealias Reducer<State, Change, Action> = State.(change: Change) -> Effect<State, Action>
+/** A function accepting the `State` and a `Intent` and returning a new `State` with `Actions`. */
+typealias Reducer<State, Intent, Action> = State.(intent: Intent) -> Effect<State, Action>
 
-/** A function used for performing given `Action` and emitting resulting `Change`. */
-typealias Performer<Action, Change> = (Action) -> Change?
+/** A function used for performing given `Action` and emitting resulting `Intent`. */
+typealias Performer<Action, Intent> = (Action) -> Intent?
 
-/** A function used for performing given `Action` and emitting resulting `Change`. */
-typealias SuspendPerformer<Action, Change> = suspend (Action) -> Change?
+/** A function used for performing given `Action` and emitting resulting `Intent`. */
+typealias SuspendPerformer<Action, Intent> = suspend (Action) -> Intent?
 
 /** Convenience wrapper around [State] and optional [Action]s. */
-data class Effect<State : Any, Action : Any>(
-    val state: State,
-    val actions: List<Action> = emptyList()
+data class Effect<S : State, A : Action>(
+    val state: S,
+    val actions: List<A> = emptyList()
 ) {
-    operator fun plus(action: Action): Effect<State, Action> = Effect(state, actions + action)
+    operator fun plus(action: A): Effect<S, A> = Effect(state, actions + action)
 }

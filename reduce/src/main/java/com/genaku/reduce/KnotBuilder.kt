@@ -4,38 +4,38 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 /** A configuration builder for a [Knot]. */
-abstract class KnotBuilder<State : Any, Change : Any, Action : Any> {
+abstract class KnotBuilder<S : State, C : Intent, A : Action> {
 
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
-    protected var _initialState: State? = null
-    protected var _knotState: CoroutineKnotState<State>? = null
-    protected var _reducer: Reducer<State, Change, Action>? = null
-    protected var _performer: Performer<Action, Change>? = null
+    protected var _initialState: S? = null
+    protected var _knotState: CoroutineKnotState<S>? = null
+    protected var _reducer: Reducer<S, C, A>? = null
+    protected var _performer: Performer<A, C>? = null
 
-    abstract fun build(): Knot<State, Change>
+    abstract fun build(): Knot<S, C>
 
-    var initialState: State
+    var initialState: S
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
         get() = throw UnsupportedOperationException()
         set(value) {
             _initialState = value
         }
 
-    var knotState: CoroutineKnotState<State>
+    var knotState: CoroutineKnotState<S>
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
         get() = throw UnsupportedOperationException()
         set(value) {
             _knotState = value
         }
 
-    /** A section for [Change] related declarations. */
-    fun changes(reducer: Reducer<State, Change, Action>) {
+    /** A section for [C] related declarations. */
+    fun intents(reducer: Reducer<S, C, A>) {
         _reducer = reducer
     }
 
-    /** A section for [Action] related declarations. */
-    fun actions(performer: Performer<Action, Change>?) {
+    /** A section for [A] related declarations. */
+    fun actions(performer: Performer<A, C>?) {
         _performer = performer
     }
 
@@ -43,21 +43,21 @@ abstract class KnotBuilder<State : Any, Change : Any, Action : Any> {
         _dispatcher = dispatcher
     }
 
-    /** Throws [IllegalStateException] with current [State] and given [Change] in its message. */
-    fun State.unexpected(change: Change): Nothing = error("Unexpected $change in $this")
+    /** Throws [IllegalStateException] with current [S] and given [C] in its message. */
+    fun S.unexpected(intent: C): Nothing = error("Unexpected $intent in $this")
 
-    /** Turns [State] into an [Effect] without [Action]. */
-    val State.only: Effect<State, Action> get() = Effect(this)
+    /** Turns [S] into an [Effect] without [A]. */
+    val S.stateOnly: Effect<S, A> get() = Effect(this)
 
-    /** Combines [State] and [Action] into [Effect]. */
-    operator fun State.plus(action: Action) = Effect(this, listOf(action))
+    /** Combines [S] and [A] into [Effect]. */
+    operator fun S.plus(action: A) = Effect(this, listOf(action))
 
     /**
      * Executes given block if the knot is in the given state or
-     * ignores the change in any other states.
+     * ignores the intent in any other states.
      *
      * ```
-     * reduce<Change> {
+     * reduce<Intent> {
      *    whenState<State.Content> {
      *       ...
      *    }
@@ -65,7 +65,7 @@ abstract class KnotBuilder<State : Any, Change : Any, Action : Any> {
      * ```
      * is a better readable alternative to
      * ```
-     * reduce<Change> {
+     * reduce<Intent> {
      *    when(this) {
      *       is State.Content -> ...
      *       else -> only
@@ -73,36 +73,36 @@ abstract class KnotBuilder<State : Any, Change : Any, Action : Any> {
      * }
      * ```
      */
-    inline fun <reified WhenState : State> State.whenState(
-        block: WhenState.() -> Effect<State, Action>
-    ): Effect<State, Action> =
+    inline fun <reified WhenState : S> S.whenState(
+        block: WhenState.() -> Effect<S, A>
+    ): Effect<S, A> =
         if (this is WhenState) block()
         else Effect(this, emptyList())
 
     /**
      * Executes given block if the knot is in the given state or
-     * throws [IllegalStateException] for the change in any other state.
+     * throws [IllegalStateException] for the intent in any other state.
      *
      * ```
-     * reduce<Change> { change ->
-     *    requireState<State.Content>(change) {
+     * reduce<Intent> { intent ->
+     *    requireState<State.Content>(intent) {
      *       ...
      *    }
      * }
      * ```
      * is a better readable alternative to
      * ```
-     * reduce<Change> { change ->
+     * reduce<Intent> { intent ->
      *    when(this) {
      *       is State.Content -> ...
-     *       else -> unexpected(change)
+     *       else -> unexpected(intent)
      *    }
      * }
      * ```
      */
-    inline fun <reified WhenState : State> State.requireState(
-        change: Change, block: WhenState.() -> Effect<State, Action>
-    ): Effect<State, Action> =
+    inline fun <reified WhenState : S> S.requireState(
+        intent: C, block: WhenState.() -> Effect<S, A>
+    ): Effect<S, A> =
         if (this is WhenState) block()
-        else unexpected(change)
+        else unexpected(intent)
 }
