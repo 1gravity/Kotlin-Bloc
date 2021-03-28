@@ -134,7 +134,7 @@ If your knot becomes complex and you want to improve its readability and maintai
         actions { action ->
             when (action) {
                 BooksAction.Load -> {
-                    repository.loadBooks().toChange()
+                    repository.loadBooks().toIntent()
                 }
             }
         }

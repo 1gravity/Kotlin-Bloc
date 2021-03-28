@@ -53,7 +53,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
             when (action) {
                 BooksAction.Load -> {
                     delay(1000)
-                    repository.loadBooks().toChange()
+                    repository.loadBooks().toIntent()
                 }
             }
         }
@@ -75,7 +75,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
         clearKnot.offerIntent(ClearBookIntent.Clear)
     }
 
-    private fun IBooksRepository.LoadBooksResult.toChange() =
+    private fun IBooksRepository.LoadBooksResult.toIntent() =
         when (this) {
             is IBooksRepository.LoadBooksResult.Success ->
                 BooksIntent.Success(books)
