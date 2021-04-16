@@ -233,17 +233,17 @@ Raviola in his article [A case against the MVI architecture pattern](https://dev
 Add it in your root build.gradle at the end of repositories:
 ```groovy
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
 **Step 2.** Add the dependency
 ```groovy
 dependencies {
-		implementation 'com.github.genaku:reduce:<version>'
-	}
+    implementation 'com.github.genaku:reduce:<version>'
+}
 ```
 
 # Why Reduce?
