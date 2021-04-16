@@ -3,7 +3,7 @@ package com.genaku.reduce.station
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.genaku.reduce.CoroutineKnotState
-import com.genaku.reduce.Intent
+import com.genaku.reduce.StateIntent
 import com.genaku.reduce.SuspendSideEffect
 import com.genaku.reduce.suspendKnot
 import kotlinx.coroutines.delay
@@ -22,13 +22,13 @@ class StationViewModel : ViewModel() {
         }
     }
 
-    private fun <I : Intent> arrive(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
+    private fun <I : StateIntent> arrive(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
         delay(vehicle.delay)
         vehicle.num++
         create(vehicle)
     }
 
-    private fun <I : Intent> leave(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
+    private fun <I : StateIntent> leave(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
         delay(vehicle.delay)
         create(vehicle)
     }
@@ -38,7 +38,7 @@ class StationViewModel : ViewModel() {
 
         val bus = Vehicle("Bus", 800)
 
-        intents { intent ->
+        reduce { intent ->
             when (intent) {
                 is BusIntent.Arrive -> StationState.Bus(intent.name + arrive) +
                         leave(bus) { BusIntent.Leave("$it") }
@@ -53,7 +53,7 @@ class StationViewModel : ViewModel() {
 
         val train = Vehicle("Train", 600)
 
-        intents { intent ->
+        reduce { intent ->
             when (intent) {
                 is TrainIntent.Arrive -> StationState.Train(intent.name + arrive) +
                         leave(train) { TrainIntent.Leave("$it") }
@@ -67,7 +67,7 @@ class StationViewModel : ViewModel() {
         knotState = stationState
         val lorry = Vehicle("Lorry", 250)
 
-        intents { intent ->
+        reduce { intent ->
             when (intent) {
                 is LorryIntent.Arrive -> StationState.Lorry(intent.name + arrive) +
                         leave(lorry) { LorryIntent.Leave("$it") }

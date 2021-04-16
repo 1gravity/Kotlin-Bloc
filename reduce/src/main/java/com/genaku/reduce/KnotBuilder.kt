@@ -4,16 +4,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 /** A configuration builder for a [Knot]. */
-abstract class KnotBuilder<S : State, C : Intent, A : Action> {
+abstract class KnotBuilder<S : State, I : StateIntent, A : StateAction> {
 
     protected var _dispatcher: CoroutineContext = Dispatchers.Default
 
     protected var _initialState: S? = null
     protected var _knotState: CoroutineKnotState<S>? = null
-    protected var _reducer: Reducer<S, C, A>? = null
-    protected var _performer: Performer<A, C>? = null
+    protected var _reducer: Reducer<S, I, A>? = null
+    protected var _performer: Performer<A, I>? = null
 
-    abstract fun build(): Knot<S, C>
+    abstract fun build(): Knot<S, I>
 
     var initialState: S
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
@@ -29,13 +29,13 @@ abstract class KnotBuilder<S : State, C : Intent, A : Action> {
             _knotState = value
         }
 
-    /** A section for [C] related declarations. */
-    fun intents(reducer: Reducer<S, C, A>) {
+    /** A section for [I] related declarations. */
+    fun reduce(reducer: Reducer<S, I, A>) {
         _reducer = reducer
     }
 
     /** A section for [A] related declarations. */
-    fun actions(performer: Performer<A, C>?) {
+    fun actions(performer: Performer<A, I>?) {
         _performer = performer
     }
 
@@ -43,8 +43,8 @@ abstract class KnotBuilder<S : State, C : Intent, A : Action> {
         _dispatcher = dispatcher
     }
 
-    /** Throws [IllegalStateException] with current [S] and given [C] in its message. */
-    fun S.unexpected(intent: C): Nothing = error("Unexpected $intent in $this")
+    /** Throws [IllegalStateException] with current [S] and given [I] in its message. */
+    fun S.unexpected(intent: I): Nothing = error("Unexpected $intent in $this")
 
     /** Turns [S] into an [Effect] without [A]. */
     val S.stateOnly: Effect<S, A> get() = Effect(this)
@@ -65,7 +65,7 @@ abstract class KnotBuilder<S : State, C : Intent, A : Action> {
      * ```
      * is a better readable alternative to
      * ```
-     * reduce<Intent> {
+     * reduce {
      *    when(this) {
      *       is State.Content -> ...
      *       else -> only
@@ -84,7 +84,7 @@ abstract class KnotBuilder<S : State, C : Intent, A : Action> {
      * throws [IllegalStateException] for the intent in any other state.
      *
      * ```
-     * reduce<Intent> { intent ->
+     * reduce { intent ->
      *    requireState<State.Content>(intent) {
      *       ...
      *    }
@@ -92,7 +92,7 @@ abstract class KnotBuilder<S : State, C : Intent, A : Action> {
      * ```
      * is a better readable alternative to
      * ```
-     * reduce<Intent> { intent ->
+     * reduce { intent ->
      *    when(this) {
      *       is State.Content -> ...
      *       else -> unexpected(intent)
@@ -101,7 +101,7 @@ abstract class KnotBuilder<S : State, C : Intent, A : Action> {
      * ```
      */
     inline fun <reified WhenState : S> S.requireState(
-        intent: C, block: WhenState.() -> Effect<S, A>
+        intent: I, block: WhenState.() -> Effect<S, A>
     ): Effect<S, A> =
         if (this is WhenState) block()
         else unexpected(intent)

@@ -2,7 +2,6 @@ package com.genaku.reduce.traffic
 
 import com.genaku.reduce.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import org.mym.plog.PLog
 
 sealed class StreetState : State {
@@ -31,7 +30,7 @@ sealed class StreetState : State {
     override fun toString(): String = value.toString()
 }
 
-sealed class StreetIntent : Intent {
+sealed class StreetIntent : StateIntent {
     object Plus : StreetIntent()
     object Minus : StreetIntent()
 }
@@ -43,11 +42,11 @@ class Street(private val delay: Long) {
     private val knot = easyKnot<StreetState, StreetIntent> {
         initialState = StreetState.Empty
 
-        intents { intent ->
+        reduce { intent ->
             PLog.d("intent $this ${intent.javaClass.simpleName}")
             when (this) {
                 StreetState.Empty -> when (intent) {
-                    StreetIntent.Minus -> this.stateOnly
+                    StreetIntent.Minus -> stateOnly
                     StreetIntent.Plus -> StreetState.Traffic(1) + outStreet()
                 }
                 is StreetState.Traffic -> when (intent) {

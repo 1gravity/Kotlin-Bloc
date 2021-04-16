@@ -3,12 +3,12 @@ package com.genaku.reduce
 import kotlinx.coroutines.flow.StateFlow
 
 interface State
-interface Intent
-interface Action
-class SideEffect<I: Intent>(val block: () -> I?): Action
-class SuspendSideEffect<I: Intent>(val block: suspend () -> I?): Action
+interface StateIntent
+interface StateAction
+class SideEffect<I: StateIntent>(val block: () -> I?): StateAction
+class SuspendSideEffect<I: StateIntent>(val block: suspend () -> I?): StateAction
 
-interface Knot<S : State, C : Intent> : KnotState<S> {
+interface Knot<S : State, C : StateIntent> : KnotState<S> {
     fun offerIntent(intent: C)
 }
 
@@ -23,11 +23,11 @@ typealias Reducer<State, Intent, Action> = State.(intent: Intent) -> Effect<Stat
 /** A function used for performing given `Action` and emitting resulting `Intent`. */
 typealias Performer<Action, Intent> = (Action) -> Intent?
 
-/** A function used for performing given `Action` and emitting resulting `Intent`. */
+/** A suspend function used for performing given `Action` and emitting resulting `Intent`. */
 typealias SuspendPerformer<Action, Intent> = suspend (Action) -> Intent?
 
-/** Convenience wrapper around [State] and optional [Action]s. */
-data class Effect<S : State, A : Action>(
+/** Convenience wrapper around [State] and optional [StateAction]s. */
+data class Effect<S : State, A : StateAction>(
     val state: S,
     val actions: List<A> = emptyList()
 ) {

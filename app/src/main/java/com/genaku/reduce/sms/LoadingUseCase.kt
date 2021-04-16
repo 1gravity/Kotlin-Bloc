@@ -1,6 +1,6 @@
 package com.genaku.reduce.sms
 
-import com.genaku.reduce.Action
+import com.genaku.reduce.StateAction
 import com.genaku.reduce.knot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
@@ -9,10 +9,10 @@ import org.mym.plog.PLog
 class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
     IErrorUseCase by errorUseCase {
 
-    private val loadingKnot = knot<LoadingState, LoadingIntent, Action> {
+    private val loadingKnot = knot<LoadingState, LoadingIntent, StateAction> {
         initialState = LoadingState.Idle
 
-        intents { intent ->
+        reduce { intent ->
             PLog.d( "loading intent $intent")
             when (intent) {
                 LoadingIntent.Start -> LoadingState.Active.stateOnly

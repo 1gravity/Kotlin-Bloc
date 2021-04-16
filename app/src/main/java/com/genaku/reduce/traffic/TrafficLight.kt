@@ -18,7 +18,7 @@ sealed class TrafficState : State {
     }
 }
 
-sealed class TrafficIntent : Intent {
+sealed class TrafficIntent : StateIntent {
     object On : TrafficIntent()
     object Off : TrafficIntent()
     object Plus : TrafficIntent()
@@ -45,7 +45,7 @@ class TrafficLight(
 
         dispatcher(Dispatchers.IO)
 
-        intents { intent ->
+        reduce { intent ->
             PLog.d("intent $intent for state $this")
             when (intent) {
                 TrafficIntent.Minus -> {
@@ -53,7 +53,7 @@ class TrafficLight(
                         cars--
                         this + startMovement()
                     } else {
-                        this.stateOnly
+                        stateOnly
                     }
                 }
                 TrafficIntent.Plus -> {

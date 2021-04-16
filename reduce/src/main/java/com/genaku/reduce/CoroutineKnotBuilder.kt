@@ -1,9 +1,6 @@
 package com.genaku.reduce
 
-import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
-
-class CoroutineKnotBuilder<S : State, C : Intent, A : Action> :
+class CoroutineKnotBuilder<S : State, C : StateIntent, A : StateAction> :
     KnotBuilder<S, C, A>() {
 
     private var _suspendPerformer: SuspendPerformer<A, C>? = null

@@ -1,9 +1,6 @@
 package com.genaku.reduce
 
-import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
-
-class EasyCoroutineKnotBuilder<S : State, C : Intent> :
+class EasyCoroutineKnotBuilder<S : State, C : StateIntent> :
     KnotBuilder<S, C, SideEffect<C>>() {
 
     private val _suspendPerformer: SuspendPerformer<SideEffect<C>, C> = {

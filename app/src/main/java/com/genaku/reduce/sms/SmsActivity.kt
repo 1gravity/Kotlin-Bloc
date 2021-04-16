@@ -11,7 +11,7 @@ import org.mym.plog.PLog
 
 class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
 
-    private val smsUseCase = DI.useCase
+    private val smsUseCase = DI.smsUseCase
 
     private val viewBinding by viewBinding(ActivitySmsBinding::bind)
 
@@ -24,7 +24,11 @@ class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
 
     private fun observeStates() {
         observeState(smsUseCase.state) {
-            if (it == SmsState.Exit) finish()
+            when(it) {
+                SmsState.Exit -> finish()
+                SmsState.SmsConfirmed -> viewBinding.tvSuccess.visibility = View.VISIBLE
+                else -> {}
+            }
         }
         observeState(smsUseCase.loadingState) {
             progress(it == LoadingState.Active)
@@ -38,7 +42,7 @@ class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
     private fun setupButtons() {
         with(viewBinding) {
             button.setOnClickListener {
-                smsUseCase.checkSms(viewBinding.edCode.text.toString())
+                smsUseCase.checkSms(edCode.text.toString())
             }
             btnCancel.setOnClickListener {
                 smsUseCase.cancel()

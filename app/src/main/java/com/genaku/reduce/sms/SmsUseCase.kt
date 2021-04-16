@@ -3,7 +3,6 @@ package com.genaku.reduce.sms
 import com.genaku.reduce.SideEffect
 import com.genaku.reduce.easyKnot
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import org.mym.plog.PLog
 
@@ -16,8 +15,8 @@ class SmsUseCase(
 
         initialState = SmsState.InputSms
 
-        intents { intent ->
-            PLog.d("state: ${this.javaClass.simpleName} intent: ${intent.javaClass.simpleName}")
+        reduce { intent ->
+            PLog.d("state: ${javaClass.simpleName} intent: ${intent.javaClass.simpleName}")
             when (this) {
                 SmsState.InputSms -> when (intent) {
                     SmsIntent.Cancel -> SmsState.Exit.stateOnly
@@ -34,10 +33,10 @@ class SmsUseCase(
                     else -> unexpected(intent)
                 }
                 SmsState.Exit -> {
-                    this.stateOnly
+                    stateOnly
                 }
                 SmsState.SmsConfirmed -> {
-                    this.stateOnly
+                    stateOnly
                 }
             }
         }

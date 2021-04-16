@@ -14,7 +14,7 @@ class MainViewModel : ViewModel() {
 
         knotState = commonState
 
-        intents { intent ->
+        reduce { intent ->
             when (intent) {
                 SampleIntent.ONE -> stateOnly
                 SampleIntent.TWO -> SampleState.SECOND + SampleAction.YES + SampleAction.NO
@@ -59,13 +59,13 @@ enum class SampleState : State {
     THIRD
 }
 
-enum class SampleIntent : Intent {
+enum class SampleIntent : StateIntent {
     ONE,
     TWO,
     THREE
 }
 
-enum class SampleAction : Action {
+enum class SampleAction : StateAction {
     YES,
     NO
 }

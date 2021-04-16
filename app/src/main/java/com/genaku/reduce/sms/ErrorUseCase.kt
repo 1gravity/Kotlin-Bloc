@@ -1,16 +1,16 @@
 package com.genaku.reduce.sms
 
-import com.genaku.reduce.Action
+import com.genaku.reduce.StateAction
 import com.genaku.reduce.knot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 
 class ErrorUseCase : IStateUseCase, IErrorUseCase {
 
-    private val errorKnot = knot<ErrorState, ErrorIntent, Action> {
+    private val errorKnot = knot<ErrorState, ErrorIntent, StateAction> {
         initialState = ErrorState.NoError
 
-        intents { intent ->
+        reduce { intent ->
             when (intent) {
                 ErrorIntent.ClearError -> ErrorState.NoError.stateOnly
                 is ErrorIntent.SetError -> ErrorState.Error(intent.error).stateOnly

@@ -12,6 +12,6 @@ object DI {
     private val errorUseCase = ErrorUseCase()
     private val loadingUseCase = LoadingUseCase(errorUseCase)
 
-    val useCase = SmsUseCase(repository, loadingUseCase)
+    val smsUseCase = SmsUseCase(repository, loadingUseCase)
 
 }

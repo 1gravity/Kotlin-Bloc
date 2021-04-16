@@ -1,6 +1,6 @@
 package com.genaku.reduce.station
 
-import com.genaku.reduce.Intent
+import com.genaku.reduce.StateIntent
 import com.genaku.reduce.State
 
 sealed class StationState : State {
@@ -17,17 +17,17 @@ sealed class StationState : State {
     }
 }
 
-sealed class TrainIntent : Intent {
+sealed class TrainIntent : StateIntent {
     class Arrive(val name: String) : TrainIntent()
     class Leave(val name: String) : TrainIntent()
 }
 
-sealed class BusIntent : Intent {
+sealed class BusIntent : StateIntent {
     class Arrive(val name: String) : BusIntent()
     class Leave(val name: String) : BusIntent()
 }
 
-sealed class LorryIntent : Intent {
+sealed class LorryIntent : StateIntent {
     class Arrive(val name: String) : LorryIntent()
     class Leave(val name: String) : LorryIntent()
 }

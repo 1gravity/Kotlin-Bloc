@@ -15,7 +15,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
             knotState = commonState
 
-            intents { intent ->
+            reduce { intent ->
                 when (intent) {
                     ClearBookIntent.Clear -> when (this) {
                         is BooksState.Content -> BooksState.Empty.stateOnly
@@ -30,7 +30,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
         knotState = commonState
 
-        intents { intent ->
+        reduce { intent ->
             when (intent) {
                 BooksIntent.Load -> when (this) {
                     BooksState.Empty,
