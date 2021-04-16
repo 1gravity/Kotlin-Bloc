@@ -69,15 +69,15 @@ val knot = knot<BooksState, BooksIntent, BooksAction> {
                     else -> unexpected(intent)
                 }
             }
-        }
+    }
 
-        actions { action ->
-            when (action) {
-                BooksAction.Load -> {
-                    repository.loadBooks().toIntent()
-                }
+    actions { action ->
+        when (action) {
+            BooksAction.Load -> {
+                repository.loadBooks().toIntent()
             }
         }
+    }
 }
 ```
 
@@ -231,7 +231,7 @@ Raviola in his article [A case against the MVI architecture pattern](https://dev
 
 **Step 1.** Add the JitPack repository to your build file.
 Add it in your root build.gradle at the end of repositories:
-```
+```groovy
 allprojects {
 		repositories {
 			...
@@ -240,7 +240,7 @@ allprojects {
 	}
 ```
 **Step 2.** Add the dependency
-```
+```groovy
 dependencies {
 		implementation 'com.github.genaku:reduce:<version>'
 	}
