@@ -1,8 +1,8 @@
 package com.genaku.reduce.traffic
 
-import android.util.Log
 import com.genaku.reduce.*
 import kotlinx.coroutines.CoroutineScope
+import org.mym.plog.PLog
 
 sealed class StreetState : State {
     object Empty : StreetState()
@@ -43,10 +43,7 @@ class Street(private val delay: Long) {
         initialState = StreetState.Empty
 
         intents { intent ->
-            Log.d(
-                "TRAFLOG:" + this@Street.hashCode(),
-                "intent $this ${intent.javaClass.simpleName}"
-            )
+            PLog.d("intent $this ${intent.javaClass.simpleName}")
             when (this) {
                 StreetState.Empty -> when (intent) {
                     StreetIntent.Minus -> this.stateOnly

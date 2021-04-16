@@ -1,6 +1,5 @@
 package com.genaku.reduce.traffic
 
-import android.util.Log
 import com.genaku.reduce.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,11 +12,9 @@ sealed class TrafficState : State {
     object On : TrafficState()
     object Off : TrafficState()
 
-    override fun toString(): String {
-        return when (this) {
-            On -> "green"
-            Off -> "red"
-        }
+    override fun toString(): String = when (this) {
+        On -> "green"
+        Off -> "red"
     }
 }
 
@@ -109,10 +106,7 @@ class TrafficLight(
     private fun startMovement() = SideEffect<TrafficIntent> {
         PLog.d("startMovement")
         if (moving.get()) return@SideEffect null
-        Log.d(
-            "TRAFLOG:" + this@TrafficLight.hashCode(),
-            "start moving ${moving.get()} ${open.get()}"
-        )
+        PLog.d("start moving ${moving.get()} ${open.get()}")
         coroutineScope.launch {
             moving.set(true)
             while (open.get() && cars > 0) {
