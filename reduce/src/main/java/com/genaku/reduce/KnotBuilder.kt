@@ -6,7 +6,7 @@ import kotlin.coroutines.CoroutineContext
 /** A configuration builder for a [Knot]. */
 abstract class KnotBuilder<S : State, C : Intent, A : Action> {
 
-    private var _dispatcher: CoroutineContext = Dispatchers.Default
+    protected var _dispatcher: CoroutineContext = Dispatchers.Default
 
     protected var _initialState: S? = null
     protected var _knotState: CoroutineKnotState<S>? = null

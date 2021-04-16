@@ -40,12 +40,13 @@ class TrafficLight(
     private var open = AtomicBoolean(false)
     private var moving = AtomicBoolean(false)
 
-    private val knot = easyKnot<TrafficState, TrafficIntent> {
+    private val knot = suspendKnot<TrafficState, TrafficIntent> {
         initialState = TrafficState.Off
 
         dispatcher(Dispatchers.IO)
 
         intents { intent ->
+            PLog.d("intent $intent for state $this")
             when (intent) {
                 TrafficIntent.Minus -> {
                     if (cars > 0) {
@@ -91,33 +92,31 @@ class TrafficLight(
         this.streetOut = street
     }
 
-    private fun open() = SideEffect<TrafficIntent> {
+    private fun open() = SuspendSideEffect<TrafficIntent> {
         PLog.d("open")
         open.set(true)
         null
     }
 
-    private fun close() = SideEffect<TrafficIntent> {
+    private fun close() = SuspendSideEffect<TrafficIntent> {
         PLog.d("close")
         open.set(false)
         null
     }
 
-    private fun startMovement() = SideEffect<TrafficIntent> {
+    private fun startMovement() = SuspendSideEffect<TrafficIntent> {
         PLog.d("startMovement")
-        if (moving.get()) return@SideEffect null
+        if (moving.get()) return@SuspendSideEffect null
         PLog.d("start moving ${moving.get()} ${open.get()}")
-        coroutineScope.launch {
-            moving.set(true)
-            while (open.get() && cars > 0) {
-                delay(delay)
-                PLog.d("move car $cars")
-                streetIn?.carOut()
-                streetOut?.carIn()
-                cars--
-            }
-            moving.set(false)
+        moving.set(true)
+        while (open.get() && cars > 0) {
+            delay(delay)
+            PLog.d("move car $cars")
+            streetIn?.carOut()
+            streetOut?.carIn()
+            cars--
         }
+        moving.set(false)
         PLog.d("end moving ${moving.get()}")
         null
     }

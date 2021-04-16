@@ -6,7 +6,6 @@ import kotlin.coroutines.CoroutineContext
 class EasyCoroutineKnotBuilder<S : State, C : Intent> :
     KnotBuilder<S, C, SideEffect<C>>() {
 
-    private var _dispatcher: CoroutineContext = Dispatchers.Default
     private val _suspendPerformer: SuspendPerformer<SideEffect<C>, C> = {
         it.block.invoke()
     }

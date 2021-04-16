@@ -6,7 +6,6 @@ import kotlin.coroutines.CoroutineContext
 class CoroutineKnotBuilder<S : State, C : Intent, A : Action> :
     KnotBuilder<S, C, A>() {
 
-    private var _dispatcher: CoroutineContext = Dispatchers.Default
     private var _suspendPerformer: SuspendPerformer<A, C>? = null
 
     override fun build(): Knot<S, C> {
