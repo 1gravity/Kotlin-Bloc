@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![](https://jitpack.io/v/genaku/reduce.svg)](https://jitpack.io/#genaku/reduce) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 # Reduce
 
@@ -52,7 +52,7 @@ val knot = knot<BooksState, BooksIntent, BooksAction> {
 
     initialState = BooksState.Empty
 
-    intents { intent ->
+    reduce { intent ->
             when (intent) {
                 BooksIntent.Load -> when (this) {
                     BooksState.Empty,
@@ -97,7 +97,7 @@ If your knot becomes complex and you want to improve its readability and maintai
 
             knotState = commonState
 
-            intents { intent ->
+            reduce { intent ->
                 when (intent) {
                     ClearBookIntent.Clear -> when (this) {
                         is BooksState.Content -> BooksState.Empty.stateOnly
@@ -112,7 +112,7 @@ If your knot becomes complex and you want to improve its readability and maintai
 
         knotState = commonState
 
-        intents { intent ->
+        reduce { intent ->
             when (intent) {
                 BooksIntent.Load -> when (this) {
                     BooksState.Empty,
@@ -146,6 +146,104 @@ If your knot becomes complex and you want to improve its readability and maintai
 Through 'performActions()' part single knots can be combined together.
 
 <img src="docs/scalable_knot_diagram.png" width="477" />
+
+# Simplify
+
+Raviola in his article [A case against the MVI architecture pattern](https://dev.to/feresr/a-case-against-the-mvi-architecture-pattern-1add "A case against the MVI architecture pattern") raises issue about MVI pattern: hard to read code, you have to jump from redicer part to actions part and back. This library help to relsove the issue. Here you can join intent reduce with side effect action in one place.
+
+```kotlin
+ 	easyKnot<BooksState, BooksIntent, BooksAction> {
+
+        knotState = commonState
+
+        reduce { intent ->
+            when (intent) {
+                BooksIntent.Load -> when (this) {
+                    BooksState.Empty,
+                    is BooksState.Content,
+                    is BooksState.BooksError -> BooksState.Loading + SideEffect<BookIntent> {
+						repository.loadBooks().toIntent()
+					}
+                    else -> stateOnly
+                }
+                is BooksIntent.Success -> when (this) {
+                    BooksState.Loading -> BooksState.Content(intent.books).stateOnly
+                    else -> unexpected(intent)
+                }
+                is BooksIntent.Failure ->  when (this) {
+                    BooksState.Loading -> BooksState.BooksError(intent.message).stateOnly
+                    else -> unexpected(intent)
+                }
+            }
+        }
+    }
+```
+ Even several actions can be executed:
+ ```kotlin
+     easyKnot<TrafficState, TrafficIntent> {
+        initialState = TrafficState.Off
+
+        reduce { intent ->
+            PLog.d("intent $intent for state $this")
+            when (intent) {
+                TrafficIntent.Minus -> {
+                    if (cars > 0) {
+                        cars--
+                        this + startMovement()
+                    } else {
+                        stateOnly
+                    }
+                }
+                TrafficIntent.Plus -> {
+                    cars++
+                    this + startMovement()
+                }
+                TrafficIntent.Off -> TrafficState.Off + close()
+                TrafficIntent.On -> TrafficState.On + open() + startMovement()
+            }
+        }
+    }
+
+	private fun open() = SideEffect<TrafficIntent> {
+        open.set(true)
+        null
+    }
+
+    private fun close() = SideEffect<TrafficIntent> {
+        open.set(false)
+        null
+    }
+
+    private fun startMovement() = SideEffect<TrafficIntent> {
+        if (moving.get()) return@SideEffect null
+        moving.set(true)
+        while (open.get() && cars > 0) {
+            streetIn?.carOut()
+            streetOut?.carIn()
+            cars--
+        }
+        moving.set(false)
+        null
+    }
+ ```
+
+#Gradle
+**Step 1.** Add the JitPack repository to your build file.
+Add it in your root build.gradle at the end of repositories:
+```
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+**Step 2.** Add the dependency
+```
+dependencies {
+		implementation 'com.github.genaku:reduce:<version>'
+	}
+```
 
 # Why Reduce?
 
