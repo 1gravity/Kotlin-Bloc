@@ -184,7 +184,6 @@ Raviola in his article [A case against the MVI architecture pattern](https://dev
         initialState = TrafficState.Off
 
         reduce { intent ->
-            PLog.d("intent $intent for state $this")
             when (intent) {
                 TrafficIntent.Minus -> {
                     if (cars > 0) {
