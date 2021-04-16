@@ -1,9 +1,11 @@
 package com.genaku.reduce
 
-class CoroutineKnotBuilder<S : State, C : StateIntent, A : StateAction> :
-    KnotBuilder<S, C, A>() {
+class EasySuspendCoroutineKnotBuilder<S : State, C : StateIntent> :
+    KnotBuilder<S, C, SuspendSideEffect<C>>() {
 
-    private var _suspendPerformer: SuspendPerformer<A, C>? = null
+    private val _suspendPerformer: SuspendPerformer<SuspendSideEffect<C>, C> = {
+        it.block.invoke()
+    }
 
     override fun build(): Knot<S, C> {
         return KnotImpl(
@@ -18,9 +20,4 @@ class CoroutineKnotBuilder<S : State, C : StateIntent, A : StateAction> :
     private fun createKnotState() = CoroutineKnotState(
         checkNotNull(_initialState) { "initialState must be defined" }
     )
-
-    /** A section for [A] related declarations. */
-    fun suspendActions(performer: SuspendPerformer<A, C>?) {
-        _suspendPerformer = performer
-    }
 }

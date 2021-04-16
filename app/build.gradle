@@ -30,6 +30,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -47,6 +50,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.4.4'
+//    implementation 'com.github.hoc081098:ViewBindingDelegate:1.0.0-alpha03'
+    implementation "com.github.genaku.Android-PLog:plog-core:2.0.3"
 
     implementation "com.github.genaku.Android-PLog:plog-core:2.0.3"
 

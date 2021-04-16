@@ -1,38 +1,28 @@
 package com.genaku.reduce.traffic
 
-import android.util.Log
-import com.genaku.reduce.Action
-import com.genaku.reduce.Intent
-import com.genaku.reduce.State
-import com.genaku.reduce.knot
+import com.genaku.reduce.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.mym.plog.PLog
 import java.util.concurrent.atomic.AtomicBoolean
 
 sealed class TrafficState : State {
     object On : TrafficState()
     object Off : TrafficState()
 
-    fun getValue(): String {
-        return when (this) {
-            On -> "green"
-            Off -> "red"
-        }
+    override fun toString(): String = when (this) {
+        On -> "green"
+        Off -> "red"
     }
 }
 
-sealed class TrafficIntent : Intent {
+sealed class TrafficIntent : StateIntent {
     object On : TrafficIntent()
     object Off : TrafficIntent()
     object Plus : TrafficIntent()
     object Minus : TrafficIntent()
-}
-
-sealed class TrafficAction : Action {
-    object Open : TrafficAction()
-    object Close : TrafficAction()
-    object Changed : TrafficAction()
 }
 
 class TrafficLight(
@@ -50,44 +40,28 @@ class TrafficLight(
     private var open = AtomicBoolean(false)
     private var moving = AtomicBoolean(false)
 
-    private val knot = knot<TrafficState, TrafficIntent, TrafficAction> {
+    private val knot = suspendKnot<TrafficState, TrafficIntent> {
         initialState = TrafficState.Off
 
-        intents { intent ->
+        dispatcher(Dispatchers.IO)
+
+        reduce { intent ->
+            PLog.d("intent $intent for state $this")
             when (intent) {
                 TrafficIntent.Minus -> {
                     if (cars > 0) {
                         cars--
-                        this + TrafficAction.Changed
+                        this + startMovement()
                     } else {
-                        this.stateOnly
+                        stateOnly
                     }
                 }
                 TrafficIntent.Plus -> {
                     cars++
-                    this + TrafficAction.Changed
+                    this + startMovement()
                 }
-                TrafficIntent.Off -> TrafficState.Off + TrafficAction.Close
-                TrafficIntent.On -> TrafficState.On + TrafficAction.Open + TrafficAction.Changed
-            }
-        }
-
-        suspendActions { action ->
-            when (action) {
-                TrafficAction.Changed -> {
-                    startMovement()
-                    null
-                }
-                TrafficAction.Close -> {
-                    Log.d("TRAFLOG:" + this@TrafficLight.hashCode(), "close")
-                    open.set(false)
-                    null
-                }
-                TrafficAction.Open -> {
-                    Log.d("TRAFLOG:" + this@TrafficLight.hashCode(), "open")
-                    open.set(true)
-                    null
-                }
+                TrafficIntent.Off -> TrafficState.Off + close()
+                TrafficIntent.On -> TrafficState.On + open() + startMovement()
             }
         }
     }
@@ -118,21 +92,32 @@ class TrafficLight(
         this.streetOut = street
     }
 
-    private fun startMovement() {
-        Log.d("TRAFLOG:" + this@TrafficLight.hashCode(), "startMovement")
-        if (moving.get()) return
-        Log.d("TRAFLOG:" + this@TrafficLight.hashCode(), "start moving ${moving.get()} ${open.get()}")
-        coroutineScope.launch {
-            moving.set(true)
-            while (open.get() && cars > 0) {
-                delay(delay)
-                Log.d("TRAFLOG:" + this@TrafficLight.hashCode(), "move car $cars")
-                streetIn?.carOut()
-                streetOut?.carIn()
-                cars--
-            }
-            moving.set(false)
+    private fun open() = SuspendSideEffect<TrafficIntent> {
+        PLog.d("open")
+        open.set(true)
+        null
+    }
+
+    private fun close() = SuspendSideEffect<TrafficIntent> {
+        PLog.d("close")
+        open.set(false)
+        null
+    }
+
+    private fun startMovement() = SuspendSideEffect<TrafficIntent> {
+        PLog.d("startMovement")
+        if (moving.get()) return@SuspendSideEffect null
+        PLog.d("start moving ${moving.get()} ${open.get()}")
+        moving.set(true)
+        while (open.get() && cars > 0) {
+            delay(delay)
+            PLog.d("move car $cars")
+            streetIn?.carOut()
+            streetOut?.carIn()
+            cars--
         }
-        Log.d("TRAFLOG:" + this@TrafficLight.hashCode(), "end moving ${moving.get()}")
+        moving.set(false)
+        PLog.d("end moving ${moving.get()}")
+        null
     }
 }

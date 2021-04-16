@@ -1,7 +1,7 @@
 package com.genaku.reduce.books
 
-import com.genaku.reduce.Action
-import com.genaku.reduce.Intent
+import com.genaku.reduce.StateAction
+import com.genaku.reduce.StateIntent
 import com.genaku.reduce.State
 
 sealed class BooksState : State {
@@ -13,18 +13,18 @@ sealed class BooksState : State {
 
 data class Book(val title: String, val year: String)
 
-sealed class BooksAction : Action {
+sealed class BooksAction : StateAction {
     object Load : BooksAction()
 }
 
-sealed class BooksIntent : Intent {
+sealed class BooksIntent : StateIntent {
     object Load : BooksIntent()
     class Success(val books: List<Book>) : BooksIntent()
     class Failure(val message: String) : BooksIntent()
 }
 
-sealed class ClearBookIntent : Intent {
+sealed class ClearBookIntent : StateIntent {
     object Clear : ClearBookIntent()
 }
 
-class ClearBooksAction : Action
+class ClearBooksAction : StateAction

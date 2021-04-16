@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.CoroutineContext
 
-class KnotImpl<S : State, C : Intent, A : Action>(
+class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     private val knotState: CoroutineKnotState<S>,
     private val reducer: Reducer<S, C, A>,
     private val performer: Performer<A, C>?,
