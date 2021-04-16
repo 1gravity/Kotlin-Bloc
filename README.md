@@ -152,6 +152,7 @@ Through 'performActions()' part single knots can be combined together.
 Raviola in his article [A case against the MVI architecture pattern](https://dev.to/feresr/a-case-against-the-mvi-architecture-pattern-1add "A case against the MVI architecture pattern") raises issue about MVI pattern: hard to read code, you have to jump from reducer part to actions part and back. This library help to relsove the issue. Here you can join intent reduce with side effect action in one place.
 
 ```kotlin
+...
  	easyKnot<BooksState, BooksIntent, BooksAction> {
 
         knotState = commonState
@@ -176,7 +177,7 @@ Raviola in his article [A case against the MVI architecture pattern](https://dev
                 }
             }
         }
-    }
+...
 ```
  Even several actions can be executed:
  ```kotlin
