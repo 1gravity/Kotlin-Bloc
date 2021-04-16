@@ -1,6 +1,5 @@
 package com.genaku.reduce.station
 
-import com.genaku.reduce.Action
 import com.genaku.reduce.Intent
 import com.genaku.reduce.State
 
@@ -32,19 +31,3 @@ sealed class LorryIntent : Intent {
     class Arrive(val name: String) : LorryIntent()
     class Leave(val name: String) : LorryIntent()
 }
-
-sealed class TrainAction : Action {
-    object Arrive : TrainAction()
-    object Leave : TrainAction()
-}
-
-sealed class BusAction : Action {
-    object Arrive : BusAction()
-    object Leave : BusAction()
-}
-
-sealed class LorryAction : Action {
-    object Arrive : LorryAction()
-    object Leave : LorryAction()
-}
-

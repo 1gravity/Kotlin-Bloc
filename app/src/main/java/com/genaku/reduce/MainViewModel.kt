@@ -16,9 +16,9 @@ class MainViewModel : ViewModel() {
 
         intents { intent ->
             when (intent) {
-                SampleIntent.ONE -> SampleState.FIRST.stateOnly
+                SampleIntent.ONE -> stateOnly
                 SampleIntent.TWO -> SampleState.SECOND + SampleAction.YES + SampleAction.NO
-                SampleIntent.THREE -> SampleState.THIRD.stateOnly
+                SampleIntent.THREE -> stateOnly
             }
         }
 

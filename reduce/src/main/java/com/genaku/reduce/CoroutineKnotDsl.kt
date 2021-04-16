@@ -7,3 +7,17 @@ fun <S : State, C : Intent, A : Action> knot(
 ): KnotImpl<S, C, A> = CoroutineKnotBuilder<S, C, A>()
     .also(block)
     .build() as KnotImpl<S, C, A>
+
+@Suppress("UNCHECKED_CAST")
+fun <S : State, C : Intent> easyKnot(
+    block: EasyCoroutineKnotBuilder<S, C>.() -> Unit
+): KnotImpl<S, C, SideEffect<C>> = EasyCoroutineKnotBuilder<S, C>()
+    .also(block)
+    .build() as KnotImpl<S, C, SideEffect<C>>
+
+@Suppress("UNCHECKED_CAST")
+fun <S : State, C : Intent> suspendKnot(
+    block: EasySuspendCoroutineKnotBuilder<S, C>.() -> Unit
+): KnotImpl<S, C, SuspendSideEffect<C>> = EasySuspendCoroutineKnotBuilder<S, C>()
+    .also(block)
+    .build() as KnotImpl<S, C, SuspendSideEffect<C>>

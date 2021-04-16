@@ -3,7 +3,6 @@ package com.genaku.reduce.sms
 import com.genaku.reduce.Action
 import com.genaku.reduce.Intent
 import com.genaku.reduce.State
-import com.genaku.reduce.knot
 
 sealed class SmsState : State {
     object InputSms : SmsState()
@@ -20,5 +19,5 @@ sealed class SmsIntent : Intent {
 }
 
 sealed class SmsAction : Action {
-    class SendSms(val sms: String) : SmsAction()
+    class SmsOperation(val block: () -> SmsIntent) : SmsAction()
 }

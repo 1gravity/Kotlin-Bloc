@@ -1,12 +1,8 @@
 package com.genaku.reduce.traffic
 
 import android.util.Log
-import com.genaku.reduce.Action
-import com.genaku.reduce.Intent
-import com.genaku.reduce.State
-import com.genaku.reduce.knot
+import com.genaku.reduce.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 
 sealed class StreetState : State {
     object Empty : StreetState()
@@ -25,16 +21,13 @@ sealed class StreetState : State {
         }
     }
 
-    fun getValue(): Int {
-        return when (this) {
+    val value: Int
+        get() = when (this) {
             Empty -> 0
             is Traffic -> this.cars
         }
-    }
-}
 
-sealed class StreetAction : Action {
-    object Out : StreetAction()
+    override fun toString(): String = value.toString()
 }
 
 sealed class StreetIntent : Intent {
@@ -46,32 +39,31 @@ class Street(private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val knot = knot<StreetState, StreetIntent, StreetAction> {
+    private val knot = easyKnot<StreetState, StreetIntent> {
         initialState = StreetState.Empty
 
         intents { intent ->
-            Log.d("TRAFLOG:" + this@Street.hashCode(), "intent ${this.getValue()} ${intent.javaClass.simpleName}")
+            Log.d(
+                "TRAFLOG:" + this@Street.hashCode(),
+                "intent $this ${intent.javaClass.simpleName}"
+            )
             when (this) {
                 StreetState.Empty -> when (intent) {
                     StreetIntent.Minus -> this.stateOnly
-                    StreetIntent.Plus -> StreetState.Traffic(1) + StreetAction.Out
+                    StreetIntent.Plus -> StreetState.Traffic(1) + outStreet()
                 }
                 is StreetState.Traffic -> when (intent) {
                     StreetIntent.Minus -> (this - 1).stateOnly
-                    StreetIntent.Plus -> this + 1 + StreetAction.Out
+                    StreetIntent.Plus -> this + 1 + outStreet()
                 }
             }
         }
+    }
 
-        suspendActions { action ->
-            when (action) {
-                StreetAction.Out -> {
-                    delay(delay)
-                    trafficLight?.addCar()
-                    null
-                }
-            }
-        }
+    private fun outStreet(): SideEffect<StreetIntent> = SideEffect {
+        Thread.sleep(delay)
+        trafficLight?.addCar()
+        null
     }
 
     val state

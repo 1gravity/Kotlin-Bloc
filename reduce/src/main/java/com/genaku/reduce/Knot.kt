@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.StateFlow
 interface State
 interface Intent
 interface Action
+class SideEffect<I: Intent>(val block: () -> I?): Action
+class SuspendSideEffect<I: Intent>(val block: suspend () -> I?): Action
 
 interface Knot<S : State, C : Intent> : KnotState<S> {
     fun offerIntent(intent: C)

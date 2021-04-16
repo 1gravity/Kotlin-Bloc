@@ -1,7 +1,9 @@
 package com.genaku.reduce.sms
 
-import com.genaku.reduce.knot
+import com.genaku.reduce.SideEffect
+import com.genaku.reduce.easyKnot
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import org.mym.plog.PLog
 
@@ -10,7 +12,7 @@ class SmsUseCase(
     private val loadingUseCase: LoadingUseCase
 ) : ISmsUseCase, ILoadingUseCase by loadingUseCase, IErrorUseCase by loadingUseCase {
 
-    private val smsKnot = knot<SmsState, SmsIntent, SmsAction> {
+    private val smsKnot = easyKnot<SmsState, SmsIntent> {
 
         initialState = SmsState.InputSms
 
@@ -19,7 +21,7 @@ class SmsUseCase(
             when (this) {
                 SmsState.InputSms -> when (intent) {
                     SmsIntent.Cancel -> SmsState.Exit.stateOnly
-                    is SmsIntent.SendSms -> SmsState.CheckSms + SmsAction.SendSms(intent.sms)
+                    is SmsIntent.SendSms -> SmsState.CheckSms + sendSms(intent.sms)
                     else -> unexpected(intent)
                 }
                 SmsState.CheckSms -> when (intent) {
@@ -39,17 +41,13 @@ class SmsUseCase(
                 }
             }
         }
+    }
 
-        actions { action ->
-            when (action) {
-                is SmsAction.SendSms -> {
-                    if (loadingUseCase.processWrap(false) {
-                            repository.checkSms(action.sms)
-                        }
-                    ) SmsIntent.CorrectSms else SmsIntent.WrongSms
-                }
+    private fun sendSms(sms: String) = SideEffect {
+        if (loadingUseCase.processWrap(false) {
+                repository.checkSms(sms)
             }
-        }
+        ) SmsIntent.CorrectSms else SmsIntent.WrongSms
     }
 
     override val state: StateFlow<SmsState>
