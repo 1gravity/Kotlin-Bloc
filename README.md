@@ -53,22 +53,22 @@ val knot = knot<BooksState, BooksIntent, BooksAction> {
     initialState = BooksState.Empty
 
     reduce { intent ->
-            when (intent) {
-                BooksIntent.Load -> when (this) {
-                    BooksState.Empty,
-                    is BooksState.Content,
-                    is BooksState.BooksError -> BooksState.Loading + BooksAction.Load
-                    else -> stateOnly
-                }
-                is BooksIntent.Success -> when (this) {
-                    BooksState.Loading -> BooksState.Content(intent.books).stateOnly
-                    else -> unexpected(intent)
-                }
-                is BooksIntent.Failure ->  when (this) {
-                    BooksState.Loading -> BooksState.BooksError(intent.message).stateOnly
-                    else -> unexpected(intent)
-                }
+        when (intent) {
+            BooksIntent.Load -> when (this) {
+                BooksState.Empty,
+                is BooksState.Content,
+                is BooksState.BooksError -> BooksState.Loading + BooksAction.Load
+                else -> stateOnly
             }
+            is BooksIntent.Success -> when (this) {
+                BooksState.Loading -> BooksState.Content(intent.books).stateOnly
+                else -> unexpected(intent)
+            }
+            is BooksIntent.Failure ->  when (this) {
+                BooksState.Loading -> BooksState.BooksError(intent.message).stateOnly
+                else -> unexpected(intent)
+            }
+        }
     }
 
     actions { action ->
