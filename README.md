@@ -92,21 +92,20 @@ If your knot becomes complex and you want to improve its readability and maintai
 ```kotlin
     private val commonState = CoroutineKnotState<BooksState>(BooksState.Empty)
 
-    private val clearKnot =
-        knot<BooksState, ClearBookIntent, ClearBooksAction> {
+    private val clearKnot = knot<BooksState, ClearBookIntent, ClearBooksAction> {
 
-            knotState = commonState
+        knotState = commonState
 
-            reduce { intent ->
-                when (intent) {
-                    ClearBookIntent.Clear -> when (this) {
-                        is BooksState.Content -> BooksState.Empty.stateOnly
-                        is BooksState.Empty -> stateOnly
-                        else -> unexpected(intent)
-                    }
+        reduce { intent ->
+            when (intent) {
+                ClearBookIntent.Clear -> when (this) {
+                    is BooksState.Content -> BooksState.Empty.stateOnly
+                    is BooksState.Empty -> stateOnly
+                    else -> unexpected(intent)
                 }
             }
         }
+    }
 
     private val loadKnot = knot<BooksState, BooksIntent, BooksAction> {
 
