@@ -2,6 +2,7 @@ package com.genaku.reduce
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.launch
@@ -21,9 +22,13 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     private val _intentsChannel = Channel<C>(UNLIMITED)
     private val _actionsChannel = Channel<A>(UNLIMITED)
 
+    private var _actionsJob: Job? = null
+    private var _reduceJob: Job? = null
+
     fun start(coroutineScope: CoroutineScope) {
+        stop()
         _running.set(true)
-        coroutineScope.observeWith {
+        _actionsJob = coroutineScope.observeWith {
             val intent = _intentsChannel.receive()
             val newActions = mutableListOf<A>()
             knotState.changeState { state ->
@@ -33,7 +38,7 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
             }
             newActions.forEach { _actionsChannel.offer(it) }
         }
-        coroutineScope.observeWith {
+        _reduceJob = coroutineScope.observeWith {
             val action = _actionsChannel.receive()
             val intent = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
             intent?.run { _intentsChannel.offer(intent) }
@@ -46,6 +51,8 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
 
     fun stop() {
         _running.set(false)
+        _actionsJob?.cancel()
+        _reduceJob?.cancel()
     }
 
     private fun CoroutineScope.observeWith(block: suspend () -> Unit) =
