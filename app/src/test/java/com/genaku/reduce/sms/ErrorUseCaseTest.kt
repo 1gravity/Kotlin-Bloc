@@ -23,20 +23,26 @@ class ErrorUseCaseTest : FreeSpec({
         "initial state should be NoError" {
             useCase.start(this)
             useCase.errorState.test {
-                assertEquals(ErrorState.NoError, expectItem())
+                expectItem() shouldBe ErrorState.NoError
                 cancelAndIgnoreRemainingEvents()
             }
             useCase.stop()
         }
-        "process error should emit error state" {
+        "process error should emit error state" - {
             useCase.start(this)
             useCase.processError(error)
             useCase.errorState.test {
-                assertEquals(ErrorState.Error(error), expectItem())
+                expectItem() shouldBe ErrorState.Error(error)
                 cancelAndIgnoreRemainingEvents()
+            }
+            "clearError should clear previous error to NoError" {
+                useCase.clearError()
+                useCase.errorState.test {
+                    expectItem() shouldBe ErrorState.NoError
+                    cancelAndIgnoreRemainingEvents()
+                }
             }
             useCase.stop()
         }
     }
-
 })
