@@ -38,7 +38,7 @@ sealed class BooksState : State {
     data class BooksError(val message: String) : BooksState()
 }
 
-sealed class BooksIntent : Intent {
+sealed class BooksIntent : StateIntent {
     object Load : BooksIntent()
     class Success(val books: List<Book>) : BooksIntent()
     class Failure(val message: String) : BooksIntent()
