@@ -1,8 +1,8 @@
-package com.genaku.reduce.sms
+package com.genaku.reduce
 
 import kotlinx.coroutines.CoroutineScope
 
-interface IStateUseCase {
+interface JobSwitcher {
     fun start(scope: CoroutineScope)
     fun stop()
 }

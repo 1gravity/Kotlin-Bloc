@@ -15,7 +15,7 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     private val performer: Performer<A, C>?,
     private val suspendPerformer: SuspendPerformer<A, C>?,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Knot<S, C>, KnotState<S> by knotState {
+) : Knot<S, C>, JobSwitcher, KnotState<S> by knotState {
 
     private val _running = AtomicBoolean(false)
 
@@ -25,7 +25,7 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     private var _actionsJob: Job? = null
     private var _reduceJob: Job? = null
 
-    fun start(coroutineScope: CoroutineScope) {
+    override fun start(coroutineScope: CoroutineScope) {
         stop()
         _running.set(true)
         _actionsJob = coroutineScope.observeWith {
@@ -49,7 +49,7 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
         _intentsChannel.offer(intent)
     }
 
-    fun stop() {
+    override fun stop() {
         _running.set(false)
         _actionsJob?.cancel()
         _reduceJob?.cancel()

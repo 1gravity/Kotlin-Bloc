@@ -1,5 +1,6 @@
 package com.genaku.reduce.sms
 
+import com.genaku.reduce.JobSwitcher
 import com.genaku.reduce.StateAction
 import com.genaku.reduce.knot
 import kotlinx.coroutines.CoroutineScope
@@ -7,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlin.coroutines.CoroutineContext
 
-class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : IStateUseCase, IErrorUseCase {
+class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwitcher, IErrorUseCase {
 
     private val errorKnot = knot<ErrorState, ErrorIntent, StateAction> {
         dispatcher(dispatcher)

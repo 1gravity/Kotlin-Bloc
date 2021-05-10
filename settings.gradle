@@ -1,3 +1,4 @@
 include ':reduce'
 include ':app'
 rootProject.name = "Reduce"
+include ':reducex'

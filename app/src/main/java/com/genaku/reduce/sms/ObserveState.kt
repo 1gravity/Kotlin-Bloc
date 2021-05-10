@@ -2,6 +2,7 @@ package com.genaku.reduce.sms
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import java.util.concurrent.atomic.AtomicBoolean

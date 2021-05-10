@@ -3,9 +3,9 @@ package com.genaku.reduce.sms
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.genaku.reduce.R
+import com.genaku.reducex.connectTo
 import com.genaku.reduce.databinding.ActivitySmsBinding
 import org.mym.plog.PLog
 
@@ -19,15 +19,16 @@ class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
         super.onCreate(savedInstanceState)
         observeStates()
         setupButtons()
-        smsUseCase.start(lifecycleScope)
+        smsUseCase.connectTo(lifecycle)
     }
 
     private fun observeStates() {
         observeState(smsUseCase.state) {
-            when(it) {
+            when (it) {
                 SmsState.Exit -> finish()
                 SmsState.SmsConfirmed -> viewBinding.tvSuccess.visibility = View.VISIBLE
-                else -> {}
+                else -> {
+                }
             }
         }
         observeState(smsUseCase.loadingState) {
