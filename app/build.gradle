@@ -37,9 +37,10 @@ android {
 
 dependencies {
 
-//    implementation "com.github.genaku:reduce:master-SNAPSHOT"
-    implementation(project(":reduce"))
-    implementation(project(":reducex"))
+    implementation "com.github.genaku:reduce:0.9.3"
+    implementation "com.github.genaku:reduce:reducex:0.9.3"
+//    implementation(project(":reduce"))
+//    implementation(project(":reducex"))
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'

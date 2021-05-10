@@ -38,10 +38,8 @@ class KnotLifecycleObserver(
         }
         if (stateIsChanged) {
             if (isActive) {
-                println("should be active, start jobs")
                 jobSwitcher.start(lifecycle.coroutineScope)
             } else {
-                println("should be inactive, stop jobs")
                 jobSwitcher.stop()
             }
         }
