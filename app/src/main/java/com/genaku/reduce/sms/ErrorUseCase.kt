@@ -34,8 +34,8 @@ class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwit
         errorKnot.offerIntent(ErrorIntent.ClearError)
     }
 
-    override fun start(scope: CoroutineScope) {
-        errorKnot.start(scope)
+    override fun start(coroutineScope: CoroutineScope) {
+        errorKnot.start(coroutineScope)
     }
 
     override fun stop() {

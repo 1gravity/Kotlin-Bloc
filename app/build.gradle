@@ -37,10 +37,10 @@ android {
 
 dependencies {
 
-    implementation "com.github.genaku.Reduce:reduce-core:0.9.3"
-    implementation "com.github.genaku.Reduce:reduce-ext:0.9.3"
-//    implementation(project(":reduce-core"))
-//    implementation(project(':reduce-ext'))
+//    implementation "com.github.genaku.Reduce:reduce-core:0.9.3"
+//    implementation "com.github.genaku.Reduce:reduce-ext:0.9.3"
+    implementation(project(":reduce-core"))
+    implementation(project(':reduce-ext'))
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'

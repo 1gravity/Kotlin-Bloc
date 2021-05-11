@@ -24,10 +24,10 @@ class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
     override val loadingState: StateFlow<LoadingState>
         get() = loadingKnot.state
 
-    override fun start(scope: CoroutineScope) {
+    override fun start(coroutineScope: CoroutineScope) {
         PLog.d( "start loading use case")
-        loadingKnot.start(scope)
-        errorUseCase.start(scope)
+        loadingKnot.start(coroutineScope)
+        errorUseCase.start(coroutineScope)
     }
 
     override fun stop() {

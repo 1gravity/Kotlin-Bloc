@@ -61,9 +61,9 @@ class SmsUseCase(
         smsKnot.offerIntent(SmsIntent.Cancel)
     }
 
-    override fun start(scope: CoroutineScope) {
-        smsKnot.start(scope)
-        loadingUseCase.start(scope)
+    override fun start(coroutineScope: CoroutineScope) {
+        smsKnot.start(coroutineScope)
+        loadingUseCase.start(coroutineScope)
     }
 
     override fun stop() {
