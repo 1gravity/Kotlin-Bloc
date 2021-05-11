@@ -1,4 +1,4 @@
-include ':reduce'
+include ':reduce-core'
 include ':app'
 rootProject.name = "Reduce"
-include ':reducex'
+include ':reduce-ext'

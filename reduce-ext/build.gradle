@@ -33,10 +33,11 @@ android {
     }
 }
 
-group='com.github.genaku'
+group='com.github.genaku.reduce'
 
 dependencies {
-    implementation "com.github.genaku:reduce:0.9.3"
+//    implementation "com.github.genaku:reduce:0.9.3"
+    implementation(project(":reduce-core"))
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"

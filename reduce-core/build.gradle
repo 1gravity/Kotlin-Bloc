@@ -9,7 +9,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-group='com.github.genaku'
+group='com.github.genaku.reduce'
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
