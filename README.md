@@ -242,7 +242,7 @@ allprojects {
 ```groovy
 dependencies {
     implementation 'com.github.genaku:Reduce:reduce-core:<version>'  // core of Reduce lib
-    implementation 'com.github.genaku:Reduce:reduce-ext:<version>'   // Android extensions to connect reduce knots to activity/fragment
+    implementation 'com.github.genaku:Reduce:reduce-ext:<version>'   // Android extensions to connect reduce knots to activity/fragment lifecycle
 }
 ```
 
