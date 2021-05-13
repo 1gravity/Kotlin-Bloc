@@ -1,12 +1,8 @@
 package com.genaku.reduce
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
-import kotlinx.coroutines.launch
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.CoroutineContext
 
 class KnotImpl<S : State, C : StateIntent, A : StateAction>(
@@ -17,18 +13,15 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Knot<S, C>, JobSwitcher, KnotState<S> by knotState {
 
-    private val _running = AtomicBoolean(false)
-
     private val _intentsChannel = Channel<C>(UNLIMITED)
     private val _actionsChannel = Channel<A>(UNLIMITED)
 
+    private var _intentsJob: Job? = null
     private var _actionsJob: Job? = null
-    private var _reduceJob: Job? = null
 
     override fun start(coroutineScope: CoroutineScope) {
         stop()
-        _running.set(true)
-        _actionsJob = coroutineScope.observeWith {
+        _intentsJob = coroutineScope.observeWith {
             val intent = _intentsChannel.receive()
             val newActions = mutableListOf<A>()
             knotState.changeState { state ->
@@ -38,7 +31,7 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
             }
             newActions.forEach { _actionsChannel.offer(it) }
         }
-        _reduceJob = coroutineScope.observeWith {
+        _actionsJob = coroutineScope.observeWith {
             val action = _actionsChannel.receive()
             val intent = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
             intent?.run { _intentsChannel.offer(intent) }
@@ -50,14 +43,14 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     }
 
     override fun stop() {
-        _running.set(false)
+        _intentsJob?.cancel()
         _actionsJob?.cancel()
-        _reduceJob?.cancel()
     }
 
     private fun CoroutineScope.observeWith(block: suspend () -> Unit) =
         launch(context = dispatcher) {
-            while (_running.get()) {
+            while (true) {
+                ensureActive()
                 block()
             }
         }

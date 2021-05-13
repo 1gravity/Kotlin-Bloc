@@ -29,27 +29,28 @@ abstract class KnotBuilder<S : State, I : StateIntent, A : StateAction> {
             _knotState = value
         }
 
-    /** A section for [I] related declarations. */
+    /** A section for [StateIntent] related declarations. */
     fun reduce(reducer: Reducer<S, I, A>) {
         _reducer = reducer
     }
 
-    /** A section for [A] related declarations. */
+    /** A section for [StateAction] related declarations. */
     fun actions(performer: Performer<A, I>?) {
         _performer = performer
     }
 
+    /** Set coroutine context dispatcher */
     fun dispatcher(dispatcher: CoroutineContext) {
         _dispatcher = dispatcher
     }
 
-    /** Throws [IllegalStateException] with current [S] and given [I] in its message. */
+    /** Throws [IllegalStateException] with current [State] and given [StateIntent] in its message. */
     fun S.unexpected(intent: I): Nothing = error("Unexpected $intent in $this")
 
-    /** Turns [S] into an [Effect] without [A]. */
+    /** Turns [State] into an [Effect] without [StateAction]. */
     val S.stateOnly: Effect<S, A> get() = Effect(this)
 
-    /** Combines [S] and [A] into [Effect]. */
+    /** Combines [State] and [StateAction] into [Effect]. */
     operator fun S.plus(action: A) = Effect(this, listOf(action))
 
     /**

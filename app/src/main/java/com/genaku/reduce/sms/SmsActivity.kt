@@ -2,6 +2,7 @@ package com.genaku.reduce.sms
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.genaku.reduce.R
@@ -11,19 +12,17 @@ import org.mym.plog.PLog
 
 class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
 
-    private val smsUseCase = DI.smsUseCase
-
     private val viewBinding by viewBinding(ActivitySmsBinding::bind)
+    private val viewModel: SmsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeStates()
         setupButtons()
-        smsUseCase.connectTo(lifecycle)
     }
 
     private fun observeStates() {
-        observeState(smsUseCase.state) {
+        observeState(viewModel.smsUseCase.state) {
             when (it) {
                 SmsState.Exit -> finish()
                 SmsState.SmsConfirmed -> viewBinding.tvSuccess.visibility = View.VISIBLE
@@ -31,10 +30,10 @@ class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
                 }
             }
         }
-        observeState(smsUseCase.loadingState) {
+        observeState(viewModel.loadingUseCase.loadingState) {
             progress(it == LoadingState.Active)
         }
-        observeState(smsUseCase.errorState) {
+        observeState(viewModel.loadingUseCase.errorState) {
             PLog.d("error: $it")
             error(it != ErrorState.NoError)
         }
@@ -43,10 +42,10 @@ class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
     private fun setupButtons() {
         with(viewBinding) {
             button.setOnClickListener {
-                smsUseCase.checkSms(edCode.text.toString())
+                viewModel.smsUseCase.checkSms(edCode.text.toString())
             }
             btnCancel.setOnClickListener {
-                smsUseCase.cancel()
+                viewModel.smsUseCase.cancel()
             }
         }
     }

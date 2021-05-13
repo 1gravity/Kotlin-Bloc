@@ -10,7 +10,7 @@ class EasyCoroutineKnotBuilder<S : State, C : StateIntent> :
     override fun build(): Knot<S, C> {
         return KnotImpl(
             knotState = _knotState ?: createKnotState(),
-            reducer = checkNotNull(_reducer) { "changes {  } must be declared" },
+            reducer = checkNotNull(_reducer) { "reduce {  } must be declared" },
             performer = _performer,
             suspendPerformer = _suspendPerformer,
             dispatcher = _dispatcher

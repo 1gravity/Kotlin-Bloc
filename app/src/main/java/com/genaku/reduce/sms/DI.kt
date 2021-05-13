@@ -2,7 +2,7 @@ package com.genaku.reduce.sms
 
 object DI {
 
-    private val repository = object : ISmsRepository {
+    val repository = object : ISmsRepository {
         override fun checkSms(sms: String): Boolean {
             Thread.sleep(500)
             return sms == "0101"
@@ -10,8 +10,6 @@ object DI {
     }
 
     private val errorUseCase = ErrorUseCase()
-    private val loadingUseCase = LoadingUseCase(errorUseCase)
-
-    val smsUseCase = SmsUseCase(repository, loadingUseCase)
+    val loadingUseCase = LoadingUseCase(errorUseCase)
 
 }

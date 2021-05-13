@@ -8,8 +8,9 @@ import org.mym.plog.PLog
 
 class SmsUseCase(
     private val repository: ISmsRepository,
-    private val loadingUseCase: LoadingUseCase
-) : ISmsUseCase, ILoadingUseCase by loadingUseCase, IErrorUseCase by loadingUseCase {
+    private val loadingUseCase: LoadingUseCase,
+    private val useCaseCoroutineScope : CoroutineScope
+) : ISmsUseCase {
 
     private val smsKnot = easyKnot<SmsState, SmsIntent> {
 
@@ -40,6 +41,8 @@ class SmsUseCase(
                 }
             }
         }
+    }.apply {
+        start(useCaseCoroutineScope)
     }
 
     private fun sendSms(sms: String) = SideEffect {
@@ -59,16 +62,6 @@ class SmsUseCase(
 
     override fun cancel() {
         smsKnot.offerIntent(SmsIntent.Cancel)
-    }
-
-    override fun start(coroutineScope: CoroutineScope) {
-        smsKnot.start(coroutineScope)
-        loadingUseCase.start(coroutineScope)
-    }
-
-    override fun stop() {
-        smsKnot.stop()
-        loadingUseCase.stop()
     }
 }
 
