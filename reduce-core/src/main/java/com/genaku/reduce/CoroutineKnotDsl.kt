@@ -18,6 +18,6 @@ fun <S : State, C : StateIntent> easyKnot(
 @Suppress("UNCHECKED_CAST")
 fun <S : State, C : StateIntent> suspendKnot(
     block: EasySuspendCoroutineKnotBuilder<S, C>.() -> Unit
-): KnotImpl<S, C, SuspendSideEffect<C>> = EasySuspendCoroutineKnotBuilder<S, C>()
+): SuspendKnotImpl<S, C, SuspendSideEffect<C>> = EasySuspendCoroutineKnotBuilder<S, C>()
     .also(block)
-    .build() as KnotImpl<S, C, SuspendSideEffect<C>>
+    .build() as SuspendKnotImpl<S, C, SuspendSideEffect<C>>

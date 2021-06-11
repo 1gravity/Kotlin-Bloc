@@ -104,7 +104,7 @@ class TrafficLight(
         null
     }
 
-    private fun startMovement() = SuspendSideEffect<TrafficIntent> {
+    private suspend fun startMovement() = SuspendSideEffect<TrafficIntent> {
         PLog.d("startMovement")
         if (moving.get()) return@SuspendSideEffect null
         PLog.d("start moving ${moving.get()} ${open.get()}")

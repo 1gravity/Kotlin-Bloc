@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.genaku.reduce.R
-import com.genaku.reducex.connectTo
 import com.genaku.reduce.databinding.ActivitySmsBinding
 import org.mym.plog.PLog
 

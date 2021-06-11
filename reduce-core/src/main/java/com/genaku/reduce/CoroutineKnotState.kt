@@ -12,7 +12,7 @@ class CoroutineKnotState<S : State>(initialState: S) : KnotState<S> {
 
     override val state: StateFlow<S> = _state
 
-    suspend fun changeState(newState: (S) -> S) {
+    suspend fun changeState(newState: suspend (S) -> S) {
         lock.write {
             _state.emit(newState(_state.value))
         }

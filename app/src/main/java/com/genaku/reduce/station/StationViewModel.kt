@@ -17,18 +17,16 @@ class StationViewModel : ViewModel() {
     private val departure = " departure"
 
     private class Vehicle(val name: String, val delay: Long, var num: Int = 0) {
-        override fun toString(): String {
-            return "$name $num"
-        }
+        override fun toString(): String = "$name $num"
     }
 
-    private fun <I : StateIntent> arrive(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
+    private suspend fun <I : StateIntent> arrive(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
         delay(vehicle.delay)
         vehicle.num++
         create(vehicle)
     }
 
-    private fun <I : StateIntent> leave(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
+    private suspend fun <I : StateIntent> leave(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
         delay(vehicle.delay)
         create(vehicle)
     }
