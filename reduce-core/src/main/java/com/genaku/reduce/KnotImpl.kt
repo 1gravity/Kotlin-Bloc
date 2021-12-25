@@ -44,7 +44,9 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
 
     override fun stop() {
         _intentsJob?.cancel()
+        _intentsJob = null
         _actionsJob?.cancel()
+        _actionsJob = null
     }
 
     private fun CoroutineScope.observeWith(block: suspend () -> Unit) =
