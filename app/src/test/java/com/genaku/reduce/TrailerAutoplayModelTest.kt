@@ -37,30 +37,30 @@ class TrailerAutoplayModelTest : FreeSpec() {
 
     init {
         coroutineDispatcher.runBlockingTest {
+
+            val previewPeriod = 2000L
+            val bannerPeriod = 5000L
+            val repo = mockk<TrailerRepository>()
+            val engine = TrailerAutoplayModel(
+                repository = repo,
+                eventTransmitter = eventTransmitter,
+                previewPeriod = previewPeriod,
+                bannerPeriod = bannerPeriod,
+                dispatcher = coroutineDispatcher
+            )
+
             "engine" - {
-                val previewPeriod = 2000L
-                val bannerPeriod = 5000L
-                val repo = mockk<TrailerRepository>()
-                val engine = TrailerAutoplayModel(
-                    repository = repo,
-                    eventTransmitter = eventTransmitter,
-                    previewPeriod = previewPeriod,
-                    bannerPeriod = bannerPeriod,
-                    dispatcher = coroutineDispatcher
-                )
                 eventTransmitter.clear()
+                engine.start(this@runBlockingTest)
 
                 "initial state" - {
-                    engine.start(this@runBlockingTest)
                     engine.state.test {
                         expectItem() shouldBe IdleState
                         cancelAndIgnoreRemainingEvents()
                     }
-                    engine.stop()
                 }
 
                 "happy trailer case" {
-                    engine.start(this@runBlockingTest)
                     coEvery { repo.getTrailerUrl(any()) } returns "url"
                     engine.state.test {
                         engine.startBanner("1")
@@ -74,11 +74,9 @@ class TrailerAutoplayModelTest : FreeSpec() {
                         eventTransmitter.lastEvent shouldBe NextBannerEvent
                         cancelAndIgnoreRemainingEvents()
                     }
-                    engine.stop()
                 }
 
                 "trailer with exception on getting playUrl" {
-                    engine.start(this@runBlockingTest)
                     coEvery { repo.getTrailerUrl(any()) } throws IOException("501")
                     engine.state.test {
                         engine.startBanner("1")
@@ -91,11 +89,9 @@ class TrailerAutoplayModelTest : FreeSpec() {
                         eventTransmitter.lastEvent shouldBe NextBannerEvent
                         cancelAndIgnoreRemainingEvents()
                     }
-                    engine.stop()
                 }
 
                 "repeating start banner while already started" {
-                    engine.start(this@runBlockingTest)
                     coEvery { repo.getTrailerUrl(any()) } returns "url"
                     engine.state.test {
                         engine.startBanner("1")
@@ -112,11 +108,9 @@ class TrailerAutoplayModelTest : FreeSpec() {
                         eventTransmitter.lastEvent shouldBe NextBannerEvent
                         cancelAndIgnoreRemainingEvents()
                     }
-                    engine.stop()
                 }
 
                 "start next banner while another is in preview" {
-                    engine.start(this@runBlockingTest)
                     coEvery { repo.getTrailerUrl(any()) } returns "url"
                     every { repo.stopRequest(any()) } just runs
                     engine.state.test {
@@ -134,11 +128,9 @@ class TrailerAutoplayModelTest : FreeSpec() {
                         eventTransmitter.lastEvent shouldBe NextBannerEvent
                         cancelAndIgnoreRemainingEvents()
                     }
-                    engine.stop()
                 }
 
                 "start next banner while another is in playable state" {
-                    engine.start(this@runBlockingTest)
                     coEvery { repo.getTrailerUrl("1") } throws IOException("501")
                     coEvery { repo.getTrailerUrl("2") } returns "url"
                     every { repo.stopRequest(any()) } just runs
@@ -158,11 +150,9 @@ class TrailerAutoplayModelTest : FreeSpec() {
                         eventTransmitter.lastEvent shouldBe NextBannerEvent
                         cancelAndIgnoreRemainingEvents()
                     }
-                    engine.stop()
                 }
 
                 "start next banner while another is playing" {
-                    engine.start(this@runBlockingTest)
                     coEvery { repo.getTrailerUrl(any()) } returns "url"
                     engine.state.test {
                         engine.startBanner("1")
@@ -181,11 +171,9 @@ class TrailerAutoplayModelTest : FreeSpec() {
                         expectItem() shouldBe IdleState
                         eventTransmitter.lastEvent shouldBe NextBannerEvent
                     }
-                    engine.stop()
                 }
 
                 "2 happy trailer cases" {
-                    engine.start(this@runBlockingTest)
                     coEvery { repo.getTrailerUrl(any()) } returns "url"
                     engine.state.test {
                         engine.startBanner("1")
@@ -208,8 +196,9 @@ class TrailerAutoplayModelTest : FreeSpec() {
                         eventTransmitter.lastEvent shouldBe NextBannerEvent
                         cancelAndIgnoreRemainingEvents()
                     }
-                    engine.stop()
                 }
+
+                engine.stop()
             }
         }
     }
