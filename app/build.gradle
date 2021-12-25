@@ -55,8 +55,7 @@ dependencies {
     implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.4.4'
 //    implementation 'com.github.hoc081098:ViewBindingDelegate:1.0.0-alpha03'
     implementation "com.github.genaku.Android-PLog:plog-core:2.0.3"
-
-    implementation "com.github.genaku.Android-PLog:plog-core:2.0.3"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     testImplementation 'io.kotest:kotest-runner-junit5:4.4.3'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
