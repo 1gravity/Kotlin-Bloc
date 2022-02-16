@@ -14,6 +14,7 @@ android {
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -40,6 +41,8 @@ dependencies {
 //    implementation("com.github.genaku.Reduce:reduce-ext:_")
     implementation(project(":reduce-core"))
     implementation(project(":reduce-ext"))
+
+    implementation("androidx.multidex:multidex:2.0.1")
 
     implementation(Kotlin.stdlib)
     implementation(AndroidX.appCompat)

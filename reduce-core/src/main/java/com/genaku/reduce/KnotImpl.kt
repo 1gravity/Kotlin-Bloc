@@ -19,8 +19,11 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     private var _intentsJob: Job? = null
     private var _actionsJob: Job? = null
 
+    private var _coroutineScope: CoroutineScope? = null
+
     override fun start(coroutineScope: CoroutineScope) {
         stop()
+        _coroutineScope = coroutineScope
         _intentsJob = coroutineScope.observeWith {
             val intent = _intentsChannel.receive()
             val newActions = mutableListOf<A>()
@@ -29,23 +32,25 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
                 newActions.addAll(effect.actions)
                 effect.state
             }
-            newActions.forEach { _actionsChannel.offer(it) }
+            newActions.forEach { _actionsChannel.send(it) }
         }
         _actionsJob = coroutineScope.observeWith {
             val action = _actionsChannel.receive()
             val intent = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
-            intent?.run { _intentsChannel.offer(intent) }
+            intent?.run { _intentsChannel.send(intent) }
         }
     }
 
     override fun offerIntent(intent: C) {
-        _intentsChannel.offer(intent)
+        _coroutineScope?.launch {
+            _intentsChannel.send(intent)
+        }
     }
 
     override fun stop() {
-        _intentsJob?.cancel()
+        _intentsJob?.cancel("")
         _intentsJob = null
-        _actionsJob?.cancel()
+        _actionsJob?.cancel("")
         _actionsJob = null
     }
 

@@ -3,6 +3,8 @@
 /local.properties
 /captures
 
+lint.xml
+
 # Built application files
 *.apk
 *.ap_

@@ -1,11 +1,11 @@
 package com.genaku.reduce
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import org.mym.plog.DebugPrinter
 import org.mym.plog.PLog
 import org.mym.plog.config.PLogConfig
 
-class App: Application() {
+class App: MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
