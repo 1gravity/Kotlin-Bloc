@@ -31,7 +31,7 @@ group = "com.github.genaku.reduce"
 
 dependencies {
     implementation(project(":reduce-core"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.32")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation(Kotlin.stdlib)
+    implementation(KotlinX.coroutines.core)
+    implementation(AndroidX.lifecycle.runtimeKtx)
 }

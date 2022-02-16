@@ -11,7 +11,7 @@ java {
 group = "com.github.genaku.reduce"
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.32")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
+    implementation(Kotlin.stdlib)
+    implementation(KotlinX.coroutines.core)
+    implementation(KotlinX.coroutines.android)
 }
