@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = 31
+    buildToolsVersion = "32.0.0"
 
     defaultConfig {
         applicationId = "com.genaku.reduce"
         minSdk = 19
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 1
         versionName = "1.0"
     }
