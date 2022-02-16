@@ -1,4 +1,0 @@
-include ':reduce-core'
-include ':app'
-rootProject.name = "Reduce"
-include ':reduce-ext'
