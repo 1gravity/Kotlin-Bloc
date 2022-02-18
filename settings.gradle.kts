@@ -1,4 +1,4 @@
-rootProject.name = "Reduce"
+rootProject.name = "Knot"
 
 pluginManagement {
     repositories {
@@ -16,8 +16,8 @@ plugins {
     id("de.fayard.refreshVersions") version "0.40.1"
 }
 
-include (
-    ":reduce-core",
-    ":reduce-ext",
-    ":app"
+include(
+    ":knot-core",
+    ":knot-extension",
+    ":androidApp"
 )
