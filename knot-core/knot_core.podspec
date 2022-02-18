@@ -1,13 +1,13 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'knot_core'
     spec.version                  = '1.0'
-    spec.homepage                 = 'Link to the Shared Module homepage'
+    spec.homepage                 = 'https://github.com/1gravity/Knot'
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = 'Some description for the Shared Module'
+    spec.summary                  = 'Reactive state container library for KMM'
 
-    spec.vendored_frameworks      = "build/cocoapods/framework/knot.framework"
+    spec.vendored_frameworks      = "build/cocoapods/framework/knot-core.framework"
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
 

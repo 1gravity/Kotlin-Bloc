@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -8,16 +10,16 @@ version = "1.0"
 
 kotlin {
     android()
-    iosX64()
-    iosArm64()
+    ios()
+    // Note: iosSimulatorArm64 target requires that all dependencies have M1 support
     iosSimulatorArm64()
 
     cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
+        summary = "Reactive state container library for KMM"
+        homepage = "https://github.com/1gravity/Knot"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "knot"
+            baseName = "knot-core"
         }
     }
     
@@ -25,6 +27,13 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(KotlinX.coroutines.core)
+
+                // Badoo's Reaktive library
+                implementation("com.badoo.reaktive:reaktive:_")
+
+                // https://github.com/michaelbull/kotlin-result
+                implementation("com.michael-bull.kotlin-result:kotlin-result:_")
+                implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
             }
         }
         val commonTest by getting {
@@ -34,24 +43,15 @@ kotlin {
         }
         val androidMain by getting
         val androidTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
-        }
+
+        val iosMain by getting
+        val iosTest by getting
+//        val iosSimulatorArm64Main by getting {
+//            dependsOn(iosMain)
+//        }
+//        val iosSimulatorArm64Test by getting {
+//            dependsOn(iosTest)
+//        }
     }
 }
 

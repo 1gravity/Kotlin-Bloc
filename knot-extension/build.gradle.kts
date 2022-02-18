@@ -39,5 +39,5 @@ dependencies {
     implementation(KotlinX.coroutines.core)
     implementation(AndroidX.lifecycle.runtimeKtx)
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(Testing.junit4)
 }

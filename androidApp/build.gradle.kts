@@ -35,18 +35,21 @@ dependencies {
     implementation(project(":knot-core"))
     implementation(project(":knot-extension"))
 
-    implementation("androidx.multidex:multidex:2.0.1")
-
     implementation(Kotlin.stdlib)
+
+    implementation(KotlinX.coroutines.core)
+    implementation(KotlinX.coroutines.android)
+
+    implementation(AndroidX.multidex)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.core.ktx)
     implementation(AndroidX.lifecycle.viewModelKtx)
     implementation(AndroidX.fragment.ktx)
     implementation(AndroidX.lifecycle.extensions)
-    implementation(Google.android.material)
     implementation(AndroidX.constraintLayout)
-    implementation(KotlinX.coroutines.core)
-    implementation(KotlinX.coroutines.android)
+
+    implementation(Google.android.material)
+
     implementation("com.github.kirich1409:viewbindingpropertydelegate:_")
     implementation("com.github.genaku.Android-PLog:plog-core:_")
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
