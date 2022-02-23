@@ -22,12 +22,9 @@ class SuspendKnotImpl<S : State, C : StateIntent, A : StateAction>(
 
         _intentsJob = coroutineScope.launch(dispatcher) {
             for (intent in _intents) {
-                val newActions = mutableListOf<A>()
                 val effect = reducer(knotState.state.value, intent)
-                newActions.addAll(effect.actions)
-
                 knotState.changeState { effect.state }
-                newActions.forEach { _actions.send(it) }
+                effect.actions.forEach { _actions.send(it) }
             }
         }
 
