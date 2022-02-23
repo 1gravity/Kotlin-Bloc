@@ -13,52 +13,42 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Knot<S, C>, JobSwitcher, KnotState<S> by knotState {
 
-    private val _intentsChannel = Channel<C>(UNLIMITED)
-    private val _actionsChannel = Channel<A>(UNLIMITED)
+    private val _intents = Channel<C>(UNLIMITED)
+    private val _actions = Channel<A>(UNLIMITED)
 
     private var _intentsJob: Job? = null
     private var _actionsJob: Job? = null
 
-    private var _coroutineScope: CoroutineScope? = null
+    override fun offerIntent(intent: C) {
+        _intents.trySend(intent)
+    }
 
     override fun start(coroutineScope: CoroutineScope) {
         stop()
-        _coroutineScope = coroutineScope
-        _intentsJob = coroutineScope.observeWith {
-            val intent = _intentsChannel.receive()
-            val newActions = mutableListOf<A>()
-            knotState.changeState { state ->
+
+        _intentsJob = coroutineScope.launch(dispatcher) {
+            for (intent in _intents) {
+                val newActions = mutableListOf<A>()
+                val state = knotState.state.value
                 val effect = reducer(state, intent)
                 newActions.addAll(effect.actions)
-                effect.state
-            }
-            newActions.forEach { _actionsChannel.send(it) }
-        }
-        _actionsJob = coroutineScope.observeWith {
-            val action = _actionsChannel.receive()
-            val intent = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
-            intent?.run { _intentsChannel.send(intent) }
-        }
-    }
 
-    override fun offerIntent(intent: C) {
-        _coroutineScope?.launch {
-            _intentsChannel.send(intent)
+                knotState.changeState { effect.state }
+                newActions.forEach { _actions.send(it) }
+            }
+        }
+
+        _actionsJob = coroutineScope.launch(dispatcher) {
+            for (action in _actions) {
+                val intent = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
+                intent?.run { _intents.send(intent) }
+            }
         }
     }
 
     override fun stop() {
-        _intentsJob?.cancel("")
-        _intentsJob = null
-        _actionsJob?.cancel("")
-        _actionsJob = null
+        _intentsJob?.cancel("")?.also { _intentsJob = null }
+        _actionsJob?.cancel("")?.also { _actionsJob = null }
     }
 
-    private fun CoroutineScope.observeWith(block: suspend () -> Unit) =
-        launch(context = dispatcher) {
-            while (true) {
-                ensureActive()
-                block()
-            }
-        }
 }

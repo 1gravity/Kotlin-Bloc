@@ -12,7 +12,7 @@ kotlin {
     android()
     ios()
     // Note: iosSimulatorArm64 target requires that all dependencies have M1 support
-    iosSimulatorArm64()
+//    iosSimulatorArm64()
 
     cocoapods {
         summary = "Reactive state container library for KMM"
