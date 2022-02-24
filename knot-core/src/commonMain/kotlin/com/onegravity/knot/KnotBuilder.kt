@@ -4,16 +4,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 /** A configuration builder for a [Knot]. */
-abstract class KnotBuilder<S : State, I : StateIntent, A : StateAction> {
+abstract class KnotBuilder<S : State, Intent, A : StateAction> {
 
     protected var _dispatcher: CoroutineContext = Dispatchers.Default
 
     protected var _initialState: S? = null
     protected var _knotState: CoroutineKnotState<S>? = null
-    protected var _reducer: Reducer<S, I, A>? = null
-    protected var _performer: Performer<A, I>? = null
+    protected var _reducer: Reducer<S, Intent, A>? = null
+    protected var _performer: Performer<A, Intent>? = null
 
-    abstract fun build(): Knot<S, I>
+    abstract fun build(): Knot<S, Intent>
 
     var initialState: S
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
@@ -30,12 +30,12 @@ abstract class KnotBuilder<S : State, I : StateIntent, A : StateAction> {
         }
 
     /** A section for [StateIntent] related declarations. */
-    fun reduce(reducer: Reducer<S, I, A>) {
+    fun reduce(reducer: Reducer<S, Intent, A>) {
         _reducer = reducer
     }
 
     /** A section for [StateAction] related declarations. */
-    fun actions(performer: Performer<A, I>?) {
+    fun actions(performer: Performer<A, Intent>?) {
         _performer = performer
     }
 
@@ -45,7 +45,7 @@ abstract class KnotBuilder<S : State, I : StateIntent, A : StateAction> {
     }
 
     /** Throws [IllegalStateException] with current [State] and given [StateIntent] in its message. */
-    fun S.unexpected(intent: I): Nothing = error("Unexpected $intent in $this")
+    fun S.unexpected(intent: Intent): Nothing = error("Unexpected $intent in $this")
 
     /** Turns [State] into an [Effect] without [StateAction]. */
     val S.toEffect: Effect<S, A> get() = Effect(this)
@@ -102,7 +102,7 @@ abstract class KnotBuilder<S : State, I : StateIntent, A : StateAction> {
      * ```
      */
     inline fun <reified WhenState : S> S.requireState(
-        intent: I, block: WhenState.() -> Effect<S, A>
+        intent: Intent, block: WhenState.() -> Effect<S, A>
     ): Effect<S, A> =
         if (this is WhenState) block()
         else unexpected(intent)

@@ -30,7 +30,7 @@ sealed class StreetState : State {
     override fun toString(): String = value.toString()
 }
 
-sealed class StreetIntent : StateIntent {
+sealed class StreetIntent {
     object Plus : StreetIntent()
     object Minus : StreetIntent()
 }

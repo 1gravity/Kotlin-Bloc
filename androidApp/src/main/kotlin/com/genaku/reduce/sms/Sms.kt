@@ -9,7 +9,7 @@ sealed class SmsState : State {
     object Exit : SmsState()
 }
 
-sealed class SmsIntent : StateIntent {
+sealed class SmsIntent {
     class SendSms(val sms: String) : SmsIntent()
     object Cancel : SmsIntent()
     object WrongSms : SmsIntent()

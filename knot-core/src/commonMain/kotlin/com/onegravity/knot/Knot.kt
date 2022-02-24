@@ -3,13 +3,12 @@ package com.onegravity.knot
 import kotlinx.coroutines.flow.StateFlow
 
 interface State
-interface StateIntent
 interface StateAction
-data class SideEffect<I: StateIntent>(val block: () -> I?): StateAction
-data class SuspendSideEffect<I: StateIntent>(val block: suspend () -> I?): StateAction
+data class SideEffect<out Intent>(val block: () -> Intent?): StateAction
+data class SuspendSideEffect<out Intent>(val block: suspend () -> Intent?): StateAction
 
-interface Knot<S : State, C : StateIntent> : KnotState<S> {
-    fun offerIntent(intent: C)
+interface Knot<S : State, in Intent> : KnotState<S> {
+    fun offerIntent(intent: Intent)
 }
 
 /**

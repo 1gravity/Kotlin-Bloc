@@ -6,16 +6,16 @@ import kotlin.coroutines.CoroutineContext
 /**
  * A configuration builder for suspend [Knot].
  **/
-abstract class SuspendKnotBuilder<S : State, I : StateIntent, A : StateAction> {
+abstract class SuspendKnotBuilder<S : State, Intent, A : StateAction> {
 
     protected var _dispatcher: CoroutineContext = Dispatchers.Default
 
     protected var _initialState: S? = null
     protected var _knotState: CoroutineKnotState<S>? = null
-    protected var _reducer: SuspendReducer<S, I, A>? = null
-    protected var _performer: SuspendPerformer<A, I>? = null
+    protected var _reducer: SuspendReducer<S, Intent, A>? = null
+    protected var _performer: SuspendPerformer<A, Intent>? = null
 
-    abstract fun build(): Knot<S, I>
+    abstract fun build(): Knot<S, Intent>
 
     var initialState: S
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
@@ -32,12 +32,12 @@ abstract class SuspendKnotBuilder<S : State, I : StateIntent, A : StateAction> {
         }
 
     /** A section for [StateIntent] related declarations. */
-    fun reduce(reducer: SuspendReducer<S, I, A>) {
+    fun reduce(reducer: SuspendReducer<S, Intent, A>) {
         _reducer = reducer
     }
 
     /** A section for [StateAction] related declarations. */
-    fun actions(performer: SuspendPerformer<A, I>?) {
+    fun actions(performer: SuspendPerformer<A, Intent>?) {
         _performer = performer
     }
 
@@ -47,7 +47,7 @@ abstract class SuspendKnotBuilder<S : State, I : StateIntent, A : StateAction> {
     }
 
     /** Throws [IllegalStateException] with current [State] and given [StateIntent] in its message. */
-    fun S.unexpected(intent: I): Nothing = error("Unexpected $intent in $this")
+    fun S.unexpected(intent: Intent): Nothing = error("Unexpected $intent in $this")
 
     /** Turns [State] into an [Effect] without [StateAction]. */
     val S.toEffect: Effect<S, A> get() = Effect(this)
@@ -104,7 +104,7 @@ abstract class SuspendKnotBuilder<S : State, I : StateIntent, A : StateAction> {
      * ```
      */
     inline fun <reified WhenState : S> S.requireState(
-        intent: I, block: WhenState.() -> Effect<S, A>
+        intent: Intent, block: WhenState.() -> Effect<S, A>
     ): Effect<S, A> =
         if (this is WhenState) block()
         else unexpected(intent)

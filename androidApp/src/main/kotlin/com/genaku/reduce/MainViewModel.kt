@@ -60,7 +60,7 @@ enum class SampleState : State {
     THIRD
 }
 
-enum class SampleIntent : StateIntent {
+enum class SampleIntent {
     ONE,
     TWO,
     THREE

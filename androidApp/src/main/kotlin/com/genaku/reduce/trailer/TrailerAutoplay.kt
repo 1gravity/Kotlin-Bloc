@@ -23,7 +23,7 @@ data class PlayableState(val id: String, val url: String) : TrailerState()
 data class PlayingState(val id: String, val url: String) : TrailerState()
 
 
-sealed class TrailerIntent(open val id: String) : StateIntent
+sealed class TrailerIntent(open val id: String)
 data class StartTrailerIntent(override val id: String) : TrailerIntent(id)
 data class PlayUrlReadyIntent(override val id: String, val url: String) : TrailerIntent(id)
 data class PlayUrlFailedIntent(override val id: String) : TrailerIntent(id)

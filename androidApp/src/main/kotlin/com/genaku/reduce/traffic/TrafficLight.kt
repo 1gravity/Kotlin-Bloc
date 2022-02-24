@@ -18,7 +18,7 @@ sealed class TrafficState : State {
     }
 }
 
-sealed class TrafficIntent : StateIntent {
+sealed class TrafficIntent {
     object On : TrafficIntent()
     object Off : TrafficIntent()
     object Plus : TrafficIntent()

@@ -1,13 +1,13 @@
 package com.onegravity.knot
 
-class EasyCoroutineKnotBuilder<S : State, C : StateIntent> :
-    KnotBuilder<S, C, SideEffect<C>>() {
+class EasyCoroutineKnotBuilder<S : State, Intent> :
+    KnotBuilder<S, Intent, SideEffect<Intent>>() {
 
-    private val _suspendPerformer: SuspendPerformer<SideEffect<C>, C> = {
+    private val _suspendPerformer: SuspendPerformer<SideEffect<Intent>, Intent> = {
         it.block.invoke()
     }
 
-    override fun build(): Knot<S, C> {
+    override fun build(): Knot<S, Intent> {
         return KnotImpl(
             knotState = _knotState ?: createKnotState(),
             reducer = checkNotNull(_reducer) { "reduce {  } must be declared" },

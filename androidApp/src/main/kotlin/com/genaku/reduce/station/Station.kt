@@ -16,17 +16,17 @@ sealed class StationState : State {
     }
 }
 
-sealed class TrainIntent : StateIntent {
+sealed class TrainIntent {
     class Arrive(val name: String) : TrainIntent()
     class Leave(val name: String) : TrainIntent()
 }
 
-sealed class BusIntent : StateIntent {
+sealed class BusIntent {
     class Arrive(val name: String) : BusIntent()
     class Leave(val name: String) : BusIntent()
 }
 
-sealed class LorryIntent : StateIntent {
+sealed class LorryIntent {
     class Arrive(val name: String) : LorryIntent()
     class Leave(val name: String) : LorryIntent()
 }

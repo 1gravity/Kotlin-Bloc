@@ -1,7 +1,6 @@
 package com.genaku.reduce.books
 
 import com.onegravity.knot.StateAction
-import com.onegravity.knot.StateIntent
 import com.onegravity.knot.State
 
 sealed class BooksState : State {
@@ -17,13 +16,13 @@ sealed class BooksAction : StateAction {
     object Load : BooksAction()
 }
 
-sealed class BooksIntent : StateIntent {
+sealed class BooksIntent {
     object Load : BooksIntent()
     class Success(val books: List<Book>) : BooksIntent()
     class Failure(val message: String) : BooksIntent()
 }
 
-sealed class ClearBookIntent : StateIntent {
+sealed class ClearBookIntent {
     object Clear : ClearBookIntent()
 }
 

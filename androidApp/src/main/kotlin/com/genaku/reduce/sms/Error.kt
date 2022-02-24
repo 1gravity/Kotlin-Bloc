@@ -10,7 +10,7 @@ sealed class ErrorState: State {
     object NoError: ErrorState()
     data class Error(val error: IError): ErrorState()
 }
-sealed class ErrorIntent : StateIntent {
+sealed class ErrorIntent {
     data class SetError(val error: IError): ErrorIntent()
     object ClearError: ErrorIntent()
 }

@@ -1,11 +1,11 @@
 package com.onegravity.knot
 
-class CoroutineKnotBuilder<S : State, C : StateIntent, A : StateAction> :
-    KnotBuilder<S, C, A>() {
+class CoroutineKnotBuilder<S : State, Intent, A : StateAction> :
+    KnotBuilder<S, Intent, A>() {
 
-    private var _suspendPerformer: SuspendPerformer<A, C>? = null
+    private var _suspendPerformer: SuspendPerformer<A, Intent>? = null
 
-    override fun build(): Knot<S, C> {
+    override fun build(): Knot<S, Intent> {
         return KnotImpl(
             knotState = _knotState ?: createKnotState(),
             reducer = checkNotNull(_reducer) { "reduce {  } must be declared" },
@@ -20,7 +20,7 @@ class CoroutineKnotBuilder<S : State, C : StateIntent, A : StateAction> :
     )
 
     /** A section for [A] related declarations. */
-    fun suspendActions(performer: SuspendPerformer<A, C>?) {
+    fun suspendActions(performer: SuspendPerformer<A, Intent>?) {
         _suspendPerformer = performer
     }
 }

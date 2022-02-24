@@ -17,13 +17,13 @@ class StationViewModel : ViewModel() {
         override fun toString(): String = "$name $num"
     }
 
-    private suspend fun <I : StateIntent> arrive(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
+    private suspend fun <Intent> arrive(vehicle: Vehicle, create: (Vehicle) -> Intent) = SuspendSideEffect {
         delay(vehicle.delay)
         vehicle.num++
         create(vehicle)
     }
 
-    private suspend fun <I : StateIntent> leave(vehicle: Vehicle, create: (Vehicle) -> I) = SuspendSideEffect {
+    private suspend fun <Intent> leave(vehicle: Vehicle, create: (Vehicle) -> Intent) = SuspendSideEffect {
         delay(vehicle.delay)
         create(vehicle)
     }

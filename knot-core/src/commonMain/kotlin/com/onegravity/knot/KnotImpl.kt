@@ -5,21 +5,21 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlin.coroutines.CoroutineContext
 
-class KnotImpl<S : State, C : StateIntent, A : StateAction>(
+class KnotImpl<S : State, Intent, A : StateAction>(
     private val knotState: CoroutineKnotState<S>,
-    private val reducer: Reducer<S, C, A>,
-    private val performer: Performer<A, C>?,
-    private val suspendPerformer: SuspendPerformer<A, C>?,
+    private val reducer: Reducer<S, Intent, A>,
+    private val performer: Performer<A, Intent>?,
+    private val suspendPerformer: SuspendPerformer<A, Intent>?,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Knot<S, C>, JobSwitcher, KnotState<S> by knotState {
+) : Knot<S, Intent>, JobSwitcher, KnotState<S> by knotState {
 
-    private val _intents = Channel<C>(UNLIMITED)
+    private val _intents = Channel<Intent>(UNLIMITED)
     private val _actions = Channel<A>(UNLIMITED)
 
     private var _intentsJob: Job? = null
     private var _actionsJob: Job? = null
 
-    override fun offerIntent(intent: C) {
+    override fun offerIntent(intent: Intent) {
         _intents.trySend(intent)
     }
 

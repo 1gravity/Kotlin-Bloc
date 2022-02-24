@@ -4,14 +4,14 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlin.coroutines.CoroutineContext
 
-class SuspendKnotImpl<S : State, C : StateIntent, A : StateAction>(
+class SuspendKnotImpl<S : State, Intent, A : StateAction>(
     private val knotState: CoroutineKnotState<S>,
-    private val reducer: SuspendReducer<S, C, A>,
-    private val performer: SuspendPerformer<A, C>,
+    private val reducer: SuspendReducer<S, Intent, A>,
+    private val performer: SuspendPerformer<A, Intent>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Knot<S, C>, JobSwitcher, KnotState<S> by knotState {
+) : Knot<S, Intent>, JobSwitcher, KnotState<S> by knotState {
 
-    private val _intents = Channel<C>(Channel.UNLIMITED)
+    private val _intents = Channel<Intent>(Channel.UNLIMITED)
     private val _actions = Channel<A>(Channel.UNLIMITED)
 
     private var _intentsJob: Job? = null
@@ -36,7 +36,7 @@ class SuspendKnotImpl<S : State, C : StateIntent, A : StateAction>(
         }
     }
 
-    override fun offerIntent(intent: C) {
+    override fun offerIntent(intent: Intent) {
         _intents.trySend(intent)
     }
 

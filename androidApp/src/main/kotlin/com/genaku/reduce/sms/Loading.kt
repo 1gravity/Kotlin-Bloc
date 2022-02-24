@@ -7,7 +7,7 @@ sealed class LoadingState : State {
     object Idle: LoadingState()
 }
 
-sealed class LoadingIntent : StateIntent {
+sealed class LoadingIntent {
     object Start: LoadingIntent()
     object Stop: LoadingIntent()
 }
