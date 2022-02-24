@@ -1,9 +1,9 @@
 package com.onegravity.knot
 
-class CoroutineKnotBuilder<S : State, Intent, A : StateAction> :
-    KnotBuilder<S, Intent, A>() {
+class CoroutineKnotBuilder<S : State, Intent, SideEffect> :
+    KnotBuilder<S, Intent, SideEffect>() {
 
-    private var _suspendPerformer: SuspendPerformer<A, Intent>? = null
+    private var _suspendPerformer: SuspendPerformer<SideEffect, Intent>? = null
 
     override fun build(): Knot<S, Intent> {
         return KnotImpl(
@@ -19,8 +19,8 @@ class CoroutineKnotBuilder<S : State, Intent, A : StateAction> :
         checkNotNull(_initialState) { "initialState must be defined" }
     )
 
-    /** A section for [A] related declarations. */
-    fun suspendActions(performer: SuspendPerformer<A, Intent>?) {
+    /** SideEffect section for [SideEffect] related declarations. */
+    fun suspendActions(performer: SuspendPerformer<SideEffect, Intent>?) {
         _suspendPerformer = performer
     }
 }

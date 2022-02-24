@@ -8,7 +8,7 @@ import kotlin.coroutines.CoroutineContext
 
 class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwitcher, IErrorUseCase {
 
-    private val errorKnot = knot<ErrorState, ErrorIntent, StateAction> {
+    private val errorKnot = knot<ErrorState, ErrorIntent, Any> {
         dispatcher(dispatcher)
 
         initialState = ErrorState.NoError

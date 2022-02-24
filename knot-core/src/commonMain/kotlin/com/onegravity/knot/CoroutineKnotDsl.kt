@@ -2,11 +2,11 @@ package com.onegravity.knot
 
 /** Creates a [Knot] instance. */
 @Suppress("UNCHECKED_CAST")
-fun <S : State, Intent, A : StateAction> knot(
-    block: CoroutineKnotBuilder<S, Intent, A>.() -> Unit
-): KnotImpl<S, Intent, A> = CoroutineKnotBuilder<S, Intent, A>()
+fun <S : State, Intent, Proposal> knot(
+    block: CoroutineKnotBuilder<S, Intent, Proposal>.() -> Unit
+): KnotImpl<S, Intent, Proposal> = CoroutineKnotBuilder<S, Intent, Proposal>()
     .also(block)
-    .build() as KnotImpl<S, Intent, A>
+    .build() as KnotImpl<S, Intent, Proposal>
 
 @Suppress("UNCHECKED_CAST")
 fun <S : State, Intent> easyKnot(

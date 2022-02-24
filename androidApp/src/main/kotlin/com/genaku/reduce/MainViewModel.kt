@@ -66,7 +66,7 @@ enum class SampleIntent {
     THREE
 }
 
-enum class SampleAction : StateAction {
+enum class SampleAction {
     YES,
     NO
 }

@@ -4,15 +4,15 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlin.coroutines.CoroutineContext
 
-class SuspendKnotImpl<S : State, Intent, A : StateAction>(
+class SuspendKnotImpl<S : State, Intent, SideEffect>(
     private val knotState: CoroutineKnotState<S>,
-    private val reducer: SuspendReducer<S, Intent, A>,
-    private val performer: SuspendPerformer<A, Intent>,
+    private val reducer: SuspendReducer<S, Intent, SideEffect>,
+    private val performer: SuspendPerformer<SideEffect, Intent>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Knot<S, Intent>, JobSwitcher, KnotState<S> by knotState {
 
     private val _intents = Channel<Intent>(Channel.UNLIMITED)
-    private val _actions = Channel<A>(Channel.UNLIMITED)
+    private val _actions = Channel<SideEffect>(Channel.UNLIMITED)
 
     private var _intentsJob: Job? = null
     private var _actionsJob: Job? = null
@@ -24,7 +24,7 @@ class SuspendKnotImpl<S : State, Intent, A : StateAction>(
             for (intent in _intents) {
                 val effect = reducer(knotState.state.value, intent)
                 knotState.changeState { effect.state }
-                effect.actions.forEach { _actions.send(it) }
+                effect.sideEffects.forEach { _actions.send(it) }
             }
         }
 

@@ -3,9 +3,10 @@ package com.onegravity.knot
 import kotlinx.coroutines.flow.StateFlow
 
 interface State
-interface StateAction
-data class SideEffect<out Intent>(val block: () -> Intent?): StateAction
-data class SuspendSideEffect<out Intent>(val block: suspend () -> Intent?): StateAction
+
+// todo this needs to be renamed...
+data class SideEffect<out Intent>(val block: () -> Intent?)
+data class SuspendSideEffect<out Intent>(val block: suspend () -> Intent?)
 
 interface Knot<S : State, in Intent> : KnotState<S> {
     fun offerIntent(intent: Intent)
@@ -31,9 +32,9 @@ typealias Performer<Action, Intent> = (Action) -> Intent?
 typealias SuspendPerformer<Action, Intent> = suspend (Action) -> Intent?
 
 /** Convenience wrapper around [State] and optional [StateAction]s. */
-data class Effect<S : State, A : StateAction>(
+data class Effect<S : State, SideEffect>(
     val state: S,
-    val actions: List<A> = emptyList()
+    val sideEffects: List<SideEffect> = emptyList()
 ) {
-    operator fun plus(action: A): Effect<S, A> = Effect(state, actions + action)
+    operator fun plus(proposal: SideEffect): Effect<S, SideEffect> = Effect(state, sideEffects + proposal)
 }

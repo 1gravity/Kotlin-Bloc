@@ -4,14 +4,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 /** A configuration builder for a [Knot]. */
-abstract class KnotBuilder<S : State, Intent, A : StateAction> {
+abstract class KnotBuilder<S : State, Intent, SideEffect> {
 
     protected var _dispatcher: CoroutineContext = Dispatchers.Default
 
     protected var _initialState: S? = null
     protected var _knotState: CoroutineKnotState<S>? = null
-    protected var _reducer: Reducer<S, Intent, A>? = null
-    protected var _performer: Performer<A, Intent>? = null
+    protected var _reducer: Reducer<S, Intent, SideEffect>? = null
+    protected var _performer: Performer<SideEffect, Intent>? = null
 
     abstract fun build(): Knot<S, Intent>
 
@@ -29,13 +29,13 @@ abstract class KnotBuilder<S : State, Intent, A : StateAction> {
             _knotState = value
         }
 
-    /** A section for [StateIntent] related declarations. */
-    fun reduce(reducer: Reducer<S, Intent, A>) {
+    /** SideEffect section for [StateIntent] related declarations. */
+    fun reduce(reducer: Reducer<S, Intent, SideEffect>) {
         _reducer = reducer
     }
 
-    /** A section for [StateAction] related declarations. */
-    fun actions(performer: Performer<A, Intent>?) {
+    /** SideEffect section for [StateAction] related declarations. */
+    fun actions(performer: Performer<SideEffect, Intent>?) {
         _performer = performer
     }
 
@@ -48,10 +48,10 @@ abstract class KnotBuilder<S : State, Intent, A : StateAction> {
     fun S.unexpected(intent: Intent): Nothing = error("Unexpected $intent in $this")
 
     /** Turns [State] into an [Effect] without [StateAction]. */
-    val S.toEffect: Effect<S, A> get() = Effect(this)
+    val S.toEffect: Effect<S, SideEffect> get() = Effect(this)
 
     /** Combines [State] and [StateAction] into [Effect]. */
-    operator fun S.plus(action: A) = Effect(this, listOf(action))
+    operator fun S.plus(action: SideEffect) = Effect(this, listOf(action))
 
     /**
      * Executes given block if the knot is in the given state or
@@ -75,8 +75,8 @@ abstract class KnotBuilder<S : State, Intent, A : StateAction> {
      * ```
      */
     inline fun <reified WhenState : S> S.whenState(
-        block: WhenState.() -> Effect<S, A>
-    ): Effect<S, A> =
+        block: WhenState.() -> Effect<S, SideEffect>
+    ): Effect<S, SideEffect> =
         if (this is WhenState) block()
         else Effect(this, emptyList())
 
@@ -102,8 +102,8 @@ abstract class KnotBuilder<S : State, Intent, A : StateAction> {
      * ```
      */
     inline fun <reified WhenState : S> S.requireState(
-        intent: Intent, block: WhenState.() -> Effect<S, A>
-    ): Effect<S, A> =
+        intent: Intent, block: WhenState.() -> Effect<S, SideEffect>
+    ): Effect<S, SideEffect> =
         if (this is WhenState) block()
         else unexpected(intent)
 }

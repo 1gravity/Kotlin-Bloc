@@ -8,7 +8,7 @@ import org.mym.plog.PLog
 class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
     IErrorUseCase by errorUseCase {
 
-    private val loadingKnot = knot<LoadingState, LoadingIntent, StateAction> {
+    private val loadingKnot = knot<LoadingState, LoadingIntent, Any> {
         initialState = LoadingState.Idle
 
         reduce { _, intent ->
