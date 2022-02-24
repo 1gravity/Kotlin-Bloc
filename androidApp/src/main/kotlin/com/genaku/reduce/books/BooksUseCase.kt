@@ -14,12 +14,12 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
             knotState = commonState
 
-            reduce { intent ->
+            reduce { state, intent ->
                 when (intent) {
-                    ClearBookIntent.Clear -> when (this) {
-                        is BooksState.Content -> BooksState.Empty.stateOnly
-                        is BooksState.Empty -> stateOnly
-                        else -> unexpected(intent)
+                    ClearBookIntent.Clear -> when (state) {
+                        is BooksState.Content -> BooksState.Empty.toEffect
+                        is BooksState.Empty -> state.toEffect
+                        else -> state.unexpected(intent)
                     }
                 }
             }
@@ -29,21 +29,21 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
         knotState = commonState
 
-        reduce { intent ->
+        reduce { state, intent ->
             when (intent) {
-                BooksIntent.Load -> when (this) {
+                BooksIntent.Load -> when (state) {
                     BooksState.Empty,
                     is BooksState.Content,
                     is BooksState.BooksError -> BooksState.Loading + BooksAction.Load
-                    else -> stateOnly
+                    else -> state.toEffect
                 }
-                is BooksIntent.Success -> when (this) {
-                    BooksState.Loading -> BooksState.Content(intent.books).stateOnly
-                    else -> unexpected(intent)
+                is BooksIntent.Success -> when (state) {
+                    BooksState.Loading -> BooksState.Content(intent.books).toEffect
+                    else -> state.unexpected(intent)
                 }
-                is BooksIntent.Failure ->  when (this) {
-                    BooksState.Loading -> BooksState.BooksError(intent.message).stateOnly
-                    else -> unexpected(intent)
+                is BooksIntent.Failure ->  when (state) {
+                    BooksState.Loading -> BooksState.BooksError(intent.message).toEffect
+                    else -> state.unexpected(intent)
                 }
             }
         }

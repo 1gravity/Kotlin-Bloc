@@ -28,8 +28,7 @@ class KnotImpl<S : State, C : StateIntent, A : StateAction>(
 
         _intentsJob = coroutineScope.launch(dispatcher) {
             for (intent in _intents) {
-                val state = knotState.state.value
-                val effect = reducer(state, intent)
+                val effect = reducer(knotState.state.value, intent)
                 knotState.changeState { effect.state }
                 effect.actions.forEach { _actions.send(it) }
             }

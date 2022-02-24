@@ -13,10 +13,10 @@ class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwit
 
         initialState = ErrorState.NoError
 
-        reduce { intent ->
+        reduce { _, intent ->
             when (intent) {
-                ErrorIntent.ClearError -> ErrorState.NoError.stateOnly
-                is ErrorIntent.SetError -> ErrorState.Error(intent.error).stateOnly
+                ErrorIntent.ClearError -> ErrorState.NoError.toEffect
+                is ErrorIntent.SetError -> ErrorState.Error(intent.error).toEffect
             }
         }
     }

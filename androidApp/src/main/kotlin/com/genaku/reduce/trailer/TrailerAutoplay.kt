@@ -54,8 +54,8 @@ class TrailerAutoplayModel(
 
         initialState = IdleState
 
-        reduce { intent ->
-            when (this) {
+        reduce { state, intent ->
+            when (state) {
                 IdleState -> when (intent) {
                     is StartTrailerIntent -> {
                         PreviewState(
@@ -63,94 +63,94 @@ class TrailerAutoplayModel(
                             ""
                         ) + restartTimers(intent.id) + getPlayUrl(intent.id)
                     }
-                    else -> this.stateOnly
+                    else -> state.toEffect
                 }
 
                 is PreviewState -> when (intent) {
-                    is StartTrailerIntent -> if (this.isSameTrailer(intent)) {
-                        this.stateOnly
+                    is StartTrailerIntent -> if (state.isSameTrailer(intent)) {
+                        state.toEffect
                     } else {
                         PreviewState(
                             intent.id,
                             ""
-                        ) + restartTimers(intent.id) + stopLoadUrl(this.id) + getPlayUrl(intent.id)
+                        ) + restartTimers(intent.id) + stopLoadUrl(state.id) + getPlayUrl(intent.id)
                     }
-                    is PlayUrlReadyIntent -> if (this.isSameTrailer(intent)) {
-                        PreviewState(intent.id, intent.url).stateOnly
+                    is PlayUrlReadyIntent -> if (state.isSameTrailer(intent)) {
+                        PreviewState(intent.id, intent.url).toEffect
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
-                    is PlayUrlFailedIntent -> this.stateOnly
-                    is PreviewTimeIsFinishedIntent -> if (this.isSameTrailer(intent)) {
-                        if (this.url.isNotBlank()) {
-                            PlayingState(this.id, this.url).stateOnly
+                    is PlayUrlFailedIntent -> state.toEffect
+                    is PreviewTimeIsFinishedIntent -> if (state.isSameTrailer(intent)) {
+                        if (state.url.isNotBlank()) {
+                            PlayingState(state.id, state.url).toEffect
                         } else {
-                            PlayableState(this.id, this.url).stateOnly
+                            PlayableState(state.id, state.url).toEffect
                         }
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
-                    is BannerTimeIsFinishedIntent -> if (this.isSameTrailer(intent)) {
+                    is BannerTimeIsFinishedIntent -> if (state.isSameTrailer(intent)) {
                         IdleState + nextBanner()
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
-                    is TrailerIsFinishedIntent -> if (this.isSameTrailer(intent)) {
+                    is TrailerIsFinishedIntent -> if (state.isSameTrailer(intent)) {
                         IdleState + nextBanner()
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
                 }
 
                 is PlayableState -> when (intent) {
-                    is StartTrailerIntent -> if (this.isSameTrailer(intent)) {
-                        this.stateOnly
+                    is StartTrailerIntent -> if (state.isSameTrailer(intent)) {
+                        state.toEffect
                     } else {
                         PreviewState(
                             intent.id,
                             ""
-                        ).stateOnly + restartTimers(intent.id) + getPlayUrl(intent.id)
+                        ).toEffect + restartTimers(intent.id) + getPlayUrl(intent.id)
                     }
-                    is PlayUrlReadyIntent -> if (this.isSameTrailer(intent)) {
-                        PlayableState(this.id, intent.url).stateOnly
+                    is PlayUrlReadyIntent -> if (state.isSameTrailer(intent)) {
+                        PlayableState(state.id, intent.url).toEffect
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
-                    is PlayUrlFailedIntent -> this.stateOnly
+                    is PlayUrlFailedIntent -> state.toEffect
                     is PreviewTimeIsFinishedIntent -> {
-                        if (this.url.isNotBlank()) {
-                            PlayingState(this.id, this.url) + stopTimers()
+                        if (state.url.isNotBlank()) {
+                            PlayingState(state.id, state.url) + stopTimers()
                         } else {
-                            this.stateOnly
+                            state.toEffect
                         }
                     }
-                    is BannerTimeIsFinishedIntent -> if (this.isSameTrailer(intent)) {
+                    is BannerTimeIsFinishedIntent -> if (state.isSameTrailer(intent)) {
                         IdleState + nextBanner()
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
-                    is TrailerIsFinishedIntent -> if (this.isSameTrailer(intent)) {
+                    is TrailerIsFinishedIntent -> if (state.isSameTrailer(intent)) {
                         IdleState + nextBanner()
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
                 }
 
                 is PlayingState -> when (intent) {
-                    is StartTrailerIntent -> if (this.isSameTrailer(intent)) {
-                        this.stateOnly
+                    is StartTrailerIntent -> if (state.isSameTrailer(intent)) {
+                        state.toEffect
                     } else {
                         PreviewState(
                             intent.id,
                             ""
-                        ) + stopTrailer(this.id) + restartTimers(intent.id) + getPlayUrl(intent.id)
+                        ) + stopTrailer(state.id) + restartTimers(intent.id) + getPlayUrl(intent.id)
                     }
-                    is TrailerIsFinishedIntent -> if (this.isSameTrailer(intent)) {
+                    is TrailerIsFinishedIntent -> if (state.isSameTrailer(intent)) {
                         IdleState + nextBanner()
                     } else {
-                        this.stateOnly
+                        state.toEffect
                     }
-                    else -> this.stateOnly
+                    else -> state.toEffect
                 }
             }
         }

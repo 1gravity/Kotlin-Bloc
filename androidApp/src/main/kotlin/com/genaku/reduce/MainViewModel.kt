@@ -15,11 +15,11 @@ class MainViewModel : ViewModel() {
 
         knotState = commonState
 
-        reduce { intent ->
+        reduce { state, intent ->
             when (intent) {
-                SampleIntent.ONE -> stateOnly
+                SampleIntent.ONE -> state.toEffect
                 SampleIntent.TWO -> SampleState.SECOND + SampleAction.YES + SampleAction.NO
-                SampleIntent.THREE -> stateOnly
+                SampleIntent.THREE -> state.toEffect
             }
         }
 

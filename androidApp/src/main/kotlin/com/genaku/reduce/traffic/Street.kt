@@ -42,16 +42,16 @@ class Street(private val delay: Long) {
     private val knot = easyKnot<StreetState, StreetIntent> {
         initialState = StreetState.Empty
 
-        reduce { intent ->
+        reduce { state, intent ->
             PLog.d("intent $this ${intent.javaClass.simpleName}")
-            when (this) {
+            when (state) {
                 StreetState.Empty -> when (intent) {
-                    StreetIntent.Minus -> stateOnly
+                    StreetIntent.Minus -> state.toEffect
                     StreetIntent.Plus -> StreetState.Traffic(1) + outStreet()
                 }
                 is StreetState.Traffic -> when (intent) {
-                    StreetIntent.Minus -> (this - 1).stateOnly
-                    StreetIntent.Plus -> this + 1 + outStreet()
+                    StreetIntent.Minus -> (state - 1).toEffect
+                    StreetIntent.Plus -> state + 1 + outStreet()
                 }
             }
         }

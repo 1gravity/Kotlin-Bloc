@@ -20,10 +20,10 @@ interface KnotState<S : State> {
 }
 
 /** A function accepting the `State` and a `Intent` and returning a new `State` with `Actions`. */
-typealias Reducer<State, Intent, Action> = State.(intent: Intent) -> Effect<State, Action>
+typealias Reducer<State, Intent, Action> = (state: State, intent: Intent) -> Effect<State, Action>
 
 /** A suspend function accepting the `State` and a `Intent` and returning a new `State` with `Actions`. */
-typealias SuspendReducer<State, Intent, Action> = suspend State.(intent: Intent) -> Effect<State, Action>
+typealias SuspendReducer<State, Intent, Action> = suspend (state: State, intent: Intent) -> Effect<State, Action>
 
 /** A function used for performing given `Action` and emitting resulting `Intent`. */
 typealias Performer<Action, Intent> = (Action) -> Intent?

@@ -50,7 +50,7 @@ abstract class SuspendKnotBuilder<S : State, I : StateIntent, A : StateAction> {
     fun S.unexpected(intent: I): Nothing = error("Unexpected $intent in $this")
 
     /** Turns [State] into an [Effect] without [StateAction]. */
-    val S.stateOnly: Effect<S, A> get() = Effect(this)
+    val S.toEffect: Effect<S, A> get() = Effect(this)
 
     /** Combines [State] and [StateAction] into [Effect]. */
     operator fun S.plus(action: A) = Effect(this, listOf(action))

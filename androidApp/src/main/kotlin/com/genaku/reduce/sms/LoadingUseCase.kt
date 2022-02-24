@@ -11,11 +11,11 @@ class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
     private val loadingKnot = knot<LoadingState, LoadingIntent, StateAction> {
         initialState = LoadingState.Idle
 
-        reduce { intent ->
+        reduce { _, intent ->
             PLog.d( "loading intent $intent")
             when (intent) {
-                LoadingIntent.Start -> LoadingState.Active.stateOnly
-                LoadingIntent.Stop -> LoadingState.Idle.stateOnly
+                LoadingIntent.Start -> LoadingState.Active.toEffect
+                LoadingIntent.Stop -> LoadingState.Idle.toEffect
             }
         }
     }

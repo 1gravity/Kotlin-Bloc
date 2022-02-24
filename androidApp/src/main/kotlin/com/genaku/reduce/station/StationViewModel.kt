@@ -33,7 +33,7 @@ class StationViewModel : ViewModel() {
 
         val bus = Vehicle("Bus", 800)
 
-        reduce { intent ->
+        reduce { _, intent ->
             when (intent) {
                 is BusIntent.Arrive -> StationState.Bus(intent.name + arrive) +
                         leave(bus) { BusIntent.Leave("$it") }
@@ -48,7 +48,7 @@ class StationViewModel : ViewModel() {
 
         val train = Vehicle("Train", 600)
 
-        reduce { intent ->
+        reduce { _, intent ->
             when (intent) {
                 is TrainIntent.Arrive -> StationState.Train(intent.name + arrive) +
                         leave(train) { TrainIntent.Leave("$it") }
@@ -62,7 +62,7 @@ class StationViewModel : ViewModel() {
         knotState = stationState
         val lorry = Vehicle("Lorry", 250)
 
-        reduce { intent ->
+        reduce { _, intent ->
             when (intent) {
                 is LorryIntent.Arrive -> StationState.Lorry(intent.name + arrive) +
                         leave(lorry) { LorryIntent.Leave("$it") }

@@ -45,20 +45,20 @@ class TrafficLight(
 
         dispatcher(Dispatchers.IO)
 
-        reduce { intent ->
+        reduce { state, intent ->
             PLog.d("intent $intent for state $this")
             when (intent) {
                 TrafficIntent.Minus -> {
                     if (cars > 0) {
                         cars--
-                        this + startMovement()
+                        state + startMovement()
                     } else {
-                        stateOnly
+                        state.toEffect
                     }
                 }
                 TrafficIntent.Plus -> {
                     cars++
-                    this + startMovement()
+                    state + startMovement()
                 }
                 TrafficIntent.Off -> TrafficState.Off + close()
                 TrafficIntent.On -> TrafficState.On + open() + startMovement()
