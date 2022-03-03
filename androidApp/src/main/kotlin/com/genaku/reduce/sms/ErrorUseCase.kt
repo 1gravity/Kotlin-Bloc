@@ -15,8 +15,8 @@ class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwit
 
         reduce { _, intent ->
             when (intent) {
-                ErrorIntent.ClearError -> ErrorState.NoError.toEffect
-                is ErrorIntent.SetError -> ErrorState.Error(intent.error).toEffect
+                ErrorIntent.ClearError -> ErrorState.NoError.asEffect
+                is ErrorIntent.SetError -> ErrorState.Error(intent.error).asEffect
             }
         }
     }

@@ -3,6 +3,7 @@ package com.genaku.reduce.station
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.onegravity.knot.*
+import com.onegravity.knot.state.CoroutineKnotState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 

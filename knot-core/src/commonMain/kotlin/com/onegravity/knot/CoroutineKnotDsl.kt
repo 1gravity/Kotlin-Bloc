@@ -1,10 +1,14 @@
 package com.onegravity.knot
 
+import com.onegravity.knot.builder.CoroutineKnotBuilder
+import com.onegravity.knot.builder.EasyCoroutineKnotBuilder
+import com.onegravity.knot.builder.EasySuspendCoroutineKnotBuilder
+
 /** Creates a [Knot] instance. */
 @Suppress("UNCHECKED_CAST")
-fun <S : State, Intent, Proposal> knot(
+fun <State, Intent, Proposal> knot(
     block: CoroutineKnotBuilder<S, Intent, Proposal>.() -> Unit
-): KnotImpl<S, Intent, Proposal> = CoroutineKnotBuilder<S, Intent, Proposal>()
+): KnotImpl<State, Intent, Proposal> = CoroutineKnotBuilder<S, Intent, Proposal>()
     .also(block)
     .build() as KnotImpl<S, Intent, Proposal>
 

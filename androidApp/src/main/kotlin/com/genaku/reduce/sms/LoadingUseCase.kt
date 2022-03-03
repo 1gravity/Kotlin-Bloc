@@ -14,8 +14,8 @@ class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
         reduce { _, intent ->
             PLog.d( "loading intent $intent")
             when (intent) {
-                LoadingIntent.Start -> LoadingState.Active.toEffect
-                LoadingIntent.Stop -> LoadingState.Idle.toEffect
+                LoadingIntent.Start -> LoadingState.Active.asEffect
+                LoadingIntent.Stop -> LoadingState.Idle.asEffect
             }
         }
     }

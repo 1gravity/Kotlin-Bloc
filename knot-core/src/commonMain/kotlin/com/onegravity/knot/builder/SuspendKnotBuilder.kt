@@ -1,17 +1,21 @@
-package com.onegravity.knot
+package com.onegravity.knot.builder
 
+import com.onegravity.knot.*
+import com.onegravity.knot.state.CoroutineKnotState
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
-/** A configuration builder for a [Knot]. */
-abstract class KnotBuilder<S : State, Intent, SideEffect> {
+/**
+ * A configuration builder for suspend [Knot].
+ **/
+abstract class SuspendKnotBuilder<S : State, Intent, SideEffect> {
 
     protected var _dispatcher: CoroutineContext = Dispatchers.Default
 
     protected var _initialState: S? = null
     protected var _knotState: CoroutineKnotState<S>? = null
-    protected var _reducer: Reducer<S, Intent, SideEffect>? = null
-    protected var _performer: Performer<SideEffect, Intent>? = null
+    protected var _reducer: SuspendReducer<S, Intent, SideEffect>? = null
+    protected var _performer: SuspendPerformer<SideEffect, Intent>? = null
 
     abstract fun build(): Knot<S, Intent>
 
@@ -30,12 +34,12 @@ abstract class KnotBuilder<S : State, Intent, SideEffect> {
         }
 
     /** SideEffect section for [StateIntent] related declarations. */
-    fun reduce(reducer: Reducer<S, Intent, SideEffect>) {
+    fun reduce(reducer: SuspendReducer<S, Intent, SideEffect>) {
         _reducer = reducer
     }
 
     /** SideEffect section for [StateAction] related declarations. */
-    fun actions(performer: Performer<SideEffect, Intent>?) {
+    fun actions(performer: SuspendPerformer<SideEffect, Intent>?) {
         _performer = performer
     }
 

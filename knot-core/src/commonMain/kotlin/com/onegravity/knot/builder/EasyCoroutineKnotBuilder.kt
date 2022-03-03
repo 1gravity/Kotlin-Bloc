@@ -1,4 +1,8 @@
-package com.onegravity.knot
+package com.onegravity.knot.builder
+
+import com.onegravity.knot.*
+import com.onegravity.knot.state.CoroutineKnotState
+import com.onegravity.knot.KnotImpl
 
 class EasyCoroutineKnotBuilder<S : State, Intent> :
     KnotBuilder<S, Intent, SideEffect<Intent>>() {

@@ -1,11 +1,15 @@
-package com.onegravity.knot
+package com.onegravity.knot.builder
 
-class CoroutineKnotBuilder<S : State, Intent, SideEffect> :
-    KnotBuilder<S, Intent, SideEffect>() {
+import com.onegravity.knot.*
+import com.onegravity.knot.state.CoroutineKnotState
+import com.onegravity.knot.KnotImpl
+
+class CoroutineKnotBuilder<State, Intent, SideEffect> :
+    KnotBuilder<State, Intent, SideEffect>() {
 
     private var _suspendPerformer: SuspendPerformer<SideEffect, Intent>? = null
 
-    override fun build(): Knot<S, Intent> {
+    override fun build(): Knot<Intent, State, State, SideEffect> {
         return KnotImpl(
             knotState = _knotState ?: createKnotState(),
             reducer = checkNotNull(_reducer) { "reduce {  } must be declared" },

@@ -1,6 +1,7 @@
 package com.genaku.reduce.books
 
 import com.onegravity.knot.*
+import com.onegravity.knot.state.CoroutineKnotState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
@@ -10,14 +11,14 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     private val commonState = CoroutineKnotState<BooksState>(BooksState.Empty)
 
     private val clearKnot =
-        knot<BooksState, ClearBookIntent, ClearBooksAction> {
+        knot<BooksState, ClearBookIntent, Nothing> {
 
             knotState = commonState
 
             reduce { state, intent ->
                 when (intent) {
                     ClearBookIntent.Clear -> when (state) {
-                        is BooksState.Content -> BooksState.Empty.toEffect
+                        is BooksState.Content -> BooksState.Empty.asEffect
                         is BooksState.Empty -> state.toEffect
                         else -> state.unexpected(intent)
                     }
@@ -38,11 +39,11 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
                     else -> state.toEffect
                 }
                 is BooksIntent.Success -> when (state) {
-                    BooksState.Loading -> BooksState.Content(intent.books).toEffect
+                    BooksState.Loading -> BooksState.Content(intent.books).asEffect
                     else -> state.unexpected(intent)
                 }
                 is BooksIntent.Failure ->  when (state) {
-                    BooksState.Loading -> BooksState.BooksError(intent.message).toEffect
+                    BooksState.Loading -> BooksState.BooksError(intent.message).asEffect
                     else -> state.unexpected(intent)
                 }
             }

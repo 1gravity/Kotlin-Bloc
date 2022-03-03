@@ -1,27 +1,45 @@
 package com.onegravity.knot
 
+import com.onegravity.knot.state.CoroutineKnotState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
+import kotlinx.coroutines.flow.StateFlow
 import kotlin.coroutines.CoroutineContext
 
-class KnotImpl<S : State, Intent, SideEffect>(
-    private val knotState: CoroutineKnotState<S>,
-    private val reducer: Reducer<S, Intent, SideEffect>,
+class KnotImpl<out State, in Action, Model, SideEffect>(
+    private val knotState: CoroutineKnotS   tate<Model>,
+    private val reducer: Reducer<Model, Intent, SideEffect>,
     private val performer: Performer<SideEffect, Intent>?,
     private val suspendPerformer: SuspendPerformer<SideEffect, Intent>?,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Knot<S, Intent>, JobSwitcher, KnotState<S> by knotState {
+) : Knot<State, Action, Model, SideEffect>,
+    JobSwitcher
+{
 
-    private val _intents = Channel<Intent>(UNLIMITED)
+    private val _intents = Channel<Action>(UNLIMITED)
     private val _actions = Channel<SideEffect>(UNLIMITED)
 
     private var _intentsJob: Job? = null
     private var _actionsJob: Job? = null
 
-    override fun offerIntent(intent: Intent) {
-        _intents.trySend(intent)
+    override fun send(value: Action) {
+        _intents.trySend(value)
     }
+
+    override fun receive(receiver: StreamReceiver<State>) {
+        knotState.stream.receive(receiver)
+    }
+
+    override val state: StateFlow<State>
+        get() = TODO("Not yet implemented")
+
+    override val value: Model
+        get() = TODO("Not yet implemented")
+
+//    override fun offerIntent(intent: Intent) {
+//        _intents.trySend(intent)
+//    }
 
     override fun start(coroutineScope: CoroutineScope) {
         stop()
@@ -29,7 +47,7 @@ class KnotImpl<S : State, Intent, SideEffect>(
         _intentsJob = coroutineScope.launch(dispatcher) {
             for (intent in _intents) {
                 val effect = reducer(knotState.state.value, intent)
-                knotState.changeState { effect.state }
+                knotState.changeState { effect.proposal }
                 effect.sideEffects.forEach { _actions.send(it) }
             }
         }

@@ -19,17 +19,17 @@ class SmsUseCase(
             PLog.d("state: ${javaClass.simpleName} intent: ${intent.javaClass.simpleName}")
             when (state) {
                 SmsState.InputSms -> when (intent) {
-                    SmsIntent.Cancel -> SmsState.Exit.toEffect
+                    SmsIntent.Cancel -> SmsState.Exit.asEffect
                     is SmsIntent.SendSms -> SmsState.CheckSms + sendSms(intent.sms)
                     else -> state.unexpected(intent)
                 }
                 SmsState.CheckSms -> when (intent) {
-                    SmsIntent.CorrectSms -> SmsState.SmsConfirmed.toEffect
+                    SmsIntent.CorrectSms -> SmsState.SmsConfirmed.asEffect
                     SmsIntent.WrongSms -> {
                         loadingUseCase.processError(ErrorData("wrong sms"))
-                        SmsState.InputSms.toEffect
+                        SmsState.InputSms.asEffect
                     }
-                    SmsIntent.Cancel -> SmsState.InputSms.toEffect
+                    SmsIntent.Cancel -> SmsState.InputSms.asEffect
                     else -> state.unexpected(intent)
                 }
                 SmsState.Exit -> state.toEffect

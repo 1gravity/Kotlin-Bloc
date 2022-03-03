@@ -24,5 +24,3 @@ sealed class BooksIntent {
 sealed class ClearBookIntent {
     object Clear : ClearBookIntent()
 }
-
-class ClearBooksAction
