@@ -6,22 +6,22 @@ import com.onegravity.knot.builder.EasySuspendCoroutineKnotBuilder
 
 /** Creates a [Knot] instance. */
 @Suppress("UNCHECKED_CAST")
-fun <State, Intent, Proposal> knot(
-    block: CoroutineKnotBuilder<S, Intent, Proposal>.() -> Unit
-): KnotImpl<State, Intent, Proposal> = CoroutineKnotBuilder<S, Intent, Proposal>()
+fun <State, Action, Proposal> knot(
+    block: CoroutineKnotBuilder<State, Action, Proposal>.() -> Unit
+): SimpleKnotImpl<State, Intent, Proposal> = CoroutineKnotBuilder<State, Intent, Proposal>()
     .also(block)
-    .build() as KnotImpl<S, Intent, Proposal>
+    .build() as SimpleKnotImpl<S, Intent, Proposal>
 
 @Suppress("UNCHECKED_CAST")
-fun <S : State, Intent> easyKnot(
-    block: EasyCoroutineKnotBuilder<S, Intent>.() -> Unit
-): KnotImpl<S, Intent, SideEffect<Intent>> = EasyCoroutineKnotBuilder<S, Intent>()
+fun <State, Intent> easyKnot(
+    block: EasyCoroutineKnotBuilder<State, Intent>.() -> Unit
+): SimpleKnotImpl<State, Intent, SideEffect<Intent>> = EasyCoroutineKnotBuilder<State, Intent>()
     .also(block)
-    .build() as KnotImpl<S, Intent, SideEffect<Intent>>
+    .build() as SimpleKnotImpl<State, Intent, SideEffect<Intent>>
 
 @Suppress("UNCHECKED_CAST")
-fun <S : State, Intent> suspendKnot(
-    block: EasySuspendCoroutineKnotBuilder<S, Intent>.() -> Unit
-): SuspendKnotImpl<S, Intent, SuspendSideEffect<Intent>> = EasySuspendCoroutineKnotBuilder<S, Intent>()
+fun <State, Intent> suspendKnot(
+    block: EasySuspendCoroutineKnotBuilder<State, Intent>.() -> Unit
+): SuspendKnotImpl<State, Intent, SuspendSideEffect<Intent>> = EasySuspendCoroutineKnotBuilder<State, Intent>()
     .also(block)
-    .build() as SuspendKnotImpl<S, Intent, SuspendSideEffect<Intent>>
+    .build() as SuspendKnotImpl<State, Intent, SuspendSideEffect<Intent>>

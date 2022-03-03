@@ -2,7 +2,7 @@ package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
 import com.onegravity.knot.state.CoroutineKnotState
-import com.onegravity.knot.KnotImpl
+import com.onegravity.knot.SimpleKnotImpl
 
 class EasyCoroutineKnotBuilder<S : State, Intent> :
     KnotBuilder<S, Intent, SideEffect<Intent>>() {
@@ -12,7 +12,7 @@ class EasyCoroutineKnotBuilder<S : State, Intent> :
     }
 
     override fun build(): Knot<S, Intent> {
-        return KnotImpl(
+        return SimpleKnotImpl(
             knotState = _knotState ?: createKnotState(),
             reducer = checkNotNull(_reducer) { "reduce {  } must be declared" },
             performer = _performer,

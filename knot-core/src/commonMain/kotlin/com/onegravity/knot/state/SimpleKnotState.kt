@@ -1,30 +1,25 @@
 package com.onegravity.knot.state
 
-import com.badoo.reaktive.observable.subscribe
-import com.badoo.reaktive.subject.behavior.BehaviorSubject
-import com.onegravity.knot.StreamReceiver
+import com.onegravity.knot.Effect
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.MutableStateFlow
 
-/**
- * This KnotState serves as value holder for State.
- * It accepts new values and serves them as value and stream.
- */
-class SimpleKnotState<State>(initialState: State) :
-    KnotState<State, State>,
+class SimpleKnotState<Model, SideEffect>(initialState: Model) :
+    KnotState<Model, Effect<Model, SideEffect>>,
     DisposableKnotState() {
 
-    private val stream = BehaviorSubject(initialState)
+    private val state = MutableStateFlow(initialState)
 
-    override fun send(value: State) {
-        stream.onNext(value)
+    override val value: Model
+        get() = state.value
+
+    override fun emit(value: Effect<Model, SideEffect>) {
+        state.tryEmit(value.model)
     }
 
-    override fun receive(receiver: StreamReceiver<State>) {
-        stream
-            .subscribe { state -> receiver.emit(state) }
-            .addDisposable()
+    override suspend fun collect(collector: FlowCollector<Model>): Nothing {
+        state.collect(collector)
     }
-
-    override val value: State
-        get() = stream.value
 
 }
+
