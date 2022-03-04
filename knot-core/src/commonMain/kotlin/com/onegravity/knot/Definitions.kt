@@ -4,14 +4,18 @@ package com.onegravity.knot
 internal data class SideEffect<out Intent>(val block: () -> Intent?)
 internal data class SuspendSideEffect<out Intent>(val block: suspend () -> Intent?)
 
-/** A function accepting an `Action` and a `State` and returning a `Model` with `SideEffects`. */
-typealias Reducer<State, Action, Model, SideEffect> = (state: State, action: Action) -> Effect<Model, SideEffect>
+/** A function accepting an `Event` and a `State` and returning a `Proposal` with `SideEffects`. */
+typealias Reducer<State, Event, Proposal, SideEffect> = (state: State, event: Event) -> Effect<Proposal, SideEffect>
 
-/** A suspend function accepting an `Action` and a `State` and returning a `Model` with `SideEffects`. */
-typealias SuspendReducer<State, Action, Model, SideEffect> = suspend (state: State, intent: Action) -> Effect<Model, SideEffect>
+/** A suspend function accepting an `Event` and a `State` and returning a `Proposal` with `SideEffects`. */
+typealias SuspendReducer<State, Event, Proposal, SideEffect> = suspend (state: State, event: Event) -> Effect<Proposal, SideEffect>
 
-/** A function used for performing given `Action` and emitting resulting `Intent`. */
-typealias Performer<SideEffect, Action> = (SideEffect) -> Action?
+/** A function used for performing given `SideEffect` and emitting resulting `Event`. */
+typealias Executor<SideEffect, Event> = (SideEffect) -> Event?
 
-/** A suspend function used for performing given `Action` and emitting resulting `Intent`. */
-typealias SuspendPerformer<SideEffect, Action> = suspend (SideEffect) -> Action?
+/** A suspend function used for performing given `SideEffect` and emitting resulting `Event`. */
+typealias SuspendExecutor<SideEffect, Event> = suspend (SideEffect) -> Event?
+
+typealias Acceptor<State, Proposal, Model> = (state: State, proposal: Proposal) -> Model
+
+typealias Mapper<Model, State> = (model: Model) -> State

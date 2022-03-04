@@ -1,25 +1,11 @@
 package com.onegravity.knot.state
 
-import com.onegravity.knot.Effect
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.MutableStateFlow
-
-class SimpleKnotState<Model, SideEffect>(initialState: Model) :
-    KnotState<Model, Effect<Model, SideEffect>>,
-    DisposableKnotState() {
-
-    private val state = MutableStateFlow(initialState)
-
-    override val value: Model
-        get() = state.value
-
-    override fun emit(value: Effect<Model, SideEffect>) {
-        state.tryEmit(value.model)
-    }
-
-    override suspend fun collect(collector: FlowCollector<Model>): Nothing {
-        state.collect(collector)
-    }
-
-}
-
+/**
+ * This KnotState only stores the value produced by the Knot without any logic to accept and/or
+ * map from a proposal to a model to state. Whatever the Knot's reducer returns will be streamed
+ * to its consumers (the ui usually) as is.
+ */
+class SimpleKnotState<Model>(initialState: Model) :
+    KnotStateImpl<Model, Model, Model>(
+        initialState, { state, _ -> state }, { it }
+    )

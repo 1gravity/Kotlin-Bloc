@@ -15,4 +15,4 @@ import com.onegravity.knot.KnotFacade
  *     }
  *   }
  */
-interface KnotState<out State, in Action> : KnotFacade<State, Action>
+interface KnotState<out State, in Proposal> : KnotFacade<State, Proposal>

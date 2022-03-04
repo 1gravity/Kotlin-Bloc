@@ -1,21 +1,23 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
-import com.onegravity.knot.state.CoroutineKnotState
+import com.onegravity.knot.state.KnotState
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 /** A configuration builder for a [Knot]. */
-abstract class KnotBuilder<State, Intent, SideEffect> {
-
-    protected var _dispatcher: CoroutineContext = Dispatchers.Default
+abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
 
     protected var _initialState: State? = null
-    protected var _knotState: CoroutineKnotState<State>? = null
-    protected var _reducer: Reducer<State, Intent, SideEffect>? = null
-    protected var _performer: Performer<SideEffect, Intent>? = null
+    protected var _knotState: KnotState<State, Proposal>? = null
+    protected var _reducer: Reducer<State, Event, Proposal, SideEffect>? = null
+    protected var _executor: Executor<SideEffect, Event>? = null
+    protected var _suspendReducer: SuspendReducer<State, Event, Proposal, SideEffect>? = null
+    protected var _suspendExecutor: SuspendExecutor<SideEffect, Event>? = null
+    protected var _dispatcherReduce: CoroutineContext = Dispatchers.Default
+    protected var _dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 
-    abstract fun build(): Knot<Intent, State, State, SideEffect>
+    abstract fun build(): Knot<State, Event, Proposal, SideEffect>
 
     var initialState: State
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
@@ -24,36 +26,58 @@ abstract class KnotBuilder<State, Intent, SideEffect> {
             _initialState = value
         }
 
-    var knotState: CoroutineKnotState<State>
+    var knotState: KnotState<State, Proposal>
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
         get() = throw UnsupportedOperationException()
         set(value) {
             _knotState = value
         }
 
-    /** SideEffect section for [StateIntent] related declarations. */
-    fun reduce(reducer: Reducer<State, Intent, SideEffect>) {
+    /** A section for [Event] related declarations. */
+    fun reduce(reducer: Reducer<State, Event, Proposal, SideEffect>) {
         _reducer = reducer
     }
 
-    /** SideEffect section for [StateAction] related declarations. */
-    fun actions(performer: Performer<SideEffect, Intent>?) {
-        _performer = performer
+    /** A section for [Event] related declarations. */
+    fun suspendReduce(reducer: SuspendReducer<State, Event, Proposal, SideEffect>) {
+        _suspendReducer = reducer
+    }
+
+    /** A section for [Event] related declarations. */
+    fun execute(executor: Executor<SideEffect, Event>?) {
+        _executor = executor
+    }
+
+    /** A section for [Event] related declarations. */
+    fun suspendExecute(executor: SuspendExecutor<SideEffect, Event>?) {
+        _suspendExecutor = executor
     }
 
     /** Set coroutine context dispatcher */
     fun dispatcher(dispatcher: CoroutineContext) {
-        _dispatcher = dispatcher
+        _dispatcherReduce = dispatcher
+        _dispatcherSideEffect = dispatcher
     }
 
-    /** Throws [IllegalStateException] with current [State] and given [StateIntent] in its message. */
-    fun State.unexpected(intent: Intent): Nothing = error("Unexpected $intent in $this")
+    /** Set coroutine context dispatcher for the reduce function */
+    fun dispatcherReduce(dispatcher: CoroutineContext) {
+        _dispatcherReduce = dispatcher
+    }
 
-    /** Turns [State] into an [Effect] without [StateAction]. */
-    val State.asEffect: Effect<State, SideEffect> get() = Effect(this)
+    /** Set coroutine context dispatcher for the execute function */
+    fun dispatcherSideEffect(dispatcher: CoroutineContext) {
+        _dispatcherSideEffect = dispatcher
+    }
 
-    /** Combines [State] and [StateAction] into [Effect]. */
-    operator fun State.plus(action: SideEffect) = Effect(this, listOf(action))
+    // TODO remove this in favor of a result monad
+    /** Throws [IllegalStateException] with current [State] and given [Event] in its message. */
+    fun State.unexpected(action: Event): Nothing = error("Unexpected $action in $this")
+
+    /** Turns [State] into an [Effect] without [SideEffect]. */
+    val State.toEffect: Effect<State, SideEffect> get() = Effect(this)
+
+    /** Combines [State] and [SideEffect] into [Effect]. */
+    operator fun State.plus(sideEffect: SideEffect) = Effect(this, listOf(sideEffect))
 
     /**
      * Executes given block if the knot is in the given state or
@@ -104,8 +128,8 @@ abstract class KnotBuilder<State, Intent, SideEffect> {
      * ```
      */
     inline fun <reified WhenState : State> State.requireState(
-        intent: Intent, block: WhenState.() -> Effect<State, SideEffect>
+        action: Event, block: WhenState.() -> Effect<State, SideEffect>
     ): Effect<State, SideEffect> =
         if (this is WhenState) block()
-        else unexpected(intent)
+        else unexpected(action)
 }
