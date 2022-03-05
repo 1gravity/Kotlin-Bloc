@@ -7,7 +7,6 @@ import com.onegravity.knot.SideEffect
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 
-// todo create a SuspendKnotStateImpl with mapper and acceptor as suspend functions
 open class KnotStateImpl<State, Proposal, Model>(
     initialState: State,
     private val acceptor: Acceptor<State, Proposal, Model>,

@@ -12,8 +12,6 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
     protected var _knotState: KnotState<State, Proposal>? = null
     protected var _reducer: Reducer<State, Event, Proposal, SideEffect>? = null
     protected var _executor: Executor<SideEffect, Event>? = null
-    protected var _suspendReducer: SuspendReducer<State, Event, Proposal, SideEffect>? = null
-    protected var _suspendExecutor: SuspendExecutor<SideEffect, Event>? = null
     protected var _dispatcherReduce: CoroutineContext = Dispatchers.Default
     protected var _dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 
@@ -39,18 +37,8 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
     }
 
     /** A section for [Event] related declarations. */
-    fun suspendReduce(reducer: SuspendReducer<State, Event, Proposal, SideEffect>) {
-        _suspendReducer = reducer
-    }
-
-    /** A section for [Event] related declarations. */
     fun execute(executor: Executor<SideEffect, Event>?) {
         _executor = executor
-    }
-
-    /** A section for [Event] related declarations. */
-    fun suspendExecute(executor: SuspendExecutor<SideEffect, Event>?) {
-        _suspendExecutor = executor
     }
 
     /** Set coroutine context dispatcher */

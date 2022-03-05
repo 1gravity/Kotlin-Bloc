@@ -15,7 +15,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
             knotState = commonState
 
-            reduce { state, intent ->
+            reduce { scope, state, intent ->
                 when (intent) {
                     ClearBookIntent.Clear -> when (state) {
                         is BooksState.Content -> BooksState.Empty.asEffect

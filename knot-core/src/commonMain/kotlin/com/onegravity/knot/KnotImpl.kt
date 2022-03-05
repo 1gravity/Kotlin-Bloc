@@ -10,9 +10,7 @@ import kotlin.coroutines.CoroutineContext
 class KnotImpl<State, Event, Proposal, SideEffect>(
     private val knotState: KnotState<State, Proposal>,
     private val reducer: Reducer<State, Event, Proposal, SideEffect>?,
-    private val suspendReducer: SuspendReducer<State, Event, Proposal, SideEffect>?,
     private val executor: Executor<SideEffect, Event>?,
-    private val suspendExecutor: SuspendExecutor<SideEffect, Event>?,
     private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
     private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 ) : Knot<State, Event, Proposal, SideEffect>,
@@ -40,9 +38,9 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
         stop()
 
         eventsJob = coroutineScope.launch(dispatcherReduce) {
-            for (action in events) {
-                val effect = reducer?.invoke(knotState.value, action) ?: suspendReducer?.invoke(knotState.value, action)
-                effect?.also { effect ->
+            for (event in events) {
+                val effect = reducer?.invoke(coroutineScope, knotState.value, event)
+                if (effect != null) {
                     knotState.emit(effect.proposal)
                     effect.sideEffects.forEach { sideEffects.send(it) }
                 }
@@ -51,8 +49,8 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
         sideEffectJob = coroutineScope.launch(dispatcherSideEffect) {
             for (sideEffect in sideEffects) {
-                val action = executor?.invoke(sideEffect) ?: suspendExecutor?.invoke(sideEffect)
-                action?.run { events.send(action) }
+                val event = executor?.invoke(coroutineScope, sideEffect)
+                if (event != null) events.send(event)
             }
         }
     }

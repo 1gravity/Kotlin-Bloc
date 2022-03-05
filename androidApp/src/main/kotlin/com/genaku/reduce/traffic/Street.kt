@@ -39,7 +39,7 @@ class Street(private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val knot = easyKnot<StreetState, StreetIntent> {
+    private val knot = simpleKnot<StreetState, StreetIntent> {
         initialState = StreetState.Empty
 
         reduce { state, intent ->

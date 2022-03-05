@@ -11,7 +11,7 @@ class SmsUseCase(
     private val useCaseCoroutineScope : CoroutineScope
 ) : ISmsUseCase {
 
-    private val smsKnot = easyKnot<SmsState, SmsIntent> {
+    private val smsKnot = simpleKnot<SmsState, SmsIntent> {
 
         initialState = SmsState.InputSms
 

@@ -1,8 +1,6 @@
 package com.genaku.reduce.books
 
-import com.onegravity.knot.State
-
-sealed class BooksState : State {
+sealed class BooksState {
     object Empty : BooksState()
     object Loading : BooksState()
     data class Content(val books: List<Book>) : BooksState()
