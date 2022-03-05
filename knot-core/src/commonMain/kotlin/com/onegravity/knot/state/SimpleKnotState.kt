@@ -8,6 +8,6 @@ package com.onegravity.knot.state
 class SimpleKnotState<State>(initialState: State) :
     KnotStateImpl<State, State, State>(
         initialState = initialState,
-        acceptor = { state, _ -> state },
+        acceptor = { _, proposal -> proposal },
         mapper = { it }
     )

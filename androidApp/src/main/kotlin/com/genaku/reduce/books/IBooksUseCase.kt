@@ -1,10 +1,10 @@
 package com.genaku.reduce.books
 
+import com.onegravity.knot.Stream
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.StateFlow
 
 interface IBooksUseCase {
-    val state: StateFlow<BooksState>
+    val state: Stream<BooksState>
 
     fun start(coroutineScope: CoroutineScope)
     fun load()

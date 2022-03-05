@@ -1,32 +1,32 @@
 package com.genaku.reduce.books
 
-import com.onegravity.knot.*
-import com.onegravity.knot.state.CoroutineKnotState
+import com.onegravity.knot.knot
+import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.runBlocking
 
 class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
-    private val commonState = CoroutineKnotState<BooksState>(BooksState.Empty)
+    private val commonState = SimpleKnotState<BooksState>(BooksState.Empty)
 
     private val clearKnot =
-        knot<BooksState, ClearBookIntent, Nothing> {
+        knot<BooksState, ClearBookIntent, BooksState, Nothing> {
 
             knotState = commonState
 
-            reduce { scope, state, intent ->
+            reduce { state, intent ->
                 when (intent) {
                     ClearBookIntent.Clear -> when (state) {
-                        is BooksState.Content -> BooksState.Empty.asEffect
-                        is BooksState.Empty -> state.toEffect
+                        is BooksState.Content -> BooksState.Empty.toEffect()
+                        is BooksState.Empty -> state.toEffect()
                         else -> state.unexpected(intent)
                     }
                 }
             }
         }
 
-    private val loadKnot = knot<BooksState, BooksIntent, BooksAction> {
+    private val loadKnot = knot<BooksState, BooksIntent, BooksState, BooksAction> {
 
         knotState = commonState
 
@@ -36,31 +36,32 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
                     BooksState.Empty,
                     is BooksState.Content,
                     is BooksState.BooksError -> BooksState.Loading + BooksAction.Load
-                    else -> state.toEffect
+                    else -> state.toEffect()
                 }
                 is BooksIntent.Success -> when (state) {
-                    BooksState.Loading -> BooksState.Content(intent.books).asEffect
+                    BooksState.Loading -> BooksState.Content(intent.books).toEffect()
                     else -> state.unexpected(intent)
                 }
                 is BooksIntent.Failure ->  when (state) {
-                    BooksState.Loading -> BooksState.BooksError(intent.message).asEffect
+                    BooksState.Loading -> BooksState.BooksError(intent.message).toEffect()
                     else -> state.unexpected(intent)
                 }
             }
         }
 
-        suspendActions { action ->
-            when (action) {
+        execute { sideEffect ->
+            when (sideEffect) {
                 BooksAction.Load -> {
-                    delay(1000)
-                    repository.loadBooks().toIntent()
+                    runBlocking {
+                        delay(1000)
+                        repository.loadBooks().toIntent()
+                    }
                 }
             }
         }
     }
 
-    override val state: StateFlow<BooksState>
-        get() = commonState.state
+    override val state = commonState
 
     override fun start(coroutineScope: CoroutineScope) {
         loadKnot.start(coroutineScope)
@@ -68,11 +69,11 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     }
 
     override fun load() {
-        loadKnot.offerIntent(BooksIntent.Load)
+        loadKnot.emit(BooksIntent.Load)
     }
 
     override fun clear() {
-        clearKnot.offerIntent(ClearBookIntent.Clear)
+        clearKnot.emit(ClearBookIntent.Clear)
     }
 
     private fun IBooksRepository.LoadBooksResult.toIntent() =

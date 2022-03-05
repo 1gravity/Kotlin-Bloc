@@ -6,8 +6,8 @@ import com.onegravity.knot.state.SimpleKnotState
 
 class SimpleKnotBuilderImpl<State, Event> : KnotBuilder<State, Event, State, SideEffect<Event>>() {
 
-    private val easyExecutor: Executor<SideEffect<Event>, Event> = { coroutineScope, sideEffect ->
-        sideEffect.block.invoke(coroutineScope)
+    private val easyExecutor: Executor<SideEffect<Event>, Event> = { sideEffect ->
+        sideEffect.block.invoke()
     }
 
     override fun build(): Knot<State, Event, State, SideEffect<Event>> {

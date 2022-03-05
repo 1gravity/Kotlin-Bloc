@@ -1,9 +1,7 @@
 package com.onegravity.knot.state
 
 import com.onegravity.knot.Acceptor
-import com.onegravity.knot.Effect
 import com.onegravity.knot.Mapper
-import com.onegravity.knot.SideEffect
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -11,8 +9,7 @@ open class KnotStateImpl<State, Proposal, Model>(
     initialState: State,
     private val acceptor: Acceptor<State, Proposal, Model>,
     private val mapper: Mapper<Model, State>
-) : KnotState<State, Proposal>,
-    DisposableKnotState() {
+) : KnotState<State, Proposal> {
 
     private val state = MutableStateFlow(initialState)
 

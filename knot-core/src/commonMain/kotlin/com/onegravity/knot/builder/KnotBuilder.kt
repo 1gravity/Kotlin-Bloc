@@ -62,7 +62,7 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
     fun State.unexpected(action: Event): Nothing = error("Unexpected $action in $this")
 
     /** Turns [State] into an [Effect] without [SideEffect]. */
-    val State.toEffect: Effect<State, SideEffect> get() = Effect(this)
+    fun State.toEffect(): Effect<State, SideEffect> = Effect(this)
 
     /** Combines [State] and [SideEffect] into [Effect]. */
     operator fun State.plus(sideEffect: SideEffect) = Effect(this, listOf(sideEffect))

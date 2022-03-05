@@ -39,7 +39,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
         eventsJob = coroutineScope.launch(dispatcherReduce) {
             for (event in events) {
-                val effect = reducer?.invoke(coroutineScope, knotState.value, event)
+                val effect = reducer?.invoke(knotState.value, event)
                 if (effect != null) {
                     knotState.emit(effect.proposal)
                     effect.sideEffects.forEach { sideEffects.send(it) }
@@ -49,7 +49,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
         sideEffectJob = coroutineScope.launch(dispatcherSideEffect) {
             for (sideEffect in sideEffects) {
-                val event = executor?.invoke(coroutineScope, sideEffect)
+                val event = executor?.invoke(sideEffect)
                 if (event != null) events.send(event)
             }
         }
