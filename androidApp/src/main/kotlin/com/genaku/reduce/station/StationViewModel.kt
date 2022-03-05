@@ -17,13 +17,13 @@ class StationViewModel : ViewModel() {
         override fun toString(): String = "$name $num"
     }
 
-    private suspend fun <Intent> arrive(vehicle: Vehicle, create: (Vehicle) -> Intent) = SideEffect {
+    private suspend fun <Event> arrive(vehicle: Vehicle, create: (Vehicle) -> Event) = SideEffect {
         delay(vehicle.delay)
         vehicle.num++
         create(vehicle)
     }
 
-    private suspend fun <Intent> leave(vehicle: Vehicle, create: (Vehicle) -> Intent) = SideEffect {
+    private suspend fun <Event> leave(vehicle: Vehicle, create: (Vehicle) -> Event) = SideEffect {
         delay(vehicle.delay)
         create(vehicle)
     }
@@ -48,11 +48,11 @@ class StationViewModel : ViewModel() {
 
         val train = Vehicle("Train", 600)
 
-        reduce { _, intent ->
-            when (intent) {
-                is TrainEvent.Arrive -> StationState.Train(intent.name + arrive) +
+        reduce { _, event ->
+            when (event) {
+                is TrainEvent.Arrive -> StationState.Train(event.name + arrive) +
                         leave(train) { TrainEvent.Leave("$it") }
-                is TrainEvent.Leave -> StationState.Train(intent.name + departure) +
+                is TrainEvent.Leave -> StationState.Train(event.name + departure) +
                         arrive(train) { TrainEvent.Arrive("$it") }
             }
         }
@@ -62,11 +62,11 @@ class StationViewModel : ViewModel() {
         knotState = stationState
         val lorry = Vehicle("Lorry", 250)
 
-        reduce { _, intent ->
-            when (intent) {
-                is LorryEvent.Arrive -> StationState.Lorry(intent.name + arrive) +
+        reduce { _, event ->
+            when (event) {
+                is LorryEvent.Arrive -> StationState.Lorry(event.name + arrive) +
                         leave(lorry) { LorryEvent.Leave("$it") }
-                is LorryEvent.Leave -> StationState.Lorry(intent.name + departure) +
+                is LorryEvent.Leave -> StationState.Lorry(event.name + departure) +
                         arrive(lorry) { LorryEvent.Arrive("$it") }
             }
         }

@@ -11,8 +11,8 @@ class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
         knotState = SimpleKnotState(LoadingState.Idle)
         initialState = LoadingState.Idle
 
-        reduce { _, intent ->
-            when (intent) {
+        reduce { _, event ->
+            when (event) {
                 LoadingEvent.Start -> LoadingState.Active.toEffect()
                 LoadingEvent.Stop -> LoadingState.Idle.toEffect()
             }

@@ -73,10 +73,10 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
 
     /**
      * Executes given block if the knot is in the given state or
-     * ignores the intent in any other states.
+     * ignores the event in any other states.
      *
      * ```
-     * reduce<Intent> {
+     * reduce<Event> { state, event ->
      *    whenState<State.Content> {
      *       ...
      *    }
@@ -84,8 +84,8 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
      * ```
      * is a better readable alternative to
      * ```
-     * reduce {
-     *    when(this) {
+     * reduce { state, event ->
+     *    when(state) {
      *       is State.Content -> ...
      *       else -> only
      *    }
@@ -100,21 +100,21 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
 
     /**
      * Executes given block if the knot is in the given state or
-     * throws [IllegalStateException] for the intent in any other state.
+     * throws [IllegalStateException] for the event in any other state.
      *
      * ```
-     * reduce { intent ->
-     *    requireState<State.Content>(intent) {
+     * reduce { state, event ->
+     *    requireState<State.Content>(event) {
      *       ...
      *    }
      * }
      * ```
      * is a better readable alternative to
      * ```
-     * reduce { intent ->
-     *    when(this) {
+     * reduce { state, event ->
+     *    when(state) {
      *       is State.Content -> ...
-     *       else -> unexpected(intent)
+     *       else -> unexpected(event)
      *    }
      * }
      * ```

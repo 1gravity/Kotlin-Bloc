@@ -14,10 +14,10 @@ class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwit
         knotState = SimpleKnotState(ErrorState.NoError)
         initialState = ErrorState.NoError
 
-        reduce { _, intent ->
-            when (intent) {
+        reduce { _, event ->
+            when (event) {
                 ErrorEvent.ClearError -> ErrorState.NoError.toEffect()
-                is ErrorEvent.SetError -> ErrorState.Error(intent.error).toEffect()
+                is ErrorEvent.SetError -> ErrorState.Error(event.error).toEffect()
             }
         }
     }

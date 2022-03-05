@@ -2,7 +2,6 @@ package com.genaku.reduce.traffic
 
 import com.onegravity.knot.*
 import kotlinx.coroutines.CoroutineScope
-import org.mym.plog.PLog
 
 sealed class StreetState {
     object Empty : StreetState()
@@ -42,14 +41,13 @@ class Street(private val delay: Long) {
     private val knot = simpleKnot<StreetState, StreetEvent> {
         initialState = StreetState.Empty
 
-        reduce { state, intent ->
-            PLog.d("intent $this ${intent.javaClass.simpleName}")
+        reduce { state, event ->
             when (state) {
-                StreetState.Empty -> when (intent) {
+                StreetState.Empty -> when (event) {
                     StreetEvent.Minus -> state.toEffect()
                     StreetEvent.Plus -> StreetState.Traffic(1) + outStreet()
                 }
-                is StreetState.Traffic -> when (intent) {
+                is StreetState.Traffic -> when (event) {
                     StreetEvent.Minus -> (state - 1).toEffect()
                     StreetEvent.Plus -> state + 1 + outStreet()
                 }
