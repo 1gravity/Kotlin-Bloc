@@ -48,7 +48,7 @@
 //
 //    private var _scope: CoroutineScope? = null
 //
-//    private val knot = suspendKnot<TrailerState, TrailerIntent> {
+//    private val knot = knot<TrailerState, TrailerIntent> {
 //
 //        dispatcher(dispatcher)
 //
