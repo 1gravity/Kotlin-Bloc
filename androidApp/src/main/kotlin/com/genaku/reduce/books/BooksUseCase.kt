@@ -1,61 +1,59 @@
 package com.genaku.reduce.books
 
+import com.genaku.reduce.books.IBooksRepository.*
 import com.onegravity.knot.knot
 import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
 
     private val commonState = SimpleKnotState<BooksState>(BooksState.Empty)
 
     private val clearKnot =
-        knot<BooksState, ClearBookIntent, BooksState, Nothing> {
+        knot<BooksState, ClearBookEvent, BooksState, Nothing> {
 
             knotState = commonState
 
-            reduce { state, intent ->
-                when (intent) {
-                    ClearBookIntent.Clear -> when (state) {
+            reduce { state, event ->
+                when (event) {
+                    ClearBookEvent.Clear -> when (state) {
                         is BooksState.Content -> BooksState.Empty.toEffect()
                         is BooksState.Empty -> state.toEffect()
-                        else -> state.unexpected(intent)
+                        else -> state.unexpected(event)
                     }
                 }
             }
         }
 
-    private val loadKnot = knot<BooksState, BooksIntent, BooksState, BooksAction> {
+    private val loadKnot = knot<BooksState, BooksEvent, BooksState, BooksSideEffect> {
 
         knotState = commonState
 
-        reduce { state, intent ->
-            when (intent) {
-                BooksIntent.Load -> when (state) {
+        reduce { state, event ->
+            when (event) {
+                BooksEvent.Load -> when (state) {
                     BooksState.Empty,
                     is BooksState.Content,
-                    is BooksState.BooksError -> BooksState.Loading + BooksAction.Load
+                    is BooksState.BooksError -> BooksState.Loading + BooksSideEffect.Load
                     else -> state.toEffect()
                 }
-                is BooksIntent.Success -> when (state) {
-                    BooksState.Loading -> BooksState.Content(intent.books).toEffect()
-                    else -> state.unexpected(intent)
+                is BooksEvent.Success -> when (state) {
+                    BooksState.Loading -> BooksState.Content(event.books).toEffect()
+                    else -> state.unexpected(event)
                 }
-                is BooksIntent.Failure ->  when (state) {
-                    BooksState.Loading -> BooksState.BooksError(intent.message).toEffect()
-                    else -> state.unexpected(intent)
+                is BooksEvent.Failure ->  when (state) {
+                    BooksState.Loading -> BooksState.BooksError(event.message).toEffect()
+                    else -> state.unexpected(event)
                 }
             }
         }
 
         execute { sideEffect ->
             when (sideEffect) {
-                BooksAction.Load -> {
-                    runBlocking {
-                        delay(1000)
-                        repository.loadBooks().toIntent()
-                    }
+                BooksSideEffect.Load -> {
+                    delay(1000)
+                    repository.loadBooks().toEvent()
                 }
             }
         }
@@ -69,20 +67,17 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     }
 
     override fun load() {
-        loadKnot.emit(BooksIntent.Load)
+        loadKnot.emit(BooksEvent.Load)
     }
 
     override fun clear() {
-        clearKnot.emit(ClearBookIntent.Clear)
+        clearKnot.emit(ClearBookEvent.Clear)
     }
 
-    private fun IBooksRepository.LoadBooksResult.toIntent() =
+    private fun LoadBooksResult.toEvent() =
         when (this) {
-            is IBooksRepository.LoadBooksResult.Success ->
-                BooksIntent.Success(books)
-            is IBooksRepository.LoadBooksResult.Failure.Network ->
-                BooksIntent.Failure("Network error. Check Internet connection and try again.")
-            IBooksRepository.LoadBooksResult.Failure.Generic ->
-                BooksIntent.Failure("Generic error, please try again.")
+            is LoadBooksResult.Success -> BooksEvent.Success(books)
+            is LoadBooksResult.Failure.Network -> BooksEvent.Failure("Network error. Check Internet connection and try again.")
+            LoadBooksResult.Failure.Generic -> BooksEvent.Failure("Generic error, please try again.")
         }
 }
