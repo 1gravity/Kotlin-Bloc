@@ -5,6 +5,10 @@ import com.onegravity.knot.state.KnotState
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * TODO create a default _knotState based on initialState
+ */
+
 /** A configuration builder for a [Knot]. */
 abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
 

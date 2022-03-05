@@ -2,6 +2,7 @@ package com.genaku.reduce.books
 
 import com.genaku.reduce.books.IBooksRepository.*
 import com.onegravity.knot.knot
+import com.onegravity.knot.simpleKnot
 import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -11,7 +12,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     private val commonState = SimpleKnotState<BooksState>(BooksState.Empty)
 
     private val clearKnot =
-        knot<BooksState, ClearBookEvent, BooksState, Nothing> {
+        simpleKnot<BooksState, ClearBookEvent> {
 
             knotState = commonState
 
