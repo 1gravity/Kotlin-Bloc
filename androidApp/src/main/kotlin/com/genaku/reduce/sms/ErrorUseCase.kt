@@ -1,7 +1,6 @@
 package com.genaku.reduce.sms
 
 import com.onegravity.knot.*
-import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
@@ -11,7 +10,6 @@ class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwit
     private val errorKnot = simpleKnot<ErrorState, ErrorEvent> {
         dispatcher(dispatcher)
 
-        knotState = SimpleKnotState(ErrorState.NoError)
         initialState = ErrorState.NoError
 
         reduce { _, event ->

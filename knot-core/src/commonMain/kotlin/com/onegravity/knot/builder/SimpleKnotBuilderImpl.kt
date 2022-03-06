@@ -6,13 +6,9 @@ import com.onegravity.knot.state.SimpleKnotState
 
 class SimpleKnotBuilderImpl<State, Event> : KnotBuilder<State, Event, State, SideEffect<Event>>() {
 
-    private val easyExecutor: Executor<SideEffect<Event>, Event> = { sideEffect ->
-        sideEffect.block.invoke()
-    }
-
     override fun build(): Knot<State, Event, State, SideEffect<Event>> {
         return KnotImpl(
-            knotState = _knotState ?: defaultKnotState(),
+            knotState = _knotState ?: easyKnotState,
             reducer = checkNotNull(_reducer) { "reduce {  } must be declared" },
             executor = easyExecutor,
             dispatcherReduce = _dispatcherReduce,
@@ -20,7 +16,12 @@ class SimpleKnotBuilderImpl<State, Event> : KnotBuilder<State, Event, State, Sid
         )
     }
 
-    private fun defaultKnotState() = SimpleKnotState<State>(
-        checkNotNull(_initialState) { "initialState must be defined" }
-    )
+    private val easyKnotState by lazy {
+        SimpleKnotState<State>(checkNotNull(_initialState) { "initialState must be defined" })
+    }
+
+    private val easyExecutor: Executor<SideEffect<Event>, Event> = { sideEffect ->
+        sideEffect.block.invoke()
+    }
+
 }

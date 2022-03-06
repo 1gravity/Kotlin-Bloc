@@ -1,14 +1,13 @@
 package com.genaku.reduce.sms
 
 import com.onegravity.knot.*
-import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.CoroutineScope
 
 class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
     IErrorUseCase by errorUseCase {
 
     private val loadingKnot = simpleKnot<LoadingState, LoadingEvent> {
-        knotState = SimpleKnotState(LoadingState.Idle)
+
         initialState = LoadingState.Idle
 
         reduce { _, event ->

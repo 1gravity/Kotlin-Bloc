@@ -40,8 +40,8 @@ class TrafficLight(
     private var open = AtomicBoolean(false)
     private var moving = AtomicBoolean(false)
 
-    private val knot = knot<TrafficState, TrafficEvent, TrafficState, SideEffect<TrafficEvent>> {
-        knotState = SimpleKnotState(TrafficState.Off)
+    private val knot = simpleKnot<TrafficState, TrafficEvent> {
+
         initialState = TrafficState.Off
 
         dispatcher(Dispatchers.IO)

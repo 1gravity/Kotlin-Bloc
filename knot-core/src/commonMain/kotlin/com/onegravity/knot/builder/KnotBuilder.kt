@@ -5,10 +5,6 @@ import com.onegravity.knot.state.KnotState
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
-/**
- * TODO create a default _knotState based on initialState
- */
-
 /** A configuration builder for a [Knot]. */
 abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
 
@@ -28,7 +24,7 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
             _initialState = value
         }
 
-    var knotState: KnotState<State, Proposal>
+    open var knotState: KnotState<State, Proposal>
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
         get() = throw UnsupportedOperationException()
         set(value) {
