@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Reduce">
 
         <activity
-            android:name=".traffic.TrafficActivity"
+            android:name=".books.BooksActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name=".books.BooksActivity"
+            android:name=".traffic.TrafficActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

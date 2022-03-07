@@ -9,10 +9,8 @@ class SmsUseCase(
     private val useCaseCoroutineScope : CoroutineScope
 ) : ISmsUseCase {
 
-    private val smsKnot = simpleKnot<SmsState, SmsEvent> {
-
+    private val smsKnot = knot<SmsState, SmsEvent> {
         initialState = SmsState.InputSms
-
         reduce { state, event ->
             when (state) {
                 SmsState.InputSms -> when (event) {

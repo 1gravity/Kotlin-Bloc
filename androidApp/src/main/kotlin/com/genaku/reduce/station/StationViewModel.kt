@@ -28,7 +28,7 @@ class StationViewModel : ViewModel() {
         create(vehicle)
     }
 
-    private val busKnot = simpleKnot<StationState, BusEvent> {
+    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>> {
         knotState = stationState
 
         val bus = Vehicle("Bus", 800)
@@ -43,7 +43,7 @@ class StationViewModel : ViewModel() {
         }
     }
 
-    private val trainKnot = simpleKnot<StationState, TrainEvent> {
+    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>> {
         knotState = stationState
 
         val train = Vehicle("Train", 600)
@@ -58,7 +58,7 @@ class StationViewModel : ViewModel() {
         }
     }
 
-    private val lorryKnot = simpleKnot<StationState, LorryEvent> {
+    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>> {
         knotState = stationState
         val lorry = Vehicle("Lorry", 250)
 
@@ -104,7 +104,7 @@ class StationViewModel : ViewModel() {
         case++
     }
 
-    fun stop() {
+    private fun stop() {
         busKnot.stop()
         lorryKnot.stop()
         trainKnot.stop()

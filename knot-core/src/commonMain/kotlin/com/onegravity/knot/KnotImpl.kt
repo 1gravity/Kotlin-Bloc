@@ -13,9 +13,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
     private val executor: Executor<SideEffect, Event>?,
     private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
     private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
-) : Knot<State, Event, Proposal, SideEffect>,
-    JobSwitcher
-{
+) : Knot<State, Event, Proposal, SideEffect>, JobSwitcher {
 
     private val events = Channel<Event>(UNLIMITED)
     private val sideEffects = Channel<SideEffect>(UNLIMITED)
@@ -49,8 +47,10 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
         sideEffectJob = coroutineScope.launch(dispatcherSideEffect) {
             for (sideEffect in sideEffects) {
-                val event = executor?.invoke(sideEffect)
-                if (event != null) events.send(event)
+                when (executor) {
+                    null -> throw IllegalStateException("Side effect created but no executor defined")
+                    else -> executor.invoke(sideEffect)?.also { events.send(it) }
+                }
             }
         }
     }

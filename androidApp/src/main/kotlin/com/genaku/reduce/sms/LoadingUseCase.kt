@@ -6,10 +6,8 @@ import kotlinx.coroutines.CoroutineScope
 class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
     IErrorUseCase by errorUseCase {
 
-    private val loadingKnot = simpleKnot<LoadingState, LoadingEvent> {
-
+    private val loadingKnot = knot<LoadingState, LoadingEvent> {
         initialState = LoadingState.Idle
-
         reduce { _, event ->
             when (event) {
                 LoadingEvent.Start -> LoadingState.Active.toEffect()

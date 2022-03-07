@@ -2,16 +2,11 @@ package com.genaku.reduce.sms
 
 import com.onegravity.knot.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
 
-class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwitcher, IErrorUseCase {
+class ErrorUseCase() : JobSwitcher, IErrorUseCase {
 
-    private val errorKnot = simpleKnot<ErrorState, ErrorEvent> {
-        dispatcher(dispatcher)
-
+    private val errorKnot = knot<ErrorState, ErrorEvent> {
         initialState = ErrorState.NoError
-
         reduce { _, event ->
             when (event) {
                 ErrorEvent.ClearError -> ErrorState.NoError.toEffect()

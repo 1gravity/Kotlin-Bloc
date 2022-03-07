@@ -1,61 +1,14 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
-import com.onegravity.knot.state.KnotState
-import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
 
-/** A configuration builder for a [Knot]. */
-abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
+/** The base interface for all configuration builders for a [Knot]. */
+interface KnotBuilder<State, Event, Proposal, SideEffect> {
 
-    protected var _initialState: State? = null
-    protected var _knotState: KnotState<State, Proposal>? = null
-    protected var _reducer: Reducer<State, Event, Proposal, SideEffect>? = null
-    protected var _executor: Executor<SideEffect, Event>? = null
-    protected var _dispatcherReduce: CoroutineContext = Dispatchers.Default
-    protected var _dispatcherSideEffect: CoroutineContext = Dispatchers.Default
-
-    abstract fun build(): Knot<State, Event, Proposal, SideEffect>
-
-    var initialState: State
-        @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
-        get() = throw UnsupportedOperationException()
-        set(value) {
-            _initialState = value
-        }
-
-    open var knotState: KnotState<State, Proposal>
-        @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
-        get() = throw UnsupportedOperationException()
-        set(value) {
-            _knotState = value
-        }
+    fun build(): Knot<State, Event, Proposal, SideEffect>
 
     /** A section for [Event] related declarations. */
-    fun reduce(reducer: Reducer<State, Event, Proposal, SideEffect>) {
-        _reducer = reducer
-    }
-
-    /** A section for [Event] related declarations. */
-    fun execute(executor: Executor<SideEffect, Event>?) {
-        _executor = executor
-    }
-
-    /** Set coroutine context dispatcher */
-    fun dispatcher(dispatcher: CoroutineContext) {
-        _dispatcherReduce = dispatcher
-        _dispatcherSideEffect = dispatcher
-    }
-
-    /** Set coroutine context dispatcher for the reduce function */
-    fun dispatcherReduce(dispatcher: CoroutineContext) {
-        _dispatcherReduce = dispatcher
-    }
-
-    /** Set coroutine context dispatcher for the execute function */
-    fun dispatcherSideEffect(dispatcher: CoroutineContext) {
-        _dispatcherSideEffect = dispatcher
-    }
+    fun reduce(reducer: Reducer<State, Event, Proposal, SideEffect>)
 
     // TODO remove this in favor of a result monad
     /** Throws [IllegalStateException] with current [State] and given [Event] in its message. */
@@ -67,57 +20,59 @@ abstract class KnotBuilder<State, Event, Proposal, SideEffect> {
     /** Combines [State] and [SideEffect] into [Effect]. */
     operator fun State.plus(sideEffect: SideEffect) = Effect(this, listOf(sideEffect))
 
-    /**
-     * Executes given block if the knot is in the given state or
-     * ignores the event in any other states.
-     *
-     * ```
-     * reduce<Event> { state, event ->
-     *    whenState<State.Content> {
-     *       ...
-     *    }
-     * }
-     * ```
-     * is a better readable alternative to
-     * ```
-     * reduce { state, event ->
-     *    when(state) {
-     *       is State.Content -> ...
-     *       else -> only
-     *    }
-     * }
-     * ```
-     */
-    inline fun <reified WhenState : State> State.whenState(
-        block: WhenState.() -> Effect<State, SideEffect>
-    ): Effect<State, SideEffect> =
-        if (this is WhenState) block()
-        else Effect(this, emptyList())
-
-    /**
-     * Executes given block if the knot is in the given state or
-     * throws [IllegalStateException] for the event in any other state.
-     *
-     * ```
-     * reduce { state, event ->
-     *    requireState<State.Content>(event) {
-     *       ...
-     *    }
-     * }
-     * ```
-     * is a better readable alternative to
-     * ```
-     * reduce { state, event ->
-     *    when(state) {
-     *       is State.Content -> ...
-     *       else -> unexpected(event)
-     *    }
-     * }
-     * ```
-     */
-    inline fun <reified WhenState : State> State.requireState(
-        action: Event, block: WhenState.() -> Effect<State, SideEffect>
-    ): Effect<State, SideEffect> =
-        if (this is WhenState) block()
-        else unexpected(action)
 }
+
+// TODO re-implement this
+///**
+// * Executes given block if the knot is in the given state or
+// * ignores the event in any other states.
+// *
+// * ```
+// * reduce<Event> { state, event ->
+// *    whenState<State.Content> {
+// *       ...
+// *    }
+// * }
+// * ```
+// * is a better readable alternative to
+// * ```
+// * reduce { state, event ->
+// *    when(state) {
+// *       is State.Content -> ...
+// *       else -> only
+// *    }
+// * }
+// * ```
+// */
+//inline fun <reified WhenState : State> State.whenState(
+//    block: WhenState.() -> Effect<State, SideEffect>
+//): Effect<State, SideEffect> =
+//    if (this is WhenState) block()
+//    else Effect(this, emptyList())
+//
+///**
+// * Executes given block if the knot is in the given state or
+// * throws [IllegalStateException] for the event in any other state.
+// *
+// * ```
+// * reduce { state, event ->
+// *    requireState<State.Content>(event) {
+// *       ...
+// *    }
+// * }
+// * ```
+// * is a better readable alternative to
+// * ```
+// * reduce { state, event ->
+// *    when(state) {
+// *       is State.Content -> ...
+// *       else -> unexpected(event)
+// *    }
+// * }
+// * ```
+// */
+//inline fun <reified WhenState : State> State.requireState(
+//    action: Event, block: WhenState.() -> Effect<State, SideEffect>
+//): Effect<State, SideEffect> =
+//    if (this is WhenState) block()
+//    else unexpected(action)

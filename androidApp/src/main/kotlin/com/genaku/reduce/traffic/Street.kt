@@ -2,6 +2,7 @@ package com.genaku.reduce.traffic
 
 import com.onegravity.knot.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 
 sealed class StreetState {
     object Empty : StreetState()
@@ -38,9 +39,8 @@ class Street(private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val knot = simpleKnot<StreetState, StreetEvent> {
+    private val knot = knot<StreetState, StreetEvent> {
         initialState = StreetState.Empty
-
         reduce { state, event ->
             when (state) {
                 StreetState.Empty -> when (event) {
@@ -56,7 +56,7 @@ class Street(private val delay: Long) {
     }
 
     private fun outStreet(): SideEffect<StreetEvent> = SideEffect {
-        Thread.sleep(delay)
+        delay(delay)
         trafficLight?.addCar()
         null
     }

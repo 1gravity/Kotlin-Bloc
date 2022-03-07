@@ -49,9 +49,7 @@
 //    private var _scope: CoroutineScope? = null
 //
 //    private val knot = knot<TrailerState, TrailerIntent> {
-//
-//        dispatcher(dispatcher)
-//
+//        dispatcherReduce = dispatcher
 //        initialState = IdleState
 //
 //        reduce { state, intent ->

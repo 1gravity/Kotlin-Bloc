@@ -10,7 +10,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class ErrorUseCaseTest : FreeSpec({
     val coroutineDispatcher = TestCoroutineDispatcher()
-    val useCase = ErrorUseCase(coroutineDispatcher)
+    val useCase = ErrorUseCase()
     val error = object : IError {
         override val msg: String
             get() = "error"
