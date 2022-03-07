@@ -3,31 +3,31 @@ package com.genaku.reduce
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.onegravity.knot.*
+import com.onegravity.knot.state.SimpleKnotState
 
 class MainViewModel : ViewModel() {
 
-    private val commonState = CoroutineKnotState(SampleState.FIRST)
+    private val commonState = SimpleKnotState(SampleState.FIRST)
 
-    private val knot = knot<SampleState, SampleIntent, SampleAction> {
+    private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect> {
 
         knotState = commonState
 
-        reduce { state, intent ->
-            when (intent) {
-                SampleIntent.ONE -> state.toEffect
-                SampleIntent.TWO -> SampleState.SECOND + SampleAction.YES + SampleAction.NO
-                SampleIntent.THREE -> state.toEffect
+        reduce { state, event ->
+            when (event) {
+                SampleEvent.ONE -> state.toEffect()
+                SampleEvent.TWO -> SampleState.SECOND + SampleSideEffect.YES + SampleSideEffect.NO
+                SampleEvent.THREE -> state.toEffect()
             }
         }
 
-        suspendActions { action ->
+        execute { action ->
             delay(200)
             when (action) {
-                SampleAction.YES -> SampleIntent.THREE
-                SampleAction.NO -> null
+                SampleSideEffect.YES -> SampleEvent.THREE
+                SampleSideEffect.NO -> null
             }
         }
     }
@@ -36,14 +36,13 @@ class MainViewModel : ViewModel() {
         knot.start(viewModelScope)
     }
 
-    val state: StateFlow<SampleState>
-        get() = commonState.state
+    val state: Stream<SampleState> = commonState
 
     fun d() {
         viewModelScope.launch {
             repeat(7) {
-                knot.offerIntent(SampleIntent.ONE)
-                knot.offerIntent(SampleIntent.TWO)
+                knot.emit(SampleEvent.ONE)
+                knot.emit(SampleEvent.TWO)
             }
         }
     }
@@ -54,19 +53,19 @@ class MainViewModel : ViewModel() {
     }
 }
 
-enum class SampleState : State {
+enum class SampleState {
     FIRST,
     SECOND,
     THIRD
 }
 
-enum class SampleIntent {
+enum class SampleEvent {
     ONE,
     TWO,
     THREE
 }
 
-enum class SampleAction {
+enum class SampleSideEffect {
     YES,
     NO
 }

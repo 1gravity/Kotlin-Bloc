@@ -1,50 +1,63 @@
 package com.onegravity.knot
 
+import com.onegravity.knot.state.KnotState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
+import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
-class KnotImpl<S : State, Intent, SideEffect>(
-    private val knotState: CoroutineKnotState<S>,
-    private val reducer: Reducer<S, Intent, SideEffect>,
-    private val performer: Performer<SideEffect, Intent>?,
-    private val suspendPerformer: SuspendPerformer<SideEffect, Intent>?,
-    private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Knot<S, Intent>, JobSwitcher, KnotState<S> by knotState {
+class KnotImpl<State, Event, Proposal, SideEffect>(
+    private val knotState: KnotState<State, Proposal>,
+    private val reducer: Reducer<State, Event, Proposal, SideEffect>?,
+    private val executor: Executor<SideEffect, Event>?,
+    private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
+    private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
+) : Knot<State, Event, Proposal, SideEffect>, JobSwitcher {
 
-    private val _intents = Channel<Intent>(UNLIMITED)
-    private val _actions = Channel<SideEffect>(UNLIMITED)
+    private val events = Channel<Event>(UNLIMITED)
+    private val sideEffects = Channel<SideEffect>(UNLIMITED)
 
-    private var _intentsJob: Job? = null
-    private var _actionsJob: Job? = null
+    private var eventsJob: Job? = null
+    private var sideEffectJob: Job? = null
 
-    override fun offerIntent(intent: Intent) {
-        _intents.trySend(intent)
+    override val value: State
+        get() = knotState.value
+
+    override fun emit(value: Event) {
+        events.trySend(value)
+    }
+
+    override suspend fun collect(collector: FlowCollector<State>): Nothing {
+        knotState.collect(collector)
     }
 
     override fun start(coroutineScope: CoroutineScope) {
         stop()
 
-        _intentsJob = coroutineScope.launch(dispatcher) {
-            for (intent in _intents) {
-                val effect = reducer(knotState.state.value, intent)
-                knotState.changeState { effect.state }
-                effect.sideEffects.forEach { _actions.send(it) }
+        eventsJob = coroutineScope.launch(dispatcherReduce) {
+            for (event in events) {
+                val effect = reducer?.invoke(knotState.value, event)
+                if (effect != null) {
+                    knotState.emit(effect.proposal)
+                    effect.sideEffects.forEach { sideEffects.send(it) }
+                }
             }
         }
 
-        _actionsJob = coroutineScope.launch(dispatcher) {
-            for (action in _actions) {
-                val intent = performer?.invoke(action) ?: suspendPerformer?.invoke(action)
-                intent?.run { _intents.send(intent) }
+        sideEffectJob = coroutineScope.launch(dispatcherSideEffect) {
+            for (sideEffect in sideEffects) {
+                when (executor) {
+                    null -> throw IllegalStateException("Side effect created but no executor defined")
+                    else -> executor.invoke(sideEffect)?.also { events.send(it) }
+                }
             }
         }
     }
 
     override fun stop() {
-        _intentsJob?.cancel("")?.also { _intentsJob = null }
-        _actionsJob?.cancel("")?.also { _actionsJob = null }
+        eventsJob?.cancel("")?.also { eventsJob = null }
+        sideEffectJob?.cancel("")?.also { sideEffectJob = null }
     }
 
 }

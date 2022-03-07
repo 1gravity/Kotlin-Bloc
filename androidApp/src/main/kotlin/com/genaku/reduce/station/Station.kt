@@ -1,8 +1,6 @@
 package com.genaku.reduce.station
 
-import com.onegravity.knot.*
-
-sealed class StationState : State {
+sealed class StationState {
     object Empty : StationState()
     class Train(val name: String) : StationState()
     class Bus(val name: String) : StationState()
@@ -16,17 +14,17 @@ sealed class StationState : State {
     }
 }
 
-sealed class TrainIntent {
-    class Arrive(val name: String) : TrainIntent()
-    class Leave(val name: String) : TrainIntent()
+sealed class TrainEvent {
+    class Arrive(val name: String) : TrainEvent()
+    class Leave(val name: String) : TrainEvent()
 }
 
-sealed class BusIntent {
-    class Arrive(val name: String) : BusIntent()
-    class Leave(val name: String) : BusIntent()
+sealed class BusEvent {
+    class Arrive(val name: String) : BusEvent()
+    class Leave(val name: String) : BusEvent()
 }
 
-sealed class LorryIntent {
-    class Arrive(val name: String) : LorryIntent()
-    class Leave(val name: String) : LorryIntent()
+sealed class LorryEvent {
+    class Arrive(val name: String) : LorryEvent()
+    class Leave(val name: String) : LorryEvent()
 }

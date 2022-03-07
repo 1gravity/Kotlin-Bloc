@@ -31,6 +31,9 @@ kotlin {
                 // Badoo's Reaktive library
                 implementation("com.badoo.reaktive:reaktive:_")
 
+                // Logging
+                implementation(Touchlab.kermit)
+
                 // https://github.com/michaelbull/kotlin-result
                 implementation("com.michael-bull.kotlin-result:kotlin-result:_")
                 implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")

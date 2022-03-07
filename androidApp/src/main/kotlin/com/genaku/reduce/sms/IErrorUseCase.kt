@@ -1,9 +1,9 @@
 package com.genaku.reduce.sms
 
-import kotlinx.coroutines.flow.StateFlow
+import com.onegravity.knot.Stream
 
 interface IErrorUseCase {
-    val errorState: StateFlow<ErrorState>
+    val errorState: Stream<ErrorState>
 
     fun processError(error: IError)
     fun clearError()

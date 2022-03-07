@@ -1,14 +1,14 @@
 package com.genaku.reduce.traffic
 
 import com.onegravity.knot.*
+import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.mym.plog.PLog
 import java.util.concurrent.atomic.AtomicBoolean
 
-sealed class TrafficState : State {
+sealed class TrafficState {
     object On : TrafficState()
     object Off : TrafficState()
 
@@ -18,11 +18,11 @@ sealed class TrafficState : State {
     }
 }
 
-sealed class TrafficIntent {
-    object On : TrafficIntent()
-    object Off : TrafficIntent()
-    object Plus : TrafficIntent()
-    object Minus : TrafficIntent()
+sealed class TrafficEvent {
+    object On : TrafficEvent()
+    object Off : TrafficEvent()
+    object Plus : TrafficEvent()
+    object Minus : TrafficEvent()
 }
 
 class TrafficLight(
@@ -40,34 +40,35 @@ class TrafficLight(
     private var open = AtomicBoolean(false)
     private var moving = AtomicBoolean(false)
 
-    private val knot = suspendKnot<TrafficState, TrafficIntent> {
-        initialState = TrafficState.Off
+    private val knot = knot<TrafficState, TrafficEvent, TrafficState> {
+        knotState = SimpleKnotState(TrafficState.Off)
+        dispatcherReduce = Dispatchers.IO
+        dispatcherSideEffect = Dispatchers.IO
 
-        dispatcher(Dispatchers.IO)
-
-        reduce { state, intent ->
-            PLog.d("intent $intent for state $this")
-            when (intent) {
-                TrafficIntent.Minus -> {
+        reduce { state, event ->
+            when (event) {
+                TrafficEvent.Minus -> {
                     if (cars > 0) {
                         cars--
                         state + startMovement()
                     } else {
-                        state.toEffect
+                        state.toEffect()
                     }
                 }
-                TrafficIntent.Plus -> {
+                TrafficEvent.Plus -> {
                     cars++
                     state + startMovement()
                 }
-                TrafficIntent.Off -> TrafficState.Off + close()
-                TrafficIntent.On -> TrafficState.On + open() + startMovement()
+                TrafficEvent.Off -> TrafficState.Off + close()
+                TrafficEvent.On -> {
+                    val test = TrafficState.On + open() + startMovement()
+                    test
+                }
             }
         }
     }
 
-    val state
-        get() = knot.state
+    val state: Stream<TrafficState> = knot
 
     fun start() {
         knot.start(coroutineScope)
@@ -77,9 +78,9 @@ class TrafficLight(
         cars++
         if (cars > limit) {
             coroutineScope.launch {
-                knot.offerIntent(TrafficIntent.On)
+                knot.emit(TrafficEvent.On)
                 delay(lightTime)
-                knot.offerIntent(TrafficIntent.Off)
+                knot.emit(TrafficEvent.Off)
             }
         }
     }
@@ -92,32 +93,26 @@ class TrafficLight(
         this.streetOut = street
     }
 
-    private fun open() = SuspendSideEffect<TrafficIntent> {
-        PLog.d("open")
+    private fun open() = SideEffect<TrafficEvent> {
         open.set(true)
         null
     }
 
-    private fun close() = SuspendSideEffect<TrafficIntent> {
-        PLog.d("close")
+    private fun close() = SideEffect<TrafficEvent> {
         open.set(false)
         null
     }
 
-    private suspend fun startMovement() = SuspendSideEffect<TrafficIntent> {
-        PLog.d("startMovement")
-        if (moving.get()) return@SuspendSideEffect null
-        PLog.d("start moving ${moving.get()} ${open.get()}")
+    private suspend fun startMovement() = SideEffect<TrafficEvent> {
+        if (moving.get()) return@SideEffect null
         moving.set(true)
         while (open.get() && cars > 0) {
             delay(delay)
-            PLog.d("move car $cars")
             streetIn?.carOut()
             streetOut?.carIn()
             cars--
         }
         moving.set(false)
-        PLog.d("end moving ${moving.get()}")
         null
     }
 }

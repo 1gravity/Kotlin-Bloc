@@ -2,8 +2,6 @@ package com.genaku.reduce.sms
 
 import com.onegravity.knot.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.StateFlow
-import org.mym.plog.PLog
 
 class SmsUseCase(
     private val repository: ISmsRepository,
@@ -11,29 +9,26 @@ class SmsUseCase(
     private val useCaseCoroutineScope : CoroutineScope
 ) : ISmsUseCase {
 
-    private val smsKnot = easyKnot<SmsState, SmsIntent> {
-
+    private val smsKnot = knot<SmsState, SmsEvent> {
         initialState = SmsState.InputSms
-
-        reduce { state, intent ->
-            PLog.d("state: ${javaClass.simpleName} intent: ${intent.javaClass.simpleName}")
+        reduce { state, event ->
             when (state) {
-                SmsState.InputSms -> when (intent) {
-                    SmsIntent.Cancel -> SmsState.Exit.toEffect
-                    is SmsIntent.SendSms -> SmsState.CheckSms + sendSms(intent.sms)
-                    else -> state.unexpected(intent)
+                SmsState.InputSms -> when (event) {
+                    SmsEvent.Cancel -> SmsState.Exit.toEffect()
+                    is SmsEvent.SendSms -> SmsState.CheckSms + sendSms(event.sms)
+                    else -> state.unexpected(event)
                 }
-                SmsState.CheckSms -> when (intent) {
-                    SmsIntent.CorrectSms -> SmsState.SmsConfirmed.toEffect
-                    SmsIntent.WrongSms -> {
+                SmsState.CheckSms -> when (event) {
+                    SmsEvent.CorrectSms -> SmsState.SmsConfirmed.toEffect()
+                    SmsEvent.WrongSms -> {
                         loadingUseCase.processError(ErrorData("wrong sms"))
-                        SmsState.InputSms.toEffect
+                        SmsState.InputSms.toEffect()
                     }
-                    SmsIntent.Cancel -> SmsState.InputSms.toEffect
-                    else -> state.unexpected(intent)
+                    SmsEvent.Cancel -> SmsState.InputSms.toEffect()
+                    else -> state.unexpected(event)
                 }
-                SmsState.Exit -> state.toEffect
-                SmsState.SmsConfirmed -> state.toEffect
+                SmsState.Exit -> state.toEffect()
+                SmsState.SmsConfirmed -> state.toEffect()
             }
         }
     }.apply {
@@ -44,19 +39,18 @@ class SmsUseCase(
         if (loadingUseCase.processWrap(false) {
                 repository.checkSms(sms)
             }
-        ) SmsIntent.CorrectSms else SmsIntent.WrongSms
+        ) SmsEvent.CorrectSms else SmsEvent.WrongSms
     }
 
-    override val state: StateFlow<SmsState>
-        get() = smsKnot.state
+    override val state: Stream<SmsState> = smsKnot
 
     override fun checkSms(sms: String) {
         loadingUseCase.clearError()
-        smsKnot.offerIntent(SmsIntent.SendSms(sms))
+        smsKnot.emit(SmsEvent.SendSms(sms))
     }
 
     override fun cancel() {
-        smsKnot.offerIntent(SmsIntent.Cancel)
+        smsKnot.emit(SmsEvent.Cancel)
     }
 }
 

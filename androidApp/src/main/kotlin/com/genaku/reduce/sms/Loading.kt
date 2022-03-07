@@ -1,13 +1,11 @@
 package com.genaku.reduce.sms
 
-import com.onegravity.knot.*
-
-sealed class LoadingState : State {
+sealed class LoadingState {
     object Active: LoadingState()
     object Idle: LoadingState()
 }
 
-sealed class LoadingIntent {
-    object Start: LoadingIntent()
-    object Stop: LoadingIntent()
+sealed class LoadingEvent {
+    object Start: LoadingEvent()
+    object Stop: LoadingEvent()
 }

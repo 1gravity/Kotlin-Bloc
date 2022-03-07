@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.genaku.reduce.R
 import kotlinx.coroutines.launch
-import com.onegravity.knot.*
 
 class StationActivity : AppCompatActivity() {
 

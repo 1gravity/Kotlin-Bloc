@@ -2,34 +2,27 @@ package com.genaku.reduce.sms
 
 import com.onegravity.knot.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.StateFlow
-import kotlin.coroutines.CoroutineContext
 
-class ErrorUseCase(dispatcher: CoroutineContext = Dispatchers.Default) : JobSwitcher, IErrorUseCase {
+class ErrorUseCase() : JobSwitcher, IErrorUseCase {
 
-    private val errorKnot = knot<ErrorState, ErrorIntent, Any> {
-        dispatcher(dispatcher)
-
+    private val errorKnot = knot<ErrorState, ErrorEvent> {
         initialState = ErrorState.NoError
-
-        reduce { _, intent ->
-            when (intent) {
-                ErrorIntent.ClearError -> ErrorState.NoError.toEffect
-                is ErrorIntent.SetError -> ErrorState.Error(intent.error).toEffect
+        reduce { _, event ->
+            when (event) {
+                ErrorEvent.ClearError -> ErrorState.NoError.toEffect()
+                is ErrorEvent.SetError -> ErrorState.Error(event.error).toEffect()
             }
         }
     }
 
-    override val errorState: StateFlow<ErrorState>
-        get() = errorKnot.state
+    override val errorState: Stream<ErrorState> = errorKnot
 
     override fun processError(error: IError) {
-        errorKnot.offerIntent(ErrorIntent.SetError(error))
+        errorKnot.emit(ErrorEvent.SetError(error))
     }
 
     override fun clearError() {
-        errorKnot.offerIntent(ErrorIntent.ClearError)
+        errorKnot.emit(ErrorEvent.ClearError)
     }
 
     override fun start(coroutineScope: CoroutineScope) {

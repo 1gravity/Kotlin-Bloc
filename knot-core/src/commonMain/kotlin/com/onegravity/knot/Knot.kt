@@ -1,40 +1,19 @@
 package com.onegravity.knot
 
-import kotlinx.coroutines.flow.StateFlow
-
-interface State
-
-// todo this needs to be renamed...
-data class SideEffect<out Intent>(val block: () -> Intent?)
-data class SuspendSideEffect<out Intent>(val block: suspend () -> Intent?)
-
-interface Knot<S : State, in Intent> : KnotState<S> {
-    fun offerIntent(intent: Intent)
-}
+import com.onegravity.knot.state.KnotState
+import kotlinx.coroutines.CoroutineScope
 
 /**
- * Knot state
+ * TODO move all knot code into a shared module
+ * TODO rename everything to BLoC
+ * TODO implement the orbit demo app in BLoC
+ * TODO replace the Knot.start/stop functions with Lifecycle subscriptions
  */
-interface KnotState<S : State> {
-    val state: StateFlow<S>
-}
 
-/** A function accepting the `State` and a `Intent` and returning a new `State` with `Actions`. */
-typealias Reducer<State, Intent, Action> = (state: State, intent: Intent) -> Effect<State, Action>
+interface Knot<out State, in Event, Proposal, SideEffect> : KnotState<State, Event> {
 
-/** A suspend function accepting the `State` and a `Intent` and returning a new `State` with `Actions`. */
-typealias SuspendReducer<State, Intent, Action> = suspend (state: State, intent: Intent) -> Effect<State, Action>
+    fun start(coroutineScope: CoroutineScope)
 
-/** A function used for performing given `Action` and emitting resulting `Intent`. */
-typealias Performer<Action, Intent> = (Action) -> Intent?
+    fun stop()
 
-/** A suspend function used for performing given `Action` and emitting resulting `Intent`. */
-typealias SuspendPerformer<Action, Intent> = suspend (Action) -> Intent?
-
-/** Convenience wrapper around [State] and optional [StateAction]s. */
-data class Effect<S : State, SideEffect>(
-    val state: S,
-    val sideEffects: List<SideEffect> = emptyList()
-) {
-    operator fun plus(proposal: SideEffect): Effect<S, SideEffect> = Effect(state, sideEffects + proposal)
 }

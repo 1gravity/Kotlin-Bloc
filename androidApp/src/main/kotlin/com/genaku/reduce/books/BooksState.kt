@@ -1,8 +1,6 @@
 package com.genaku.reduce.books
 
-import com.onegravity.knot.State
-
-sealed class BooksState : State {
+sealed class BooksState {
     object Empty : BooksState()
     object Loading : BooksState()
     data class Content(val books: List<Book>) : BooksState()
@@ -11,18 +9,16 @@ sealed class BooksState : State {
 
 data class Book(val title: String, val year: String)
 
-sealed class BooksAction {
-    object Load : BooksAction()
+sealed class BooksSideEffect {
+    object Load : BooksSideEffect()
 }
 
-sealed class BooksIntent {
-    object Load : BooksIntent()
-    class Success(val books: List<Book>) : BooksIntent()
-    class Failure(val message: String) : BooksIntent()
+sealed class BooksEvent {
+    object Load : BooksEvent()
+    class Success(val books: List<Book>) : BooksEvent()
+    class Failure(val message: String) : BooksEvent()
 }
 
-sealed class ClearBookIntent {
-    object Clear : ClearBookIntent()
+sealed class ClearBookEvent {
+    object Clear : ClearBookEvent()
 }
-
-class ClearBooksAction

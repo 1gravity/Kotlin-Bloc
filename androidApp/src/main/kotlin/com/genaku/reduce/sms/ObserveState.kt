@@ -2,13 +2,11 @@ package com.genaku.reduce.sms
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import com.onegravity.knot.Stream
 import java.util.concurrent.atomic.AtomicBoolean
 
 inline fun <T> LifecycleOwner.observeState(
-    flow: StateFlow<T>,
+    flow: Stream<T>,
     crossinline action: (value: T) -> Unit
 ) {
     lifecycleScope.launchWhenResumed {
@@ -19,7 +17,7 @@ inline fun <T> LifecycleOwner.observeState(
 }
 
 inline fun <T> LifecycleOwner.observeEvent(
-    flow: StateFlow<Event<T>>,
+    flow: Stream<Event<T>>,
     crossinline action: (value: T) -> Unit
 ) {
     lifecycleScope.launchWhenResumed {

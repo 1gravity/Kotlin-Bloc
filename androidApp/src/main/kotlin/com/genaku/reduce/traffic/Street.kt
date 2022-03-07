@@ -2,9 +2,9 @@ package com.genaku.reduce.traffic
 
 import com.onegravity.knot.*
 import kotlinx.coroutines.CoroutineScope
-import org.mym.plog.PLog
+import kotlinx.coroutines.delay
 
-sealed class StreetState : State {
+sealed class StreetState {
     object Empty : StreetState()
     class Traffic(val cars: Int) : StreetState()
 
@@ -30,41 +30,38 @@ sealed class StreetState : State {
     override fun toString(): String = value.toString()
 }
 
-sealed class StreetIntent {
-    object Plus : StreetIntent()
-    object Minus : StreetIntent()
+sealed class StreetEvent {
+    object Plus : StreetEvent()
+    object Minus : StreetEvent()
 }
 
 class Street(private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val knot = easyKnot<StreetState, StreetIntent> {
+    private val knot = knot<StreetState, StreetEvent> {
         initialState = StreetState.Empty
-
-        reduce { state, intent ->
-            PLog.d("intent $this ${intent.javaClass.simpleName}")
+        reduce { state, event ->
             when (state) {
-                StreetState.Empty -> when (intent) {
-                    StreetIntent.Minus -> state.toEffect
-                    StreetIntent.Plus -> StreetState.Traffic(1) + outStreet()
+                StreetState.Empty -> when (event) {
+                    StreetEvent.Minus -> state.toEffect()
+                    StreetEvent.Plus -> StreetState.Traffic(1) + outStreet()
                 }
-                is StreetState.Traffic -> when (intent) {
-                    StreetIntent.Minus -> (state - 1).toEffect
-                    StreetIntent.Plus -> state + 1 + outStreet()
+                is StreetState.Traffic -> when (event) {
+                    StreetEvent.Minus -> (state - 1).toEffect()
+                    StreetEvent.Plus -> state + 1 + outStreet()
                 }
             }
         }
     }
 
-    private fun outStreet(): SideEffect<StreetIntent> = SideEffect {
-        Thread.sleep(delay)
+    private fun outStreet(): SideEffect<StreetEvent> = SideEffect {
+        delay(delay)
         trafficLight?.addCar()
         null
     }
 
-    val state
-        get() = knot.state
+    val state: Stream<StreetState> = knot
 
     fun start(coroutineScope: CoroutineScope) {
         knot.start(coroutineScope)
@@ -75,10 +72,10 @@ class Street(private val delay: Long) {
     }
 
     fun carIn() {
-        knot.offerIntent(StreetIntent.Plus)
+        knot.emit(StreetEvent.Plus)
     }
 
     fun carOut() {
-        knot.offerIntent(StreetIntent.Minus)
+        knot.emit(StreetEvent.Minus)
     }
 }

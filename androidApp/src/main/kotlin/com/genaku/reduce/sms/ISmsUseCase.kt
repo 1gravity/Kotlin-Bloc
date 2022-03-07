@@ -1,10 +1,9 @@
 package com.genaku.reduce.sms
 
 import com.onegravity.knot.*
-import kotlinx.coroutines.flow.StateFlow
 
 interface ISmsUseCase {
-    val state: StateFlow<SmsState>
+    val state: Stream<SmsState>
 
     fun checkSms(sms: String)
     fun cancel()

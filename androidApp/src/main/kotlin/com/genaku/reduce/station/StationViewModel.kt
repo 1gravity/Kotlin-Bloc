@@ -3,12 +3,12 @@ package com.genaku.reduce.station
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.onegravity.knot.*
+import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.StateFlow
 
 class StationViewModel : ViewModel() {
 
-    private val stationState = CoroutineKnotState<StationState>(StationState.Empty)
+    private val stationState = SimpleKnotState<StationState>(StationState.Empty)
 
     private val arrive = " arrive"
     private val departure = " departure"
@@ -17,65 +17,64 @@ class StationViewModel : ViewModel() {
         override fun toString(): String = "$name $num"
     }
 
-    private suspend fun <Intent> arrive(vehicle: Vehicle, create: (Vehicle) -> Intent) = SuspendSideEffect {
+    private suspend fun <Event> arrive(vehicle: Vehicle, create: (Vehicle) -> Event) = SideEffect {
         delay(vehicle.delay)
         vehicle.num++
         create(vehicle)
     }
 
-    private suspend fun <Intent> leave(vehicle: Vehicle, create: (Vehicle) -> Intent) = SuspendSideEffect {
+    private suspend fun <Event> leave(vehicle: Vehicle, create: (Vehicle) -> Event) = SideEffect {
         delay(vehicle.delay)
         create(vehicle)
     }
 
-    private val busKnot = suspendKnot<StationState, BusIntent> {
+    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>> {
         knotState = stationState
 
         val bus = Vehicle("Bus", 800)
 
-        reduce { _, intent ->
-            when (intent) {
-                is BusIntent.Arrive -> StationState.Bus(intent.name + arrive) +
-                        leave(bus) { BusIntent.Leave("$it") }
-                is BusIntent.Leave -> StationState.Bus(intent.name + departure) +
-                        arrive(bus) { BusIntent.Arrive("$it") }
+        reduce { _, event ->
+            when (event) {
+                is BusEvent.Arrive -> StationState.Bus(event.name + arrive) +
+                        leave(bus) { BusEvent.Leave("$it") }
+                is BusEvent.Leave -> StationState.Bus(event.name + departure) +
+                        arrive(bus) { BusEvent.Arrive("$it") }
             }
         }
     }
 
-    private val trainKnot = suspendKnot<StationState, TrainIntent> {
+    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>> {
         knotState = stationState
 
         val train = Vehicle("Train", 600)
 
-        reduce { _, intent ->
-            when (intent) {
-                is TrainIntent.Arrive -> StationState.Train(intent.name + arrive) +
-                        leave(train) { TrainIntent.Leave("$it") }
-                is TrainIntent.Leave -> StationState.Train(intent.name + departure) +
-                        arrive(train) { TrainIntent.Arrive("$it") }
+        reduce { _, event ->
+            when (event) {
+                is TrainEvent.Arrive -> StationState.Train(event.name + arrive) +
+                        leave(train) { TrainEvent.Leave("$it") }
+                is TrainEvent.Leave -> StationState.Train(event.name + departure) +
+                        arrive(train) { TrainEvent.Arrive("$it") }
             }
         }
     }
 
-    private val lorryKnot = suspendKnot<StationState, LorryIntent> {
+    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>> {
         knotState = stationState
         val lorry = Vehicle("Lorry", 250)
 
-        reduce { _, intent ->
-            when (intent) {
-                is LorryIntent.Arrive -> StationState.Lorry(intent.name + arrive) +
-                        leave(lorry) { LorryIntent.Leave("$it") }
-                is LorryIntent.Leave -> StationState.Lorry(intent.name + departure) +
-                        arrive(lorry) { LorryIntent.Arrive("$it") }
+        reduce { _, event ->
+            when (event) {
+                is LorryEvent.Arrive -> StationState.Lorry(event.name + arrive) +
+                        leave(lorry) { LorryEvent.Leave("$it") }
+                is LorryEvent.Leave -> StationState.Lorry(event.name + departure) +
+                        arrive(lorry) { LorryEvent.Arrive("$it") }
             }
         }
     }
 
     private var case = 0
 
-    val state: StateFlow<StationState>
-        get() = stationState.state
+    val state: Stream<StationState> = stationState
 
     fun switch() {
         when (case) {
@@ -83,19 +82,19 @@ class StationViewModel : ViewModel() {
                 lorryKnot.stop()
                 trainKnot.stop()
                 busKnot.start(viewModelScope)
-                busKnot.offerIntent(BusIntent.Arrive("start"))
+                busKnot.emit(BusEvent.Arrive("start"))
             }
             1 -> {
                 busKnot.stop()
                 trainKnot.stop()
                 lorryKnot.start(viewModelScope)
-                lorryKnot.offerIntent(LorryIntent.Arrive("start"))
+                lorryKnot.emit(LorryEvent.Arrive("start"))
             }
             2 -> {
                 lorryKnot.stop()
                 busKnot.stop()
                 trainKnot.start(viewModelScope)
-                trainKnot.offerIntent(TrainIntent.Arrive("start"))
+                trainKnot.emit(TrainEvent.Arrive("start"))
             }
             else -> {
                 case = -1
@@ -105,7 +104,7 @@ class StationViewModel : ViewModel() {
         case++
     }
 
-    fun stop() {
+    private fun stop() {
         busKnot.stop()
         lorryKnot.stop()
         trainKnot.stop()
