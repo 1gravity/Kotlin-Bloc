@@ -7,7 +7,6 @@ import kotlinx.coroutines.CoroutineScope
  * TODO move all knot code into a shared module
  * TODO rename everything to BLoC
  * TODO implement the orbit demo app in BLoC
- * TODO replace the Knot.start/stop functions with Lifecycle subscriptions
  */
 
 interface Knot<out State, in Event, Proposal, SideEffect> : KnotState<State, Event> {

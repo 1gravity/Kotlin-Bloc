@@ -2,7 +2,7 @@ package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
 
-/** The base interface for all configuration builders for a [Knot]. */
+/** The base interface for all [Knot] builders. */
 interface KnotBuilder<State, Event, Proposal, SideEffect> {
 
     fun build(): Knot<State, Event, Proposal, SideEffect>
@@ -21,58 +21,3 @@ interface KnotBuilder<State, Event, Proposal, SideEffect> {
     operator fun State.plus(sideEffect: SideEffect) = Effect(this, listOf(sideEffect))
 
 }
-
-// TODO re-implement this
-///**
-// * Executes given block if the knot is in the given state or
-// * ignores the event in any other states.
-// *
-// * ```
-// * reduce<Event> { state, event ->
-// *    whenState<State.Content> {
-// *       ...
-// *    }
-// * }
-// * ```
-// * is a better readable alternative to
-// * ```
-// * reduce { state, event ->
-// *    when(state) {
-// *       is State.Content -> ...
-// *       else -> only
-// *    }
-// * }
-// * ```
-// */
-//inline fun <reified WhenState : State> State.whenState(
-//    block: WhenState.() -> Effect<State, SideEffect>
-//): Effect<State, SideEffect> =
-//    if (this is WhenState) block()
-//    else Effect(this, emptyList())
-//
-///**
-// * Executes given block if the knot is in the given state or
-// * throws [IllegalStateException] for the event in any other state.
-// *
-// * ```
-// * reduce { state, event ->
-// *    requireState<State.Content>(event) {
-// *       ...
-// *    }
-// * }
-// * ```
-// * is a better readable alternative to
-// * ```
-// * reduce { state, event ->
-// *    when(state) {
-// *       is State.Content -> ...
-// *       else -> unexpected(event)
-// *    }
-// * }
-// * ```
-// */
-//inline fun <reified WhenState : State> State.requireState(
-//    action: Event, block: WhenState.() -> Effect<State, SideEffect>
-//): Effect<State, SideEffect> =
-//    if (this is WhenState) block()
-//    else unexpected(action)

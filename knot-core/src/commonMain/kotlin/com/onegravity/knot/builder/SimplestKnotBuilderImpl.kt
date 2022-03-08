@@ -1,7 +1,7 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.SideEffect
-import com.onegravity.knot.state.SimpleKnotState
+import com.onegravity.knot.knotState
 
 class SimplestKnotBuilderImpl<State, Event> :
     SimplestKnotBuilder<State, Event>,
@@ -16,7 +16,7 @@ class SimplestKnotBuilderImpl<State, Event> :
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
         get() = throw UnsupportedOperationException()
         set(value) {
-            knotState = SimpleKnotState(value)
+            knotState = knotState(value)
         }
 
 }

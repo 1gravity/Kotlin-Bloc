@@ -1,7 +1,6 @@
 package com.genaku.reduce.traffic
 
 import com.onegravity.knot.*
-import com.onegravity.knot.state.SimpleKnotState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -41,7 +40,7 @@ class TrafficLight(
     private var moving = AtomicBoolean(false)
 
     private val knot = knot<TrafficState, TrafficEvent, TrafficState> {
-        knotState = SimpleKnotState(TrafficState.Off)
+        knotState = knotState(TrafficState.Off)
         dispatcherReduce = Dispatchers.IO
         dispatcherSideEffect = Dispatchers.IO
 

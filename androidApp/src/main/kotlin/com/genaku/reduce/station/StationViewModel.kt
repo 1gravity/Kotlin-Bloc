@@ -2,13 +2,15 @@ package com.genaku.reduce.station
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.onegravity.knot.*
-import com.onegravity.knot.state.SimpleKnotState
+import com.onegravity.knot.SideEffect
+import com.onegravity.knot.Stream
+import com.onegravity.knot.knot
+import com.onegravity.knot.knotState
 import kotlinx.coroutines.delay
 
 class StationViewModel : ViewModel() {
 
-    private val stationState = SimpleKnotState<StationState>(StationState.Empty)
+    private val stationState = knotState<StationState>(StationState.Empty)
 
     private val arrive = " arrive"
     private val departure = " departure"

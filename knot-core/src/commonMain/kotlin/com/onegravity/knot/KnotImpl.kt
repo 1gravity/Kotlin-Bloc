@@ -9,7 +9,7 @@ import kotlin.coroutines.CoroutineContext
 
 class KnotImpl<State, Event, Proposal, SideEffect>(
     private val knotState: KnotState<State, Proposal>,
-    private val reducer: Reducer<State, Event, Proposal, SideEffect>?,
+    private val reducer: Reducer<State, Event, Proposal, SideEffect>,
     private val executor: Executor<SideEffect, Event>?,
     private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
     private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
@@ -37,11 +37,9 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
         eventsJob = coroutineScope.launch(dispatcherReduce) {
             for (event in events) {
-                val effect = reducer?.invoke(knotState.value, event)
-                if (effect != null) {
-                    knotState.emit(effect.proposal)
-                    effect.sideEffects.forEach { sideEffects.send(it) }
-                }
+                val effect = reducer.invoke(knotState.value, event)
+                knotState.emit(effect.proposal)
+                effect.sideEffects.forEach { sideEffects.send(it) }
             }
         }
 
