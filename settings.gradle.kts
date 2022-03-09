@@ -16,8 +16,7 @@ plugins {
     id("de.fayard.refreshVersions") version "0.40.1"
 }
 
-include(
-    ":knot-core",
-    ":knot-extension",
-    ":androidApp"
-)
+include(":knot-core")
+include(":knot-extension")
+include(":knot-samples")
+include(":androidApp")
