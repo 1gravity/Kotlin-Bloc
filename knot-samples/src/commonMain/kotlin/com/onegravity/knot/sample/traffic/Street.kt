@@ -4,30 +4,10 @@ import com.onegravity.knot.*
 import com.onegravity.knot.context.KnotContext
 import kotlinx.coroutines.delay
 
-sealed class StreetState {
-    object Empty : StreetState()
-    class Traffic(val cars: Int) : StreetState()
-
-    operator fun plus(cars: Int): StreetState = when (this) {
-        Empty -> Traffic(cars)
-        is Traffic -> Traffic(this.cars + cars)
-    }
-
-    operator fun minus(cars: Int): StreetState = when (this) {
-        Empty -> this
-        is Traffic -> {
-            val newCars = this.cars - cars
-            if (newCars > 0) Traffic(newCars) else Empty
-        }
-    }
-
-    val value: Int
-        get() = when (this) {
-            Empty -> 0
-            is Traffic -> this.cars
-        }
-
-    override fun toString(): String = value.toString()
+data class StreetState(val cars: Int) {
+    operator fun plus(cars: Int): StreetState = StreetState(this.cars + cars)
+    operator fun minus(cars: Int): StreetState = StreetState(this.cars - cars)
+    override fun toString() = cars.toString()
 }
 
 sealed class StreetEvent {
@@ -35,24 +15,18 @@ sealed class StreetEvent {
     object Minus : StreetEvent()
 }
 
-class Street(
-    context: KnotContext,
-    private val delay: Long
-) {
+class Street(context: KnotContext, private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
     private val knot = knot<StreetState, StreetEvent>(context) {
-        initialState = StreetState.Empty
+        initialState = StreetState(0)
         reduce { state, event ->
-            when (state) {
-                StreetState.Empty -> when (event) {
-                    StreetEvent.Minus -> state.toEffect()
-                    StreetEvent.Plus -> StreetState.Traffic(1) + outStreet()
-                }
-                is StreetState.Traffic -> when (event) {
-                    StreetEvent.Minus -> (state - 1).toEffect()
-                    StreetEvent.Plus -> (state + 1) + outStreet()
+            when (event) {
+                StreetEvent.Plus -> state.copy(cars = state.cars + 1) + outStreet()
+                StreetEvent.Minus -> when (state.cars) {
+                    0 -> state.toEffect()
+                    else -> state.copy(cars = (state.cars - 1)) + outStreet()
                 }
             }
         }

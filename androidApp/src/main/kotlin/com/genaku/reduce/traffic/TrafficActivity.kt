@@ -69,7 +69,7 @@ class TrafficActivity : BaseActivity() {
     }
 
     private fun sumCars() {
-        cars = viewModel.street1State.value.value + viewModel.street2State.value.value + viewModel.street3State.value.value
+        cars = viewModel.street1State.value.cars + viewModel.street2State.value.cars + viewModel.street3State.value.cars
         findViewById<TextView>(R.id.tvCars).text = cars.toString()
     }
 }
