@@ -6,6 +6,9 @@ typealias Reducer<State, Event, Proposal, SideEffect> = suspend (state: State, e
 /** A function used for performing given `SideEffect` and emitting resulting `Event`. */
 typealias Executor<SideEffect, Event> = suspend (SideEffect) -> Event?
 
-typealias Acceptor<State, Proposal, Model> = (state: State, proposal: Proposal) -> Model
+/** A function used for accepting or rejecting a [Proposal] to updating and emitting resulting [State]. */
+typealias Acceptor<Proposal, State> = (proposal: Proposal, state: State) -> State
 
 typealias Mapper<Model, State> = (model: Model) -> State
+
+typealias Selector<State, Model> = (State) -> Model

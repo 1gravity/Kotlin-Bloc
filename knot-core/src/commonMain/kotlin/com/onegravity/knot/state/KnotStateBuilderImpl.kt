@@ -1,20 +1,16 @@
 package com.onegravity.knot.state
 
 import com.onegravity.knot.Acceptor
-import com.onegravity.knot.Mapper
 
-class KnotStateBuilderImpl<State, Proposal, Model> : KnotStateBuilder<State, Proposal, Model> {
+class KnotStateBuilderImpl<State, Proposal> : KnotStateBuilder<State, Proposal> {
 
     private var _initialState: State? = null
-    private var _acceptor: Acceptor<State, Proposal, Model>? = null
-    private var _mapper: Mapper<Model, State>? = null
+    private var _acceptor: Acceptor<Proposal, State>? = null
 
-    override fun build(): KnotState<State, Proposal> =
-        KnotStateImpl(
-            initialState = checkNotNull(_initialState) { "initialState must be declared" },
-            acceptor = checkNotNull(_acceptor) { "accept { } must be declared" },
-            mapper = checkNotNull(_mapper) { "map { } must be declared" },
-        )
+    override fun build() = KnotStateImpl(
+        initialState = checkNotNull(_initialState) { "initialState must be declared" },
+        acceptor = checkNotNull(_acceptor) { "accept { } must be declared" },
+    )
 
     override var initialState: State
         @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
@@ -23,12 +19,8 @@ class KnotStateBuilderImpl<State, Proposal, Model> : KnotStateBuilder<State, Pro
             _initialState = value
         }
 
-    override fun accept(acceptor: Acceptor<State, Proposal, Model>) {
+    override fun accept(acceptor: Acceptor<Proposal, State>) {
         _acceptor = acceptor
-    }
-
-    override fun map(mapper: Mapper<Model, State>) {
-        _mapper = mapper
     }
 
 }

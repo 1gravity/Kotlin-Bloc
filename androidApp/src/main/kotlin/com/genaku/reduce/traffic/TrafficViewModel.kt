@@ -1,32 +1,33 @@
 package com.genaku.reduce.traffic
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.onegravity.knot.context.KnotContext
+import com.onegravity.knot.sample.traffic.Street
+import com.onegravity.knot.sample.traffic.TrafficLight
 
-class TrafficViewModel : ViewModel() {
+class TrafficViewModel(context: KnotContext) : ViewModel() {
 
-    private val street1 = Street(100)
-    private val street2 = Street(200)
-    private val street3 = Street(300)
+    private val street1 = Street(context, 100)
+    private val street2 = Street(context, 200)
+    private val street3 = Street(context, 300)
 
     private val tl1 = TrafficLight(
-        coroutineScope = viewModelScope,
+        context = context,
         delay = 30,
         limit = 10
     )
     private val tl2 = TrafficLight(
-        coroutineScope = viewModelScope,
+        context = context,
         delay = 20,
         limit = 5
     )
     private val tl3 = TrafficLight(
-        coroutineScope = viewModelScope,
+        context = context,
         delay = 10
     )
 
     init {
         initStreets()
-        start()
     }
 
     private fun initStreets() {
@@ -40,15 +41,6 @@ class TrafficViewModel : ViewModel() {
         tl2.setStreetOut(street3)
         tl3.setStreetIn(street3)
         tl3.setStreetOut(street1)
-    }
-
-    private fun start() {
-        street1.start(viewModelScope)
-        street2.start(viewModelScope)
-        street3.start(viewModelScope)
-        tl1.start()
-        tl2.start()
-        tl3.start()
     }
 
     val street1State

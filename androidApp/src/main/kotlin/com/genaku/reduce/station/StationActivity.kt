@@ -1,17 +1,20 @@
 package com.genaku.reduce.station
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
+import com.onegravity.knot.context.defaultKnotContext
 import kotlinx.coroutines.launch
 
-class StationActivity : AppCompatActivity() {
+class StationActivity : BaseActivity() {
 
-    private val viewModel: StationViewModel by viewModels()
+    private val viewModel: StationViewModel by viewModels {
+        viewModelFactory { StationViewModel(defaultKnotContext()) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

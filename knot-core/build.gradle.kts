@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -28,13 +26,20 @@ kotlin {
             dependencies {
                 implementation(KotlinX.coroutines.core)
 
-                // Badoo's Reaktive library
-                implementation("com.badoo.reaktive:reaktive:_")
+                // Redux store (https://reduxkotlin.org)
+                implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
+
+                // Essenty (https://github.com/arkivanov/Essenty)
+                implementation("com.arkivanov.essenty:lifecycle:_")
+                implementation("com.arkivanov.essenty:parcelable:_")
+                implementation("com.arkivanov.essenty:state-keeper:_")
+                implementation("com.arkivanov.essenty:instance-keeper:_")
+                implementation("com.arkivanov.essenty:back-pressed:_")
 
                 // Logging
                 implementation(Touchlab.kermit)
 
-                // https://github.com/michaelbull/kotlin-result
+                // Kotlin Result (https://github.com/michaelbull/kotlin-result)
                 implementation("com.michael-bull.kotlin-result:kotlin-result:_")
                 implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
             }
@@ -44,7 +49,12 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation("androidx.activity:activity-ktx:1.4.0")
+                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+            }
+        }
         val androidTest by getting
 
         val iosMain by getting

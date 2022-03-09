@@ -1,19 +1,21 @@
 package com.genaku.reduce.traffic
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
-import kotlinx.coroutines.flow.collect
+import com.onegravity.knot.context.defaultKnotContext
 import kotlinx.coroutines.launch
 
-class TrafficActivity : AppCompatActivity() {
+class TrafficActivity : BaseActivity() {
 
-    private val viewModel: TrafficViewModel by viewModels()
+    private val viewModel: TrafficViewModel by viewModels {
+        viewModelFactory { TrafficViewModel(defaultKnotContext()) }
+    }
 
     private var cars = 0
 

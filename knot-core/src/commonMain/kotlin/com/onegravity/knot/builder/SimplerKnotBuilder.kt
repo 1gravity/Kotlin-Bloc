@@ -9,7 +9,7 @@ import kotlin.coroutines.CoroutineContext
  *
  * [SideEffect] is of type SideEffect<Event> so declaration of a side effect can be
  *   ```
- *   private fun mySideEffect(): SideEffect<Event> = SideEffect {
+ *   private fun mySideEffect() = SideEffect<Event> {
  *       // do stuff (suspend function)
  *   }
  *   ```

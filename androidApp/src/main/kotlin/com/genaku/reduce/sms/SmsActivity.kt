@@ -3,16 +3,23 @@ package com.genaku.reduce.sms
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
 import com.genaku.reduce.databinding.ActivitySmsBinding
+import com.onegravity.knot.context.defaultKnotContext
+import com.onegravity.knot.sample.sms.ErrorState
+import com.onegravity.knot.sample.sms.LoadingState
+import com.onegravity.knot.sample.sms.SmsState
 import org.mym.plog.PLog
 
-class SmsActivity : AppCompatActivity(R.layout.activity_sms) {
+class SmsActivity : BaseActivity(R.layout.activity_sms) {
 
     private val viewBinding by viewBinding(ActivitySmsBinding::bind)
-    private val viewModel: SmsViewModel by viewModels()
+
+    private val viewModel: SmsViewModel by viewModels {
+        viewModelFactory { SmsViewModel(defaultKnotContext()) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

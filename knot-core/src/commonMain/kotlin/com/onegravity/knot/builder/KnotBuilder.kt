@@ -1,9 +1,14 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
+import com.onegravity.knot.context.KnotContext
 
-/** The base interface for all [Knot] builders. */
+/**
+ * The base interface for all [Knot] builders.
+ */
 interface KnotBuilder<State, Event, Proposal, SideEffect> {
+
+    val context: KnotContext
 
     fun build(): Knot<State, Event, Proposal, SideEffect>
 
@@ -12,7 +17,7 @@ interface KnotBuilder<State, Event, Proposal, SideEffect> {
 
     // TODO remove this in favor of a result monad
     /** Throws [IllegalStateException] with current [State] and given [Event] in its message. */
-    fun State.unexpected(action: Event): Nothing = error("Unexpected $action in $this")
+    fun State.unexpected(event: Event): Nothing = error("Unexpected $event in $this")
 
     /** Turns [State] into an [Effect] without [SideEffect]. */
     fun State.toEffect(): Effect<State, SideEffect> = Effect(this)

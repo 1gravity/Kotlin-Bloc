@@ -1,5 +1,8 @@
 package com.onegravity.knot
 
+import com.arkivanov.essenty.lifecycle.doOnCreate
+import com.arkivanov.essenty.lifecycle.doOnDestroy
+import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.state.KnotState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -8,12 +11,22 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
 class KnotImpl<State, Event, Proposal, SideEffect>(
+    private val context: KnotContext,
     private val knotState: KnotState<State, Proposal>,
     private val reducer: Reducer<State, Event, Proposal, SideEffect>,
     private val executor: Executor<SideEffect, Event>?,
     private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
     private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
-) : Knot<State, Event, Proposal, SideEffect>, JobSwitcher {
+) : Knot<State, Event, Proposal, SideEffect> {
+
+    init {
+        context.lifecycle.doOnCreate {
+            start(context.coroutineScope)
+        }
+        context.lifecycle.doOnDestroy {
+            stop()
+        }
+    }
 
     private val events = Channel<Event>(UNLIMITED)
     private val sideEffects = Channel<SideEffect>(UNLIMITED)
@@ -28,11 +41,11 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
         events.trySend(value)
     }
 
-    override suspend fun collect(collector: FlowCollector<State>): Nothing {
+    override suspend fun collect(collector: FlowCollector<State>) {
         knotState.collect(collector)
     }
 
-    override fun start(coroutineScope: CoroutineScope) {
+    private fun start(coroutineScope: CoroutineScope) {
         stop()
 
         eventsJob = coroutineScope.launch(dispatcherReduce) {
@@ -53,7 +66,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
         }
     }
 
-    override fun stop() {
+    private fun stop() {
         eventsJob?.cancel("")?.also { eventsJob = null }
         sideEffectJob?.cancel("")?.also { sideEffectJob = null }
     }

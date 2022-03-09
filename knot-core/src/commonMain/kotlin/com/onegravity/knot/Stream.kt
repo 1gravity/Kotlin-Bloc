@@ -16,5 +16,5 @@ interface Stream<out Value> {
      * Accepts the given collector and emits values into it.
      * A Stream never completes.
      */
-    suspend fun collect(collector: FlowCollector<Value>): Nothing
+    suspend fun collect(collector: FlowCollector<Value>)
 }

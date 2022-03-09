@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
+import com.onegravity.knot.context.defaultKnotContext
+import com.onegravity.knot.sample.books.BooksState
 import kotlinx.coroutines.launch
 
-class BooksActivity : AppCompatActivity() {
+class BooksActivity : BaseActivity() {
 
-    private val viewModel: BooksViewModel by viewModels()
+    private val viewModel: BooksViewModel by viewModels {
+        viewModelFactory { BooksViewModel(defaultKnotContext()) }
+    }
 
     lateinit var pageEmpty: View
     lateinit var pageLoading: View
