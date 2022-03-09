@@ -28,7 +28,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
         events.trySend(value)
     }
 
-    override suspend fun collect(collector: FlowCollector<State>): Nothing {
+    override suspend fun collect(collector: FlowCollector<State>) {
         knotState.collect(collector)
     }
 

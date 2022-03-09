@@ -9,14 +9,14 @@ import com.onegravity.knot.*
  * - The KnotState cannot be set but is generated based on an [initialState]
  * - [SideEffect] is of type SideEffect<Event> so declaration of a side effect can be
  *   ```
- *   private fun mySideEffect(): SideEffect<Event> = SideEffect {
+ *   private fun mySideEffect() = SideEffect<Event> {
  *       // do stuff (suspend function)
  *   }
  *   ```
  *
  * TODO Create contract to compile-time check whether all mandatory parameters have been provided
- *      (in this case the initialState). Alternatively put the mandatory parameters into the DSL
- *      constructor.
+ *      (in this case the initialState, why do we use properties instead of functions?).
+ *      Alternatively put the mandatory parameters into the DSL constructor.
  */
 interface SimplestKnotBuilder<State, Event> : KnotBuilder<State, Event, State, SideEffect<Event>> {
 

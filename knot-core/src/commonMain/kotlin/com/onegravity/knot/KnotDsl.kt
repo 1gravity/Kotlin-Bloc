@@ -71,9 +71,20 @@ fun <State> knotState(
  * Creates a [KnotState] instance using a [KnotStateBuilder]
  */
 @JvmName("knotState")
-fun <State, Proposal, Model> knotState(
-    block: KnotStateBuilder<State, Proposal, Model>.() -> Unit
+fun <State, Proposal> knotState(
+    block: KnotStateBuilder<State, Proposal>.() -> Unit
 ): KnotState<State, Proposal> =
-    KnotStateBuilderImpl<State, Proposal, Model>()
+    KnotStateBuilderImpl<State, Proposal>()
+        .also(block)
+        .build()
+
+/**
+ * Creates a [KnotState] instance using a [FullKnotBuilder]
+ */
+@JvmName("knotKnotState")
+fun <State, Proposal, SideEffect> knotState(
+    block: FullKnotBuilder<State, Proposal, Proposal, SideEffect>.() -> Unit
+): Knot<State, Proposal, Proposal, SideEffect> =
+    FullKnotBuilderImpl<State, Proposal, Proposal, SideEffect>()
         .also(block)
         .build()

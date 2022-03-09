@@ -28,6 +28,11 @@ kotlin {
             dependencies {
                 implementation(KotlinX.coroutines.core)
 
+                // Redux store (https://reduxkotlin.org)
+                implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
+
+                implementation("com.arkivanov.essenty:lifecycle:_")
+
                 // Badoo's Reaktive library
                 implementation("com.badoo.reaktive:reaktive:_")
 

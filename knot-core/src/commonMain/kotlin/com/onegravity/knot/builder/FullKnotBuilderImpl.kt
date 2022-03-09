@@ -14,15 +14,13 @@ open class FullKnotBuilderImpl<State, Event, Proposal, SideEffect> :
     private var _dispatcherReduce: CoroutineContext = Dispatchers.Default
     private var _dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 
-    override fun build(): Knot<State, Event, Proposal, SideEffect> {
-        return KnotImpl(
-            knotState = checkNotNull(_knotState) { "knotState must be declared" },
-            reducer = checkNotNull(_reducer) { "reduce { } must be declared" },
-            executor = _executor,
-            dispatcherReduce = _dispatcherReduce,
-            dispatcherSideEffect = _dispatcherSideEffect
-        )
-    }
+    override fun build() = KnotImpl(
+        knotState = checkNotNull(_knotState) { "knotState must be declared" },
+        reducer = checkNotNull(_reducer) { "reduce { } must be declared" },
+        executor = _executor,
+        dispatcherReduce = _dispatcherReduce,
+        dispatcherSideEffect = _dispatcherSideEffect
+    )
 
     /** Set the initial state. */
     override var knotState: KnotState<State, Proposal>

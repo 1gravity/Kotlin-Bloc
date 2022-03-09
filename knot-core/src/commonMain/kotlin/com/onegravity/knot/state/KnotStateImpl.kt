@@ -1,36 +1,33 @@
 package com.onegravity.knot.state
 
 import com.onegravity.knot.Acceptor
-import com.onegravity.knot.Mapper
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 
-open class KnotStateImpl<State, Proposal, Model>(
+open class KnotStateImpl<State, Proposal>(
     initialState: State,
-    private val acceptor: Acceptor<State, Proposal, Model>,
-    private val mapper: Mapper<Model, State>
+    private val acceptor: Acceptor<Proposal, State>,
 ) : KnotState<State, Proposal> {
 
     private val state = MutableStateFlow(initialState)
 
     /**
-     * The Stream<State>.
+     * The Stream<Model>.
      */
     override val value: State
         get() = state.value
 
-    override suspend fun collect(collector: FlowCollector<State>): Nothing {
+    override suspend fun collect(collector: FlowCollector<State>) {
         state.collect(collector)
     }
 
     /**
      * The Sink<Proposal>.
      */
-    override fun emit(value: Proposal) {
-        val model = acceptor(state.value, value)
-        val newState = mapper(model)
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+    override fun emit(proposal: Proposal) {
+        val newState = acceptor(proposal, value)
         state.tryEmit(newState)
     }
 
 }
-
