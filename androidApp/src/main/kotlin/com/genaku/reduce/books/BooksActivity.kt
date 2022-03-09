@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.genaku.reduce.R
 import kotlinx.coroutines.launch
+import com.onegravity.knot.sample.books.*
 
 class BooksActivity : AppCompatActivity() {
 

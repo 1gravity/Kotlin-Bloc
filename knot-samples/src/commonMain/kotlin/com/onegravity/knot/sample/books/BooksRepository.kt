@@ -1,11 +1,14 @@
 package com.onegravity.knot.sample.books
 
+import kotlin.random.Random
+
 class BooksRepository : IBooksRepository {
 
     override fun loadBooks(): IBooksRepository.LoadBooksResult {
-        val failure = Math.random() < 0.35
+
+        val failure = Random.nextFloat() < 0.35
         return if (failure) {
-            val network = Math.random() < 0.5
+            val network = Random.nextFloat() < 0.5
             if (network) IBooksRepository.LoadBooksResult.Failure.Network
             else IBooksRepository.LoadBooksResult.Failure.Generic
         } else IBooksRepository.LoadBooksResult.Success(books)

@@ -1,5 +1,6 @@
 package com.onegravity.knot.sample.books
 
+import co.touchlab.kermit.Logger
 import com.onegravity.knot.sample.books.IBooksRepository.*
 import com.onegravity.knot.knot
 import com.onegravity.knot.knotState
@@ -21,7 +22,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
             proposal + DemoSideEffect("$proposal")
         }
         execute {
-//            Log.e("test", "Proposal was: ${it.s}")
+            Logger.withTag("knot").i("Proposal was: ${it.s}")
             null
         }
     }
