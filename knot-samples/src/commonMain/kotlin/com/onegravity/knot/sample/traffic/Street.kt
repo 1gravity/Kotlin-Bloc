@@ -1,4 +1,4 @@
-package com.genaku.reduce.traffic
+package com.onegravity.knot.sample.traffic
 
 import com.onegravity.knot.*
 import kotlinx.coroutines.CoroutineScope

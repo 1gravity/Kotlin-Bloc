@@ -26,6 +26,7 @@ kotlin {
             dependencies {
                 implementation(KotlinX.coroutines.core)
                 implementation(project(":knot-core"))
+
                 // Logging
                 implementation(Touchlab.kermit)
             }

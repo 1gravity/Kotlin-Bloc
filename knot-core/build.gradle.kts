@@ -29,15 +29,17 @@ kotlin {
                 // Redux store (https://reduxkotlin.org)
                 implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
 
+                // Essenty (https://github.com/arkivanov/Essenty)
                 implementation("com.arkivanov.essenty:lifecycle:_")
-
-                // Badoo's Reaktive library
-                implementation("com.badoo.reaktive:reaktive:_")
+                implementation("com.arkivanov.essenty:parcelable:_")
+                implementation("com.arkivanov.essenty:state-keeper:_")
+                implementation("com.arkivanov.essenty:instance-keeper:_")
+                implementation("com.arkivanov.essenty:back-pressed:_")
 
                 // Logging
                 implementation(Touchlab.kermit)
 
-                // https://github.com/michaelbull/kotlin-result
+                // Kotlin Result (https://github.com/michaelbull/kotlin-result)
                 implementation("com.michael-bull.kotlin-result:kotlin-result:_")
                 implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
             }

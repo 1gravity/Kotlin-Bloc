@@ -2,6 +2,8 @@ package com.genaku.reduce.traffic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.onegravity.knot.sample.traffic.Street
+import com.onegravity.knot.sample.traffic.TrafficLight
 
 class TrafficViewModel : ViewModel() {
 
