@@ -1,14 +1,17 @@
 package com.onegravity.knot.sample.books
 
 import co.touchlab.kermit.Logger
+import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.sample.books.IBooksRepository.*
 import com.onegravity.knot.knot
 import com.onegravity.knot.knotState
 import com.onegravity.knot.state.KnotState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 
-class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
+class BooksUseCase(
+    private val context: KnotContext,
+    private val repository: IBooksRepository,
+) : IBooksUseCase {
 
     private val commonState = knotState<BooksState>(BooksState.Empty)
 
@@ -16,7 +19,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
      * This is just an example how to "combine" two Knots.
      */
     data class DemoSideEffect(val s: String)
-    private val clearKnotPassThrough = knot<BooksState, BooksState, BooksState, DemoSideEffect> {
+    private val clearKnotPassThrough = knot<BooksState, BooksState, BooksState, DemoSideEffect>(context) {
         knotState = commonState
         reduce { _, proposal ->
             proposal + DemoSideEffect("$proposal")
@@ -29,7 +32,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     // This shows that the created [Knot] is also a [KnotState]
     private val clearKnotState: KnotState<BooksState, BooksState> = clearKnotPassThrough
 
-    private val clearKnot = knot<BooksState, ClearBookEvent, BooksState> {
+    private val clearKnot = knot<BooksState, ClearBookEvent, BooksState>(context) {
         knotState = clearKnotState
         reduce { state, event ->
             when (event) {
@@ -42,7 +45,7 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
         }
     }
 
-    private val loadKnot = knot<BooksState, BooksEvent, BooksState, BooksSideEffect> {
+    private val loadKnot = knot<BooksState, BooksEvent, BooksState, BooksSideEffect>(context) {
         knotState = commonState
         reduce { state, event ->
             when (event) {
@@ -74,12 +77,6 @@ class BooksUseCase(private val repository: IBooksRepository) : IBooksUseCase {
     }
 
     override val state = commonState
-
-    override fun start(coroutineScope: CoroutineScope) {
-        loadKnot.start(coroutineScope)
-        clearKnotPassThrough.start(coroutineScope)
-        clearKnot.start(coroutineScope)
-    }
 
     override fun load() {
         loadKnot.emit(BooksEvent.Load)

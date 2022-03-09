@@ -1,15 +1,15 @@
 package com.onegravity.knot.sample.sms
 
 import com.onegravity.knot.*
-import kotlinx.coroutines.CoroutineScope
+import com.onegravity.knot.context.KnotContext
 
 class SmsUseCase(
+    context: KnotContext,
     private val repository: ISmsRepository,
-    private val loadingUseCase: LoadingUseCase,
-    private val useCaseCoroutineScope : CoroutineScope
+    private val loadingUseCase: LoadingUseCase
 ) : ISmsUseCase {
 
-    private val smsKnot = knot<SmsState, SmsEvent> {
+    private val smsKnot = knot<SmsState, SmsEvent>(context) {
         initialState = SmsState.InputSms
         reduce { state, event ->
             when (state) {
@@ -31,8 +31,6 @@ class SmsUseCase(
                 SmsState.SmsConfirmed -> state.toEffect()
             }
         }
-    }.apply {
-        start(useCaseCoroutineScope)
     }
 
     private fun sendSms(sms: String) = SideEffect {

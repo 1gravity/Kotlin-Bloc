@@ -1,7 +1,7 @@
 package com.onegravity.knot.sample.traffic
 
 import com.onegravity.knot.*
-import kotlinx.coroutines.CoroutineScope
+import com.onegravity.knot.context.KnotContext
 import kotlinx.coroutines.delay
 
 sealed class StreetState {
@@ -35,11 +35,14 @@ sealed class StreetEvent {
     object Minus : StreetEvent()
 }
 
-class Street(private val delay: Long) {
+class Street(
+    context: KnotContext,
+    private val delay: Long
+) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val knot = knot<StreetState, StreetEvent> {
+    private val knot = knot<StreetState, StreetEvent>(context) {
         initialState = StreetState.Empty
         reduce { state, event ->
             when (state) {
@@ -49,7 +52,7 @@ class Street(private val delay: Long) {
                 }
                 is StreetState.Traffic -> when (event) {
                     StreetEvent.Minus -> (state - 1).toEffect()
-                    StreetEvent.Plus -> state + 1 + outStreet()
+                    StreetEvent.Plus -> (state + 1) + outStreet()
                 }
             }
         }
@@ -62,10 +65,6 @@ class Street(private val delay: Long) {
     }
 
     val state: Stream<StreetState> = knot
-
-    fun start(coroutineScope: CoroutineScope) {
-        knot.start(coroutineScope)
-    }
 
     fun setTrafficLight(trafficLight: TrafficLight) {
         this.trafficLight = trafficLight

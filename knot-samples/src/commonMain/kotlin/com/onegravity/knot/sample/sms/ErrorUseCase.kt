@@ -1,11 +1,11 @@
 package com.onegravity.knot.sample.sms
 
 import com.onegravity.knot.*
-import kotlinx.coroutines.CoroutineScope
+import com.onegravity.knot.context.KnotContext
 
-class ErrorUseCase() : JobSwitcher, IErrorUseCase {
+class ErrorUseCase(context: KnotContext) : IErrorUseCase {
 
-    private val errorKnot = knot<ErrorState, ErrorEvent> {
+    private val errorKnot = knot<ErrorState, ErrorEvent>(context) {
         initialState = ErrorState.NoError
         reduce { _, event ->
             when (event) {
@@ -25,11 +25,4 @@ class ErrorUseCase() : JobSwitcher, IErrorUseCase {
         errorKnot.emit(ErrorEvent.ClearError)
     }
 
-    override fun start(coroutineScope: CoroutineScope) {
-        errorKnot.start(coroutineScope)
-    }
-
-    override fun stop() {
-        errorKnot.stop()
-    }
 }

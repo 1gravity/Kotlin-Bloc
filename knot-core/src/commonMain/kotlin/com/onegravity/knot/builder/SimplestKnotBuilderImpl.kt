@@ -1,11 +1,13 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.SideEffect
+import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.knotState
 
-class SimplestKnotBuilderImpl<State, Event> :
-    SimplestKnotBuilder<State, Event>,
-    FullKnotBuilderImpl<State, Event, State, SideEffect<Event>>()
+class SimplestKnotBuilderImpl<State, Event>(
+    override val context: KnotContext
+) : SimplestKnotBuilder<State, Event>,
+    FullKnotBuilderImpl<State, Event, State, SideEffect<Event>>(context)
 {
 
     init {

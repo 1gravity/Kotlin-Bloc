@@ -1,9 +1,9 @@
 package com.genaku.reduce.station
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.onegravity.knot.SideEffect
 import com.onegravity.knot.Stream
+import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.knot
 import com.onegravity.knot.knotState
 import com.onegravity.knot.sample.station.BusEvent
@@ -12,9 +12,11 @@ import com.onegravity.knot.sample.station.StationState
 import com.onegravity.knot.sample.station.TrainEvent
 import kotlinx.coroutines.delay
 
-class StationViewModel : ViewModel() {
+class StationViewModel(context: KnotContext) : ViewModel() {
 
     private val stationState = knotState<StationState>(StationState.Empty)
+
+    val state: Stream<StationState> = stationState
 
     private val arrive = " arrive"
     private val departure = " departure"
@@ -34,7 +36,7 @@ class StationViewModel : ViewModel() {
         create(vehicle)
     }
 
-    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>> {
+    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>>(context) {
         knotState = stationState
 
         val bus = Vehicle("Bus", 800)
@@ -51,7 +53,7 @@ class StationViewModel : ViewModel() {
         execute { it.block.invoke() }
     }
 
-    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>> {
+    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>>(context) {
         knotState = stationState
 
         val train = Vehicle("Train", 600)
@@ -68,7 +70,7 @@ class StationViewModel : ViewModel() {
         execute { it.block.invoke() }
     }
 
-    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>> {
+    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>>(context) {
         knotState = stationState
         val lorry = Vehicle("Lorry", 250)
 
@@ -86,44 +88,14 @@ class StationViewModel : ViewModel() {
 
     private var case = 0
 
-    val state: Stream<StationState> = stationState
-
     fun switch() {
         when (case) {
-            0 -> {
-                lorryKnot.stop()
-                trainKnot.stop()
-                busKnot.start(viewModelScope)
-                busKnot.emit(BusEvent.Arrive("start"))
-            }
-            1 -> {
-                busKnot.stop()
-                trainKnot.stop()
-                lorryKnot.start(viewModelScope)
-                lorryKnot.emit(LorryEvent.Arrive("start"))
-            }
-            2 -> {
-                lorryKnot.stop()
-                busKnot.stop()
-                trainKnot.start(viewModelScope)
-                trainKnot.emit(TrainEvent.Arrive("start"))
-            }
-            else -> {
-                case = -1
-                stop()
-            }
+            0 -> busKnot.emit(BusEvent.Arrive("start"))
+            1 -> lorryKnot.emit(LorryEvent.Arrive("start"))
+            2 -> trainKnot.emit(TrainEvent.Arrive("start"))
+            else -> case = -1
         }
         case++
     }
 
-    private fun stop() {
-        busKnot.stop()
-        lorryKnot.stop()
-        trainKnot.stop()
-    }
-
-    override fun onCleared() {
-        stop()
-        super.onCleared()
-    }
 }

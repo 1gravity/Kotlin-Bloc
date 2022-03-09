@@ -49,7 +49,12 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation("androidx.activity:activity-ktx:1.4.0")
+                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+            }
+        }
         val androidTest by getting
 
         val iosMain by getting

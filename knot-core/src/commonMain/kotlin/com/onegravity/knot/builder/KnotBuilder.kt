@@ -1,11 +1,14 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
+import com.onegravity.knot.context.KnotContext
 
 /**
  * The base interface for all [Knot] builders.
  */
 interface KnotBuilder<State, Event, Proposal, SideEffect> {
+
+    val context: KnotContext
 
     fun build(): Knot<State, Event, Proposal, SideEffect>
 

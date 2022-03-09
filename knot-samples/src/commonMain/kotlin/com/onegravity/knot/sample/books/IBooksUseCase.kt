@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 interface IBooksUseCase {
     val state: Stream<BooksState>
 
-    fun start(coroutineScope: CoroutineScope)
     fun load()
     fun clear()
 }

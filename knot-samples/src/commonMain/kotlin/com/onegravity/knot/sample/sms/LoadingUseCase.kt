@@ -1,12 +1,13 @@
 package com.onegravity.knot.sample.sms
 
 import com.onegravity.knot.*
-import kotlinx.coroutines.CoroutineScope
+import com.onegravity.knot.context.KnotContext
 
-class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
+class LoadingUseCase(context: KnotContext, private val errorUseCase: ErrorUseCase) :
+    ILoadingUseCase,
     IErrorUseCase by errorUseCase {
 
-    private val loadingKnot = knot<LoadingState, LoadingEvent> {
+    private val loadingKnot = knot<LoadingState, LoadingEvent>(context) {
         initialState = LoadingState.Idle
         reduce { _, event ->
             when (event) {
@@ -17,16 +18,6 @@ class LoadingUseCase(private val errorUseCase: ErrorUseCase) : ILoadingUseCase,
     }
 
     override val loadingState: Stream<LoadingState> = loadingKnot
-
-    override fun start(coroutineScope: CoroutineScope) {
-        loadingKnot.start(coroutineScope)
-        errorUseCase.start(coroutineScope)
-    }
-
-    override fun stop() {
-        loadingKnot.stop()
-        errorUseCase.stop()
-    }
 
     override fun <T> processWrap(default: T, block: () -> T): T {
         loadingKnot.emit(LoadingEvent.Start)

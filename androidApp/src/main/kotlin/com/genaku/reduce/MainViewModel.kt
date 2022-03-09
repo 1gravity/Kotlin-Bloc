@@ -3,17 +3,18 @@ package com.genaku.reduce
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.onegravity.knot.Stream
+import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.knot
 import com.onegravity.knot.knotState
 import kotlinx.coroutines.delay
 
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(context: KnotContext) : ViewModel() {
 
     private val commonState = knotState(initialState = SampleState.FIRST)
 
-    private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect> {
+    private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect>(context) {
 
         knotState = commonState
 
@@ -34,10 +35,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    init {
-        knot.start(viewModelScope)
-    }
-
     val state: Stream<SampleState> = commonState
 
     fun d() {
@@ -47,11 +44,6 @@ class MainViewModel : ViewModel() {
                 knot.emit(SampleEvent.TWO)
             }
         }
-    }
-
-    override fun onCleared() {
-        knot.stop()
-        super.onCleared()
     }
 }
 

@@ -33,7 +33,6 @@ android {
 
 dependencies {
     implementation(project(":knot-core"))
-    implementation(project(":knot-extension"))
     implementation(project(":knot-samples"))
 
     implementation(Kotlin.stdlib)
