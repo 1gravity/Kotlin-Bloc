@@ -4,7 +4,6 @@ import com.onegravity.knot.state.KnotState
 import kotlinx.coroutines.CoroutineScope
 
 /**
- * TODO move all knot code into a shared module
  * TODO rename everything to BLoC
  * TODO implement the orbit demo app in BLoC
  */

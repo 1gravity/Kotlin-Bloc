@@ -1,5 +1,9 @@
 package com.genaku.reduce.sms
 
+import com.onegravity.knot.sample.sms.ErrorUseCase
+import com.onegravity.knot.sample.sms.ISmsRepository
+import com.onegravity.knot.sample.sms.LoadingUseCase
+
 object DI {
 
     val repository = object : ISmsRepository {

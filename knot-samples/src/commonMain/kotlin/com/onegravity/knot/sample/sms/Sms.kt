@@ -1,4 +1,4 @@
-package com.genaku.reduce.sms
+package com.onegravity.knot.sample.sms
 
 sealed class SmsState {
     object InputSms : SmsState()

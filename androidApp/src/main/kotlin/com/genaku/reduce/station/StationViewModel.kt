@@ -6,6 +6,10 @@ import com.onegravity.knot.SideEffect
 import com.onegravity.knot.Stream
 import com.onegravity.knot.knot
 import com.onegravity.knot.knotState
+import com.onegravity.knot.sample.station.BusEvent
+import com.onegravity.knot.sample.station.LorryEvent
+import com.onegravity.knot.sample.station.StationState
+import com.onegravity.knot.sample.station.TrainEvent
 import kotlinx.coroutines.delay
 
 class StationViewModel : ViewModel() {
@@ -43,6 +47,8 @@ class StationViewModel : ViewModel() {
                         arrive(bus) { BusEvent.Arrive("$it") }
             }
         }
+
+        execute { it.block.invoke() }
     }
 
     private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>> {
@@ -58,6 +64,8 @@ class StationViewModel : ViewModel() {
                         arrive(train) { TrainEvent.Arrive("$it") }
             }
         }
+
+        execute { it.block.invoke() }
     }
 
     private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>> {
@@ -72,6 +80,8 @@ class StationViewModel : ViewModel() {
                         arrive(lorry) { LorryEvent.Arrive("$it") }
             }
         }
+
+        execute { it.block.invoke() }
     }
 
     private var case = 0

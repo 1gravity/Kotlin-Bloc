@@ -37,7 +37,7 @@
         android:id="@+id/tvError"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Code is wrong"
+        android:text="Code is wrong (try 0101...)"
         android:textColor="@android:color/holo_red_light"
         android:visibility="gone"
         tools:visibility="visible" />

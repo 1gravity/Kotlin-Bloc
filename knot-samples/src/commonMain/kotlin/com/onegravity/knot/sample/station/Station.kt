@@ -1,4 +1,4 @@
-package com.genaku.reduce.station
+package com.onegravity.knot.sample.station
 
 sealed class StationState {
     object Empty : StationState()
@@ -28,3 +28,4 @@ sealed class LorryEvent {
     class Arrive(val name: String) : LorryEvent()
     class Leave(val name: String) : LorryEvent()
 }
+

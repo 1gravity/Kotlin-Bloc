@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val commonState = knotState<SampleState>(initialState = SampleState.FIRST)
+    private val commonState = knotState(initialState = SampleState.FIRST)
 
     private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect> {
 

@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.genaku.reduce.R
 import com.genaku.reduce.databinding.ActivitySmsBinding
+import com.onegravity.knot.sample.sms.ErrorState
+import com.onegravity.knot.sample.sms.LoadingState
+import com.onegravity.knot.sample.sms.SmsState
 import org.mym.plog.PLog
 
 class SmsActivity : AppCompatActivity(R.layout.activity_sms) {

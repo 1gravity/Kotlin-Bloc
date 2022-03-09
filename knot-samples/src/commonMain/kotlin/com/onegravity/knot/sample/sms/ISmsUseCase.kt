@@ -1,4 +1,4 @@
-package com.genaku.reduce.sms
+package com.onegravity.knot.sample.sms
 
 import com.onegravity.knot.*
 

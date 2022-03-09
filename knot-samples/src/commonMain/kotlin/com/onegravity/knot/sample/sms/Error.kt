@@ -1,4 +1,4 @@
-package com.genaku.reduce.sms
+package com.onegravity.knot.sample.sms
 
 interface IError{
     val msg: String
