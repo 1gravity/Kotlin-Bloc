@@ -20,8 +20,7 @@ class BooksUseCase(
      * This is just an example how to "combine" two Knots.
      */
     data class DemoSideEffect(val s: String)
-    private val clearKnotPassThrough = knot<BooksState, BooksState, BooksState, DemoSideEffect>(context) {
-        knotState = commonState
+    private val clearKnotPassThrough = knot<BooksState, BooksState, BooksState, DemoSideEffect>(context, commonState) {
         reduce { _, proposal ->
             proposal + DemoSideEffect("$proposal")
         }
@@ -33,8 +32,7 @@ class BooksUseCase(
     // This shows that the created [Knot] is also a [KnotState]
     private val clearKnotState: KnotState<BooksState, BooksState> = clearKnotPassThrough
 
-    private val clearKnot = knot<BooksState, ClearBookEvent, BooksState>(context) {
-        knotState = clearKnotState
+    private val clearKnot = knot<BooksState, ClearBookEvent, BooksState>(context, clearKnotState) {
         reduce { state, event ->
             when (event) {
                 ClearBookEvent.Clear -> when (state) {
@@ -46,8 +44,7 @@ class BooksUseCase(
         }
     }
 
-    private val loadKnot = knot<BooksState, BooksEvent, BooksState, BooksSideEffect>(context) {
-        knotState = commonState
+    private val loadKnot = knot<BooksState, BooksEvent, BooksState, BooksSideEffect>(context, commonState) {
         reduce { state, event ->
             when (event) {
                 BooksEvent.Load -> when (state) {

@@ -5,8 +5,7 @@ import com.onegravity.knot.context.KnotContext
 
 class ErrorUseCase(context: KnotContext) : IErrorUseCase {
 
-    private val errorKnot = knot<ErrorState, ErrorEvent>(context) {
-        initialState = ErrorState.NoError
+    private val errorKnot = knot<ErrorState, ErrorEvent>(context, ErrorState.NoError) {
         reduce { _, event ->
             when (event) {
                 ErrorEvent.ClearError -> ErrorState.NoError.toEffect()

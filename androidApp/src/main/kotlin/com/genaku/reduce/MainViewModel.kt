@@ -14,10 +14,7 @@ class MainViewModel(context: KnotContext) : ViewModel() {
 
     private val commonState = knotState(initialState = SampleState.FIRST)
 
-    private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect>(context) {
-
-        knotState = commonState
-
+    private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect>(context, commonState) {
         reduce { state, event ->
             when (event) {
                 SampleEvent.ONE -> state.toEffect()

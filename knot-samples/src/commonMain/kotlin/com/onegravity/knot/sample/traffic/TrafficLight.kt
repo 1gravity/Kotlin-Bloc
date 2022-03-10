@@ -28,8 +28,7 @@ class TrafficLight(
 
     private val commonState = knotState(TrafficState(false, 0))
 
-    private val knot = knot<TrafficState, TrafficEvent, TrafficState>(context) {
-        knotState = commonState
+    private val knot = knot<TrafficState, TrafficEvent, TrafficState>(context, commonState) {
         dispatcherReduce = Dispatchers.Default
         dispatcherSideEffect = Dispatchers.Default
 
@@ -44,7 +43,7 @@ class TrafficLight(
     }
 
     private fun startMovement() = SideEffect<TrafficEvent> {
-        //delay(delay)
+        delay(delay)
         if (commonState.value.on && commonState.value.cars > 0) {
             streetIn?.carOut()
             streetOut?.carIn()

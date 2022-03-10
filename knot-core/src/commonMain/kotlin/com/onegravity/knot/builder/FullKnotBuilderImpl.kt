@@ -7,31 +7,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 open class FullKnotBuilderImpl<State, Event, Proposal, SideEffect>(
-    override val context: KnotContext
+    protected open val _context: KnotContext,
+    private val _knotState: KnotState<State, Proposal>
 ) : FullKnotBuilder<State, Event, Proposal, SideEffect> {
 
-    private var _knotState: KnotState<State, Proposal>? = null
     private var _reducer: Reducer<State, Event, Proposal, SideEffect>? = null
     private var _executor: Executor<SideEffect, Event>? = null
     private var _dispatcherReduce: CoroutineContext = Dispatchers.Default
     private var _dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 
-    override fun build() = KnotImpl(
-        context = context,
-        knotState = checkNotNull(_knotState) { "knotState must be declared" },
+    fun build() = KnotImpl(
+        context = _context,
+        knotState = _knotState,
         reducer = checkNotNull(_reducer) { "reduce { } must be declared" },
         executor = _executor,
         dispatcherReduce = _dispatcherReduce,
         dispatcherSideEffect = _dispatcherSideEffect
     )
-
-    /** Set the initial state. */
-    override var knotState: KnotState<State, Proposal>
-        @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
-        get() = throw UnsupportedOperationException()
-        set(value) {
-            _knotState = value
-        }
 
     /** A section for [Event] related declarations. */
     final override fun reduce(reducer: Reducer<State, Event, Proposal, SideEffect>) {

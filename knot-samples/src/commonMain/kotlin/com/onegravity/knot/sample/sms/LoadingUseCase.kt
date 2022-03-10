@@ -7,8 +7,7 @@ class LoadingUseCase(context: KnotContext, private val errorUseCase: ErrorUseCas
     ILoadingUseCase,
     IErrorUseCase by errorUseCase {
 
-    private val loadingKnot = knot<LoadingState, LoadingEvent>(context) {
-        initialState = LoadingState.Idle
+    private val loadingKnot = knot<LoadingState, LoadingEvent>(context, LoadingState.Idle) {
         reduce { _, event ->
             when (event) {
                 LoadingEvent.Start -> LoadingState.Active.toEffect()

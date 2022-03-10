@@ -19,8 +19,7 @@ class Street(context: KnotContext, private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val knot = knot<StreetState, StreetEvent>(context) {
-        initialState = StreetState(0)
+    private val knot = knot<StreetState, StreetEvent>(context, StreetState(0)) {
         reduce { state, event ->
             val cars = state.cars
             when (event) {

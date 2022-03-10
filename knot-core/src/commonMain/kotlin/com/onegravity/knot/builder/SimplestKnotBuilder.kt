@@ -13,13 +13,5 @@ import com.onegravity.knot.*
  *       // do stuff (suspend function)
  *   }
  *   ```
- *
- * TODO Create contract to compile-time check whether all mandatory parameters have been provided
- *      (in this case the initialState, why do we use properties instead of functions?).
- *      Alternatively put the mandatory parameters into the DSL constructor.
  */
-interface SimplestKnotBuilder<State, Event> : KnotBuilder<State, Event, State, SideEffect<Event>> {
-
-    var initialState: State
-
-}
+interface SimplestKnotBuilder<State, Event> : KnotBuilder<State, Event, State, SideEffect<Event>>

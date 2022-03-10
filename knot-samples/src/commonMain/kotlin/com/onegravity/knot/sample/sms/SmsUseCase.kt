@@ -9,8 +9,7 @@ class SmsUseCase(
     private val loadingUseCase: LoadingUseCase
 ) : ISmsUseCase {
 
-    private val smsKnot = knot<SmsState, SmsEvent>(context) {
-        initialState = SmsState.InputSms
+    private val smsKnot = knot<SmsState, SmsEvent>(context, SmsState.InputSms) {
         reduce { state, event ->
             when (state) {
                 SmsState.InputSms -> when (event) {

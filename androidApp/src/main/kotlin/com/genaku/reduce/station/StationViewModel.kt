@@ -36,9 +36,7 @@ class StationViewModel(context: KnotContext) : ViewModel() {
         create(vehicle)
     }
 
-    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>>(context) {
-        knotState = stationState
-
+    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>>(context, stationState) {
         val bus = Vehicle("Bus", 800)
 
         reduce { _, event ->
@@ -53,9 +51,7 @@ class StationViewModel(context: KnotContext) : ViewModel() {
         execute { it.block.invoke() }
     }
 
-    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>>(context) {
-        knotState = stationState
-
+    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>>(context, stationState) {
         val train = Vehicle("Train", 600)
 
         reduce { _, event ->
@@ -70,8 +66,7 @@ class StationViewModel(context: KnotContext) : ViewModel() {
         execute { it.block.invoke() }
     }
 
-    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>>(context) {
-        knotState = stationState
+    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>>(context, stationState) {
         val lorry = Vehicle("Lorry", 250)
 
         reduce { _, event ->

@@ -1,7 +1,6 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
-import com.onegravity.knot.state.KnotState
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -16,9 +15,6 @@ import kotlin.coroutines.CoroutineContext
  */
 interface SimplerKnotBuilder<State, Event, Proposal> :
     KnotBuilder<State, Event, Proposal, SideEffect<Event>> {
-
-    /** Set the [KnotState]. */
-    var knotState: KnotState<State, Proposal>
 
     /** Set coroutine context dispatcher for the reduce function. */
     var dispatcherReduce: CoroutineContext
