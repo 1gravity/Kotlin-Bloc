@@ -1,28 +1,15 @@
 package com.genaku.reduce.traffic
 
-import androidx.lifecycle.*
-import com.onegravity.knot.context.DefaultKnotContext
-import com.onegravity.knot.context.KnotContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import com.genaku.reduce.BaseViewModel
+import com.onegravity.knot.ActivityKnotContext
 import com.onegravity.knot.sample.traffic.Traffic
 
-class TrafficViewModel(val context: KnotContext) : ViewModel() {
+class TrafficViewModel(val context: ActivityKnotContext) : BaseViewModel(context) {
 
-    private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry()
-
-    private val viewModelContext = DefaultKnotContext(
-        lifecycle = lifecycleRegistry,
-        coroutineScope = viewModelScope,
-        stateKeeper = context.stateKeeper,
-        instanceKeeper = context.instanceKeeper,
-        backPressedHandler = context.backPressedHandler
-    )
+    private val lifecycleRegistry = LifecycleRegistry()
 
     private val traffic = Traffic(viewModelContext)
-
-    init {
-        lifecycleRegistry.onCreate()
-    }
 
     override fun onCleared() {
         super.onCleared()

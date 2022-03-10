@@ -7,7 +7,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
 import com.genaku.reduce.databinding.ActivitySmsBinding
-import com.onegravity.knot.context.defaultKnotContext
+import com.onegravity.knot.defaultKnotContext
 import com.onegravity.knot.sample.sms.ErrorState
 import com.onegravity.knot.sample.sms.LoadingState
 import com.onegravity.knot.sample.sms.SmsState

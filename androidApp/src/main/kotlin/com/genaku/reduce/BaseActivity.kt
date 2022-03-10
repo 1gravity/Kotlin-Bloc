@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.onegravity.knot.ActivityKnotContext
 
 open class BaseActivity : AppCompatActivity {
 

@@ -19,6 +19,10 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
     private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
     private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 ) : Knot<State, Event, Proposal, SideEffect> {
+
+    private val events = Channel<Event>(UNLIMITED)
+    private val sideEffects = Channel<SideEffect>(UNLIMITED)
+
     init {
         context.lifecycle.doOnCreate {
             Logger.withTag("knot").i("doOnCreate -> start Knot")
@@ -30,14 +34,10 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
         }
     }
 
-    private val events = Channel<Event>(UNLIMITED)
-    private val sideEffects = Channel<SideEffect>(UNLIMITED)
-
     private var eventsJob: Job? = null
     private var sideEffectJob: Job? = null
 
-    override val value: State
-        get() = knotState.value
+    override val value = knotState.value
 
     override fun emit(value: Event) {
         Logger.withTag("knot").i("emit $value / ${this.hashCode()}")

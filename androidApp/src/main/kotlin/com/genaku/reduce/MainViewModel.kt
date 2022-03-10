@@ -1,20 +1,18 @@
 package com.genaku.reduce
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.onegravity.knot.ActivityKnotContext
 import com.onegravity.knot.Stream
-import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.knot
 import com.onegravity.knot.knotState
 import kotlinx.coroutines.delay
-
 import kotlinx.coroutines.launch
 
-class MainViewModel(context: KnotContext) : ViewModel() {
+class MainViewModel(context: ActivityKnotContext) : BaseViewModel(context) {
 
     private val commonState = knotState(initialState = SampleState.FIRST)
 
-    private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect>(context, commonState) {
+    private val knot = knot<SampleState, SampleEvent, SampleState, SampleSideEffect>(viewModelContext, commonState) {
         reduce { state, event ->
             when (event) {
                 SampleEvent.ONE -> state.toEffect()

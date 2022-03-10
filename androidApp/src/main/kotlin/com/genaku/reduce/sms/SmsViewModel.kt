@@ -1,7 +1,7 @@
 package com.genaku.reduce.sms
 
-import androidx.lifecycle.ViewModel
-import com.onegravity.knot.context.KnotContext
+import com.genaku.reduce.BaseViewModel
+import com.onegravity.knot.ActivityKnotContext
 import com.onegravity.knot.sample.sms.ErrorUseCase
 import com.onegravity.knot.sample.sms.ISmsRepository
 import com.onegravity.knot.sample.sms.LoadingUseCase
@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 
-class SmsViewModel(context: KnotContext): ViewModel() {
+class SmsViewModel(context: ActivityKnotContext): BaseViewModel(context) {
 
     private val useCaseCoroutineScope : CoroutineScope = CoroutineScope(Job())
 
@@ -21,8 +21,8 @@ class SmsViewModel(context: KnotContext): ViewModel() {
         }
     }
 
-    val loadingUseCase = LoadingUseCase(context, ErrorUseCase(context))
-    val smsUseCase = SmsUseCase(context, repository, loadingUseCase)
+    val loadingUseCase = LoadingUseCase(viewModelContext, ErrorUseCase(viewModelContext))
+    val smsUseCase = SmsUseCase(viewModelContext, repository, loadingUseCase)
 
     override fun onCleared() {
         useCaseCoroutineScope.cancel()

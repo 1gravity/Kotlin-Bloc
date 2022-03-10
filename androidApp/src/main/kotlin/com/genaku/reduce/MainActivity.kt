@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.onegravity.knot.context.defaultKnotContext
+import com.onegravity.knot.defaultKnotContext
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {

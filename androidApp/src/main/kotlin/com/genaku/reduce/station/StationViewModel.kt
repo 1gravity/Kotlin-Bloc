@@ -1,18 +1,14 @@
 package com.genaku.reduce.station
 
-import androidx.lifecycle.ViewModel
-import com.onegravity.knot.SideEffect
-import com.onegravity.knot.Stream
-import com.onegravity.knot.context.KnotContext
-import com.onegravity.knot.knot
-import com.onegravity.knot.knotState
+import com.genaku.reduce.BaseViewModel
+import com.onegravity.knot.*
 import com.onegravity.knot.sample.station.BusEvent
 import com.onegravity.knot.sample.station.LorryEvent
 import com.onegravity.knot.sample.station.StationState
 import com.onegravity.knot.sample.station.TrainEvent
 import kotlinx.coroutines.delay
 
-class StationViewModel(context: KnotContext) : ViewModel() {
+class StationViewModel(context: ActivityKnotContext) : BaseViewModel(context) {
 
     private val stationState = knotState<StationState>(StationState.Empty)
 
@@ -36,7 +32,7 @@ class StationViewModel(context: KnotContext) : ViewModel() {
         create(vehicle)
     }
 
-    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>>(context, stationState) {
+    private val busKnot = knot<StationState, BusEvent, StationState, SideEffect<BusEvent>>(viewModelContext, stationState) {
         val bus = Vehicle("Bus", 800)
 
         reduce { _, event ->
@@ -51,7 +47,7 @@ class StationViewModel(context: KnotContext) : ViewModel() {
         execute { it.block.invoke() }
     }
 
-    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>>(context, stationState) {
+    private val trainKnot = knot<StationState, TrainEvent, StationState, SideEffect<TrainEvent>>(viewModelContext, stationState) {
         val train = Vehicle("Train", 600)
 
         reduce { _, event ->
@@ -66,7 +62,7 @@ class StationViewModel(context: KnotContext) : ViewModel() {
         execute { it.block.invoke() }
     }
 
-    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>>(context, stationState) {
+    private val lorryKnot = knot<StationState, LorryEvent, StationState, SideEffect<LorryEvent>>(viewModelContext, stationState) {
         val lorry = Vehicle("Lorry", 250)
 
         reduce { _, event ->

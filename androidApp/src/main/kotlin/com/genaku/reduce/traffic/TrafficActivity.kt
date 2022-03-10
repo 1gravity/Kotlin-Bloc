@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
-import com.onegravity.knot.context.defaultKnotContext
+import com.onegravity.knot.defaultKnotContext
 import kotlinx.coroutines.launch
 
 class TrafficActivity : BaseActivity() {
