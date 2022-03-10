@@ -1,5 +1,6 @@
 package com.onegravity.knot
 
+import co.touchlab.kermit.Logger
 import com.arkivanov.essenty.lifecycle.doOnCreate
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.onegravity.knot.context.KnotContext
@@ -18,12 +19,13 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
     private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
     private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 ) : Knot<State, Event, Proposal, SideEffect> {
-
     init {
         context.lifecycle.doOnCreate {
+            Logger.withTag("knot").i("doOnCreate -> start Knot")
             start(context.coroutineScope)
         }
         context.lifecycle.doOnDestroy {
+            Logger.withTag("knot").i("doOnDestroy -> stop Knot")
             stop()
         }
     }
@@ -38,6 +40,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
         get() = knotState.value
 
     override fun emit(value: Event) {
+        Logger.withTag("knot").i("emit $value / ${this.hashCode()}")
         events.trySend(value)
     }
 
@@ -50,6 +53,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
         eventsJob = coroutineScope.launch(dispatcherReduce) {
             for (event in events) {
+                Logger.withTag("knot").i("processing event $event")
                 val effect = reducer.invoke(knotState.value, event)
                 knotState.emit(effect.proposal)
                 effect.sideEffects.forEach { sideEffects.send(it) }
@@ -58,6 +62,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
         sideEffectJob = coroutineScope.launch(dispatcherSideEffect) {
             for (sideEffect in sideEffects) {
+                Logger.withTag("knot").i("processing sideEffect $sideEffect")
                 when (executor) {
                     null -> throw IllegalStateException("Side effect created but no executor defined")
                     else -> executor.invoke(sideEffect)?.also { events.send(it) }

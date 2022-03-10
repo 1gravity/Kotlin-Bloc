@@ -51,8 +51,14 @@ dependencies {
     implementation(Google.android.material)
 
     implementation("com.github.kirich1409:viewbindingpropertydelegate:_")
-    implementation("com.github.genaku.Android-PLog:plog-core:_")
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
+
+    // Essenty (https://github.com/arkivanov/Essenty)
+    implementation("com.arkivanov.essenty:lifecycle:_")
+    implementation("com.arkivanov.essenty:parcelable:_")
+    implementation("com.arkivanov.essenty:state-keeper:_")
+    implementation("com.arkivanov.essenty:instance-keeper:_")
+    implementation("com.arkivanov.essenty:back-pressed:_")
 
     testImplementation(Testing.kotest.runner.junit5)
     testImplementation(KotlinX.coroutines.test)

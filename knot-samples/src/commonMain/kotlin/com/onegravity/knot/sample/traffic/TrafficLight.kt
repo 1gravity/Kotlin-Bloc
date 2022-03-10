@@ -35,13 +35,7 @@ class TrafficLight(
 
         reduce { state, event ->
             when (event) {
-                TrafficEvent.Minus -> {
-                    if (state.cars > 0) {
-                        state.copy(cars = state.cars - 1) + startMovement()
-                    } else {
-                        state.toEffect()
-                    }
-                }
+                TrafficEvent.Minus -> state.copy(cars = (state.cars - 1).coerceAtLeast(0)) + startMovement()
                 TrafficEvent.Plus -> state.copy(cars = state.cars + 1) + startMovement()
                 TrafficEvent.Off -> state.copy(on = false).toEffect()
                 TrafficEvent.On -> state.copy(on = true) + startMovement()
@@ -50,8 +44,8 @@ class TrafficLight(
     }
 
     private fun startMovement() = SideEffect<TrafficEvent> {
+        //delay(delay)
         if (commonState.value.on && commonState.value.cars > 0) {
-            delay(delay)
             streetIn?.carOut()
             streetOut?.carIn()
             TrafficEvent.Minus

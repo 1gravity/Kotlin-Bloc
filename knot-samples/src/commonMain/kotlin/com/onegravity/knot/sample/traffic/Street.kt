@@ -22,12 +22,10 @@ class Street(context: KnotContext, private val delay: Long) {
     private val knot = knot<StreetState, StreetEvent>(context) {
         initialState = StreetState(0)
         reduce { state, event ->
+            val cars = state.cars
             when (event) {
-                StreetEvent.Plus -> state.copy(cars = state.cars + 1) + outStreet()
-                StreetEvent.Minus -> when (state.cars) {
-                    0 -> state.toEffect()
-                    else -> state.copy(cars = (state.cars - 1)) + outStreet()
-                }
+                StreetEvent.Plus -> state.copy(cars = cars + 1) + outStreet()
+                StreetEvent.Minus -> state.copy(cars = (cars - 1).coerceAtLeast(0)).toEffect()
             }
         }
     }

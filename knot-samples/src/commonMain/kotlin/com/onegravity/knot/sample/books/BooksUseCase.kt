@@ -5,11 +5,12 @@ import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.sample.books.IBooksRepository.*
 import com.onegravity.knot.knot
 import com.onegravity.knot.knotState
+import com.onegravity.knot.sample.booksRedux.IBooksUseCase
 import com.onegravity.knot.state.KnotState
 import kotlinx.coroutines.delay
 
 class BooksUseCase(
-    private val context: KnotContext,
+    context: KnotContext,
     private val repository: IBooksRepository,
 ) : IBooksUseCase {
 

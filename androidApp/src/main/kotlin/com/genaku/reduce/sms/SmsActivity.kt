@@ -11,7 +11,6 @@ import com.onegravity.knot.context.defaultKnotContext
 import com.onegravity.knot.sample.sms.ErrorState
 import com.onegravity.knot.sample.sms.LoadingState
 import com.onegravity.knot.sample.sms.SmsState
-import org.mym.plog.PLog
 
 class SmsActivity : BaseActivity(R.layout.activity_sms) {
 
@@ -40,7 +39,6 @@ class SmsActivity : BaseActivity(R.layout.activity_sms) {
             progress(it == LoadingState.Active)
         }
         observeState(viewModel.loadingUseCase.errorState) {
-            PLog.d("error: $it")
             error(it != ErrorState.NoError)
         }
     }
@@ -61,7 +59,6 @@ class SmsActivity : BaseActivity(R.layout.activity_sms) {
     }
 
     private fun error(visible: Boolean) {
-        PLog.d("error $visible")
         viewBinding.tvError.visibility = if (visible) View.VISIBLE else View.GONE
     }
 }

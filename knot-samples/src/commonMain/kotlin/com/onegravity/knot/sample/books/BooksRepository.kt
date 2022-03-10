@@ -5,7 +5,6 @@ import kotlin.random.Random
 class BooksRepository : IBooksRepository {
 
     override fun loadBooks(): IBooksRepository.LoadBooksResult {
-
         val failure = Random.nextFloat() < 0.35
         return if (failure) {
             val network = Random.nextFloat() < 0.5
