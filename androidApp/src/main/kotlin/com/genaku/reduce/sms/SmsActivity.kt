@@ -7,7 +7,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
 import com.genaku.reduce.databinding.ActivitySmsBinding
-import com.onegravity.knot.defaultKnotContext
+import com.onegravity.knot.activityKnotContext
 import com.onegravity.knot.sample.sms.ErrorState
 import com.onegravity.knot.sample.sms.LoadingState
 import com.onegravity.knot.sample.sms.SmsState
@@ -17,7 +17,7 @@ class SmsActivity : BaseActivity(R.layout.activity_sms) {
     private val viewBinding by viewBinding(ActivitySmsBinding::bind)
 
     private val viewModel: SmsViewModel by viewModels {
-        viewModelFactory { SmsViewModel(defaultKnotContext()) }
+        viewModelFactory { SmsViewModel(activityKnotContext()) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

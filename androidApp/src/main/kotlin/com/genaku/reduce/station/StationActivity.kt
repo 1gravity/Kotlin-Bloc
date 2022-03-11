@@ -7,13 +7,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
-import com.onegravity.knot.defaultKnotContext
+import com.onegravity.knot.activityKnotContext
 import kotlinx.coroutines.launch
 
 class StationActivity : BaseActivity() {
 
     private val viewModel: StationViewModel by viewModels {
-        viewModelFactory { StationViewModel(defaultKnotContext()) }
+        viewModelFactory { StationViewModel(activityKnotContext()) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

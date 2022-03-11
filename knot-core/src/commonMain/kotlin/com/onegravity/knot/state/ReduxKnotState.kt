@@ -7,6 +7,7 @@ import com.onegravity.knot.Mapper
 import com.onegravity.knot.Selector
 import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.select.select
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.reduxkotlin.Store
@@ -19,6 +20,8 @@ class ReduxKnotState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
     private val acceptor: Acceptor<Model, State>,
     private val mapper: Mapper<Model, State>
 ) : KnotState<State, Proposal> {
+
+    private val state = MutableStateFlow(initialState)
 
     init {
         context.lifecycle.doOnCreate {
@@ -33,8 +36,6 @@ class ReduxKnotState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
             }
         }
     }
-
-    private val state = MutableStateFlow(initialState)
 
     /**
      * The Stream<State>.

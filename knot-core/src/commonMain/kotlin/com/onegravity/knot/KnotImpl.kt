@@ -25,12 +25,13 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
     init {
         context.lifecycle.doOnCreate {
-            Logger.withTag("knot").i("doOnCreate -> start Knot")
+            Logger.withTag("knot").d("doOnCreate -> start Knot")
             start(context.coroutineScope)
         }
         context.lifecycle.doOnDestroy {
-            Logger.withTag("knot").i("doOnDestroy -> stop Knot")
-            stop()
+            Logger.withTag("knot").d("doOnDestroy -> stop Knot")
+            // note: we don't need to cancel the jobs
+            // they will be cancelled automatically when the parent CoroutineScope completes
         }
     }
 
@@ -40,7 +41,7 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
     override val value = knotState.value
 
     override fun emit(value: Event) {
-        Logger.withTag("knot").i("emit $value / ${this.hashCode()}")
+        Logger.withTag("knot").d("emit $value")
         events.trySend(value)
     }
 
@@ -49,31 +50,26 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
     }
 
     private fun start(coroutineScope: CoroutineScope) {
-        stop()
-
         eventsJob = coroutineScope.launch(dispatcherReduce) {
             for (event in events) {
-                Logger.withTag("knot").i("processing event $event")
+                Logger.withTag("knot").d("processing event $event")
                 val effect = reducer.invoke(knotState.value, event)
                 knotState.emit(effect.proposal)
                 effect.sideEffects.forEach { sideEffects.send(it) }
             }
+            Logger.withTag("knot").d("processing event DONE")
         }
 
         sideEffectJob = coroutineScope.launch(dispatcherSideEffect) {
             for (sideEffect in sideEffects) {
-                Logger.withTag("knot").i("processing sideEffect $sideEffect")
+                Logger.withTag("knot").d("processing sideEffect $sideEffect")
                 when (executor) {
                     null -> throw IllegalStateException("Side effect created but no executor defined")
                     else -> executor.invoke(sideEffect)?.also { events.send(it) }
                 }
             }
+            Logger.withTag("knot").d("processing sideEffect DONE")
         }
-    }
-
-    private fun stop() {
-        eventsJob?.cancel("")?.also { eventsJob = null }
-        sideEffectJob?.cancel("")?.also { sideEffectJob = null }
     }
 
 }

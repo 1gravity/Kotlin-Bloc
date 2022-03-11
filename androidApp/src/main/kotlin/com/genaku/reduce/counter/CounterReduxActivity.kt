@@ -5,19 +5,19 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
-import com.genaku.reduce.databinding.ActivityCounterBinding
-import com.onegravity.knot.defaultKnotContext
+import com.genaku.reduce.databinding.ActivityCounterReduxBinding
+import com.onegravity.knot.activityKnotContext
 
-class CounterActivity : BaseActivity() {
+class CounterReduxActivity : BaseActivity() {
 
-    private val viewModel: CounterViewModel by viewModels {
-        viewModelFactory { CounterViewModel(defaultKnotContext()) }
+    private val viewModel: CounterReduxViewModel by viewModels {
+        viewModelFactory { CounterReduxViewModel(activityKnotContext()) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityCounterBinding>(this, R.layout.activity_counter)
+        val binding = DataBindingUtil.setContentView<ActivityCounterReduxBinding>(this, R.layout.activity_counter_redux)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         setContentView(binding.root)

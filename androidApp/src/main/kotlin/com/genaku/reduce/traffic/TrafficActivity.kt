@@ -8,13 +8,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
-import com.onegravity.knot.defaultKnotContext
+import com.onegravity.knot.activityKnotContext
 import kotlinx.coroutines.launch
 
 class TrafficActivity : BaseActivity() {
 
     private val viewModel: TrafficViewModel by viewModels {
-        viewModelFactory { TrafficViewModel(defaultKnotContext()) }
+        viewModelFactory { TrafficViewModel(activityKnotContext()) }
     }
 
     private var cars = 0
