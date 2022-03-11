@@ -2,7 +2,6 @@ package com.onegravity.knot.sample.traffic
 
 import com.onegravity.knot.*
 import com.onegravity.knot.context.KnotContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 
 data class TrafficState(val on: Boolean, val cars: Int) {
@@ -28,10 +27,7 @@ class TrafficLight(
 
     private val commonState = knotState(TrafficState(false, 0))
 
-    private val knot = knot<TrafficState, TrafficEvent, TrafficState>(context, commonState) {
-        dispatcherReduce = Dispatchers.Default
-        dispatcherSideEffect = Dispatchers.Default
-
+    private val knot = knot<TrafficState, TrafficEvent>(context, commonState) {
         reduce { state, event ->
             when (event) {
                 TrafficEvent.Minus -> state.copy(cars = (state.cars - 1).coerceAtLeast(0)) + startMovement()

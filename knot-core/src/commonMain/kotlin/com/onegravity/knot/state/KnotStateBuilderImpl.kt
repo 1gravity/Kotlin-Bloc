@@ -7,7 +7,7 @@ class KnotStateBuilderImpl<State, Proposal> : KnotStateBuilder<State, Proposal> 
     private var _initialState: State? = null
     private var _acceptor: Acceptor<Proposal, State>? = null
 
-    override fun build() = KnotStateImpl(
+    fun build() = KnotStateImpl(
         initialState = checkNotNull(_initialState) { "initialState must be declared" },
         acceptor = checkNotNull(_acceptor) { "accept { } must be declared" },
     )

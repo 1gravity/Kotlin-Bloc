@@ -1,9 +1,7 @@
 package com.onegravity.knot.sample.counter
 
-import com.onegravity.knot.Effect
+import com.onegravity.knot.*
 import com.onegravity.knot.context.KnotContext
-import com.onegravity.knot.knot
-import com.onegravity.knot.state.ReduxKnotState
 
 object ReduxCounter {
     sealed class Event {
@@ -13,14 +11,7 @@ object ReduxCounter {
 
     fun knot(context: KnotContext) = knot<Int, Event, ReduxEvent, Nothing>(
         context,
-        ReduxKnotState(
-            context = context,
-            initialState = 1,
-            store = reduxStore,
-            selector = { state -> state },
-            acceptor = { proposal, _ -> proposal },
-            mapper = { it }
-        )
+        reduxStore.toKnotState(context, 1) { state -> state }
     ) {
         reduce { _, event ->
             when (event) {
@@ -31,7 +22,6 @@ object ReduxCounter {
     }
 }
 
-// TODO ReduxKnotState finalize design + create a reduxKnotState builder
 // TODO think about the initial value, who/what provides it?
 // TODO implement the books example the classic way and using Redux, also try to load the books from a Rest API
 // TODO navigation, routing!

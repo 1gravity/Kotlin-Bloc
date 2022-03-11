@@ -14,8 +14,7 @@ open class KnotStateImpl<State, Proposal>(
     /**
      * The Stream<Model>.
      */
-    override val value: State
-        get() = state.value
+    override val value: State = state.value
 
     override suspend fun collect(collector: FlowCollector<State>) {
         state.collect(collector)

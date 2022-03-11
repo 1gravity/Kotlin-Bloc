@@ -3,6 +3,7 @@ package com.onegravity.knot
 import com.onegravity.knot.builder.*
 import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.state.*
+import org.reduxkotlin.Store
 import kotlin.jvm.JvmName
 
 /**
@@ -14,35 +15,35 @@ fun <State, Event, Proposal, SideEffect> knot(
     knotState: KnotState<State, Proposal>,
     block: FullKnotBuilder<State, Event, Proposal, SideEffect>.() -> Unit
 ): Knot<State, Event, Proposal, SideEffect> =
-    FullKnotBuilderImpl<State, Event, Proposal, SideEffect>(context, knotState)
+    FullKnotBuilderImpl<State, Event, Proposal, SideEffect>()
     .also(block)
-    .build()
+    .build(context, knotState)
 
 /**
- * Creates a [Knot] instance using a [SimplerKnotBuilder]
+ * Creates a [Knot] instance using a [SimpleKnotBuilder]
  */
 @JvmName("simplerKnot")
-fun <State, Event, Proposal> knot(
+fun <State, Event> knot(
     context: KnotContext,
-    knotState: KnotState<State, Proposal>,
-    block: SimplerKnotBuilder<State, Event, Proposal>.() -> Unit
-): Knot<State, Event, Proposal, SideEffect<Event>> =
-    SimplerKnotBuilderImpl<State, Event, Proposal>(context, knotState)
+    knotState: KnotState<State, State>,
+    block: SimpleKnotBuilder<State, Event>.() -> Unit
+): Knot<State, Event, State, SideEffect<Event>> =
+    SimpleKnotBuilderImpl<State, Event>()
         .also(block)
-        .build()
+        .build(context, knotState)
 
 /**
- * Creates a [Knot] instance using a [SimplestKnotBuilder].
+ * Creates a [Knot] instance using a [SimpleKnotBuilder].
  */
 @JvmName("simplestKnot")
 fun <State, Event> knot(
     context: KnotContext,
     initialState: State,
-    block: SimplestKnotBuilder<State, Event>.() -> Unit
+    block: SimpleKnotBuilder<State, Event>.() -> Unit
 ): Knot<State, Event, State, SideEffect<Event>> =
-    SimplestKnotBuilderImpl<State, Event>(context, initialState)
+    SimpleKnotBuilderImpl<State, Event>()
     .also(block)
-    .build()
+    .build(context, knotState(initialState))
 
 /**
  * Creates a [KnotState] instance using a [SimpleKnotStateBuilder]
@@ -84,3 +85,29 @@ fun <State, Proposal> knotState(
     KnotStateBuilderImpl<State, Proposal>()
         .also(block)
         .build()
+
+/**
+ * Creates a [KnotState] instance using a [KnotStateBuilder]
+ */
+@JvmName("reduxKnotState")
+fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxKnotState(
+    context: KnotContext,
+    store: Store<ReduxModel>,
+    block: ReduxKnotStateBuilder<State, Model, ReduxModel>.() -> Unit
+): KnotState<State, Proposal> =
+    ReduxKnotStateBuilderImpl<State, Model, ReduxModel>()
+        .also(block)
+        .build(context, store)
+
+/**
+ * Creates a [KnotState] instance using a [KnotStateBuilder]
+ */
+@JvmName("simpleReduxKnotState")
+fun <State: Any, Proposal: Any, ReduxModel: Any> simpleReduxKnotState(
+    context: KnotContext,
+    store: Store<ReduxModel>,
+    block: ReduxSimpleKnotStateBuilder<State, ReduxModel>.() -> Unit
+): KnotState<State, Proposal> =
+    ReduxSimpleKnotStateBuilderImpl<State, ReduxModel>()
+        .also(block)
+        .build(context, store)

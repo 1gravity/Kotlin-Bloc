@@ -14,4 +14,4 @@ import com.onegravity.knot.*
  *   }
  *   ```
  */
-interface SimplestKnotBuilder<State, Event> : KnotBuilder<State, Event, State, SideEffect<Event>>
+interface SimpleKnotBuilder<State, Event> : KnotBuilder<State, Event, State, SideEffect<Event>>

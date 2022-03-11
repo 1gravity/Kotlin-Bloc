@@ -32,7 +32,7 @@ class BooksUseCase(
     // This shows that the created [Knot] is also a [KnotState]
     private val clearKnotState: KnotState<BooksState, BooksState> = clearKnotPassThrough
 
-    private val clearKnot = knot<BooksState, ClearBookEvent, BooksState>(context, clearKnotState) {
+    private val clearKnot = knot<BooksState, ClearBookEvent>(context, clearKnotState) {
         reduce { state, event ->
             when (event) {
                 ClearBookEvent.Clear -> when (state) {
