@@ -25,11 +25,11 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
 
     init {
         context.lifecycle.doOnCreate {
-            Logger.withTag("knot").d("doOnCreate -> start Knot")
+            Logger.withTag("knot").d("onCreate -> start Knot")
             start(context.coroutineScope)
         }
         context.lifecycle.doOnDestroy {
-            Logger.withTag("knot").d("doOnDestroy -> stop Knot")
+            Logger.withTag("knot").d("onDestroy -> stop Knot")
             // note: we don't need to cancel the jobs
             // they will be cancelled automatically when the parent CoroutineScope completes
         }

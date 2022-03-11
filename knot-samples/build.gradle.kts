@@ -28,6 +28,13 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
                 implementation(project(":knot-core"))
 
+                // Redux store (https://reduxkotlin.org)
+                implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
+                implementation("org.reduxkotlin:redux-kotlin-thunk:_")
+
+                // Reaktive (https://github.com/badoo/Reaktive)
+                implementation("com.badoo.reaktive:reaktive:_")
+
                 // Essenty (https://github.com/arkivanov/Essenty)
                 implementation("com.arkivanov.essenty:lifecycle:_")
                 implementation("com.arkivanov.essenty:parcelable:_")
@@ -35,16 +42,12 @@ kotlin {
                 implementation("com.arkivanov.essenty:instance-keeper:_")
                 implementation("com.arkivanov.essenty:back-pressed:_")
 
-                // Redux store (https://reduxkotlin.org)
-                implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
-                implementation("org.reduxkotlin:redux-kotlin-thunk:_")
+                // Logging (https://github.com/touchlab/Kermit)
+                implementation(Touchlab.kermit)
 
                 // Kotlin Result (https://github.com/michaelbull/kotlin-result)
                 implementation("com.michael-bull.kotlin-result:kotlin-result:_")
                 implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
-
-                // Logging
-                implementation(Touchlab.kermit)
             }
         }
         val commonTest by getting {
