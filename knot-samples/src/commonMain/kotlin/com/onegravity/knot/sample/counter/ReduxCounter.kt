@@ -22,7 +22,7 @@ object ReduxCounter {
     }
 }
 
-// TODO think about the initial value, who/what provides it?
 // TODO implement the books example the classic way and using Redux, also try to load the books from a Rest API
+// TODO think about the initial value, who/what provides it?
 // TODO navigation, routing!
 // TODO iOS

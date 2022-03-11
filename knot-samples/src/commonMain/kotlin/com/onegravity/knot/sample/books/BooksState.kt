@@ -1,24 +1,20 @@
 package com.onegravity.knot.sample.books
 
-sealed class BooksState {
-    object Empty : BooksState()
-    object Loading : BooksState()
-    data class Content(val books: List<Book>) : BooksState()
-    data class BooksError(val message: String) : BooksState()
-}
-
 data class Book(val title: String, val year: String)
 
-sealed class BooksSideEffect {
-    object Load : BooksSideEffect()
+sealed class BookState {
+    object Empty : BookState()
+    object Loading : BookState()
+    data class Loaded(val books: List<Book>) : BookState()
+    data class Failure(val message: String) : BookState()
 }
 
-sealed class BooksEvent {
-    object Load : BooksEvent()
-    class Success(val books: List<Book>) : BooksEvent()
-    class Failure(val message: String) : BooksEvent()
+sealed class BookSideEffect {
+    object Load : BookSideEffect()
 }
 
-sealed class ClearBookEvent {
-    object Clear : ClearBookEvent()
+sealed class BookEvent {
+    object Load : BookEvent()
+    object Clear : BookEvent()
+    class LoadComplete(val result: BookResult) : BookEvent()
 }

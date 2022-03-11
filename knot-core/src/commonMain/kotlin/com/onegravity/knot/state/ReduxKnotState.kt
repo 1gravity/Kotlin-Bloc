@@ -29,7 +29,8 @@ class ReduxKnotState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
     /**
      * The Stream<State>.
      */
-    override val value: State = state.value
+    override val value: State
+        get() = state.value
 
     override suspend fun collect(collector: FlowCollector<State>) {
         state.collect(collector)

@@ -1,5 +1,6 @@
 package com.onegravity.knot.state
 
+import co.touchlab.kermit.Logger
 import com.onegravity.knot.Acceptor
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ open class KnotStateImpl<State, Proposal>(
     /**
      * The Stream<Model>.
      */
-    override val value: State = state.value
+    override val value: State
+        get() = state.value
 
     override suspend fun collect(collector: FlowCollector<State>) {
         state.collect(collector)
@@ -25,8 +27,8 @@ open class KnotStateImpl<State, Proposal>(
      */
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(proposal: Proposal) {
+        Logger.withTag("knot").d("KnotState proposal: $proposal")
         val newState = acceptor(proposal, value)
         state.tryEmit(newState)
     }
-
 }

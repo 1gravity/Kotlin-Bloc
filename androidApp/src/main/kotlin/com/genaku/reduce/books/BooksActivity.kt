@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.genaku.reduce.BaseActivity
 import com.genaku.reduce.R
 import com.onegravity.knot.activityKnotContext
-import com.onegravity.knot.sample.books.BooksState
+import com.onegravity.knot.sample.books.BookState
 import kotlinx.coroutines.launch
 
 class BooksActivity : BaseActivity() {
@@ -35,21 +35,21 @@ class BooksActivity : BaseActivity() {
         lifecycleScope.launch {
             viewModel.state.collect { state ->
                 when (state) {
-                    is BooksState.Content -> showContent(state)
-                    BooksState.Empty -> pageEmpty.show()
-                    is BooksState.BooksError -> showError(state)
-                    BooksState.Loading -> pageLoading.show()
+                    is BookState.Loaded -> showContent(state)
+                    BookState.Empty -> pageEmpty.show()
+                    is BookState.Failure -> showError(state)
+                    BookState.Loading -> pageLoading.show()
                 }
             }
         }
     }
 
-    private fun showError(state: BooksState.BooksError) {
+    private fun showError(state: BookState.Failure) {
         pageError.show()
         errorMessage.text = state.message
     }
 
-    private fun showContent(state: BooksState.Content) {
+    private fun showContent(state: BookState.Loaded) {
         pageContent.show()
         val text = state.books.joinToString(separator = "\n") {
             "${it.title} (${it.year})"
