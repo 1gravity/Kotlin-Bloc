@@ -7,7 +7,7 @@ plugins {
 android {
     compileSdk = 32
     defaultConfig {
-        applicationId = "com.onegravity.knot.application"
+        applicationId = "com.onegravity.knot.fullKnot.application"
         minSdk = 21
         targetSdk = 32
         versionCode = 1

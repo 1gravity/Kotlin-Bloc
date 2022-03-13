@@ -5,12 +5,12 @@ import com.onegravity.knot.SideEffect
 import com.onegravity.knot.Stream
 import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.knot
-import com.onegravity.knot.knotState
+import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
 import com.onegravity.knot.sample.books.IBooksRepository.*
 
 /**
- * Implements the IBooksUseCase with a single Knot and also uses [SideEffect]s
+ * Implements the BooksUseCase with a single Knot and also uses [SideEffect]s
  */
 class BooksUseCaseImplSimple(
     context: KnotContext,

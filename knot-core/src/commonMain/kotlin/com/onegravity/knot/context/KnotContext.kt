@@ -11,7 +11,6 @@ import com.arkivanov.essenty.statekeeper.StateKeeperOwner
 
 interface KnotContext :
     LifecycleOwner,
-    CoroutineScopeOwner,
     StateKeeperOwner,
     InstanceKeeperOwner,
     BackPressedHandlerOwner

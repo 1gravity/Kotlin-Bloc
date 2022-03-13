@@ -5,10 +5,12 @@ import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
 import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.select.select
+import com.onegravity.knot.state.reduxKnotState
+import com.onegravity.knot.state.simpleReduxKnotState
 import org.reduxkotlin.Store
 
 /**
- * Create a DisposableScope that is disposed when the KnotContext lifecycle ends (onDestroy called)
+ * Create a DisposableScope that is disposed when the Knot is destroyed (onDestroy called)
  */
 fun KnotContext.disposableScope() = DisposableScope()
     .apply { lifecycle.doOnDestroy(::dispose) }
@@ -60,7 +62,7 @@ fun <State: Any, Proposal: Any, ReduxModel: Any> Store<ReduxModel>.toKnotState(
     context: KnotContext,
     initialState: State,
     selector: Selector<ReduxModel, State>
-) = simpleReduxKnotState<State, Proposal, ReduxModel>(context, this) {
+) = simpleReduxKnotState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
     this.initialState = initialState
     select(selector)
 }
@@ -68,7 +70,7 @@ fun <State: Any, Proposal: Any, ReduxModel: Any> Store<ReduxModel>.toKnotState(
 /**
  * Extension function to convert a Redux store to a ReduxKnotState:
  * ```
- *    store.toKnotState(context, initialValue, { /* select function */ },  { /* ma[ function */ })
+ *    store.toKnotState(context, initialValue, { /* select function */ },  { /* map function */ })
  * ```
  */
 fun <State: Any, Proposal: Any, Model: Any, ReduxModel: Any> Store<ReduxModel>.toKnotState(
@@ -76,7 +78,7 @@ fun <State: Any, Proposal: Any, Model: Any, ReduxModel: Any> Store<ReduxModel>.t
     initialState: State,
     selector: Selector<ReduxModel, Model>,
     mapper: Mapper<Model, State>
-) = reduxKnotState<State, Proposal, Model, ReduxModel>(context, this) {
+) = reduxKnotState<State, Proposal, Model, ReduxModel>(context.disposableScope(), this) {
     this.initialState = initialState
     select(selector)
     map(mapper)

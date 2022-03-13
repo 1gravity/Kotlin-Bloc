@@ -35,7 +35,6 @@ fun ViewModel.defaultKnotContext(
     lifecycleRegistry: LifecycleRegistry
 ) = DefaultKnotContext(
     lifecycle = lifecycleRegistry.asEssentyLifecycle(),
-    coroutineScope = lifecycleRegistry.coroutineScope,
     stateKeeper = activityKnotContext.savedStateRegistry?.let(::StateKeeper),
     instanceKeeper = activityKnotContext.viewModelStore?.let(::InstanceKeeper),
     backPressedHandler = activityKnotContext.onBackPressedDispatcher?.let(::BackPressedHandler)
@@ -47,7 +46,6 @@ fun <T> T.defaultKnotContext(): DefaultKnotContext where
         T : SavedStateRegistryOwner, T : OnBackPressedDispatcherOwner, T : ViewModelStoreOwner, T : LifecycleOwner =
     DefaultKnotContext(
         lifecycle = (this as LifecycleOwner).lifecycle.asEssentyLifecycle(),
-        coroutineScope = (this as LifecycleOwner).lifecycle.coroutineScope,
         stateKeeper = savedStateRegistry.let(::StateKeeper),
         instanceKeeper = viewModelStore.let(::InstanceKeeper),
         backPressedHandler = onBackPressedDispatcher.let(::BackPressedHandler)

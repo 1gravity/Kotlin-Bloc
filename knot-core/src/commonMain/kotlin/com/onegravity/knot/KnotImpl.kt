@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
 class KnotImpl<State, Event, Proposal, SideEffect>(
-    private val context: KnotContext,
+    context: KnotContext,
     private val knotState: KnotState<State, Proposal>,
     private val reducer: Reducer<State, Event, Proposal, SideEffect>,
     private val executor: Executor<SideEffect, Event>?,
@@ -24,19 +24,17 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
     private val sideEffects = Channel<SideEffect>(UNLIMITED)
 
     init {
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
         context.lifecycle.doOnCreate {
             Logger.withTag("knot").d("onCreate -> start Knot")
-            start(context.coroutineScope)
+            start(coroutineScope)
         }
         context.lifecycle.doOnDestroy {
             Logger.withTag("knot").d("onDestroy -> stop Knot")
-            // note: we don't need to cancel the jobs
-            // they will be cancelled automatically when the parent CoroutineScope completes
+            coroutineScope.cancel("Stop Knot")
         }
     }
-
-    private var eventsJob: Job? = null
-    private var sideEffectJob: Job? = null
 
     override val value = knotState.value
 
@@ -50,17 +48,16 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
     }
 
     private fun start(coroutineScope: CoroutineScope) {
-        eventsJob = coroutineScope.launch(dispatcherReduce) {
+        coroutineScope.launch(dispatcherReduce) {
             for (event in events) {
                 Logger.withTag("knot").d("processing event $event")
                 val effect = reducer.invoke(knotState.value, event)
                 knotState.emit(effect.proposal)
                 effect.sideEffects.forEach { sideEffects.send(it) }
             }
-            Logger.withTag("knot").d("processing event DONE")
         }
 
-        sideEffectJob = coroutineScope.launch(dispatcherSideEffect) {
+        coroutineScope.launch(dispatcherSideEffect) {
             for (sideEffect in sideEffects) {
                 Logger.withTag("knot").d("processing sideEffect $sideEffect")
                 when (executor) {
@@ -68,7 +65,6 @@ class KnotImpl<State, Event, Proposal, SideEffect>(
                     else -> executor.invoke(sideEffect)?.also { events.send(it) }
                 }
             }
-            Logger.withTag("knot").d("processing sideEffect DONE")
         }
     }
 

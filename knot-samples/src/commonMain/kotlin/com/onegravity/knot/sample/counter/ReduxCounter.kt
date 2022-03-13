@@ -11,7 +11,7 @@ object ReduxCounter {
 
     fun knot(context: KnotContext) = knot<Int, Event, ReduxEvent, Nothing>(
         context,
-        reduxStore.toKnotState(context, 1) { state -> state }
+        reduxStore.toKnotState(context, 1) { it }
     ) {
         reduce { _, event ->
             when (event) {

@@ -1,8 +1,8 @@
 package com.onegravity.knot.state
 
+import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.onegravity.knot.Mapper
 import com.onegravity.knot.Selector
-import com.onegravity.knot.context.KnotContext
 import org.reduxkotlin.Store
 
 open class ReduxKnotStateBuilderImpl<State, Model: Any, ReduxModel: Any> :
@@ -12,9 +12,12 @@ open class ReduxKnotStateBuilderImpl<State, Model: Any, ReduxModel: Any> :
     private var _selector: Selector<ReduxModel, Model>? = null
     private var _mapper: Mapper<Model, State>? = null
 
-    fun <Proposal: Any> build(context: KnotContext, store: Store<ReduxModel>) : KnotState<State, Proposal> =
+    fun <Proposal: Any> build(
+        disposableScope: DisposableScope,
+        store: Store<ReduxModel>
+    ) : KnotState<State, Proposal> =
         ReduxKnotState(
-            context = context,
+            disposableScope = disposableScope,
             initialState = checkNotNull(_initialState) { "initialState must be declared" },
             store = store,
             selector = checkNotNull(_selector) { "select { } must be declared" },

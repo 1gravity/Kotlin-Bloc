@@ -4,12 +4,12 @@ import com.github.michaelbull.result.mapBoth
 import com.onegravity.knot.Stream
 import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.knot
-import com.onegravity.knot.knotState
+import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
 import com.onegravity.knot.sample.books.IBooksRepository.*
 
 /**
- * Implements the IBooksUseCase with two [Knot]s to demonstrate shared [KnotState]
+ * Implements the BooksUseCase with two [Knot]s to demonstrate shared [KnotState]
  */
 class BooksUseCaseImpl(
     context: KnotContext,

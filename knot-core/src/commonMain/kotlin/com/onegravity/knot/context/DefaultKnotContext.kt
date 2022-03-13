@@ -11,11 +11,9 @@ import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.arkivanov.essenty.statekeeper.StateKeeperDispatcher
-import kotlinx.coroutines.CoroutineScope
 
 class DefaultKnotContext(
     override val lifecycle: Lifecycle,
-    override val coroutineScope: CoroutineScope,
     stateKeeper: StateKeeper? = null,
     instanceKeeper: InstanceKeeper? = null,
     backPressedHandler: BackPressedHandler? = null,
