@@ -6,6 +6,7 @@ import com.onegravity.knot.builder.SimpleKnotBuilder
 import com.onegravity.knot.builder.SimpleKnotBuilderImpl
 import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.state.KnotState
+import com.onegravity.knot.state.knotState
 import kotlin.jvm.JvmName
 
 /**

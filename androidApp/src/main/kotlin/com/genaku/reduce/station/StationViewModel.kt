@@ -6,6 +6,7 @@ import com.onegravity.knot.sample.station.BusEvent
 import com.onegravity.knot.sample.station.LorryEvent
 import com.onegravity.knot.sample.station.StationState
 import com.onegravity.knot.sample.station.TrainEvent
+import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
 
 class StationViewModel(context: ActivityKnotContext) : BaseViewModel(context) {

@@ -2,6 +2,7 @@ package com.onegravity.knot.sample.traffic
 
 import com.onegravity.knot.*
 import com.onegravity.knot.context.KnotContext
+import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
 
 data class TrafficState(val on: Boolean, val cars: Int) {
