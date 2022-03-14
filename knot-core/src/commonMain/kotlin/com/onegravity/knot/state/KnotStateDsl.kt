@@ -1,16 +1,17 @@
 package com.onegravity.knot.state
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
+import com.onegravity.bloc.BlocState
 import org.reduxkotlin.Store
 import kotlin.jvm.JvmName
 
 /**
- * Creates a [KnotState] instance using a [SimpleKnotStateBuilder]
+ * Creates a [BlocState] instance using a [SimpleKnotStateBuilder]
  */
 @JvmName("simpleKnotState")
 fun <State> knotState(
     block: SimpleKnotStateBuilder<State>.() -> Unit
-): KnotState<State, State> =
+): BlocState<State, State> =
     SimpleKnotStateBuilderImpl<State>()
         .also(block)
         .build()
@@ -29,44 +30,44 @@ fun <State> knotState(
 @JvmName("simpleKnotStateWithInitialState")
 fun <State> knotState(
     initialState: State
-): KnotState<State, State> =
+): BlocState<State, State> =
     SimpleKnotStateBuilderImpl<State>()
         .also { it.initialState = initialState }
         .build()
 
 /**
- * Creates a [KnotState] instance using a [KnotStateBuilder]
+ * Creates a [BlocState] instance using a [KnotStateBuilder]
  */
 @JvmName("knotState")
 fun <State, Proposal> knotState(
     block: KnotStateBuilder<State, Proposal>.() -> Unit
-): KnotState<State, Proposal> =
+): BlocState<State, Proposal> =
     KnotStateBuilderImpl<State, Proposal>()
         .also(block)
         .build()
 
 /**
- * Creates a [KnotState] instance using a [ReduxKnotStateBuilder]
+ * Creates a [BlocState] instance using a [ReduxKnotStateBuilder]
  */
 @JvmName("reduxKnotState")
 fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxKnotState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxKnotStateBuilder<State, Model, ReduxModel>.() -> Unit
-): KnotState<State, Proposal> =
+): BlocState<State, Proposal> =
     ReduxKnotStateBuilderImpl<State, Model, ReduxModel>()
         .also(block)
         .build(disposableScope, store)
 
 /**
- * Creates a [KnotState] instance using a [ReduxSimpleKnotStateBuilder]
+ * Creates a [BlocState] instance using a [ReduxSimpleKnotStateBuilder]
  */
 @JvmName("simpleReduxKnotState")
 fun <State: Any, Proposal: Any, ReduxModel: Any> simpleReduxKnotState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxSimpleKnotStateBuilder<State, ReduxModel>.() -> Unit
-): KnotState<State, Proposal> =
+): BlocState<State, Proposal> =
     ReduxSimpleKnotStateBuilderImpl<State, ReduxModel>()
         .also(block)
         .build(disposableScope, store)

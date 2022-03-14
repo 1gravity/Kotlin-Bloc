@@ -14,7 +14,7 @@ import com.arkivanov.essenty.backpressed.BackPressedHandler
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.arkivanov.essenty.statekeeper.StateKeeper
-import com.onegravity.knot.context.DefaultKnotContext
+import com.onegravity.bloc.context.DefaultBlocContext
 
 fun AppCompatActivity.activityKnotContext() = ActivityKnotContext(
     savedStateRegistry = savedStateRegistry,
@@ -33,7 +33,7 @@ data class ActivityKnotContext(
 fun ViewModel.defaultKnotContext(
     activityKnotContext: ActivityKnotContext,
     lifecycleRegistry: LifecycleRegistry
-) = DefaultKnotContext(
+) = DefaultBlocContext(
     lifecycle = lifecycleRegistry.asEssentyLifecycle(),
     stateKeeper = activityKnotContext.savedStateRegistry?.let(::StateKeeper),
     instanceKeeper = activityKnotContext.viewModelStore?.let(::InstanceKeeper),
@@ -42,9 +42,9 @@ fun ViewModel.defaultKnotContext(
 
 /** --------------------------------------------------------------------------------------------- */
 
-fun <T> T.defaultKnotContext(): DefaultKnotContext where
+fun <T> T.defaultKnotContext(): DefaultBlocContext where
         T : SavedStateRegistryOwner, T : OnBackPressedDispatcherOwner, T : ViewModelStoreOwner, T : LifecycleOwner =
-    DefaultKnotContext(
+    DefaultBlocContext(
         lifecycle = (this as LifecycleOwner).lifecycle.asEssentyLifecycle(),
         stateKeeper = savedStateRegistry.let(::StateKeeper),
         instanceKeeper = viewModelStore.let(::InstanceKeeper),

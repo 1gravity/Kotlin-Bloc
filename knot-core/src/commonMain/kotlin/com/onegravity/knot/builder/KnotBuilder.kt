@@ -3,7 +3,7 @@ package com.onegravity.knot.builder
 import com.onegravity.knot.*
 
 /**
- * The base interface for all [Knot] builders.
+ * The base interface for all [Bloc] builders.
  */
 interface KnotBuilder<State, Event, Proposal, SideEffect> {
 

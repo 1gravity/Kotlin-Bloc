@@ -1,6 +1,7 @@
 package com.onegravity.knot.state
 
 import co.touchlab.kermit.Logger
+import com.onegravity.bloc.BlocState
 import com.onegravity.knot.Acceptor
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 open class KnotStateImpl<State, Proposal>(
     initialState: State,
     private val acceptor: Acceptor<Proposal, State>,
-) : KnotState<State, Proposal> {
+) : BlocState<State, Proposal> {
 
     private val state = MutableStateFlow(initialState)
 

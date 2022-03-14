@@ -1,9 +1,9 @@
 package com.onegravity.knot.sample.traffic
 
 import com.arkivanov.essenty.lifecycle.doOnCreate
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 
-class Traffic(val context: KnotContext) {
+class Traffic(val context: BlocContext) {
 
     val street1 = Street(context, 100)
     val street2 = Street(context, 200)

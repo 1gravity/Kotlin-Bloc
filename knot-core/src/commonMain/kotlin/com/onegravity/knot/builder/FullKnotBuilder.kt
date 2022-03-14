@@ -4,7 +4,7 @@ import com.onegravity.knot.*
 import kotlin.coroutines.CoroutineContext
 
 /**
- * A [KnotBuilder] that allows the configuration of every [Knot] attribute/functionality.
+ * A [KnotBuilder] that allows the configuration of every [Bloc] attribute/functionality.
  */
 interface FullKnotBuilder<State, Event, Proposal, SideEffect> :
     KnotBuilder<State, Event, Proposal, SideEffect> {

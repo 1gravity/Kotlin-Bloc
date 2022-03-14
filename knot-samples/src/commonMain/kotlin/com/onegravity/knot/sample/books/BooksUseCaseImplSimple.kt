@@ -1,55 +1,49 @@
 package com.onegravity.knot.sample.books
 
-import com.github.michaelbull.result.mapBoth
-import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
-import com.onegravity.knot.state.knotState
+import com.onegravity.bloc.Stream
+import com.onegravity.bloc.bloc
+import com.onegravity.bloc.context.BlocContext
 import kotlinx.coroutines.delay
-import com.onegravity.knot.sample.books.BooksRepository.*
 
 /**
- * Implements the BooksUseCase with a single Knot and also uses [SideEffect]s
+ * Implements the BooksUseCase with a single [Bloc] and [Thunk]s
  */
 class BooksUseCaseImplSimple(
-    context: KnotContext,
+    context: BlocContext,
     private val repository: BooksRepository,
 ) : BooksUseCase {
 
-    private val knot = knotSimple2<BookState, BookEvent>(context, knotState(BookState.Empty)) {
-        reduce { _, action, dispatch ->
+    private val bloc = bloc<BookState, BookEvent>(context, BookState.Empty) {
+        thunk { _, action, dispatch ->
+            if (action == BookEvent.Load) {
+                dispatch(BookEvent.Loading)
+                delay(1000)
+                val nextAction = repository.loadBooks().toAction()
+                dispatch(nextAction)
+            } else {
+                dispatch(action)
+            }
+        }
+
+        reduce { state, action ->
             when (action) {
-                BookEvent.Clear -> dispatch(BookState.Empty)
-                BookEvent.Load -> {
-                    dispatch(BookState.Loading)
-                    delay(1000)
-                    val state = repository.loadBooks().toState()
-                    dispatch(state)
-                }
-                else -> { }
+                BookEvent.Clear -> BookState.Empty
+                BookEvent.Loading -> BookState.Loading
+                is BookEvent.LoadComplete -> action.result.toState()
+                else -> state
             }
         }
     }
 
-    private fun BookResult.toState() =
-        mapBoth(
-            { books -> if (books.isEmpty()) BookState.Empty else BookState.Loaded(books) },
-            { failure ->
-                val message = when (failure) {
-                    is Failure.Network -> "Network error. Check Internet connection and try again."
-                    is Failure.Generic -> "Generic error, please try again."
-                }
-                BookState.Failure(message)
-            })
-
     override val state: Stream<BookState>
-        get() = knot
+        get() = bloc
 
     override fun load() {
-        knot.emit(BookEvent.Load)
+        bloc.emit(BookEvent.Load)
     }
 
     override fun clear() {
-        knot.emit(BookEvent.Clear)
+        bloc.emit(BookEvent.Clear)
     }
 
 }

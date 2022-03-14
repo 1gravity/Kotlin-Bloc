@@ -1,9 +1,10 @@
 package com.onegravity.knot.sample.sms
 
+import com.onegravity.bloc.Stream
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 
-class LoadingUseCase(context: KnotContext, private val errorUseCase: ErrorUseCase) :
+class LoadingUseCase(context: BlocContext, private val errorUseCase: ErrorUseCase) :
     ILoadingUseCase,
     IErrorUseCase by errorUseCase {
 

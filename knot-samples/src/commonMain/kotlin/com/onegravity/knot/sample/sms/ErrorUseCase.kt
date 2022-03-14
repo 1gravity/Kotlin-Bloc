@@ -1,9 +1,10 @@
 package com.onegravity.knot.sample.sms
 
+import com.onegravity.bloc.Stream
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 
-class ErrorUseCase(context: KnotContext) : IErrorUseCase {
+class ErrorUseCase(context: BlocContext) : IErrorUseCase {
 
     private val errorKnot = knot<ErrorState, ErrorEvent>(context, ErrorState.NoError) {
         reduce { _, event ->

@@ -2,7 +2,7 @@
  * From https://github.com/arkivanov/Decompose
  */
 
-package com.onegravity.knot.context
+package com.onegravity.bloc.context
 
 import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.essenty.lifecycle.Lifecycle

@@ -1,8 +1,8 @@
 package com.onegravity.knot.builder
 
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
-import com.onegravity.knot.state.KnotState
+import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocState
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
@@ -13,7 +13,7 @@ open class FullKnotBuilderImpl<State, Event, Proposal, SideEffect> : FullKnotBui
     private var _dispatcherReduce: CoroutineContext = Dispatchers.Default
     private var _dispatcherSideEffect: CoroutineContext = Dispatchers.Default
 
-    fun build(context: KnotContext, knotState: KnotState<State, Proposal>) = KnotImpl(
+    fun build(context: BlocContext, knotState: BlocState<State, Proposal>) = KnotImpl(
         context = context,
         knotState = knotState,
         reducer = checkNotNull(_reducer) { "reduce { } must be declared" },

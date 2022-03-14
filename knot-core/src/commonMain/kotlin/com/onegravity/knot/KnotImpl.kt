@@ -3,8 +3,9 @@ package com.onegravity.knot
 import co.touchlab.kermit.Logger
 import com.arkivanov.essenty.lifecycle.doOnCreate
 import com.arkivanov.essenty.lifecycle.doOnDestroy
-import com.onegravity.knot.context.KnotContext
-import com.onegravity.knot.state.KnotState
+import com.onegravity.bloc.Bloc
+import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
@@ -12,13 +13,13 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
 class KnotImpl<State, Event, Proposal, SideEffect>(
-    context: KnotContext,
-    private val knotState: KnotState<State, Proposal>,
+    context: BlocContext,
+    private val knotState: BlocState<State, Proposal>,
     private val reducer: Reducer<State, Event, Proposal, SideEffect>,
     private val executor: Executor<SideEffect, Event>?,
     private val dispatcherReduce: CoroutineContext = Dispatchers.Default,
     private val dispatcherSideEffect: CoroutineContext = Dispatchers.Default
-) : Knot<State, Event, Proposal, SideEffect> {
+) : Bloc<State, Event, Proposal> {
 
     private val events = Channel<Event>(UNLIMITED)
     private val sideEffects = Channel<SideEffect>(UNLIMITED)

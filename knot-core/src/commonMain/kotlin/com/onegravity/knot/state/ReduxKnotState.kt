@@ -1,6 +1,7 @@
 package com.onegravity.knot.state
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
+import com.onegravity.bloc.BlocState
 import com.onegravity.knot.*
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,7 @@ class ReduxKnotState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
     private val store: Store<ReduxModel>,
     selector: Selector<ReduxModel, Model>,
     mapper: Mapper<Model, State>
-) : KnotState<State, Proposal>,
+) : BlocState<State, Proposal>,
     DisposableScope by disposableScope {
 
     private val state = MutableStateFlow(initialState)

@@ -1,7 +1,7 @@
 package com.onegravity.knot.sample.counter
 
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 
 object ReduxCounter {
     sealed class Event {
@@ -9,7 +9,7 @@ object ReduxCounter {
         data class Decrement(val value: Int = 1): Event()
     }
 
-    fun knot(context: KnotContext) = knot<Int, Event, ReduxEvent, Nothing>(
+    fun knot(context: BlocContext) = knot<Int, Event, ReduxEvent, Nothing>(
         context,
         reduxStore.toKnotState(context, 1) { it }
     ) {

@@ -1,7 +1,8 @@
 package com.onegravity.knot.sample.traffic
 
+import com.onegravity.bloc.Stream
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
 
@@ -17,7 +18,7 @@ sealed class TrafficEvent {
 }
 
 class TrafficLight(
-    context: KnotContext,
+    context: BlocContext,
     private val delay: Long = 10,
     private val limit: Int = 20,
     private val lightTime: Long = 5000

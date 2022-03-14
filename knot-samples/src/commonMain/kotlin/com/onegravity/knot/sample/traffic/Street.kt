@@ -1,7 +1,8 @@
 package com.onegravity.knot.sample.traffic
 
+import com.onegravity.bloc.Stream
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 import kotlinx.coroutines.delay
 
 data class StreetState(val cars: Int) {
@@ -15,7 +16,7 @@ sealed class StreetEvent {
     object Minus : StreetEvent()
 }
 
-class Street(context: KnotContext, private val delay: Long) {
+class Street(context: BlocContext, private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 

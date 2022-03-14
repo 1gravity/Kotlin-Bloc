@@ -1,6 +1,7 @@
 package com.onegravity.knot.state
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
+import com.onegravity.bloc.BlocState
 import com.onegravity.knot.Mapper
 import com.onegravity.knot.Selector
 import org.reduxkotlin.Store
@@ -15,7 +16,7 @@ open class ReduxKnotStateBuilderImpl<State, Model: Any, ReduxModel: Any> :
     fun <Proposal: Any> build(
         disposableScope: DisposableScope,
         store: Store<ReduxModel>
-    ) : KnotState<State, Proposal> =
+    ) : BlocState<State, Proposal> =
         ReduxKnotState(
             disposableScope = disposableScope,
             initialState = checkNotNull(_initialState) { "initialState must be declared" },

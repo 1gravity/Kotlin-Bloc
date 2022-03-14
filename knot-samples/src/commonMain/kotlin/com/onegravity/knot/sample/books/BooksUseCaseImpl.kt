@@ -1,8 +1,7 @@
 package com.onegravity.knot.sample.books
 
-import com.github.michaelbull.result.mapBoth
-import com.onegravity.knot.Stream
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.Stream
+import com.onegravity.bloc.context.BlocContext
 import com.onegravity.knot.knot
 import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
@@ -12,7 +11,7 @@ import com.onegravity.knot.sample.books.BooksRepository.*
  * Implements the BooksUseCase with two [Knot]s to demonstrate shared [KnotState]
  */
 class BooksUseCaseImpl(
-    context: KnotContext,
+    context: BlocContext,
     private val repository: BooksRepository,
 ) : BooksUseCase {
 
@@ -39,16 +38,7 @@ class BooksUseCaseImpl(
                         BookState.Loading + BookSideEffect.Load
                     else -> state.toEffect()
                 }
-                is BookEvent.LoadComplete -> event.result.mapBoth(
-                    { books -> if (books.isEmpty()) BookState.Empty else BookState.Loaded(books) },
-                    { failure ->
-                        val message = when (failure) {
-                            is Failure.Network -> "Network error. Check Internet connection and try again."
-                            is Failure.Generic -> "Generic error, please try again."
-                        }
-                        BookState.Failure(message)
-                    }
-                ).toEffect()
+                is BookEvent.LoadComplete -> event.result.toState().toEffect()
                 else -> state.toEffect()
             }
         }

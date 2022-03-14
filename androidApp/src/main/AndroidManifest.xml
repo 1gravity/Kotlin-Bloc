@@ -20,16 +20,6 @@
             </intent-filter>
         </activity>
 
-<!--        <activity-->
-<!--            android:name=".counter.CounterReduxActivity"-->
-<!--            android:label="Counter Redux"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
         <!--        <activity-->
         <!--            android:name=".counter.CounterSimpleActivity"-->
         <!--            android:label="Counter Simple"-->
@@ -39,6 +29,17 @@
         <!--                <category android:name="android.intent.category.LAUNCHER" />-->
         <!--            </intent-filter>-->
         <!--        </activity>-->
+
+        <!--        <activity-->
+        <!--            android:name=".counter.CounterReduxActivity"-->
+        <!--            android:label="Counter Redux"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
+
 
 
         <!--        <activity-->

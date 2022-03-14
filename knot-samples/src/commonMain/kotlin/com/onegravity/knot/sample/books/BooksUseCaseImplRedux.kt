@@ -1,14 +1,15 @@
 package com.onegravity.knot.sample.books
 
 import com.github.michaelbull.result.mapBoth
+import com.onegravity.bloc.Stream
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 import com.onegravity.knot.state.ReduxKnotState
 
 /**
  * Implements the BooksUseCase with a single Knot and a [ReduxKnotState].
  */
-class BooksUseCaseImplRedux(context: KnotContext) : BooksUseCase {
+class BooksUseCaseImplRedux(context: BlocContext) : BooksUseCase {
     private val mapModel2State: Mapper<Books, BookState> = { books ->
         books.mapBoth(
             { if (it.isEmpty()) BookState.Empty else BookState.Loaded(it) },

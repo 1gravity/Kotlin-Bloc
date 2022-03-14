@@ -1,10 +1,11 @@
 package com.onegravity.knot.sample.sms
 
+import com.onegravity.bloc.Stream
 import com.onegravity.knot.*
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 
 class SmsUseCase(
-    context: KnotContext,
+    context: BlocContext,
     private val repository: ISmsRepository,
     private val loadingUseCase: LoadingUseCase
 ) : ISmsUseCase {

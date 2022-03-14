@@ -1,7 +1,7 @@
 package com.onegravity.knot.sample.counter
 
 import com.onegravity.knot.SideEffect
-import com.onegravity.knot.context.KnotContext
+import com.onegravity.bloc.context.BlocContext
 import com.onegravity.knot.knot
 
 object SimpleCounter {
@@ -10,7 +10,7 @@ object SimpleCounter {
         data class Decrement(val value: Int = 1): Event()
     }
 
-    fun knot(context: KnotContext) = knot<Int, Event>(context, 1) {
+    fun knot(context: BlocContext) = knot<Int, Event>(context, 1) {
         reduce { state, event ->
             when (event) {
                 is Event.Increment -> state.plus(event.value) + bonus(state.plus(event.value))

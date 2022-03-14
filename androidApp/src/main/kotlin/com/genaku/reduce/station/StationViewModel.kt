@@ -1,6 +1,7 @@
 package com.genaku.reduce.station
 
 import com.genaku.reduce.BaseViewModel
+import com.onegravity.bloc.Stream
 import com.onegravity.knot.*
 import com.onegravity.knot.sample.station.BusEvent
 import com.onegravity.knot.sample.station.LorryEvent

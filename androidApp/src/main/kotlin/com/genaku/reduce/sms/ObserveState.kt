@@ -2,7 +2,7 @@ package com.genaku.reduce.sms
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.onegravity.knot.Stream
+import com.onegravity.bloc.Stream
 import java.util.concurrent.atomic.AtomicBoolean
 
 inline fun <T> LifecycleOwner.observeState(
