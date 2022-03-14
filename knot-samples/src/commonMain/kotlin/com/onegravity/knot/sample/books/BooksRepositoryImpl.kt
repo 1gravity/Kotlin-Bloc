@@ -3,9 +3,9 @@ package com.onegravity.knot.sample.books
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import kotlin.random.Random
-import com.onegravity.knot.sample.books.IBooksRepository.*
+import com.onegravity.knot.sample.books.BooksRepository.*
 
-class BooksRepositoryImpl : IBooksRepository {
+class BooksRepositoryImpl : BooksRepository {
 
     override fun loadBooks() =
         when (Random.nextFloat() < 0.35) {

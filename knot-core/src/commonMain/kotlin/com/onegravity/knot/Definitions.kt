@@ -3,6 +3,10 @@ package com.onegravity.knot
 /** A function accepting an `Event` and a `State` and returning a `Proposal` with `SideEffects`. */
 typealias Reducer<State, Event, Proposal, SideEffect> = suspend (state: State, event: Event) -> Effect<Proposal, SideEffect>
 
+typealias Dispatcher<Proposal> = (Proposal) -> Unit
+
+typealias Reducer2<State, Action, Proposal> = suspend (state: State, action: Action, dispatch: Dispatcher<Proposal>) -> Unit
+
 /** A function used for performing given `SideEffect` and emitting resulting `Event`. */
 typealias Executor<SideEffect, Event> = suspend (SideEffect) -> Event?
 

@@ -1,54 +1,45 @@
 package com.onegravity.knot.sample.books
 
 import com.github.michaelbull.result.mapBoth
-import com.onegravity.knot.SideEffect
-import com.onegravity.knot.Stream
+import com.onegravity.knot.*
 import com.onegravity.knot.context.KnotContext
-import com.onegravity.knot.knot
 import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
-import com.onegravity.knot.sample.books.IBooksRepository.*
+import com.onegravity.knot.sample.books.BooksRepository.*
 
 /**
  * Implements the BooksUseCase with a single Knot and also uses [SideEffect]s
  */
 class BooksUseCaseImplSimple(
     context: KnotContext,
-    private val repository: IBooksRepository,
+    private val repository: BooksRepository,
 ) : BooksUseCase {
 
-    private val knot = knot<BookState, BookEvent>(context, knotState(BookState.Empty)) {
-        reduce { state, event ->
-            when (event) {
-                BookEvent.Clear -> when (state) {
-                    BookState.Empty -> state.toEffect()
-                    is BookState.Loaded -> BookState.Empty.toEffect()
-                    else -> state.unexpected(event)
+    private val knot = knotSimple2<BookState, BookEvent>(context, knotState(BookState.Empty)) {
+        reduce { _, action, dispatch ->
+            when (action) {
+                BookEvent.Clear -> dispatch(BookState.Empty)
+                BookEvent.Load -> {
+                    dispatch(BookState.Loading)
+                    delay(1000)
+                    val state = repository.loadBooks().toState()
+                    dispatch(state)
                 }
-                BookEvent.Load -> when (state) {
-                    BookState.Empty, is BookState.Loaded, is BookState.Failure ->
-                        BookState.Loading + loadBooks()
-                    else -> state.toEffect()
-                }
-                is BookEvent.LoadComplete -> event.result.mapBoth(
-                    { books -> if (books.isEmpty()) BookState.Empty else BookState.Loaded(books) },
-                    { failure ->
-                        val message = when (failure) {
-                            is Failure.Network -> "Network error. Check Internet connection and try again."
-                            is Failure.Generic -> "Generic error, please try again."
-                        }
-                        BookState.Failure(message)
-                    }
-                ).toEffect()
+                else -> { }
             }
         }
     }
 
-    private fun loadBooks() = SideEffect<BookEvent> {
-        delay(1000)
-        val result = repository.loadBooks()
-        BookEvent.LoadComplete(result)
-    }
+    private fun BookResult.toState() =
+        mapBoth(
+            { books -> if (books.isEmpty()) BookState.Empty else BookState.Loaded(books) },
+            { failure ->
+                val message = when (failure) {
+                    is Failure.Network -> "Network error. Check Internet connection and try again."
+                    is Failure.Generic -> "Generic error, please try again."
+                }
+                BookState.Failure(message)
+            })
 
     override val state: Stream<BookState>
         get() = knot

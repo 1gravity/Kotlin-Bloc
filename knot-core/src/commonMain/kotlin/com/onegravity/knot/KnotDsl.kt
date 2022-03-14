@@ -1,13 +1,33 @@
 package com.onegravity.knot
 
-import com.onegravity.knot.builder.FullKnotBuilder
-import com.onegravity.knot.builder.FullKnotBuilderImpl
-import com.onegravity.knot.builder.SimpleKnotBuilder
-import com.onegravity.knot.builder.SimpleKnotBuilderImpl
+import com.onegravity.knot.builder.*
 import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.state.KnotState
 import com.onegravity.knot.state.knotState
 import kotlin.jvm.JvmName
+
+/**
+ * Creates a [Knot] instance using a [FullKnotBuilder].
+ */
+@JvmName("fullKnot2")
+fun <State, Event, Proposal: Any> knot2(
+    context: KnotContext,
+    knotState: KnotState<State, Proposal>,
+    block: FullKnotBuilderImpl2<State, Event, Proposal>.() -> Unit
+): Knot<State, Event, Proposal, Nothing> =
+    FullKnotBuilderImpl2<State, Event, Proposal>()
+        .also(block)
+        .build(context, knotState)
+
+@JvmName("simpleKnot2")
+fun <State: Any, Action: Any> knotSimple2(
+    context: KnotContext,
+    knotState: KnotState<State, State>,
+    block: FullKnotBuilderImpl2<State, Action, State>.() -> Unit
+): Knot<State, Action, State, Nothing> =
+    FullKnotBuilderImpl2<State, Action, State>()
+        .also(block)
+        .build(context, knotState)
 
 /**
  * Creates a [Knot] instance using a [FullKnotBuilder].

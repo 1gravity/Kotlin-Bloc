@@ -2,9 +2,9 @@ package com.onegravity.knot.sample.books
 
 import com.github.michaelbull.result.Result
 
-typealias BookResult = Result<List<Book>, IBooksRepository.Failure>
+typealias BookResult = Result<List<Book>, BooksRepository.Failure>
 
-interface IBooksRepository {
+interface BooksRepository {
 
     fun loadBooks(): BookResult
 

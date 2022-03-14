@@ -6,14 +6,14 @@ import com.onegravity.knot.context.KnotContext
 import com.onegravity.knot.knot
 import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
-import com.onegravity.knot.sample.books.IBooksRepository.*
+import com.onegravity.knot.sample.books.BooksRepository.*
 
 /**
  * Implements the BooksUseCase with two [Knot]s to demonstrate shared [KnotState]
  */
 class BooksUseCaseImpl(
     context: KnotContext,
-    private val repository: IBooksRepository,
+    private val repository: BooksRepository,
 ) : BooksUseCase {
 
     private val commonState = knotState<BookState>(BookState.Empty)
