@@ -11,10 +11,14 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * todo reduce { } should use its own dispatcher, right now it's running on the thunk dispatcher
+ *      when a thunk dispatches an action or the main thread if the action is triggered by the ui
+ */
 class BlocImpl<State, Action: Any, Proposal>(
     context: BlocContext,
     private val blocState: BlocState<State, Proposal>,
-    thunks: List<MatcherThunk<State, Action>> = emptyList(),
+    private val thunks: List<MatcherThunk<State, Action>> = emptyList(),
     private val reducer: Reducer<State, Action, Proposal>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, Proposal> {
@@ -25,24 +29,25 @@ class BlocImpl<State, Action: Any, Proposal>(
         val dispatcher: Dispatcher<Action>
     )
 
-    private val thunkRecords: List<ThunkRecord<State, Action>> = thunks
-        .foldIndexed(ArrayList()) { index, list, value ->
-            ThunkRecord(value.matcher, value.thunk, getDispatcher(index))
-            list
-        }
-
     private val reduceDispatcher: Dispatcher<Action> = { action ->
         val proposal = reducer.invoke(blocState.value, action)
         blocState.emit(proposal)
     }
 
-    private fun getDispatcher(index: Int): Dispatcher<Action> =
-        when (index == thunkRecords.lastIndex) {
-            true -> reduceDispatcher
-            else -> { action ->
-                val (_, thunk, _) = thunkRecords[index + 1]
-                thunk.invoke({ blocState.value }, action, getDispatcher(index + 1))
-            }
+    private val thunkRecords = thunks.indices
+        .reversed()
+        .fold(ArrayList<ThunkRecord<State, Action>>()) { list, index ->
+            val (matcher, thunk) = thunks[index]
+            val dispatcher: Dispatcher<Action> =
+                when (index == thunks.lastIndex) {
+                    true -> reduceDispatcher
+                    else -> { action ->
+                        val dispatcher = list[index + 1].dispatcher
+                        thunks[index + 1].thunk.invoke( { blocState.value }, action, dispatcher)
+                    }
+                }
+            list.add(0, ThunkRecord(matcher, thunk, dispatcher))
+            list
         }
 
     private val actions = Channel<Action>(UNLIMITED)
@@ -85,20 +90,20 @@ class BlocImpl<State, Action: Any, Proposal>(
                 logger.d("process action $action")
                 thunkRecords.forEachIndexed { index, (matcher, thunk, _) ->
                     if (matcher == null || matcher.matches(action)) {
-                        val nextDispatcher = nextDispatcher(index + 1, action)
-                        thunk.invoke({ blocState.value }, action, nextDispatcher)
+                        val dispatcher = nextDispatcher(index, action)
+                        thunk.invoke({ blocState.value }, action, dispatcher)
                     }
                 }
             }
         }
-
     }
 
     private fun nextDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
-        (startIndex..thunkRecords.lastIndex).forEach { index ->
-            val (matcher, _, dispatcher) = thunkRecords[index]
+        (startIndex until thunkRecords.lastIndex).forEach { index ->
+            // we use the current dispatcher ([index]) if the next thunk is match ([index + 1])
+            val matcher = thunkRecords[index + 1].matcher
             if (matcher == null || matcher.matches(action)) {
-                return dispatcher
+                return thunkRecords[index].dispatcher
             }
         }
         return reduceDispatcher

@@ -12,30 +12,34 @@ object SimpleCounter {
 
     fun bloc(context: BlocContext) =
         bloc<Int, Action>(context, 1) {
-            thunkMatching<Action.Increment> { getState, action, dispatch ->
-                logger.w("1 state: ${getState.invoke()}")
+            thunkMatching<Action.Increment> { _, action, dispatch ->
+                logger.w("thunk 1 started")
                 dispatch(action)
-                logger.w("2 state: ${getState.invoke()}")
-            }
-            thunkMatching<Action.Increment> { getState, action, dispatch ->
-                logger.w("1 state: ${getState.invoke()}")
                 dispatch(action)
-                logger.w("2 state: ${getState.invoke()}")
+                logger.w("thunk 1 ended")
             }
-//            thunk { getState, action, dispatch ->
-//                logger.w("3 state: ${getState.invoke()}")
-//                dispatch(action)
-//                logger.w("4 state: ${getState.invoke()}")
-//            }
+            thunkMatching<Action.Increment> { _, action, dispatch ->
+                logger.w("thunk 2 started")
+                dispatch(action)
+                logger.w("thunk 2 ended")
+            }
+            thunk { _, action, dispatch ->
+                logger.w("thunk 3 started")
+                dispatch(action)
+                logger.w("thunk 3 ended")
+            }
             reduce { state, action ->
-                when (action) {
+                logger.w("reduce started")
+                val result = when (action) {
                     is Action.Increment -> state + action.value
                     is Action.Decrement -> (state - action.value).coerceAtLeast(0)
                 }
+                logger.w("reduce ended")
+                result
             }
         }
 
-    // shortest possible implementation
+// shortest possible implementation
 //    fun bloc(context: BlocContext) =
 //        bloc<Int, Boolean>(context, 1) {
 //            reduce { state, action -> state + if (action) 1 else -1 }
