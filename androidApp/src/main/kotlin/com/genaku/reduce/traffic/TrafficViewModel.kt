@@ -19,15 +19,20 @@ class TrafficViewModel(val context: ActivityKnotContext) : BaseViewModel(context
     val street1State
         get() = traffic.street1.state
 
-    val street2State = traffic.street2.state
+    val street2State
+        get() = traffic.street2.state
 
-    val street3State = traffic.street3.state
+    val street3State
+        get() = traffic.street3.state
 
-    val tl1State = traffic.tl1.state
+    val tl1State
+        get() = traffic.tl1.state
 
-    val tl2State = traffic.tl2.state
+    val tl2State
+        get() = traffic.tl2.state
 
-    val tl3State = traffic.tl3.state
+    val tl3State
+        get() = traffic.tl3.state
 
     fun addCar() {
         traffic.addCar()

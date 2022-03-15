@@ -1,7 +1,7 @@
 package com.onegravity.knot.sample.traffic
 
 import com.onegravity.bloc.Stream
-import com.onegravity.knot.*
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import kotlinx.coroutines.delay
 
@@ -20,33 +20,33 @@ class Street(context: BlocContext, private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val knot = knot<StreetState, StreetEvent>(context, StreetState(0)) {
+    private val bloc = bloc<StreetState, StreetEvent>(context, StreetState(0)) {
+        thunkMatching<StreetEvent.Plus> { _, action, dispatch ->
+            dispatch(StreetEvent.Plus)
+            delay(delay)
+            trafficLight?.addCar()
+        }
+
         reduce { state, event ->
             val cars = state.cars
             when (event) {
-                StreetEvent.Plus -> state.copy(cars = cars + 1) + outStreet()
-                StreetEvent.Minus -> state.copy(cars = (cars - 1).coerceAtLeast(0)).toEffect()
+                StreetEvent.Plus -> StreetState(cars + 1)
+                StreetEvent.Minus -> StreetState((cars - 1).coerceAtLeast(0))
             }
         }
     }
 
-    private fun outStreet(): SideEffect<StreetEvent> = SideEffect {
-        delay(delay)
-        trafficLight?.addCar()
-        null
-    }
-
-    val state: Stream<StreetState> = knot
+    val state: Stream<StreetState> = bloc
 
     fun setTrafficLight(trafficLight: TrafficLight) {
         this.trafficLight = trafficLight
     }
 
     fun carIn() {
-        knot.emit(StreetEvent.Plus)
+        bloc.emit(StreetEvent.Plus)
     }
 
     fun carOut() {
-        knot.emit(StreetEvent.Minus)
+        bloc.emit(StreetEvent.Minus)
     }
 }

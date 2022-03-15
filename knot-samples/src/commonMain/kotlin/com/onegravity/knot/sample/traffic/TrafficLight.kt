@@ -1,13 +1,14 @@
 package com.onegravity.knot.sample.traffic
 
 import com.onegravity.bloc.Stream
-import com.onegravity.knot.*
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.logger
 import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
 
 data class TrafficState(val on: Boolean, val cars: Int) {
-    override fun toString() = if (on) "green" else "red"
+    override fun toString() = if (on) "green ($cars)" else "red ($cars)"
 }
 
 sealed class TrafficEvent {
@@ -29,36 +30,60 @@ class TrafficLight(
 
     private val commonState = knotState(TrafficState(false, 0))
 
-    private val knot = knot<TrafficState, TrafficEvent>(context, commonState) {
-        reduce { state, event ->
-            when (event) {
-                TrafficEvent.Minus -> state.copy(cars = (state.cars - 1).coerceAtLeast(0)) + startMovement()
-                TrafficEvent.Plus -> state.copy(cars = state.cars + 1) + startMovement()
-                TrafficEvent.Off -> state.copy(on = false).toEffect()
-                TrafficEvent.On -> state.copy(on = true) + startMovement()
+    private val bloc = bloc<TrafficState, TrafficEvent>(context, commonState) {
+        thunkMatching<TrafficEvent.Plus> { state, action, dispatch ->
+            logger.w("Thunk 1: TrafficEvent.Plus, state = $state")
+            dispatch(TrafficEvent.Plus)
+
+            if (commonState.value.cars > limit) {
+                dispatch(TrafficEvent.On)
+                delay(lightTime)
+                dispatch(TrafficEvent.Off)
+            }
+        }
+
+        thunkMatching<TrafficEvent.Minus> { state, action, dispatch ->
+            logger.w("Thunk 2: TrafficEvent.Minus, state = $state")
+            dispatch(TrafficEvent.Minus)
+
+            while (commonState.value.on && commonState.value.cars > 0) {
+                streetIn?.carOut()
+                streetOut?.carIn()
+                dispatch(TrafficEvent.Minus)
+            }
+        }
+
+        thunkMatching<TrafficEvent.On> { state, action , dispatch ->
+            logger.w("Thunk 3: TrafficEvent.On, state = $state")
+            dispatch(TrafficEvent.On)
+
+            while (commonState.value.on && commonState.value.cars > 0) {
+                streetIn?.carOut()
+                streetOut?.carIn()
+                dispatch(TrafficEvent.Minus)
+            }
+        }
+
+        thunk { state, action, dispatch ->
+            logger.w("Thunk 4: $action, state = $state")
+//            dispatch(action)
+        }
+
+        reduce { state, action ->
+            logger.w("Reduce: $action, state = $state")
+            when (action) {
+                TrafficEvent.Plus -> state.copy(cars = state.cars + 1)
+                TrafficEvent.Minus -> state.copy(cars = (state.cars - 1).coerceAtLeast(0))
+                TrafficEvent.On -> state.copy(on = true)
+                TrafficEvent.Off -> state.copy(on = false)
             }
         }
     }
 
-    private fun startMovement() = SideEffect<TrafficEvent> {
-        delay(delay)
-        if (commonState.value.on && commonState.value.cars > 0) {
-            streetIn?.carOut()
-            streetOut?.carIn()
-            TrafficEvent.Minus
-        } else null
-    }
+    val state: Stream<TrafficState> = bloc
 
-    val state: Stream<TrafficState> = knot
-
-    suspend fun addCar() {
-        val cars = commonState.value.cars + 1
-        commonState.emit(commonState.value.copy(cars = cars))
-        if (cars > limit) {
-            knot.emit(TrafficEvent.On)
-            delay(lightTime)
-            knot.emit(TrafficEvent.Off)
-        }
+    fun addCar() {
+        bloc.emit(TrafficEvent.Plus)
     }
 
     fun setStreetIn(street: Street) {

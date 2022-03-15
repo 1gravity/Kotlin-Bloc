@@ -17,8 +17,6 @@ class TrafficActivity : BaseActivity() {
         viewModelFactory { TrafficViewModel(activityKnotContext()) }
     }
 
-    private var cars = 0
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +67,11 @@ class TrafficActivity : BaseActivity() {
     }
 
     private fun sumCars() {
-        cars = viewModel.street1State.value.cars + viewModel.street2State.value.cars + viewModel.street3State.value.cars
-        findViewById<TextView>(R.id.tvCars).text = cars.toString()
+        val cars = viewModel.street1State.value.cars
+        findViewById<TextView>(R.id.tvCars).text =
+            viewModel.street1State.value.cars
+                .plus(viewModel.street2State.value.cars)
+                .plus(viewModel.street3State.value.cars)
+                .toString()
     }
 }

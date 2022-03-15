@@ -1,14 +1,14 @@
 package com.onegravity.knot.sample.books
 
 import com.onegravity.bloc.Stream
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.knot.knot
 import com.onegravity.knot.state.knotState
 import kotlinx.coroutines.delay
 import com.onegravity.knot.sample.books.BooksRepository.*
 
 /**
- * Implements the BooksUseCase with two [Knot]s to demonstrate shared [KnotState]
+ * Implements the BooksUseCase with two [Bloc]s to demonstrate shared [BlocState]
  */
 class BooksUseCaseImpl(
     context: BlocContext,
@@ -17,36 +17,30 @@ class BooksUseCaseImpl(
 
     private val commonState = knotState<BookState>(BookState.Empty)
 
-    private val clearKnot = knot<BookState, BookEvent>(context, commonState) {
-        reduce { state, event ->
-            when (event) {
-                BookEvent.Clear -> when (state) {
-                    BookState.Empty -> state.toEffect()
-                    is BookState.Loaded -> BookState.Empty.toEffect()
-                    else -> state.unexpected(event)
-                }
-                else -> state.toEffect()
+    private val clearBloc = bloc<BookState, BookEvent.Clear>(context, commonState) {
+        reduce { state, _ ->
+            when (state) {
+                BookState.Empty -> state
+                is BookState.Loaded -> BookState.Empty
+                else -> state
             }
         }
     }
 
-    private val loadKnot = knot<BookState, BookEvent, BookState, BookSideEffect>(context, commonState) {
-        reduce { state, event ->
-            when (event) {
-                BookEvent.Load -> when (state) {
-                    BookState.Empty, is BookState.Loaded, is BookState.Failure ->
-                        BookState.Loading + BookSideEffect.Load
-                    else -> state.toEffect()
-                }
-                is BookEvent.LoadComplete -> event.result.toState().toEffect()
-                else -> state.toEffect()
-            }
+    private val loadBloc = bloc<BookState, BookEvent, BookState>(context, commonState) {
+        thunkMatching<BookEvent.Load> { _, action, dispatch ->
+            dispatch(BookEvent.Loading)
+            delay(1000)
+            val nextAction = repository.loadBooks().toAction()
+            dispatch(nextAction)
         }
 
-        execute {
-            delay(1000)
-            val result = repository.loadBooks()
-            BookEvent.LoadComplete(result)
+        reduce { state, action ->
+            when (action) {
+                BookEvent.Loading -> BookState.Loading
+                is BookEvent.LoadComplete -> action.result.toState()
+                else -> state
+            }
         }
     }
 
@@ -54,11 +48,11 @@ class BooksUseCaseImpl(
         get() = commonState
 
     override fun load() {
-        loadKnot.emit(BookEvent.Load)
+        loadBloc.emit(BookEvent.Load)
     }
 
     override fun clear() {
-        clearKnot.emit(BookEvent.Clear)
+        clearBloc.emit(BookEvent.Clear)
     }
 
 }

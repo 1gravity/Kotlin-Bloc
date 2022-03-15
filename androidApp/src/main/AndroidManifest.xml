@@ -11,8 +11,8 @@
         android:theme="@style/Theme.Reduce">
 
         <activity
-            android:name=".books.BooksActivity"
-            android:label="Books"
+            android:name=".MainActivity"
+            android:label="BLoC Framework"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,47 +20,25 @@
             </intent-filter>
         </activity>
 
-        <!--                <activity-->
-        <!--                    android:name=".counter.CounterSimpleActivity"-->
-        <!--                    android:label="Counter Simple"-->
-        <!--                    android:exported="true">-->
-        <!--                    <intent-filter>-->
-        <!--                        <action android:name="android.intent.action.MAIN" />-->
-        <!--                        <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--                    </intent-filter>-->
-        <!--                </activity>-->
+        <activity
+            android:name=".counter.CounterActivity"
+            android:label="Counter Simple"
+            android:exported="false"/>
 
+        <activity
+            android:name=".counter.CounterReduxActivity"
+            android:label="Counter Redux"
+            android:exported="false"/>
 
-        <!--        <activity-->
-        <!--            android:name=".counter.CounterReduxActivity"-->
-        <!--            android:label="Counter Redux"-->
-        <!--            android:exported="true">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
+        <activity
+            android:name=".books.BooksActivity"
+            android:label="Books"
+            android:exported="false"/>
 
-
-
-        <!--        <activity-->
-        <!--            android:name=".traffic.TrafficActivity"-->
-        <!--            android:label="Traffic"-->
-        <!--            android:exported="true">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-
-        <!--        <activity-->
-        <!--            android:name=".sms.SmsActivity"-->
-        <!--            android:exported="true">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
+        <activity
+            android:name=".traffic.TrafficActivity"
+            android:label="Traffic"
+            android:exported="false"/>
 
     </application>
 

@@ -13,7 +13,7 @@ class BlocImpl<State, Action: Any, Proposal>(
     context: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<Thunk<State, Action>> = emptyList(),
-    private val actionThunks: Map<Matcher<Action, Action>, ActionThunk<State, Action>> = emptyMap(),
+    private val actionThunks: Map<Matcher<Action, Action>, Thunk<State, Action>> = emptyMap(),
     private val reducer: Reducer<State, Action, Proposal>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, Proposal> {
@@ -33,11 +33,12 @@ class BlocImpl<State, Action: Any, Proposal>(
         }
     }
 
-    override val value = blocState.value
+    override val value
+        get() = blocState.value
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(action: Action) {
-        logger.d("emit $action")
+        logger.d("emit action $action")
 
         if (actionThunks.any { it.key.matches(action) } || thunks.isNotEmpty()) {
             actions.trySend(action)
@@ -54,7 +55,7 @@ class BlocImpl<State, Action: Any, Proposal>(
     private fun start(coroutineScope: CoroutineScope) {
         coroutineScope.launch(dispatcher) {
             for (action in actions) {
-                logger.d("processing action $action")
+                logger.d("process action $action")
                 val reduceDispatcher: Dispatcher<Action> = { reducerAction ->
                     val proposal = reducer.invoke(blocState.value, reducerAction)
                     blocState.emit(proposal)
@@ -62,11 +63,10 @@ class BlocImpl<State, Action: Any, Proposal>(
                 actionThunks
                     .filter { it.key.matches(action) }
                     .forEach { (_, thunk) ->
-                        logger.d("FOUND THUNK for $action")
-                        thunk.invoke(blocState.value, reduceDispatcher)
+                        thunk.invoke({ blocState.value }, action, reduceDispatcher)
                     }
                 thunks.forEach { thunk ->
-                    thunk.invoke(blocState.value, action, reduceDispatcher)
+                    thunk.invoke( { blocState.value }, action, reduceDispatcher)
                 }
             }
         }

@@ -9,7 +9,7 @@ import kotlin.coroutines.CoroutineContext
 class BlocBuilder<State, Action: Any, Proposal> {
 
     private var _thunks: MutableList<Thunk<State, Action>> = ArrayList()
-    private val _actionThunks: MutableMap<Matcher<Action, Action>, ActionThunk<State, Action>> = LinkedHashMap()
+    private val _actionThunks: MutableMap<Matcher<Action, Action>, Thunk<State, Action>> = LinkedHashMap()
     private var _reducer: Reducer<State, Action, Proposal>? = null
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
@@ -26,18 +26,20 @@ class BlocBuilder<State, Action: Any, Proposal> {
         _thunks.add(thunk)
     }
 
-    inline fun <reified A : Action> thunk(noinline thunk: ActionThunk<State, Action>) {
+    inline fun <reified A : Action> thunkMatching(noinline thunk: Thunk<State, Action>) {
         action(Matcher.any<Action, A>(), thunk)
     }
 
     fun <A : Action> action(
         stateMatcher: Matcher<Action, A>,
-        thunk: ActionThunk<State, Action>
+        thunk: Thunk<State, Action>
     ) {
         _actionThunks[stateMatcher] = thunk
     }
 
+    // TODO implement reduce<Action> { }
     fun reduce(reducer: Reducer<State, Action, Proposal>) {
+        check(_reducer == null) { "only one reduce { } can be defined" }
         _reducer = reducer
     }
 

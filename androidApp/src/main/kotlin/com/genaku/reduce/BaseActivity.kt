@@ -2,15 +2,19 @@ package com.genaku.reduce
 
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.onegravity.knot.ActivityKnotContext
 
-open class BaseActivity : AppCompatActivity {
+open class BaseActivity : AppCompatActivity() {
 
-    constructor(): super()
-
-    constructor(@LayoutRes contentLayoutId: Int): super(contentLayoutId)
+    protected fun <T : ViewDataBinding> bind(@LayoutRes layoutId: Int, bind2ViewModel: (T) -> Unit) {
+        val binding = DataBindingUtil.setContentView<T>(this, layoutId)
+        bind2ViewModel(binding)
+        binding.lifecycleOwner = this
+        setContentView(binding.root)
+    }
 
     @Suppress("UNCHECKED_CAST")
     protected inline fun <VM : ViewModel> viewModelFactory(crossinline f: () -> VM) =
