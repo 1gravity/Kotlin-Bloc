@@ -2,7 +2,7 @@
 
 package com.onegravity.bloc.fsm
 
-import com.onegravity.bloc.Matcher
+import com.onegravity.bloc.builder.Matcher
 
 class GraphBuilder<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
     graph: Graph<STATE, EVENT, SIDE_EFFECT>? = null

@@ -2,6 +2,7 @@ package com.onegravity.bloc
 
 import com.arkivanov.essenty.lifecycle.doOnCreate
 import com.arkivanov.essenty.lifecycle.doOnDestroy
+import com.onegravity.bloc.builder.MatcherThunk
 import com.onegravity.bloc.context.BlocContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -12,8 +13,7 @@ import kotlin.coroutines.CoroutineContext
 class BlocImpl<State, Action: Any, Proposal>(
     context: BlocContext,
     private val blocState: BlocState<State, Proposal>,
-    private val thunks: List<Thunk<State, Action>> = emptyList(),
-    private val actionThunks: Map<Matcher<Action, Action>, Thunk<State, Action>> = emptyMap(),
+    private val thunks: List<MatcherThunk<State, Action>> = emptyList(),
     private val reducer: Reducer<State, Action, Proposal>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, Proposal> {
@@ -40,7 +40,7 @@ class BlocImpl<State, Action: Any, Proposal>(
     override fun emit(action: Action) {
         logger.d("emit action $action")
 
-        if (actionThunks.any { it.key.matches(action) } || thunks.isNotEmpty()) {
+        if (thunks.any { (matcher, _) -> matcher == null || matcher.matches(action) }) {
             actions.trySend(action)
         } else {
             val proposal = reducer.invoke(blocState.value, action)

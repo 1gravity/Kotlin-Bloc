@@ -17,6 +17,11 @@ object SimpleCounter {
                 dispatch(action)
                 logger.w("2 state: ${getState.invoke()}")
             }
+            thunkMatching<Action.Increment> { getState, action, dispatch ->
+                logger.w("1 state: ${getState.invoke()}")
+                dispatch(action)
+                logger.w("2 state: ${getState.invoke()}")
+            }
 //            thunk { getState, action, dispatch ->
 //                logger.w("3 state: ${getState.invoke()}")
 //                dispatch(action)

@@ -2,14 +2,13 @@ package com.onegravity.bloc.builder
 
 import com.onegravity.bloc.*
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.Matcher
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 class BlocBuilder<State, Action: Any, Proposal> {
 
-    private var _thunks: MutableList<Thunk<State, Action>> = ArrayList()
-    private val _actionThunks: MutableMap<Matcher<Action, Action>, Thunk<State, Action>> = LinkedHashMap()
+    private val _thunks = ArrayList<MatcherThunk<State, Action>>()
+
     private var _reducer: Reducer<State, Action, Proposal>? = null
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
@@ -18,12 +17,11 @@ class BlocBuilder<State, Action: Any, Proposal> {
         blocState = blocState,
         reducer = checkNotNull(_reducer) { "reduce { } must be declared" },
         thunks = _thunks,
-        actionThunks = _actionThunks,
         dispatcher = _dispatcher,
     )
 
     fun thunk(thunk: Thunk<State, Action>) {
-        _thunks.add(thunk)
+        _thunks.add(MatcherThunk(null, thunk))
     }
 
     inline fun <reified A : Action> thunkMatching(noinline thunk: Thunk<State, Action>) {
@@ -34,7 +32,7 @@ class BlocBuilder<State, Action: Any, Proposal> {
         stateMatcher: Matcher<Action, A>,
         thunk: Thunk<State, Action>
     ) {
-        _actionThunks[stateMatcher] = thunk
+        _thunks.add(MatcherThunk(stateMatcher, thunk))
     }
 
     // TODO implement reduce<Action> { }

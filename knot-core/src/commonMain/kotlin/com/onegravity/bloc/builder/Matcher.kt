@@ -1,6 +1,6 @@
 /** From https://github.com/Tinder/StateMachine */
 
-package com.onegravity.bloc
+package com.onegravity.bloc.builder
 
 import kotlin.reflect.KClass
 
