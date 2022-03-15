@@ -3,7 +3,7 @@ package com.onegravity.knot.sample.books
 import com.onegravity.bloc.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.knot.state.knotState
+import com.onegravity.knot.state.blocState
 import kotlinx.coroutines.delay
 import com.onegravity.knot.sample.books.BooksRepository.*
 
@@ -15,7 +15,7 @@ class BooksUseCaseImpl(
     private val repository: BooksRepository,
 ) : BooksUseCase {
 
-    private val commonState = knotState<BookState>(BookState.Empty)
+    private val commonState = blocState<BookState>(BookState.Empty)
 
     private val clearBloc = bloc<BookState, BookEvent.Clear>(context, commonState) {
         reduce { state, _ ->

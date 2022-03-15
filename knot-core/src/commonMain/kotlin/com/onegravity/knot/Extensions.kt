@@ -4,9 +4,9 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.knot.select.select
-import com.onegravity.knot.state.reduxKnotState
-import com.onegravity.knot.state.simpleReduxKnotState
+import com.onegravity.bloc.select.select
+import com.onegravity.knot.state.reduxBlocState
+import com.onegravity.knot.state.simpleReduxBlocState
 import org.reduxkotlin.Store
 
 /**
@@ -62,7 +62,7 @@ fun <State: Any, Proposal: Any, ReduxModel: Any> Store<ReduxModel>.toKnotState(
     context: BlocContext,
     initialState: State,
     selector: Selector<ReduxModel, State>
-) = simpleReduxKnotState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
+) = simpleReduxBlocState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
     this.initialState = initialState
     select(selector)
 }
@@ -78,7 +78,7 @@ fun <State: Any, Proposal: Any, Model: Any, ReduxModel: Any> Store<ReduxModel>.t
     initialState: State,
     selector: Selector<ReduxModel, Model>,
     mapper: Mapper<Model, State>
-) = reduxKnotState<State, Proposal, Model, ReduxModel>(context.disposableScope(), this) {
+) = reduxBlocState<State, Proposal, Model, ReduxModel>(context.disposableScope(), this) {
     this.initialState = initialState
     select(selector)
     map(mapper)

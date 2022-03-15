@@ -1,6 +1,6 @@
-package com.genaku.reduce.books
+package com.onegravity.bloc.books
 
-import com.genaku.reduce.BaseViewModel
+import com.onegravity.bloc.BaseViewModel
 import com.onegravity.knot.ActivityKnotContext
 import com.onegravity.knot.sample.books.*
 

@@ -4,7 +4,7 @@ import com.onegravity.bloc.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.logger
-import com.onegravity.knot.state.knotState
+import com.onegravity.knot.state.blocState
 import kotlinx.coroutines.delay
 
 data class TrafficState(val on: Boolean, val cars: Int) {
@@ -28,7 +28,7 @@ class TrafficLight(
     private var streetIn: Street? = null
     private var streetOut: Street? = null
 
-    private val commonState = knotState(TrafficState(false, 0))
+    private val commonState = blocState(TrafficState(false, 0))
 
     private val bloc = bloc<TrafficState, TrafficEvent>(context, commonState) {
         thunkMatching<TrafficEvent.Plus> { state, action, dispatch ->

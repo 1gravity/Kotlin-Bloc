@@ -2,7 +2,7 @@
  * Adapted version from: https://github.com/reduxkotlin/Reselect
  */
 
-package com.onegravity.knot.select
+package com.onegravity.bloc.select
 
 /**
  * Wrapper class for Selector factory methods, that basically is used only to capture type

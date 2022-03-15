@@ -1,4 +1,4 @@
-package com.genaku.reduce
+package com.onegravity.bloc
 
 import androidx.lifecycle.*
 import com.onegravity.knot.ActivityKnotContext

@@ -2,7 +2,7 @@ package com.onegravity.bloc
 
 import com.onegravity.bloc.builder.BlocBuilder
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.knot.state.knotState
+import com.onegravity.knot.state.blocState
 import kotlin.jvm.JvmName
 
 /**
@@ -36,4 +36,4 @@ fun <State, Action: Any> bloc(
 ): Bloc<State, Action, State> =
     BlocBuilder<State, Action, State>()
         .also(block)
-        .build(context, knotState(initialValue))
+        .build(context, blocState(initialValue))

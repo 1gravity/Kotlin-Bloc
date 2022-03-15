@@ -1,15 +1,16 @@
-package com.genaku.reduce
+package com.onegravity.bloc
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.genaku.reduce.books.BooksActivity
-import com.genaku.reduce.counter.CounterActivity
-import com.genaku.reduce.counter.CounterReduxActivity
-import com.genaku.reduce.databinding.ActivityMainBinding
-import com.genaku.reduce.traffic.TrafficActivity
+import com.onegravity.bloc.R
+import com.onegravity.bloc.books.BooksActivity
+import com.onegravity.bloc.counter.CounterActivity
+import com.onegravity.bloc.counter.CounterReduxActivity
+import com.onegravity.bloc.databinding.ActivityMainBinding
+import com.onegravity.bloc.traffic.TrafficActivity
 import com.onegravity.knot.activityKnotContext
 import com.onegravity.knot.sample.MainMenu.State.*
 import kotlinx.coroutines.launch

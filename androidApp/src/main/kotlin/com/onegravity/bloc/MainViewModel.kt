@@ -1,6 +1,5 @@
-package com.genaku.reduce
+package com.onegravity.bloc
 
-import com.onegravity.bloc.Stream
 import com.onegravity.knot.ActivityKnotContext
 import com.onegravity.knot.sample.MainMenu.Action.*
 import com.onegravity.knot.sample.MainMenu.State

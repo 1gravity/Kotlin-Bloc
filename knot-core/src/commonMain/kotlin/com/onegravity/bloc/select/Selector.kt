@@ -2,7 +2,7 @@
  * Adapted version from: https://github.com/reduxkotlin/Reselect
  */
 
-package com.onegravity.knot.select
+package com.onegravity.bloc.select
 
 import org.reduxkotlin.*
 import kotlin.jvm.JvmField

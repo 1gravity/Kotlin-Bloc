@@ -1,7 +1,7 @@
-package com.genaku.reduce.traffic
+package com.onegravity.bloc.traffic
 
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import com.genaku.reduce.BaseViewModel
+import com.onegravity.bloc.BaseViewModel
 import com.onegravity.knot.ActivityKnotContext
 import com.onegravity.knot.sample.traffic.Traffic
 

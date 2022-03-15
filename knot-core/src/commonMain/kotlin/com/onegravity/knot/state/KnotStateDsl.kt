@@ -9,7 +9,7 @@ import kotlin.jvm.JvmName
  * Creates a [BlocState] instance using a [SimpleKnotStateBuilder]
  */
 @JvmName("simpleKnotState")
-fun <State> knotState(
+fun <State> blocState(
     block: SimpleKnotStateBuilder<State>.() -> Unit
 ): BlocState<State, State> =
     SimpleKnotStateBuilderImpl<State>()
@@ -17,7 +17,7 @@ fun <State> knotState(
         .build()
 
 /**
- * Similar to the previous [knotState] function but takes the initialState as function parameter to
+ * Similar to the previous [blocState] function but takes the initialState as function parameter to
  * simplify from
  * ```
  *    knotState<State> { initialState = SomeState }
@@ -28,7 +28,7 @@ fun <State> knotState(
  * ```
  */
 @JvmName("simpleKnotStateWithInitialState")
-fun <State> knotState(
+fun <State> blocState(
     initialState: State
 ): BlocState<State, State> =
     SimpleKnotStateBuilderImpl<State>()
@@ -39,7 +39,7 @@ fun <State> knotState(
  * Creates a [BlocState] instance using a [KnotStateBuilder]
  */
 @JvmName("knotState")
-fun <State, Proposal> knotState(
+fun <State, Proposal> blocState(
     block: KnotStateBuilder<State, Proposal>.() -> Unit
 ): BlocState<State, Proposal> =
     KnotStateBuilderImpl<State, Proposal>()
@@ -50,7 +50,7 @@ fun <State, Proposal> knotState(
  * Creates a [BlocState] instance using a [ReduxKnotStateBuilder]
  */
 @JvmName("reduxKnotState")
-fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxKnotState(
+fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxKnotStateBuilder<State, Model, ReduxModel>.() -> Unit
@@ -63,7 +63,7 @@ fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxKnotState(
  * Creates a [BlocState] instance using a [ReduxSimpleKnotStateBuilder]
  */
 @JvmName("simpleReduxKnotState")
-fun <State: Any, Proposal: Any, ReduxModel: Any> simpleReduxKnotState(
+fun <State: Any, Proposal: Any, ReduxModel: Any> simpleReduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxSimpleKnotStateBuilder<State, ReduxModel>.() -> Unit

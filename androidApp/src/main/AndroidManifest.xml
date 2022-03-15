@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.genaku.reduce">
+    package="com.onegravity.bloc">
 
     <application
         android:name=".App"
@@ -36,7 +36,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".traffic.TrafficActivity"
+            android:name="com.onegravity.bloc.traffic.TrafficActivity"
             android:label="Traffic"
             android:exported="false"/>
 

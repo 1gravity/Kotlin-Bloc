@@ -1,4 +1,4 @@
-package com.genaku.reduce
+package com.onegravity.bloc
 
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity

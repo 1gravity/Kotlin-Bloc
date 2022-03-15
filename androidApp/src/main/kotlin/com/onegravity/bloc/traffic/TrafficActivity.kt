@@ -1,4 +1,4 @@
-package com.genaku.reduce.traffic
+package com.onegravity.bloc.traffic
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.genaku.reduce.BaseActivity
-import com.genaku.reduce.R
+import com.onegravity.bloc.BaseActivity
+import com.onegravity.bloc.R
 import com.onegravity.knot.activityKnotContext
 import kotlinx.coroutines.launch
 

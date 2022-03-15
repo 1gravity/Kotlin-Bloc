@@ -1,12 +1,12 @@
-package com.genaku.reduce.books
+package com.onegravity.bloc.books
 
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.genaku.reduce.BaseActivity
-import com.genaku.reduce.R
+import com.onegravity.bloc.BaseActivity
+import com.onegravity.bloc.R
 import com.onegravity.knot.activityKnotContext
 import com.onegravity.knot.sample.books.BookState
 import kotlinx.coroutines.launch

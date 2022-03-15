@@ -1,7 +1,7 @@
-package com.genaku.reduce.counter
+package com.onegravity.bloc.counter
 
 import androidx.lifecycle.viewModelScope
-import com.genaku.reduce.BaseViewModel
+import com.onegravity.bloc.BaseViewModel
 import com.onegravity.knot.ActivityKnotContext
 import com.onegravity.knot.sample.counter.SimpleCounter.bloc
 import com.onegravity.knot.sample.counter.SimpleCounter.Action.*
