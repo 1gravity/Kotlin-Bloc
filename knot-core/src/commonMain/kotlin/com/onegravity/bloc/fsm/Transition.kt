@@ -1,3 +1,5 @@
+/** From https://github.com/Tinder/StateMachine */
+
 package com.onegravity.bloc.fsm
 
 @Suppress("UNUSED")

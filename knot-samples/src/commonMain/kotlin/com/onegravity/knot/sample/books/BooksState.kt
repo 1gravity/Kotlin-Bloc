@@ -15,7 +15,7 @@ fun BookResult.toState(): BookState =
             BookState.Failure(message)
         })
 
-fun BookResult.toAction(): BookEvent = BookEvent.LoadComplete(this)
+fun BookResult.toAction() = BookEvent.LoadComplete(this)
 
 sealed class BookState {
     object Empty : BookState()

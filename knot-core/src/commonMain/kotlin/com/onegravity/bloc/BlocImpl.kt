@@ -9,34 +9,16 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
-class BlocImpl<State, Action, Proposal>(
+class BlocImpl<State, Action: Any, Proposal>(
     context: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<Thunk<State, Action>> = emptyList(),
-    @Suppress("UNCHECKED_CAST")
-    private val reducer: Reducer<State, Action, Proposal> = { _, action -> action as Proposal },
-    private val dispatcherThunks: CoroutineContext = Dispatchers.Default
+    private val actionThunks: Map<Matcher<Action, Action>, ActionThunk<State, Action>> = emptyMap(),
+    private val reducer: Reducer<State, Action, Proposal>,
+    private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, Proposal> {
 
     private val actions = Channel<Action>(UNLIMITED)
-
-    private val thunkDispatchers = thunks.indices
-        .reversed()
-        .fold(ArrayList<ThunkDispatcher<State, Action>>()) { list, index ->
-            val dispatcher: Dispatcher<Action> =
-                when (index == thunks.lastIndex) {
-                    true -> { action ->
-                        val proposal = reducer.invoke(blocState.value, action)
-                        blocState.emit(proposal)
-                    }
-                    else -> { action ->
-                        val (thunk, dispatcher) = list[index + 1]
-                        thunk.invoke(blocState.value, action, dispatcher)
-                    }
-                }
-            list.add(0, ThunkDispatcher(thunks[index], dispatcher))
-            list
-        }
 
     init {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -56,7 +38,8 @@ class BlocImpl<State, Action, Proposal>(
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(action: Action) {
         logger.d("emit $action")
-        if (thunks.isNotEmpty()) {
+
+        if (actionThunks.any { it.key.matches(action) } || thunks.isNotEmpty()) {
             actions.trySend(action)
         } else {
             val proposal = reducer.invoke(blocState.value, action)
@@ -69,12 +52,21 @@ class BlocImpl<State, Action, Proposal>(
     }
 
     private fun start(coroutineScope: CoroutineScope) {
-
-        coroutineScope.launch(dispatcherThunks) {
+        coroutineScope.launch(dispatcher) {
             for (action in actions) {
                 logger.d("processing action $action")
-                thunkDispatchers.firstOrNull()?.let { (thunk, dispatcher) ->
-                        thunk.invoke(blocState.value, action, dispatcher)
+                val reduceDispatcher: Dispatcher<Action> = { reducerAction ->
+                    val proposal = reducer.invoke(blocState.value, reducerAction)
+                    blocState.emit(proposal)
+                }
+                actionThunks
+                    .filter { it.key.matches(action) }
+                    .forEach { (_, thunk) ->
+                        logger.d("FOUND THUNK for $action")
+                        thunk.invoke(blocState.value, reduceDispatcher)
+                    }
+                thunks.forEach { thunk ->
+                    thunk.invoke(blocState.value, action, reduceDispatcher)
                 }
             }
         }

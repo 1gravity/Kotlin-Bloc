@@ -1,4 +1,8 @@
+/** From https://github.com/Tinder/StateMachine */
+
 package com.onegravity.bloc.fsm
+
+import com.onegravity.bloc.Matcher
 
 class StateDefinitionBuilder<STATE : Any, S : STATE, EVENT : Any, SIDE_EFFECT : Any> {
 

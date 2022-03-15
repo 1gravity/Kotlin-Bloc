@@ -1,4 +1,8 @@
+/** From https://github.com/Tinder/StateMachine */
+
 package com.onegravity.bloc.fsm
+
+import com.onegravity.bloc.Matcher
 
 data class Graph<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
     val initialState: STATE,

@@ -1,4 +1,8 @@
+/** From https://github.com/Tinder/StateMachine */
+
 package com.onegravity.bloc.fsm
+
+import com.onegravity.bloc.Matcher
 
 class GraphBuilder<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
     graph: Graph<STATE, EVENT, SIDE_EFFECT>? = null

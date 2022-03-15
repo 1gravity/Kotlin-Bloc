@@ -8,6 +8,11 @@ typealias Thunk<State, Action> = suspend (
     dispatch: Dispatcher<Action>
 ) -> Unit
 
+typealias ActionThunk<State, Action> = suspend (
+    state: State,
+    dispatch: Dispatcher<Action>
+) -> Unit
+
 data class ThunkDispatcher<State, Action>(
     val thunk: Thunk<State, Action>,
     val dispatcher: Dispatcher<Action>
