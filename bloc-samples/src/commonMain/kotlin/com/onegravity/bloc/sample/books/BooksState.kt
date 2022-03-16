@@ -15,7 +15,7 @@ fun BookResult.toState(): BookState =
             BookState.Failure(message)
         })
 
-fun BookResult.toAction() = BookEvent.LoadComplete(this)
+fun BookResult.toAction() = BookAction.LoadComplete(this)
 
 sealed class BookState {
     object Empty : BookState()
@@ -28,9 +28,9 @@ sealed class BookSideEffect {
     object Load : BookSideEffect()
 }
 
-sealed class BookEvent {
-    object Load : BookEvent()
-    object Clear : BookEvent()
-    object Loading : BookEvent()
-    class LoadComplete(val result: BookResult) : BookEvent()
+sealed class BookAction {
+    object Load : BookAction()
+    object Clear : BookAction()
+    object Loading : BookAction()
+    class LoadComplete(val result: BookResult) : BookAction()
 }

@@ -25,13 +25,13 @@ class BooksUseCaseImplRedux(context: BlocContext) : BooksUseCase {
         )
     }
 
-    private val bloc = bloc<BookState, BookEvent, Action>(
+    private val bloc = bloc<BookState, BookAction, Action>(
         context,
         reduxStore.toBlocState(context, BookState.Empty, { it }, mapModel2State)
     ) {
-        reduce { _, event ->
-            when (event) {
-                BookEvent.Load -> Action.Load
+        reduce { _, action ->
+            when (action) {
+                BookAction.Load -> Action.Load
                 else -> Action.Clear
             }
         }
@@ -41,11 +41,11 @@ class BooksUseCaseImplRedux(context: BlocContext) : BooksUseCase {
         get() = bloc
 
     override fun load() {
-        bloc.emit(BookEvent.Load)
+        bloc.emit(BookAction.Load)
     }
 
     override fun clear() {
-        bloc.emit(BookEvent.Clear)
+        bloc.emit(BookAction.Clear)
     }
 
 }

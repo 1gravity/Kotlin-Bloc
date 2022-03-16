@@ -13,9 +13,9 @@ class BooksUseCaseImplSimple(
     private val repository: BooksRepository,
 ) : BooksUseCase {
 
-    private val bloc = bloc<BookState, BookEvent>(context, BookState.Empty) {
-        thunkMatching<BookEvent.Load> { _, action, dispatch ->
-            dispatch(BookEvent.Loading)
+    private val bloc = bloc<BookState, BookAction>(context, BookState.Empty) {
+        thunkMatching<BookAction.Load> { _, action, dispatch ->
+            dispatch(BookAction.Loading)
             delay(1000)
             val nextAction = repository.loadBooks().toAction()
             dispatch(nextAction)
@@ -36,9 +36,9 @@ class BooksUseCaseImplSimple(
 
         reduce { state, action ->
             when (action) {
-                BookEvent.Clear -> BookState.Empty
-                BookEvent.Loading -> BookState.Loading
-                is BookEvent.LoadComplete -> action.result.toState()
+                BookAction.Clear -> BookState.Empty
+                BookAction.Loading -> BookState.Loading
+                is BookAction.LoadComplete -> action.result.toState()
                 else -> state
             }
         }
@@ -48,11 +48,11 @@ class BooksUseCaseImplSimple(
         get() = bloc
 
     override fun load() {
-        bloc.emit(BookEvent.Load)
+        bloc.emit(BookAction.Load)
     }
 
     override fun clear() {
-        bloc.emit(BookEvent.Clear)
+        bloc.emit(BookAction.Clear)
     }
 
 }

@@ -11,11 +11,11 @@ data class TrafficState(val on: Boolean, val cars: Int) {
     override fun toString() = if (on) "green ($cars)" else "red ($cars)"
 }
 
-sealed class TrafficEvent {
-    object On : TrafficEvent()
-    object Off : TrafficEvent()
-    object Plus : TrafficEvent()
-    object Minus : TrafficEvent()
+sealed class TrafficAction {
+    object On : TrafficAction()
+    object Off : TrafficAction()
+    object Plus : TrafficAction()
+    object Minus : TrafficAction()
 }
 
 class TrafficLight(
@@ -30,37 +30,37 @@ class TrafficLight(
 
     private val commonState = blocState(TrafficState(false, 0))
 
-    private val bloc = bloc<TrafficState, TrafficEvent>(context, commonState) {
-        thunkMatching<TrafficEvent.Plus> { state, action, dispatch ->
-            logger.w("Thunk 1: TrafficEvent.Plus, state = $state")
-            dispatch(TrafficEvent.Plus)
+    private val bloc = bloc<TrafficState, TrafficAction>(context, commonState) {
+        thunkMatching<TrafficAction.Plus> { state, _, dispatch ->
+            logger.w("Thunk 1: TrafficAction.Plus, state = $state")
+            dispatch(TrafficAction.Plus)
 
             if (commonState.value.cars > limit) {
-                dispatch(TrafficEvent.On)
+                dispatch(TrafficAction.On)
                 delay(lightTime)
-                dispatch(TrafficEvent.Off)
+                dispatch(TrafficAction.Off)
             }
         }
 
-        thunkMatching<TrafficEvent.Minus> { state, action, dispatch ->
-            logger.w("Thunk 2: TrafficEvent.Minus, state = $state")
-            dispatch(TrafficEvent.Minus)
+        thunkMatching<TrafficAction.Minus> { state, _, dispatch ->
+            logger.w("Thunk 2: TrafficAction.Minus, state = $state")
+            dispatch(TrafficAction.Minus)
 
             while (commonState.value.on && commonState.value.cars > 0) {
                 streetIn?.carOut()
                 streetOut?.carIn()
-                dispatch(TrafficEvent.Minus)
+                dispatch(TrafficAction.Minus)
             }
         }
 
-        thunkMatching<TrafficEvent.On> { state, action , dispatch ->
-            logger.w("Thunk 3: TrafficEvent.On, state = $state")
-            dispatch(TrafficEvent.On)
+        thunkMatching<TrafficAction.On> { state, _, dispatch ->
+            logger.w("Thunk 3: TrafficAction.On, state = $state")
+            dispatch(TrafficAction.On)
 
             while (commonState.value.on && commonState.value.cars > 0) {
                 streetIn?.carOut()
                 streetOut?.carIn()
-                dispatch(TrafficEvent.Minus)
+                dispatch(TrafficAction.Minus)
             }
         }
 
@@ -72,10 +72,10 @@ class TrafficLight(
         reduce { state, action ->
             logger.w("Reduce: $action, state = $state")
             when (action) {
-                TrafficEvent.Plus -> state.copy(cars = state.cars + 1)
-                TrafficEvent.Minus -> state.copy(cars = (state.cars - 1).coerceAtLeast(0))
-                TrafficEvent.On -> state.copy(on = true)
-                TrafficEvent.Off -> state.copy(on = false)
+                TrafficAction.Plus -> state.copy(cars = state.cars + 1)
+                TrafficAction.Minus -> state.copy(cars = (state.cars - 1).coerceAtLeast(0))
+                TrafficAction.On -> state.copy(on = true)
+                TrafficAction.Off -> state.copy(on = false)
             }
         }
     }
@@ -83,7 +83,7 @@ class TrafficLight(
     val state: Stream<TrafficState> = bloc
 
     fun addCar() {
-        bloc.emit(TrafficEvent.Plus)
+        bloc.emit(TrafficAction.Plus)
     }
 
     fun setStreetIn(street: Street) {

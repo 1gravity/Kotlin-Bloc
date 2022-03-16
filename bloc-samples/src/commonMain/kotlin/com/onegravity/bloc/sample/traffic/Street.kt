@@ -11,27 +11,27 @@ data class StreetState(val cars: Int) {
     override fun toString() = cars.toString()
 }
 
-sealed class StreetEvent {
-    object Plus : StreetEvent()
-    object Minus : StreetEvent()
+sealed class StreetAction {
+    object Plus : StreetAction()
+    object Minus : StreetAction()
 }
 
 class Street(context: BlocContext, private val delay: Long) {
 
     private var trafficLight: TrafficLight? = null
 
-    private val bloc = bloc<StreetState, StreetEvent>(context, StreetState(0)) {
-        thunkMatching<StreetEvent.Plus> { _, action, dispatch ->
-            dispatch(StreetEvent.Plus)
+    private val bloc = bloc<StreetState, StreetAction>(context, StreetState(0)) {
+        thunkMatching<StreetAction.Plus> { _, _, dispatch ->
+            dispatch(StreetAction.Plus)
             delay(delay)
             trafficLight?.addCar()
         }
 
-        reduce { state, event ->
+        reduce { state, action ->
             val cars = state.cars
-            when (event) {
-                StreetEvent.Plus -> StreetState(cars + 1)
-                StreetEvent.Minus -> StreetState((cars - 1).coerceAtLeast(0))
+            when (action) {
+                StreetAction.Plus -> StreetState(cars + 1)
+                StreetAction.Minus -> StreetState((cars - 1).coerceAtLeast(0))
             }
         }
     }
@@ -43,10 +43,10 @@ class Street(context: BlocContext, private val delay: Long) {
     }
 
     fun carIn() {
-        bloc.emit(StreetEvent.Plus)
+        bloc.emit(StreetAction.Plus)
     }
 
     fun carOut() {
-        bloc.emit(StreetEvent.Minus)
+        bloc.emit(StreetAction.Minus)
     }
 }

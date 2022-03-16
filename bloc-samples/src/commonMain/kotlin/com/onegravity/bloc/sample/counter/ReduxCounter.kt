@@ -5,19 +5,19 @@ import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.utils.toBlocState
 
 object ReduxCounter {
-    sealed class Event {
-        data class Increment(val value: Int = 1): Event()
-        data class Decrement(val value: Int = 1): Event()
+    sealed class Action {
+        data class Increment(val value: Int = 1): Action()
+        data class Decrement(val value: Int = 1): Action()
     }
 
-    fun bloc(context: BlocContext) = bloc<Int, Event, ReduxEvent>(
+    fun bloc(context: BlocContext) = bloc<Int, Action, ReduxAction>(
         context,
         reduxStore.toBlocState(context, 1) { it }
     ) {
-        reduce { _, event ->
-            when (event) {
-                is Event.Increment -> ReduxEvent.Increment(event.value)
-                is Event.Decrement -> ReduxEvent.Decrement(event.value)
+        reduce { _, action ->
+            when (action) {
+                is Action.Increment -> ReduxAction.Increment(action.value)
+                is Action.Decrement -> ReduxAction.Decrement(action.value)
             }
         }
     }
