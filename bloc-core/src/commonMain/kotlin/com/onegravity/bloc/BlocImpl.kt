@@ -23,33 +23,6 @@ class BlocImpl<State, Action: Any, Proposal>(
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, Proposal> {
 
-    data class ThunkRecord<State, Action : Any>(
-        val matcher: Matcher<Action, Action>?,
-        val thunk: Thunk<State, Action>,
-        val dispatcher: Dispatcher<Action>
-    )
-
-    private val reduceDispatcher: Dispatcher<Action> = { action ->
-        val proposal = reducer.invoke(blocState.value, action)
-        blocState.emit(proposal)
-    }
-
-    private val thunkRecords = thunks.indices
-        .reversed()
-        .fold(ArrayList<ThunkRecord<State, Action>>()) { list, index ->
-            val (matcher, thunk) = thunks[index]
-            val dispatcher: Dispatcher<Action> =
-                when (index == thunks.lastIndex) {
-                    true -> reduceDispatcher
-                    else -> { action ->
-                        val dispatcher = list[index + 1].dispatcher
-                        thunks[index + 1].thunk.invoke( { blocState.value }, action, dispatcher)
-                    }
-                }
-            list.add(0, ThunkRecord(matcher, thunk, dispatcher))
-            list
-        }
-
     private val actions = Channel<Action>(UNLIMITED)
 
     init {
@@ -59,6 +32,7 @@ class BlocImpl<State, Action: Any, Proposal>(
             logger.d("onCreate -> start Bloc")
             coroutineScope.start()
         }
+
         context.lifecycle.doOnDestroy {
             logger.d("onDestroy -> stop Bloc")
             coroutineScope.cancel("Stop Bloc")
@@ -86,25 +60,34 @@ class BlocImpl<State, Action: Any, Proposal>(
 
     private suspend fun processActions(action: Action) {
         logger.d("process action $action")
-        if (thunkRecords.any { it.matcher == null || it.matcher.matches(action) }) {
-            thunkRecords.forEachIndexed { index, (matcher, thunk, _) ->
+        if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
+            thunks.forEachIndexed { index, (matcher, _) ->
                 if (matcher == null || matcher.matches(action)) {
-                    val dispatcher = nextDispatcher(index, action)
-                    thunk.invoke({ blocState.value }, action, dispatcher)
+                    runThunk(index, action)
                 }
             }
         } else {
-            val proposal = reducer.invoke(blocState.value, action)
-            blocState.emit(proposal)
+            reduceDispatcher.invoke(action)
         }
     }
 
+    private val reduceDispatcher: Dispatcher<Action> = { action ->
+        val proposal = reducer.invoke(blocState.value, action)
+        blocState.emit(proposal)
+    }
+
+    private suspend fun runThunk(index: Int, action: Action) {
+        val dispatcher: Dispatcher<Action> = {
+            nextDispatcher(index + 1, it).invoke(it)
+        }
+        thunks[index].thunk.invoke({ blocState.value }, action, dispatcher)
+    }
+
     private fun nextDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
-        (startIndex until thunkRecords.lastIndex).forEach { index ->
-            // we use the current dispatcher ([index]) if the next thunk matches ([index + 1])
-            val matcher = thunkRecords[index + 1].matcher
+        (startIndex..thunks.lastIndex).forEach { index ->
+            val matcher = thunks[index].matcher
             if (matcher == null || matcher.matches(action)) {
-                return thunkRecords[index].dispatcher
+                return { runThunk(index, action) }
             }
         }
         return reduceDispatcher

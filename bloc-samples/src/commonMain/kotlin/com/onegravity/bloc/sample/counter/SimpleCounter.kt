@@ -13,20 +13,25 @@ object SimpleCounter {
     fun bloc(context: BlocContext) =
         bloc<Int, Action>(context, 1) {
             thunkMatching<Action.Increment> { _, action, dispatch ->
-                logger.w("thunk 1 started")
+                logger.w("thunk<Increment> 1 started")
                 dispatch(action)
                 dispatch(action)
-                logger.w("thunk 1 ended")
+                logger.w("thunk<Increment> 1 ended")
+            }
+            thunkMatching<Action.Decrement> { _, action, dispatch ->
+                logger.w("thunk<Decrement> started: $action")
+                dispatch(action)
+                logger.w("thunk<Decrement> ended: $action")
             }
             thunkMatching<Action.Increment> { _, action, dispatch ->
-                logger.w("thunk 2 started")
+                logger.w("thunk<Increment> 2 started")
                 dispatch(action)
-                logger.w("thunk 2 ended")
+                logger.w("thunk<Increment> 2 ended")
             }
             thunk { _, action, dispatch ->
-                logger.w("thunk 3 started")
+                logger.w("thunk started")
                 dispatch(action)
-                logger.w("thunk 3 ended")
+                logger.w("thunk ended")
             }
             reduce { state, action ->
                 logger.w("reduce started")
