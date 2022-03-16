@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
-import com.onegravity.knot.activityBlocContext
+import com.onegravity.bloc.activityBlocContext
 import com.onegravity.bloc.sample.books.BookState
 import kotlinx.coroutines.launch
 

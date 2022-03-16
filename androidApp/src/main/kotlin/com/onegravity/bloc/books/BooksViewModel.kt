@@ -1,7 +1,7 @@
 package com.onegravity.bloc.books
 
+import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.BaseViewModel
-import com.onegravity.knot.ActivityBlocContext
 import com.onegravity.bloc.sample.books.*
 
 class BooksViewModel(context: ActivityBlocContext) : BaseViewModel(context), BooksUseCase {

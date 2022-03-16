@@ -1,7 +1,7 @@
 package com.onegravity.bloc.traffic
 
+import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.BaseViewModel
-import com.onegravity.knot.ActivityBlocContext
 import com.onegravity.bloc.sample.traffic.Traffic
 
 class TrafficViewModel(val context: ActivityBlocContext) : BaseViewModel(context) {

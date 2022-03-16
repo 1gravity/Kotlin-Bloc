@@ -18,7 +18,7 @@ kotlin {
         homepage = "https://github.com/1gravity/Knot"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "knot-core"
+            baseName = "bloc-core"
         }
     }
     

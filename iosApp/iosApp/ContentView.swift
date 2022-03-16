@@ -1,5 +1,5 @@
 import SwiftUI
-import knot-core
+import bloc-core
 
 struct ContentView: View {
 	let greet = Greeting().greeting()

@@ -1,15 +1,15 @@
 PODS:
-  - knot_core (1.0)
+  - bloc_core (1.0)
 
 DEPENDENCIES:
-  - knot_core (from `../knot-core`)
+  - bloc_core (from `../bloc-core`)
 
 EXTERNAL SOURCES:
-  knot_core:
-    :path: "../knot-core"
+  bloc_core:
+    :path: "../bloc-core"
 
 SPEC CHECKSUMS:
-  knot_core: 63d0abc8b7076ff704028de0ab1a5f9ab3df8e3b
+  bloc_core: 63d0abc8b7076ff704028de0ab1a5f9ab3df8e3b
 
 PODFILE CHECKSUM: a1545ee59e338add820062da60cfd4c5a2d8ce19
 

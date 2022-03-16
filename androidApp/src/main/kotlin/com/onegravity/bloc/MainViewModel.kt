@@ -1,6 +1,5 @@
 package com.onegravity.bloc
 
-import com.onegravity.knot.ActivityBlocContext
 import com.onegravity.bloc.sample.MainMenu.Action.*
 import com.onegravity.bloc.sample.MainMenu.State
 import com.onegravity.bloc.sample.MainMenu.bloc

@@ -10,7 +10,7 @@ object ReduxCounter {
         data class Decrement(val value: Int = 1): Event()
     }
 
-    fun knot(context: BlocContext) = bloc<Int, Event, ReduxEvent>(
+    fun bloc(context: BlocContext) = bloc<Int, Event, ReduxEvent>(
         context,
         reduxStore.toBlocState(context, 1) { it }
     ) {

@@ -1,24 +1,24 @@
 Pod::Spec.new do |spec|
-    spec.name                     = 'knot_core'
+    spec.name                     = 'bloc_core'
     spec.version                  = '1.0'
     spec.homepage                 = 'https://github.com/1gravity/Knot'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''
     spec.summary                  = 'Reactive state container library for KMM'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/knot-core.framework'
+    spec.vendored_frameworks      = 'build/cocoapods/framework/bloc-core.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target = '14.1'
                 
                 
     spec.pod_target_xcconfig = {
-        'KOTLIN_PROJECT_PATH' => ':knot-core',
-        'PRODUCT_MODULE_NAME' => 'knot-core',
+        'KOTLIN_PROJECT_PATH' => ':bloc-core',
+        'PRODUCT_MODULE_NAME' => 'bloc-core',
     }
                 
     spec.script_phases = [
         {
-            :name => 'Build knot_core',
+            :name => 'Build bloc_core',
             :execution_position => :before_compile,
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1543BC2A821905E7368C7B495C4FB039"
-               BuildableName = "knot_core"
-               BlueprintName = "knot_core"
+               BuildableName = "bloc_core"
+               BlueprintName = "bloc_core"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

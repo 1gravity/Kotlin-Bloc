@@ -2,7 +2,7 @@
  * From https://github.com/arkivanov/Decompose
  */
 
-package com.onegravity.knot
+package com.onegravity.bloc
 
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner

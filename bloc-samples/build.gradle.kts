@@ -26,7 +26,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(KotlinX.coroutines.core)
-                implementation(project(":knot-core"))
+                implementation(project(":bloc-core"))
 
                 // Redux store (https://reduxkotlin.org)
                 implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")

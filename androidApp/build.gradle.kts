@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":knot-core"))
+    implementation(project(":bloc-core"))
     implementation(project(":bloc-samples"))
 
     implementation(Kotlin.stdlib)

@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
+import com.onegravity.bloc.activityBlocContext
 import com.onegravity.bloc.databinding.ActivityCounterReduxBinding
-import com.onegravity.knot.activityBlocContext
 
 class CounterReduxActivity : BaseActivity() {
 

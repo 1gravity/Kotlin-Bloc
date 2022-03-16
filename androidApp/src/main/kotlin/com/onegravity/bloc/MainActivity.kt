@@ -10,7 +10,6 @@ import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.traffic.TrafficActivity
-import com.onegravity.knot.activityBlocContext
 import com.onegravity.bloc.sample.MainMenu.State.*
 import kotlinx.coroutines.launch
 

@@ -1,8 +1,6 @@
 package com.onegravity.bloc
 
 import androidx.lifecycle.*
-import com.onegravity.knot.ActivityBlocContext
-import com.onegravity.knot.defaultBlocContext
 
 open class BaseViewModel(context: ActivityBlocContext) : ViewModel(), LifecycleOwner {
 

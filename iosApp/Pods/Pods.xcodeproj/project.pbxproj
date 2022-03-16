@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		1543BC2A821905E7368C7B495C4FB039 /* knot_core */ = {
+		1543BC2A821905E7368C7B495C4FB039 /* bloc_core */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 30F2C9B1151F123ACFE19B633B6926D5 /* Build configuration list for PBXAggregateTarget "knot_core" */;
+			buildConfigurationList = 30F2C9B1151F123ACFE19B633B6926D5 /* Build configuration list for PBXAggregateTarget "bloc_core" */;
 			buildPhases = (
-				97D66792F5738671AAE329DA2145F899 /* [CP-User] Build knot_core */,
+				97D66792F5738671AAE329DA2145F899 /* [CP-User] Build bloc_core */,
 			);
 			dependencies = (
 			);
-			name = knot_core;
+			name = bloc_core;
 		};
 /* End PBXAggregateTarget section */
 
@@ -31,23 +31,23 @@
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1543BC2A821905E7368C7B495C4FB039;
-			remoteInfo = knot_core;
+			remoteInfo = bloc_core;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0011AEE22E8296B3D9E0B0B2CDCAB2EE /* Pods-iosApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-acknowledgements.plist"; sourceTree = "<group>"; };
 		1A2FB55B5C37861BC78ECD1420D818C3 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
-		1EC2ECFBA60DF145D123E1676697BD5B /* knot_core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = knot_core.release.xcconfig; sourceTree = "<group>"; };
+		1EC2ECFBA60DF145D123E1676697BD5B /* bloc_core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = bloc_core.release.xcconfig; sourceTree = "<group>"; };
 		3A2475209BEE7612101900020629C625 /* Pods-iosApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iosApp-dummy.m"; sourceTree = "<group>"; };
 		42DE4C0106600A5B6D599285368F3270 /* Pods-iosApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iosApp-umbrella.h"; sourceTree = "<group>"; };
 		482384ADFE4EF692B16FACB8C2021970 /* Pods-iosApp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iosApp.modulemap"; sourceTree = "<group>"; };
-		4F81312EB352A521DD09525C10D25161 /* knot_core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = knot_core.debug.xcconfig; sourceTree = "<group>"; };
+		4F81312EB352A521DD09525C10D25161 /* bloc_core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = bloc_core.debug.xcconfig; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A43877303056397968EC90C7AAFE17E8 /* Pods-iosApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iosApp-acknowledgements.markdown"; sourceTree = "<group>"; };
 		A79C2AA5C063914B2D1BD80187FDF6DE /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
-		B02B074987A2A81796E857597E314619 /* knot_core.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = knot_core.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B02B074987A2A81796E857597E314619 /* bloc_core.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = bloc_core.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B097DD7534E741D5C41838011D755842 /* Pods-iosApp */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iosApp"; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCAED803D074E2E9C3B1327F049C8C2A /* Pods-iosApp-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,14 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		01F470DD2ED3BBD450E11F489BBA3290 /* knot_core */ = {
+		01F470DD2ED3BBD450E11F489BBA3290 /* bloc_core */ = {
 			isa = PBXGroup;
 			children = (
 				E01F9545137DC53DC22B1E9B51970AE8 /* Pod */,
 				935E02FE979370BBF87BD65A4A6966FF /* Support Files */,
 			);
-			name = knot_core;
-			path = "../../knot-core";
+			name = bloc_core;
+			path = "../../bloc-core";
 			sourceTree = "<group>";
 		};
 		1F86AA6785DF34AFD5A71790761717DE /* Products */ = {
@@ -109,7 +109,7 @@
 		60DDABD7153689EECD570B185962C816 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				01F470DD2ED3BBD450E11F489BBA3290 /* knot_core */,
+				01F470DD2ED3BBD450E11F489BBA3290 /* bloc_core */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -117,11 +117,11 @@
 		935E02FE979370BBF87BD65A4A6966FF /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				4F81312EB352A521DD09525C10D25161 /* knot_core.debug.xcconfig */,
-				1EC2ECFBA60DF145D123E1676697BD5B /* knot_core.release.xcconfig */,
+				4F81312EB352A521DD09525C10D25161 /* bloc_core.debug.xcconfig */,
+				1EC2ECFBA60DF145D123E1676697BD5B /* bloc_core.release.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../iosApp/Pods/Target Support Files/knot_core";
+			path = "../iosApp/Pods/Target Support Files/bloc_core";
 			sourceTree = "<group>";
 		};
 		C9F6DDEE5D76F65BB478A349731F54F4 /* Targets Support Files */ = {
@@ -154,7 +154,7 @@
 		E01F9545137DC53DC22B1E9B51970AE8 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				B02B074987A2A81796E857597E314619 /* knot_core.podspec */,
+				B02B074987A2A81796E857597E314619 /* bloc_core.podspec */,
 			);
 			name = Pod;
 			sourceTree = "<group>";
@@ -214,7 +214,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1543BC2A821905E7368C7B495C4FB039 /* knot_core */,
+				1543BC2A821905E7368C7B495C4FB039 /* bloc_core */,
 				ED39C638569286489CD697A6C8964146 /* Pods-iosApp */,
 			);
 		};
@@ -231,12 +231,12 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		97D66792F5738671AAE329DA2145F899 /* [CP-User] Build knot_core */ = {
+		97D66792F5738671AAE329DA2145F899 /* [CP-User] Build bloc_core */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			name = "[CP-User] Build knot_core";
+			name = "[CP-User] Build bloc_core";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
@@ -257,8 +257,8 @@
 /* Begin PBXTargetDependency section */
 		B8CA7ACE93161ED248038F661ACE1A45 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = knot_core;
-			target = 1543BC2A821905E7368C7B495C4FB039 /* knot_core */;
+			name = bloc_core;
+			target = 1543BC2A821905E7368C7B495C4FB039 /* bloc_core */;
 			targetProxy = 466F2BA44AD05FA3CD1030828CDAC77F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -303,7 +303,7 @@
 		};
 		4195C5FE383D6EAC3A5ABDAA14DCE874 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F81312EB352A521DD09525C10D25161 /* knot_core.debug.xcconfig */;
+			baseConfigurationReference = 4F81312EB352A521DD09525C10D25161 /* bloc_core.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -486,7 +486,7 @@
 		};
 		EB35C3B3D04BE0448FC2DF707C0D0BA5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EC2ECFBA60DF145D123E1676697BD5B /* knot_core.release.xcconfig */;
+			baseConfigurationReference = 1EC2ECFBA60DF145D123E1676697BD5B /* bloc_core.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -505,7 +505,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		30F2C9B1151F123ACFE19B633B6926D5 /* Build configuration list for PBXAggregateTarget "knot_core" */ = {
+		30F2C9B1151F123ACFE19B633B6926D5 /* Build configuration list for PBXAggregateTarget "bloc_core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4195C5FE383D6EAC3A5ABDAA14DCE874 /* Debug */,
