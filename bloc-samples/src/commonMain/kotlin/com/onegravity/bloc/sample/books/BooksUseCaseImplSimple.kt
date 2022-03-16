@@ -14,7 +14,7 @@ class BooksUseCaseImplSimple(
 ) : BooksUseCase {
 
     private val bloc = bloc<BookState, BookAction>(context, BookState.Empty) {
-        thunkMatching<BookAction.Load> { _, action, dispatch ->
+        thunkMatching<BookAction.Load> { _, _, dispatch ->
             dispatch(BookAction.Loading)
             delay(1000)
             val nextAction = repository.loadBooks().toAction()

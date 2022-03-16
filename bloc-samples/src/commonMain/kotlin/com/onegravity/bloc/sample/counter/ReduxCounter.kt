@@ -16,6 +16,8 @@ object ReduxCounter {
     ) {
         reduce { _, action ->
             when (action) {
+                // we could use the same actions for the BLoC and the redux store but in a real
+                // application the BLoC would implement some business logic
                 is Action.Increment -> ReduxAction.Increment(action.value)
                 is Action.Decrement -> ReduxAction.Decrement(action.value)
             }

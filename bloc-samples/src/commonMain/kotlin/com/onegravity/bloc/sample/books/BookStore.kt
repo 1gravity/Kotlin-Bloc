@@ -7,9 +7,9 @@ import org.reduxkotlin.Store
 import org.reduxkotlin.createThreadSafeStore
 import kotlin.random.Random
 
-sealed class Action {
-    object Load: Action()
-    object Clear: Action()
+sealed class ReduxAction {
+    object Load: ReduxAction()
+    object Clear: ReduxAction()
 }
 
 sealed class ReduxFailure {
@@ -26,8 +26,8 @@ sealed class State {
 }
 
 private fun reducer(state: Books, action: Any) = when (action) {
-    is Action.Load -> loadBooks()
-    is Action.Clear -> Ok(emptyList())
+    is ReduxAction.Load -> loadBooks()
+    is ReduxAction.Clear -> Ok(emptyList())
     else -> state
 }
 

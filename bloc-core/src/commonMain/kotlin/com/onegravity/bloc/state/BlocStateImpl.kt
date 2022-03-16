@@ -13,7 +13,7 @@ open class BlocStateImpl<State, Proposal>(
     private val state = MutableStateFlow(initialState)
 
     /**
-     * The Stream<Model>.
+     * The Stream<State>.
      */
     override val value: State
         get() = state.value

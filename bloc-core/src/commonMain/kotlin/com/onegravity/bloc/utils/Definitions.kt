@@ -2,7 +2,9 @@ package com.onegravity.bloc.utils
 
 import org.reduxkotlin.GetState
 
-/** A function used for accepting or rejecting a [Proposal] to updating and emitting resulting [State]. */
+/**
+ * A function for accepting / rejecting a [Proposal] and updating and emitting resulting [State].
+ */
 typealias Acceptor<Proposal, State> = (proposal: Proposal, state: State) -> State
 
 typealias Mapper<Model, State> = (model: Model) -> State

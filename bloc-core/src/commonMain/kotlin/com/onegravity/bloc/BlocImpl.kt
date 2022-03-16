@@ -13,7 +13,6 @@ import kotlin.coroutines.CoroutineContext
 
 /**
  * todo reduce { } should use its own dispatcher, right now it's running on the thunk dispatcher
- *      when a thunk dispatches an action or the main thread if the action is triggered by the ui
  */
 class BlocImpl<State, Action: Any, Proposal>(
     context: BlocContext,
@@ -63,7 +62,7 @@ class BlocImpl<State, Action: Any, Proposal>(
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             thunks.forEachIndexed { index, (matcher, _) ->
                 if (matcher == null || matcher.matches(action)) {
-                    runThunk(index, action)
+                    executeThunk(index, action)
                 }
             }
         } else {
@@ -76,7 +75,7 @@ class BlocImpl<State, Action: Any, Proposal>(
         blocState.emit(proposal)
     }
 
-    private suspend fun runThunk(index: Int, action: Action) {
+    private suspend fun executeThunk(index: Int, action: Action) {
         val dispatcher: Dispatcher<Action> = {
             nextDispatcher(index + 1, it).invoke(it)
         }
@@ -87,7 +86,7 @@ class BlocImpl<State, Action: Any, Proposal>(
         (startIndex..thunks.lastIndex).forEach { index ->
             val matcher = thunks[index].matcher
             if (matcher == null || matcher.matches(action)) {
-                return { runThunk(index, action) }
+                return { executeThunk(index, action) }
             }
         }
         return reduceDispatcher
