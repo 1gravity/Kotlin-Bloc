@@ -4,10 +4,11 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import kotlin.random.Random
 import com.onegravity.bloc.sample.books.BooksRepository.*
+import kotlinx.coroutines.delay
 
 class BooksRepositoryImpl : BooksRepository {
 
-    override fun loadBooks() =
+    override suspend fun loadBooks() =
         when (Random.nextFloat() < 0.35) {
             true -> {
                 val network = Random.nextFloat() < 0.5
@@ -15,7 +16,7 @@ class BooksRepositoryImpl : BooksRepository {
                 Err(error)
             }
             else -> Ok(books)
-        }
+        }.also { delay(1000) }
 
     private val books = listOf(
         Book("The Hobbit or There and Back Again", "1937"),

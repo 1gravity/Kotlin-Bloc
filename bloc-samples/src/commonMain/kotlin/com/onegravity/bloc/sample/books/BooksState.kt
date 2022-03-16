@@ -24,10 +24,6 @@ sealed class BookState {
     data class Failure(val message: String) : BookState()
 }
 
-sealed class BookSideEffect {
-    object Load : BookSideEffect()
-}
-
 sealed class BookAction {
     object Load : BookAction()
     object Clear : BookAction()

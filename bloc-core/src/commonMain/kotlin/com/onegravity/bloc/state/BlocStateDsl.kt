@@ -67,7 +67,7 @@ fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxBlocStateBuilder<State, Model, ReduxModel>.() -> Unit
-): BlocState<State, Proposal> =
+): ReduxBlocState<State, Proposal, Model, ReduxModel> =
     ReduxBlocStateBuilderImpl<State, Model, ReduxModel>()
         .also(block)
         .build(disposableScope, store)
@@ -84,7 +84,7 @@ fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxSimpleBlocStateBuilder<State, ReduxModel>.() -> Unit
-): BlocState<State, Proposal> =
+): ReduxBlocState<State, Proposal, State, ReduxModel> =
     ReduxSimpleBlocStateBuilderImpl<State, ReduxModel>()
         .also(block)
         .build(disposableScope, store)

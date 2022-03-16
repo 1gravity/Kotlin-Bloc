@@ -24,8 +24,8 @@ class BlocImpl<State, Action: Any, Proposal>(
 
     private val actions = Channel<Action>(UNLIMITED)
 
+    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     init {
-        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
         context.lifecycle.doOnCreate {
             logger.d("onCreate -> start Bloc")

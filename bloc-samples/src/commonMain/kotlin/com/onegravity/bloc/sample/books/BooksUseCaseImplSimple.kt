@@ -3,7 +3,6 @@ package com.onegravity.bloc.sample.books
 import com.onegravity.bloc.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import kotlinx.coroutines.delay
 
 /**
  * Implements the BooksUseCase with a single [Bloc] and [Thunk]s
@@ -16,7 +15,6 @@ class BooksUseCaseImplSimple(
     private val bloc = bloc<BookState, BookAction>(context, BookState.Empty) {
         thunkMatching<BookAction.Load> { _, _, dispatch ->
             dispatch(BookAction.Loading)
-            delay(1000)
             val nextAction = repository.loadBooks().toAction()
             dispatch(nextAction)
         }

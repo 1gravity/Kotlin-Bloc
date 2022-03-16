@@ -4,9 +4,7 @@ import com.onegravity.bloc.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.blocState
-import kotlinx.coroutines.delay
 import com.onegravity.bloc.sample.books.BooksRepository.*
-import com.onegravity.bloc.state.ReduxBlocState
 
 /**
  * Implements the BooksUseCase with two [Bloc]s to demonstrate shared [BlocState]
@@ -18,30 +16,15 @@ class BooksUseCaseImpl(
 
     private val commonState = blocState<BookState>(BookState.Empty)
 
-    val test = blocState<BookState, BookAction> {
-        initialState = BookState.Empty
-        accept { proposal, state ->
-            when (proposal) {
-                BookAction.Clear -> BookState.Empty
-                else -> BookState.Failure("")
-            }
-        }
-    }
-
     private val clearBloc = bloc<BookState, BookAction.Clear>(context, commonState) {
         reduce { state, _ ->
-            when (state) {
-                BookState.Empty -> state
-                is BookState.Loaded -> BookState.Empty
-                else -> state
-            }
+            if (state is BookState.Loaded) BookState.Empty else state
         }
     }
 
     private val loadBloc = bloc<BookState, BookAction, BookState>(context, commonState) {
         thunkMatching<BookAction.Load> { _, _, dispatch ->
             dispatch(BookAction.Loading)
-            delay(1000)
             val nextAction = repository.loadBooks().toAction()
             dispatch(nextAction)
         }

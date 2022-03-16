@@ -6,7 +6,7 @@ typealias BookResult = Result<List<Book>, BooksRepository.Failure>
 
 interface BooksRepository {
 
-    fun loadBooks(): BookResult
+    suspend fun loadBooks(): BookResult
 
     sealed class Failure {
         object Network : Failure()

@@ -15,7 +15,7 @@ open class ReduxBlocStateBuilderImpl<State, Model: Any, ReduxModel: Any> :
     fun <Proposal: Any> build(
         disposableScope: DisposableScope,
         store: Store<ReduxModel>
-    ) : BlocState<State, Proposal> =
+    ) : ReduxBlocState<State, Proposal, Model, ReduxModel> =
         ReduxBlocState(
             disposableScope = disposableScope,
             initialState = checkNotNull(_initialState) { "initialState must be declared" },
