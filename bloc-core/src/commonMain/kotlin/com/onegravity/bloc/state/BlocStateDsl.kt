@@ -80,7 +80,7 @@ fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
  * reduxStore.toBlocState(...)
  */
 @JvmName("simpleReduxBlocState")
-fun <State: Any, Proposal: Any, ReduxModel: Any> q(
+fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxSimpleBlocStateBuilder<State, ReduxModel>.() -> Unit
