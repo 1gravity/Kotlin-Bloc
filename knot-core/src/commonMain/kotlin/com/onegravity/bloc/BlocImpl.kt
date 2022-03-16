@@ -2,9 +2,9 @@ package com.onegravity.bloc
 
 import com.arkivanov.essenty.lifecycle.doOnCreate
 import com.arkivanov.essenty.lifecycle.doOnDestroy
-import com.onegravity.bloc.builder.Matcher
-import com.onegravity.bloc.builder.MatcherThunk
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
@@ -57,7 +57,7 @@ class BlocImpl<State, Action: Any, Proposal>(
 
         context.lifecycle.doOnCreate {
             logger.d("onCreate -> start Bloc")
-            start(coroutineScope)
+            coroutineScope.start()
         }
         context.lifecycle.doOnDestroy {
             logger.d("onDestroy -> stop Bloc")
@@ -71,36 +71,37 @@ class BlocImpl<State, Action: Any, Proposal>(
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(action: Action) {
         logger.d("emit action $action")
-
-        if (thunkRecords.any { (matcher, _, _) -> matcher == null || matcher.matches(action) }) {
-            actions.trySend(action)
-        } else {
-            val proposal = reducer.invoke(blocState.value, action)
-            blocState.emit(proposal)
-        }
+        actions.trySend(action)
     }
 
     override suspend fun collect(collector: FlowCollector<State>) {
         blocState.collect(collector)
     }
 
-    private fun start(coroutineScope: CoroutineScope) {
-        coroutineScope.launch(dispatcher) {
-            for (action in actions) {
-                logger.d("process action $action")
-                thunkRecords.forEachIndexed { index, (matcher, thunk, _) ->
-                    if (matcher == null || matcher.matches(action)) {
-                        val dispatcher = nextDispatcher(index, action)
-                        thunk.invoke({ blocState.value }, action, dispatcher)
-                    }
+    private fun CoroutineScope.start() = launch(dispatcher) {
+        for (action in actions) {
+            processActions(action)
+        }
+    }
+
+    private suspend fun processActions(action: Action) {
+        logger.d("process action $action")
+        if (thunkRecords.any { it.matcher == null || it.matcher.matches(action) }) {
+            thunkRecords.forEachIndexed { index, (matcher, thunk, _) ->
+                if (matcher == null || matcher.matches(action)) {
+                    val dispatcher = nextDispatcher(index, action)
+                    thunk.invoke({ blocState.value }, action, dispatcher)
                 }
             }
+        } else {
+            val proposal = reducer.invoke(blocState.value, action)
+            blocState.emit(proposal)
         }
     }
 
     private fun nextDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
         (startIndex until thunkRecords.lastIndex).forEach { index ->
-            // we use the current dispatcher ([index]) if the next thunk is match ([index + 1])
+            // we use the current dispatcher ([index]) if the next thunk matches ([index + 1])
             val matcher = thunkRecords[index + 1].matcher
             if (matcher == null || matcher.matches(action)) {
                 return thunkRecords[index].dispatcher

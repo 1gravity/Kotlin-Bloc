@@ -5,20 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.onegravity.bloc.R
 import com.onegravity.bloc.books.BooksActivity
 import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.traffic.TrafficActivity
-import com.onegravity.knot.activityKnotContext
-import com.onegravity.knot.sample.MainMenu.State.*
+import com.onegravity.knot.activityBlocContext
+import com.onegravity.bloc.sample.MainMenu.State.*
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
     private val viewModel: MainViewModel by viewModels {
-        viewModelFactory { MainViewModel(activityKnotContext()) }
+        viewModelFactory { MainViewModel(activityBlocContext()) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

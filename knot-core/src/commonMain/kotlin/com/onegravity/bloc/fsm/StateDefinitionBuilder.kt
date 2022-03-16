@@ -2,7 +2,7 @@
 
 package com.onegravity.bloc.fsm
 
-import com.onegravity.bloc.builder.Matcher
+import com.onegravity.bloc.utils.Matcher
 
 class StateDefinitionBuilder<STATE : Any, S : STATE, EVENT : Any, SIDE_EFFECT : Any> {
 

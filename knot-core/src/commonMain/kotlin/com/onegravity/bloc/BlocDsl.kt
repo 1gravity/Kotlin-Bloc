@@ -2,7 +2,8 @@ package com.onegravity.bloc
 
 import com.onegravity.bloc.builder.BlocBuilder
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.knot.state.blocState
+import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.state.blocState
 import kotlin.jvm.JvmName
 
 /**

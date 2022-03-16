@@ -7,14 +7,14 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
-import com.onegravity.knot.activityKnotContext
-import com.onegravity.knot.sample.books.BookState
+import com.onegravity.knot.activityBlocContext
+import com.onegravity.bloc.sample.books.BookState
 import kotlinx.coroutines.launch
 
 class BooksActivity : BaseActivity() {
 
     private val viewModel: BooksViewModel by viewModels {
-        viewModelFactory { BooksViewModel(activityKnotContext()) }
+        viewModelFactory { BooksViewModel(activityBlocContext()) }
     }
 
     lateinit var pageEmpty: View

@@ -1,11 +1,11 @@
 package com.onegravity.bloc
 
-import com.onegravity.knot.ActivityKnotContext
-import com.onegravity.knot.sample.MainMenu.Action.*
-import com.onegravity.knot.sample.MainMenu.State
-import com.onegravity.knot.sample.MainMenu.bloc
+import com.onegravity.knot.ActivityBlocContext
+import com.onegravity.bloc.sample.MainMenu.Action.*
+import com.onegravity.bloc.sample.MainMenu.State
+import com.onegravity.bloc.sample.MainMenu.bloc
 
-class MainViewModel(context: ActivityKnotContext) : BaseViewModel(context) {
+class MainViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
 
     private val bloc = bloc(viewModelContext)
 

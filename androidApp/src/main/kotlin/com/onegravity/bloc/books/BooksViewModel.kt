@@ -1,10 +1,10 @@
 package com.onegravity.bloc.books
 
 import com.onegravity.bloc.BaseViewModel
-import com.onegravity.knot.ActivityKnotContext
-import com.onegravity.knot.sample.books.*
+import com.onegravity.knot.ActivityBlocContext
+import com.onegravity.bloc.sample.books.*
 
-class BooksViewModel(context: ActivityKnotContext) : BaseViewModel(context), BooksUseCase {
+class BooksViewModel(context: ActivityBlocContext) : BaseViewModel(context), BooksUseCase {
 
 //    private val useCase: BooksUseCase = BooksUseCaseImplRedux(viewModelContext)
     private val useCase: BooksUseCase = BooksUseCaseImpl(viewModelContext, BooksRepositoryImpl())

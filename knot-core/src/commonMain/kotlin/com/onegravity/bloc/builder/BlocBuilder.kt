@@ -2,6 +2,11 @@ package com.onegravity.bloc.builder
 
 import com.onegravity.bloc.*
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.utils.Matcher
+import com.onegravity.bloc.utils.MatcherThunk
+import com.onegravity.bloc.utils.Reducer
+import com.onegravity.bloc.utils.Thunk
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 

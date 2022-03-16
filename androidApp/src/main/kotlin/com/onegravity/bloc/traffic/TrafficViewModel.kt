@@ -1,20 +1,12 @@
 package com.onegravity.bloc.traffic
 
-import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.onegravity.bloc.BaseViewModel
-import com.onegravity.knot.ActivityKnotContext
-import com.onegravity.knot.sample.traffic.Traffic
+import com.onegravity.knot.ActivityBlocContext
+import com.onegravity.bloc.sample.traffic.Traffic
 
-class TrafficViewModel(val context: ActivityKnotContext) : BaseViewModel(context) {
-
-    private val lifecycleRegistry = LifecycleRegistry()
+class TrafficViewModel(val context: ActivityBlocContext) : BaseViewModel(context) {
 
     private val traffic = Traffic(viewModelContext)
-
-    override fun onCleared() {
-        super.onCleared()
-        lifecycleRegistry.onDestroy()
-    }
 
     val street1State
         get() = traffic.street1.state

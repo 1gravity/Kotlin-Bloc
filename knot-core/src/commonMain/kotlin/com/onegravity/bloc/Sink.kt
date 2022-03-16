@@ -13,7 +13,7 @@ interface Sink<in Value> {
      * Send a Value into the sink.
      *
      * This is a synchronous operation but it depends on the receiver if the emitted value triggers
-     * a synchronous or an asynchronous operations (or none at all).
+     * a synchronous or an asynchronous operation (or none at all).
      */
     fun emit(value: Value)
 

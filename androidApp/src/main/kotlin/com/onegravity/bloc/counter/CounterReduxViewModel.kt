@@ -2,12 +2,12 @@ package com.onegravity.bloc.counter
 
 import androidx.lifecycle.viewModelScope
 import com.onegravity.bloc.BaseViewModel
-import com.onegravity.knot.ActivityKnotContext
-import com.onegravity.knot.sample.counter.ReduxCounter.knot
-import com.onegravity.knot.sample.counter.ReduxCounter.Event.*
+import com.onegravity.knot.ActivityBlocContext
+import com.onegravity.bloc.sample.counter.ReduxCounter.knot
+import com.onegravity.bloc.sample.counter.ReduxCounter.Event.*
 import com.onegravity.knot.toLiveData
 
-class CounterReduxViewModel(context: ActivityKnotContext) : BaseViewModel(context) {
+class CounterReduxViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
 
     private val knot = knot(viewModelContext)
 
