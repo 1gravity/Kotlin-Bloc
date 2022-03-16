@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewmodel" type="com.genaku.reduce.counter.CounterSimpleViewModel" />
+        <variable name="viewmodel" type="com.onegravity.bloc.counter.CounterSimpleViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

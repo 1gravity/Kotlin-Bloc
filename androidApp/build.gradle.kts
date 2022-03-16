@@ -7,7 +7,7 @@ plugins {
 android {
     compileSdk = 32
     defaultConfig {
-        applicationId = "com.onegravity.knot.fullKnot.application"
+        applicationId = "com.onegravity.bloc.sample"
         minSdk = 21
         targetSdk = 32
         versionCode = 1
@@ -36,8 +36,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":knot-core"))
-    implementation(project(":knot-samples"))
+    implementation(project(":bloc-core"))
+    implementation(project(":bloc-samples"))
 
     implementation(Kotlin.stdlib)
 
