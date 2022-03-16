@@ -1,6 +1,5 @@
-package com.onegravity.bloc.builder
+package com.onegravity.bloc
 
-import com.onegravity.bloc.*
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.Matcher

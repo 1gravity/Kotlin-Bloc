@@ -6,6 +6,7 @@ import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.blocState
 import kotlinx.coroutines.delay
 import com.onegravity.bloc.sample.books.BooksRepository.*
+import com.onegravity.bloc.state.ReduxBlocState
 
 /**
  * Implements the BooksUseCase with two [Bloc]s to demonstrate shared [BlocState]
@@ -16,6 +17,16 @@ class BooksUseCaseImpl(
 ) : BooksUseCase {
 
     private val commonState = blocState<BookState>(BookState.Empty)
+
+    val test = blocState<BookState, BookAction> {
+        initialState = BookState.Empty
+        accept { proposal, state ->
+            when (proposal) {
+                BookAction.Clear -> BookState.Empty
+                else -> BookState.Failure("")
+            }
+        }
+    }
 
     private val clearBloc = bloc<BookState, BookAction.Clear>(context, commonState) {
         reduce { state, _ ->

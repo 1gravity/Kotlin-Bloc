@@ -6,7 +6,6 @@ import com.badoo.reaktive.disposable.scope.doOnDispose
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.select.select
 import com.onegravity.bloc.state.reduxBlocState
-import com.onegravity.bloc.state.simpleReduxBlocState
 import org.reduxkotlin.Store
 
 /**
@@ -62,7 +61,7 @@ fun <State: Any, Proposal: Any, ReduxModel: Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,
     selector: Selector<ReduxModel, State>
-) = simpleReduxBlocState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
+) = reduxBlocState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
     this.initialState = initialState
     select(selector)
 }

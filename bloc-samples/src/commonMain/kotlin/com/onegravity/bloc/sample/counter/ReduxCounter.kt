@@ -12,7 +12,7 @@ object ReduxCounter {
 
     fun bloc(context: BlocContext) = bloc<Int, Action, ReduxAction>(
         context,
-        reduxStore.toBlocState(context, 1) { it }
+        reduxStore.toBlocState(context = context, initialState = 1, selector = { it })
     ) {
         reduce { _, action ->
             when (action) {

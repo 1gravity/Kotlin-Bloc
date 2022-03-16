@@ -27,7 +27,12 @@ class BooksUseCaseImplRedux(context: BlocContext) : BooksUseCase {
 
     private val bloc = bloc<BookState, BookAction, ReduxAction>(
         context,
-        reduxStore.toBlocState(context, BookState.Empty, { it }, mapModel2State)
+        reduxStore.toBlocState(
+            context = context,
+            initialState = BookState.Empty,
+            selector = { it },
+            mapper = mapModel2State
+        )
     ) {
         reduce { _, action ->
             when (action) {

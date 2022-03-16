@@ -5,7 +5,29 @@ import org.reduxkotlin.Store
 import kotlin.jvm.JvmName
 
 /**
- * Creates a [BlocState] instance using a [SimpleBlocStateBuilder]
+ * Creates a [BlocState] instance using a [BlocStateBuilder]
+ * ```
+ *    blocState<State, Proposal> {
+ *       initialState = SomeState
+ *       accept { proposal, state ->
+ *          // map proposal to State
+ *       }
+ *    }
+ * ```
+ */
+@JvmName("blocState")
+fun <State, Proposal> blocState(
+    block: BlocStateBuilder<State, Proposal>.() -> Unit
+): BlocState<State, Proposal> =
+    BlocStateBuilderImpl<State, Proposal>()
+        .also(block)
+        .build()
+
+/**
+ * Creates a [BlocState] instance using a [SimpleBlocStateBuilder]:
+ * ```
+ *    blocState<State> { initialState = SomeState }
+ * ```
  */
 @JvmName("simpleBlocState")
 fun <State> blocState(
@@ -35,18 +57,10 @@ fun <State> blocState(
         .build()
 
 /**
- * Creates a [BlocState] instance using a [BlocStateBuilder]
- */
-@JvmName("blocState")
-fun <State, Proposal> blocState(
-    block: BlocStateBuilder<State, Proposal>.() -> Unit
-): BlocState<State, Proposal> =
-    BlocStateBuilderImpl<State, Proposal>()
-        .also(block)
-        .build()
-
-/**
  * Creates a [BlocState] instance using a [ReduxBlocStateBuilder]
+ *
+ * Note: don't use this directly but use the Store extension functions
+ * reduxStore.toBlocState(...)
  */
 @JvmName("reduxBlocState")
 fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
@@ -60,9 +74,13 @@ fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
 
 /**
  * Creates a [BlocState] instance using a [ReduxSimpleBlocStateBuilder]
+ * (Model == State -> no mapping function).
+ * 
+ * Note: don't use this directly but use the Store extension functions
+ * reduxStore.toBlocState(...)
  */
 @JvmName("simpleReduxBlocState")
-fun <State: Any, Proposal: Any, ReduxModel: Any> simpleReduxBlocState(
+fun <State: Any, Proposal: Any, ReduxModel: Any> q(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxSimpleBlocStateBuilder<State, ReduxModel>.() -> Unit
