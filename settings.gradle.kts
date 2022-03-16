@@ -17,5 +17,5 @@ plugins {
 }
 
 include(":knot-core")
-include(":knot-samples")
+include(":bloc-samples")
 include(":androidApp")

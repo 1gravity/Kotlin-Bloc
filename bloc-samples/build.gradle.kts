@@ -18,7 +18,7 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "knot-samples"
+            baseName = "bloc-samples"
         }
     }
     
