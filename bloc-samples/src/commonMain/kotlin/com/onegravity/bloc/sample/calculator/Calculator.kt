@@ -31,6 +31,7 @@ private val reducer: Reducer<State, Action, State> = { state, action ->
 
 private fun State.apply(op: Operator): State {
     val state = if (register1.isNotEmpty() && register2.isNotEmpty()) equals() else this
+    if (state.register1.isEmpty()) return state
     return state.copy(
         register1 = Register(),
         register2 = if (state.register1.isNotEmpty()) state.register1 else state.register2,
