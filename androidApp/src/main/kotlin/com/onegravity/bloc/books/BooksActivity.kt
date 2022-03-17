@@ -7,15 +7,12 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
-import com.onegravity.bloc.activityBlocContext
 import com.onegravity.bloc.sample.books.BookState
 import kotlinx.coroutines.launch
 
 class BooksActivity : BaseActivity() {
 
-    private val viewModel: BooksViewModel by viewModels {
-        viewModelFactory { BooksViewModel(activityBlocContext()) }
-    }
+    private val viewModel by viewModels<BooksViewModel> { factory { BooksViewModel(it) } }
 
     lateinit var pageEmpty: View
     lateinit var pageLoading: View

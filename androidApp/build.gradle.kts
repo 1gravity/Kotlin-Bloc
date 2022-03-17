@@ -49,13 +49,13 @@ dependencies {
     implementation(AndroidX.core.ktx)
     implementation(AndroidX.lifecycle.viewModelKtx)
     implementation(AndroidX.fragment.ktx)
-    implementation(AndroidX.lifecycle.extensions)
     implementation(AndroidX.constraintLayout)
 
     implementation(Google.android.material)
 
-    implementation("com.github.kirich1409:viewbindingpropertydelegate:_")
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
+
+    implementation(Koin.android)
 
     // Essenty (https://github.com/arkivanov/Essenty)
     implementation("com.arkivanov.essenty:lifecycle:_")

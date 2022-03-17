@@ -17,9 +17,9 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    protected inline fun <VM : ViewModel> viewModelFactory(crossinline f: () -> VM) =
+    protected inline fun <VM : ViewModel> factory(crossinline f: (context: ActivityBlocContext) -> VM) =
         object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>):T = f() as T
+            override fun <T : ViewModel> create(modelClass: Class<T>):T = f(activityBlocContext()) as T
         }
 
 }

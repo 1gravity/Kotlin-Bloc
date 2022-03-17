@@ -4,14 +4,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
-import com.onegravity.bloc.activityBlocContext
 import com.onegravity.bloc.databinding.ActivityCounterSimpleBinding
 
 class CounterActivity : BaseActivity() {
 
-    private val viewModel: CounterSimpleViewModel by viewModels {
-        viewModelFactory { CounterSimpleViewModel(activityBlocContext()) }
-    }
+    private val viewModel by viewModels<CounterSimpleViewModel> { factory { CounterSimpleViewModel(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,7 +3,7 @@
     package="com.onegravity.bloc">
 
     <application
-        android:name=".App"
+        android:name=".Application"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -38,6 +38,11 @@
         <activity
             android:name="com.onegravity.bloc.traffic.TrafficActivity"
             android:label="Traffic"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.onegravity.bloc.calculator.CalculatorActivity"
+            android:label="Calculator"
             android:exported="false"/>
 
     </application>

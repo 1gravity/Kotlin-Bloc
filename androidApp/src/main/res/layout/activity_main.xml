@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.38" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <Button
             android:id="@+id/counter_2"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.38" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <Button
             android:id="@+id/books"
@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@id/counter_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.38" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <Button
             android:id="@+id/traffic"
@@ -78,7 +78,19 @@
             app:layout_constraintTop_toBottomOf="@id/counter_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.38" />
+            app:layout_constraintVertical_bias="0.2" />
+
+        <Button
+            android:id="@+id/calculator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calculator"
+            android:onClick="@{() -> viewmodel.calculator()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/books"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintVertical_bias="0.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

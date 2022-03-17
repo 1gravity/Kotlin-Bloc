@@ -8,14 +8,11 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
-import com.onegravity.bloc.activityBlocContext
 import kotlinx.coroutines.launch
 
 class TrafficActivity : BaseActivity() {
 
-    private val viewModel: TrafficViewModel by viewModels {
-        viewModelFactory { TrafficViewModel(activityBlocContext()) }
-    }
+    private val viewModel by viewModels<TrafficViewModel> { factory { TrafficViewModel(it) } }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {

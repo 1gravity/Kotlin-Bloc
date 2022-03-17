@@ -45,6 +45,9 @@ kotlin {
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
 
+                // BigNums (https://github.com/ionspin/kotlin-multiplatform-bignum)
+                implementation("com.ionspin.kotlin:bignum:_")
+
                 // Kotlin Result (https://github.com/michaelbull/kotlin-result)
                 implementation("com.michael-bull.kotlin-result:kotlin-result:_")
                 implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")

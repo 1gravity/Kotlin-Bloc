@@ -25,6 +25,7 @@ class ReduxBlocState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
 
     // we need this to execute Thunks, it's tied to the DisposableScope which is tied to the
     // lifecycle of the BlocContext
+    // TODO use the builder to set a custom Dispatcher
     val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     init {

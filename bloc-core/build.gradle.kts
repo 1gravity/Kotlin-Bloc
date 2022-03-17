@@ -57,8 +57,8 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(AndroidX.appCompat)
-                implementation("androidx.activity:activity-ktx:1.4.0")
-                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+                implementation(AndroidX.activity.ktx)
+                implementation(AndroidX.lifecycle.viewModelKtx)
             }
         }
         val androidTest by getting

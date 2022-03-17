@@ -1,14 +1,14 @@
 package com.onegravity.bloc
 
-import com.onegravity.bloc.sample.MainMenu.Action.*
-import com.onegravity.bloc.sample.MainMenu.State
+import com.onegravity.bloc.sample.MainMenu.ActionState
+import com.onegravity.bloc.sample.MainMenu.ActionState.*
 import com.onegravity.bloc.sample.MainMenu.bloc
 
 class MainViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
 
     private val bloc = bloc(viewModelContext)
 
-    val state: Stream<State>
+    val state: Stream<ActionState>
         get() = bloc
 
     fun counter1() {
@@ -25,6 +25,10 @@ class MainViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
 
     fun traffic() {
         bloc.emit(Traffic)
+    }
+
+    fun calculator() {
+        bloc.emit(Calculator)
     }
 
 }

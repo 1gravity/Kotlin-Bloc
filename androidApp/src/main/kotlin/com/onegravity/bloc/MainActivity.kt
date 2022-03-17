@@ -7,17 +7,16 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.onegravity.bloc.books.BooksActivity
+import com.onegravity.bloc.calculator.CalculatorActivity
 import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.traffic.TrafficActivity
-import com.onegravity.bloc.sample.MainMenu.State.*
+import com.onegravity.bloc.sample.MainMenu.ActionState.*
 
 class MainActivity : BaseActivity() {
 
-    private val viewModel: MainViewModel by viewModels {
-        viewModelFactory { MainViewModel(activityBlocContext()) }
-    }
+    private val viewModel by viewModels<MainViewModel> { factory { MainViewModel(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +27,11 @@ class MainActivity : BaseActivity() {
             viewModel.state.collect { state ->
                 Log.d("bloc", "Navigate to $state")
                 when (state) {
-                    ShowCounter1 -> start(CounterActivity::class.java)
-                    ShowCounter2 -> start(CounterReduxActivity::class.java)
-                    ShowBooks -> start(BooksActivity::class.java)
-                    ShowTraffic -> start(TrafficActivity::class.java)
+                    Counter1 -> start(CounterActivity::class.java)
+                    Counter2 -> start(CounterReduxActivity::class.java)
+                    Books -> start(BooksActivity::class.java)
+                    Traffic -> start(TrafficActivity::class.java)
+                    Calculator -> start(CalculatorActivity::class.java)
                     MainMenu -> { /* do nothing */ }
                 }
             }
