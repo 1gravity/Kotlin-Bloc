@@ -25,7 +25,6 @@ object ReduxCounter {
     }
 }
 
-// TODO implement Orbit calculator
 // TODO implement some samples with Compose
 // TODO think about the initial value, who/what provides it?
 // TODO navigation, routing!

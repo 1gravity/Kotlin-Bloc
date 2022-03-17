@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.BaseViewModel
 import com.onegravity.bloc.R
-import com.onegravity.bloc.sample.calculator.Calculator.bloc
-import com.onegravity.bloc.sample.calculator.Calculator.Action.*
+import com.onegravity.bloc.sample.calculator.bloc
+import com.onegravity.bloc.sample.calculator.Action.*
 import com.onegravity.bloc.toLiveData
 
 class CalculatorViewModel(context: ActivityBlocContext) : BaseViewModel(context) {

@@ -12,6 +12,7 @@ class CalculatorActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         bind<ActivityCalculatorBinding>(R.layout.activity_calculator) { it.viewmodel = viewModel }
     }
 

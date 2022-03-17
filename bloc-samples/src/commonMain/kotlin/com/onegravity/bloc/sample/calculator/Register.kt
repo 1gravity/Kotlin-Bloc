@@ -1,3 +1,5 @@
+/* Modified from https://github.com/orbit-mvi/orbit-mvi */
+
 /*
  * Copyright 2021 Mikołaj Leszczyński & Appmattus Limited
  * Copyright 2020 Babylon Partners Limited
@@ -37,32 +39,42 @@ class Register(private val value: String = "") {
 
     fun isEmpty() = value.isEmpty()
 
-    fun appendDigit(digit: Int) =
-        Register(value + digit)
+    fun isNotEmpty() = value.isNotEmpty()
 
-    fun appendPeriod() =
-        if (!value.contains('.')) Register("$value.") else this
+    fun isError() = try {
+        asBigDecimal
+        false
+    } catch (e: Exception) {
+        true
+    }
 
-    fun plusMinus() =
-        Register(if (value.startsWith('-')) value.substring(1) else "-$value")
+    fun appendDigit(digit: Int) = Register(value + digit)
+
+    fun appendPeriod() = when {
+        value.contains('.') -> this
+        value.isEmpty() -> Register("0.")
+        else -> Register("$value.")
+    }
+
+    fun plusMinus() = Register(if (value.startsWith('-')) value.substring(1) else "-$value")
 
     operator fun plus(register: Register) =
-        Register((this.asBigDecimal + register.asBigDecimal).toPlainString())
+        Register((asBigDecimal + register.asBigDecimal).toPlainString())
 
     operator fun minus(register: Register) =
-        Register((this.asBigDecimal - register.asBigDecimal).toPlainString())
+        Register((asBigDecimal - register.asBigDecimal).toPlainString())
+
+    operator fun times(register: Register) =
+        Register((asBigDecimal * register.asBigDecimal).toPlainString())
 
     operator fun div(register: Register) =
-        Register(this.asBigDecimal
-            .divide(register.asBigDecimal, DecimalMode.DEFAULT)
-            .roundToDigitPosition(SCALE, RoundingMode.ROUND_HALF_TO_EVEN)
+        Register(asBigDecimal
+            .divide(register.asBigDecimal, DECIMAL_MODE)
             .toPlainString()
         )
 
-    operator fun times(register: Register) =
-        Register((this.asBigDecimal * register.asBigDecimal).toPlainString())
-
     companion object {
-        private const val SCALE = 7L
+        private const val SCALE = 8L
+        private val DECIMAL_MODE = DecimalMode(10, RoundingMode.ROUND_HALF_TO_EVEN, SCALE)
     }
 }

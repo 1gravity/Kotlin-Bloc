@@ -22,9 +22,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.onegravity.bloc.sample.calculator.Calculator.Action.Add"/>
-        <import type="com.onegravity.bloc.sample.calculator.Calculator.Action"/>
-        <variable name="add" type="com.onegravity.bloc.sample.calculator.Calculator.Action.Add" />
         <variable name="viewmodel" type="com.onegravity.bloc.calculator.CalculatorViewModel" />
     </data>
 
@@ -273,7 +270,7 @@
             style="@style/Button"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:onClick="@{(view) -> viewmodel.button(view.id)}"
+            android:onClick="@{(view) -> viewmodel.digit(0)}"
             android:text="@string/button_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
