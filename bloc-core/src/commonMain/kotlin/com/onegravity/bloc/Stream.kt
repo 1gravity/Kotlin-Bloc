@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 
 /**
  * A Stream is a source of asynchronous data.
- * It's modelled after kotlinx.coroutines.flow.StateFlow without exposing the replay cache.
+ * It's modelled after kotlinx.coroutines.flow.SharedFlow without exposing the replay cache.
  */
 interface Stream<out Value> {
     /**

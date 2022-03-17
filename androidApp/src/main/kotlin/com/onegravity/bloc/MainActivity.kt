@@ -3,6 +3,7 @@ package com.onegravity.bloc
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.onegravity.bloc.books.BooksActivity
@@ -11,7 +12,6 @@ import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.traffic.TrafficActivity
 import com.onegravity.bloc.sample.MainMenu.State.*
-import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
@@ -24,8 +24,9 @@ class MainActivity : BaseActivity() {
 
         bind<ActivityMainBinding>(R.layout.activity_main) { it.viewmodel = viewModel }
 
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             viewModel.state.collect { state ->
+                Log.d("bloc", "Navigate to $state")
                 when (state) {
                     ShowCounter1 -> start(CounterActivity::class.java)
                     ShowCounter2 -> start(CounterReduxActivity::class.java)

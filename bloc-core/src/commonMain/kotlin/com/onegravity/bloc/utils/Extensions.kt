@@ -54,6 +54,20 @@ fun <State: Any, SelectedState: Any> Store<State>.selectScoped(
 /**
  * Extension function to convert a Redux store to a ReduxBlocState:
  * ```
+ *    store.toBlocState(context, initialValue)
+ * ```
+ */
+fun <State: Any, Proposal: Any> Store<State>.toBlocState(
+    context: BlocContext,
+    initialState: State,
+) = reduxBlocState<State, Proposal, State>(context.disposableScope(), this) {
+    this.initialState = initialState
+    select { it }
+}
+
+/**
+ * Extension function to convert a Redux store to a ReduxBlocState:
+ * ```
  *    store.toBlocState(context, initialValue) { /* select function */ }
  * ```
  */

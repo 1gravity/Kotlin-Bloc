@@ -11,9 +11,6 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
-/**
- * todo reduce { } should use its own dispatcher, right now it's running on the thunk dispatcher
- */
 class BlocImpl<State, Action: Any, Proposal>(
     context: BlocContext,
     private val blocState: BlocState<State, Proposal>,
@@ -24,8 +21,8 @@ class BlocImpl<State, Action: Any, Proposal>(
 
     private val actions = Channel<Action>(UNLIMITED)
 
-    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     init {
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
         context.lifecycle.doOnCreate {
             logger.d("onCreate -> start Bloc")
@@ -44,7 +41,12 @@ class BlocImpl<State, Action: Any, Proposal>(
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(action: Action) {
         logger.d("emit action $action")
-        actions.trySend(action)
+        if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
+            actions.trySend(action)
+        } else {
+            val proposal = reducer.invoke(blocState.value, action)
+            blocState.emit(proposal)
+        }
     }
 
     override suspend fun collect(collector: FlowCollector<State>) {
@@ -59,20 +61,11 @@ class BlocImpl<State, Action: Any, Proposal>(
 
     private suspend fun processActions(action: Action) {
         logger.d("process action $action")
-        if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
-            thunks.forEachIndexed { index, (matcher, _) ->
-                if (matcher == null || matcher.matches(action)) {
-                    executeThunk(index, action)
-                }
+        thunks.forEachIndexed { index, (matcher, _) ->
+            if (matcher == null || matcher.matches(action)) {
+                executeThunk(index, action)
             }
-        } else {
-            reduceDispatcher.invoke(action)
         }
-    }
-
-    private val reduceDispatcher: Dispatcher<Action> = { action ->
-        val proposal = reducer.invoke(blocState.value, action)
-        blocState.emit(proposal)
     }
 
     private suspend fun executeThunk(index: Int, action: Action) {
@@ -89,7 +82,12 @@ class BlocImpl<State, Action: Any, Proposal>(
                 return { executeThunk(index, action) }
             }
         }
-        return reduceDispatcher
+
+        // Dispatcher for reduce { }
+        return {
+            val proposal = reducer.invoke(blocState.value, action)
+            blocState.emit(proposal)
+        }
     }
 
 }

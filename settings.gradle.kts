@@ -1,4 +1,4 @@
-rootProject.name = "Knot"
+rootProject.name = "Kotlin-Bloc"
 
 pluginManagement {
     repositories {
