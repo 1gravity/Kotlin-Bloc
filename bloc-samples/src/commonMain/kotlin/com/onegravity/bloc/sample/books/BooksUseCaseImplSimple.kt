@@ -13,7 +13,7 @@ class BooksUseCaseImplSimple(
 ) : BooksUseCase {
 
     private val bloc = bloc<BookState, BookAction>(context, BookState.Empty) {
-        thunkMatching<BookAction.Load> { _, _, dispatch ->
+        thunk<BookAction.Load> {
             dispatch(BookAction.Loading)
             val nextAction = repository.loadBooks().toAction()
             dispatch(nextAction)
@@ -32,14 +32,11 @@ class BooksUseCaseImplSimple(
 //            }
 //        }
 
-        reduce { state, action ->
-            when (action) {
-                BookAction.Clear -> BookState.Empty
-                BookAction.Loading -> BookState.Loading
-                is BookAction.LoadComplete -> action.result.toState()
-                else -> state
-            }
-        }
+        reduce<BookAction.Clear> { BookState.Empty }
+
+        reduce<BookAction.Loading> { BookState.Loading }
+
+        reduce<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
     }
 
     override val state: Stream<BookState>

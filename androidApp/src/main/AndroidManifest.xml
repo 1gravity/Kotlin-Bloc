@@ -36,12 +36,12 @@
             android:exported="false"/>
 
         <activity
-            android:name="com.onegravity.bloc.traffic.TrafficActivity"
-            android:label="Traffic"
+            android:name=".stock.StockActivity"
+            android:label="Stock"
             android:exported="false"/>
 
         <activity
-            android:name="com.onegravity.bloc.calculator.CalculatorActivity"
+            android:name=".calculator.CalculatorActivity"
             android:label="Calculator"
             android:exported="false"/>
 

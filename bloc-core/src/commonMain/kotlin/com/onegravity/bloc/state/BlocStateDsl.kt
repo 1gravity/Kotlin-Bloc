@@ -1,6 +1,7 @@
 package com.onegravity.bloc.state
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
+import com.onegravity.bloc.utils.BlocDSL
 import org.reduxkotlin.Store
 import kotlin.jvm.JvmName
 
@@ -16,6 +17,7 @@ import kotlin.jvm.JvmName
  * ```
  */
 @JvmName("blocState")
+@BlocDSL
 fun <State, Proposal> blocState(
     block: BlocStateBuilder<State, Proposal>.() -> Unit
 ): BlocState<State, Proposal> =
@@ -30,6 +32,7 @@ fun <State, Proposal> blocState(
  * ```
  */
 @JvmName("simpleBlocState")
+@BlocDSL
 fun <State> blocState(
     block: SimpleBlocStateBuilder<State>.() -> Unit
 ): BlocState<State, State> =
@@ -49,6 +52,7 @@ fun <State> blocState(
  * ```
  */
 @JvmName("simpleBlocStateWithInitialState")
+@BlocDSL
 fun <State> blocState(
     initialState: State
 ): BlocState<State, State> =
@@ -63,6 +67,7 @@ fun <State> blocState(
  * reduxStore.toBlocState(...)
  */
 @JvmName("reduxBlocState")
+@BlocDSL
 fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
@@ -80,6 +85,7 @@ fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
  * reduxStore.toBlocState(...)
  */
 @JvmName("simpleReduxBlocState")
+@BlocDSL
 fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,

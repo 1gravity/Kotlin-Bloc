@@ -9,13 +9,12 @@ object MainMenu {
         object Counter1 : ActionState()
         object Counter2 : ActionState()
         object Books : ActionState()
-        object Traffic : ActionState()
         object Calculator : ActionState()
+        object Stock : ActionState()
     }
 
     fun bloc(context: BlocContext) =
         bloc<ActionState, ActionState>(context, ActionState.MainMenu) {
-            reduce { _, action -> action }
+            reduce { action }
         }
-
 }

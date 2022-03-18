@@ -15,7 +15,7 @@ class BlocImpl<State, Action: Any, Proposal>(
     context: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<MatcherThunk<State, Action>> = emptyList(),
-    private val reducer: Reducer<State, Action, Proposal>,
+    private val reducers: List<MatcherReducer<State, Action, Proposal>> = emptyList(),
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, Proposal> {
 
@@ -44,8 +44,7 @@ class BlocImpl<State, Action: Any, Proposal>(
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             actions.trySend(action)
         } else {
-            val proposal = reducer.invoke(blocState.value, action)
-            blocState.emit(proposal)
+            getReducer(action)?.runReducer(action)
         }
     }
 
@@ -63,31 +62,43 @@ class BlocImpl<State, Action: Any, Proposal>(
         logger.d("process action $action")
         thunks.forEachIndexed { index, (matcher, _) ->
             if (matcher == null || matcher.matches(action)) {
-                executeThunk(index, action)
+                runThunk(index, action)
             }
         }
     }
 
-    private suspend fun executeThunk(index: Int, action: Action) {
+    private suspend fun runThunk(index: Int, action: Action) {
         val dispatcher: Dispatcher<Action> = {
-            nextDispatcher(index + 1, it).invoke(it)
+            nextThunkDispatcher(index + 1, it).invoke(it)
         }
-        thunks[index].thunk.invoke({ blocState.value }, action, dispatcher)
+        val thunk = thunks[index].thunk
+        ThunkContext({ blocState.value }, action, dispatcher).thunk()
     }
 
-    private fun nextDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
+    private fun Reducer<State, Action, Proposal>.runReducer(action: Action) {
+        val proposal = ReducerContext(blocState.value, action).this()
+        blocState.emit(proposal)
+    }
+
+    private fun nextThunkDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
         (startIndex..thunks.lastIndex).forEach { index ->
             val matcher = thunks[index].matcher
             if (matcher == null || matcher.matches(action)) {
-                return { executeThunk(index, action) }
+                return { runThunk(index, action) }
             }
         }
 
-        // Dispatcher for reduce { }
-        return {
-            val proposal = reducer.invoke(blocState.value, action)
-            blocState.emit(proposal)
+        return { getReducer(action)?.runReducer(action) }
+    }
+
+    private fun getReducer(action: Action): Reducer<State, Action, Proposal>? {
+        val reducer = reducers
+            .firstOrNull { it.matcher == null || it.matcher.matches(action) }
+            ?.reducer
+        if (reducer == null) {
+            logger.e("No reducer found, did you define reduce { }?")
         }
+        return reducer
     }
 
 }

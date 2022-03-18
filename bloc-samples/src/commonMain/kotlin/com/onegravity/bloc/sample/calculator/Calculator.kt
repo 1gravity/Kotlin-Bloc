@@ -1,42 +1,74 @@
 package com.onegravity.bloc.sample.calculator
 
+import com.onegravity.bloc.BlocBuilder
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.utils.Reducer
+import com.onegravity.bloc.state.blocState
 
-fun bloc(context: BlocContext) =
-    bloc<State, Action>(context, State()) {
-        reduce(reducer)
+// if BlocBuilder and BlocImpl are merged and called BlocContainer then we can define it analogous Orbit
+class Calculator(context: BlocContext) : BlocBuilder<State, Action, Action>() {
+
+    fun reduce() = reduce {
+        action
     }
 
-private val reducer: Reducer<State, Action, State> = { state, action ->
-    try {
-        val newState = if (state.register1.isError() || state.register2.isError()) State() else state
-        when (action) {
-            is Action.Clear -> State()
-            is Action.Add -> newState.apply(Operator.Add)
-            is Action.Subtract -> newState.apply(Operator.Subtract)
-            is Action.Multiply -> newState.apply(Operator.Multiply)
-            is Action.Divide -> newState.apply(Operator.Divide)
-            is Action.PlusMinus -> newState.plusMinus()
-            is Action.Percentage -> newState.percentage()
-            is Action.Digit -> newState.digit(action.digit)
-            is Action.Period -> newState.period()
-            is Action.Equals -> newState.equals()
+    fun thunk() = thunk {
+        dispatch(action)
+        dispatcher
+    }
+
+}
+
+fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
+    fun State.resetErrors() = if (register1.isError() || register2.isError()) State() else this
+
+    reduce<Action.Equals> { state.resetErrors().equals() }
+
+    reduce<Action.Clear> { State() }
+
+    reduce<Action.Add> { state.resetErrors().apply(Operator.Add) }
+
+    reduce<Action.Subtract> { state.resetErrors().apply(Operator.Subtract) }
+
+    reduce<Action.Multiply> { state.resetErrors().apply(Operator.Multiply) }
+
+    reduce<Action.Divide> { state.resetErrors().apply(Operator.Divide) }
+
+    reduce<Action.PlusMinus> { state.resetErrors().plusMinus() }
+
+    reduce<Action.Percentage> { state.resetErrors().percentage() }
+
+    /**
+     * We can either define reducers per Action (see above) or define a reducer for multiple actions
+     */
+    reduce {
+        try {
+            val newState = state.resetErrors()
+            when (action) {
+                is Action.Digit -> newState.digit((action as Action.Digit).digit)
+                is Action.Period -> newState.period()
+                else -> state
+            }
+        } catch(ex: Exception) {
+            State.error(ex.message)
         }
-    } catch(ex: Exception) {
-        State.error(ex.message)
     }
 }
 
 private fun State.apply(op: Operator): State {
-    val state = if (register1.isNotEmpty() && register2.isNotEmpty()) equals() else this
-    if (state.register1.isEmpty()) return state
-    return state.copy(
-        register1 = Register(),
-        register2 = if (state.register1.isNotEmpty()) state.register1 else state.register2,
-        operator = op
-    )
+    return try {
+        val state = if (register1.isNotEmpty() && register2.isNotEmpty()) equals() else this
+        if (state.register1.isEmpty())
+            state
+        else
+            state.copy(
+                register1 = Register(),
+                register2 = if (state.register1.isNotEmpty()) state.register1 else state.register2,
+                operator = op
+            )
+    } catch(ex: Exception) {
+        State.error(ex.message)
+    }
 }
 
 private fun State.plusMinus() = copy(register1 = register1.plusMinus())

@@ -10,14 +10,14 @@ import com.onegravity.bloc.utils.logger
  * routing / dispatching works.
  */
 object SimpleCounter {
-    sealed class Action {
-        data class Increment(val value: Int = 1): Action()
-        data class Decrement(val value: Int = 1): Action()
+    sealed class Action(val value: Int) {
+        data class Increment(private val _value: Int = 1): Action(_value)
+        data class Decrement(private val _value: Int = 1): Action(_value)
     }
 
     fun bloc(context: BlocContext) : Bloc<Int, Action, Int> {
         val interceptorBloc = bloc<Int, Int>(context, 1) {
-            reduce { _, action ->
+            reduce {
                 logger.d("interceptor: $action -> ${action + 1}")
                 action + 1
             }
@@ -25,41 +25,72 @@ object SimpleCounter {
 
         return bloc<Int, Action, Int>(context, interceptorBloc) {
             // thunk 1
-            thunkMatching<Action.Increment> { _, action, dispatch ->
+            thunk<Action.Increment> {
                 logger.d("thunk 1 started: $action")
                 dispatch(action)                         // dispatches to thunk 3
                 dispatch(Action.Decrement(1))      // dispatches to thunk 2
             }
             // thunk 2
-            thunkMatching<Action.Decrement> { _, action, dispatch ->
+            thunk<Action.Decrement> {
                 logger.d("thunk 2 started: $action")
                 dispatch(Action.Decrement(3))      // dispatches to thunk 4
             }
             // thunk 3
-            thunkMatching<Action.Increment> { _, action, dispatch ->
+            thunk<Action.Increment> {
                 logger.d("thunk 3 started: $action")
                 dispatch(action)                         // dispatches to thunk 4
             }
             // thunk 4
-            thunk { _, action, dispatch ->
+            thunk {
                 logger.d("thunk 4 started: $action")
                 dispatch(action)                        // dispatches to thunk reduce
             }
-            reduce { state, action ->
-                logger.d("reduce started: $action")
-                val result = when (action) {
-                    is Action.Increment -> state + action.value
-                    is Action.Decrement -> (state - action.value).coerceAtLeast(0)
-                }
-                result
-            }
+
+            // *******************************************************************************
+            // TODO
+            // *******************************************************************************
+
+// FIRST ONE DONE:
+//            thunk<Action.Increment> {
+//                // state, action and dispatch are variables not function parameters
+//                logger.d("thunk 4 started: $action")
+//                dispatch(action)                        // dispatches to thunk reduce
+//            }
+//
+// SECOND ONE DONE:
+//            reduce<Action.Increment> {
+//                // state, action are variables not function parameters
+//                logger.d("reduce started: $action")
+//                val result = when (action) {
+//                    is Action.Increment -> state + action.value
+//                    is Action.Decrement -> (state - action.value).coerceAtLeast(0)
+//                }
+//                result
+//            }
+//
+// TBD:
+//            sideEffect<Action.Increment> {
+//                // return value is the side effect which is an Object
+//                // can e.g. be used for navigation, logging, analytics etc.
+//            }
+
+            // *******************************************************************************
+            // *******************************************************************************
+
+            reduce<Action.Increment> { state + action.value }
+
+            reduce<Action.Decrement> { (state - action.value).coerceAtLeast(0) }
         }
     }
 
-// shortest possible implementation
+    // shortest possible implementation
 //    fun bloc(context: BlocContext) =
 //        bloc<Int, Boolean>(context, 1) {
-//            reduce { state, action -> state + if (action) 1 else -1 }
+    //            reduce { state + if (action) 1 else -1 }
+//        }
+//    fun blocIncrement(context: BlocContext) =
+//        bloc<Int, Nothing>(context, 1) {
+//            reduce { state + 1 }
 //        }
 
 }

@@ -74,7 +74,7 @@ class Register(private val value: String = "") {
         )
 
     companion object {
-        private const val SCALE = 8L
-        private val DECIMAL_MODE = DecimalMode(10, RoundingMode.ROUND_HALF_TO_EVEN, SCALE)
+        private const val SCALE = 7L
+        private val DECIMAL_MODE = DecimalMode(7, RoundingMode.ROUND_HALF_TO_EVEN, SCALE)
     }
 }

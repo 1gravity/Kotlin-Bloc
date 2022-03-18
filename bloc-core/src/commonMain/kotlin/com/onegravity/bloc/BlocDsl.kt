@@ -3,6 +3,7 @@ package com.onegravity.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.state.blocState
+import com.onegravity.bloc.utils.BlocDSL
 import kotlin.jvm.JvmName
 
 /**
@@ -20,6 +21,7 @@ import kotlin.jvm.JvmName
  * ```
  */
 @JvmName("blocFull")
+@BlocDSL
 fun <State, Action: Any, Proposal> bloc(
     context: BlocContext,
     blocState: BlocState<State, Proposal>,
@@ -45,6 +47,7 @@ fun <State, Action: Any, Proposal> bloc(
  * ```
  */
 @JvmName("blocSimple")
+@BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
@@ -70,6 +73,7 @@ fun <State, Action: Any> bloc(
  * ```
  */
 @JvmName("blocSimplest")
+@BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,
     initialValue: State,

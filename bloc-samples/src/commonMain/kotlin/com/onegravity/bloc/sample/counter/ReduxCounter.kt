@@ -5,23 +5,17 @@ import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.utils.toBlocState
 
 object ReduxCounter {
-    sealed class Action {
-        data class Increment(val value: Int = 1): Action()
-        data class Decrement(val value: Int = 1): Action()
+    sealed class Action(val value: Int) {
+        data class Increment(private val _value: Int = 1): Action(_value)
+        data class Decrement(private val _value: Int = 1): Action(_value)
     }
 
     fun bloc(context: BlocContext) = bloc<Int, Action, ReduxAction>(
         context,
         reduxStore.toBlocState(context = context, initialState = 1)
     ) {
-        reduce { _, action ->
-            when (action) {
-                // we could use the same actions for the BLoC and the redux store but in a real
-                // application the BLoC would implement some business logic
-                is Action.Increment -> ReduxAction.Increment(action.value)
-                is Action.Decrement -> ReduxAction.Decrement(action.value)
-            }
-        }
+        reduce<Action.Increment> { ReduxAction.Increment(action.value) }
+        reduce<Action.Decrement> { ReduxAction.Decrement(action.value) }
     }
 }
 
