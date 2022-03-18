@@ -1,5 +1,7 @@
 package com.onegravity.bloc.utils
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.reduxkotlin.GetState
 
 @DslMarker
@@ -9,6 +11,18 @@ annotation class BlocDSL
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
 annotation class BlocInternal
+
+/**
+ * A Stream is a source of asynchronous data.
+ * It's identical to kotlinx.coroutines.flow.Flow.
+ */
+typealias Stream<Value> = Flow<Value>
+
+/**
+ * A Stream is a source of asynchronous data.
+ * It's identical to kotlinx.coroutines.flow.StateFlow.
+ */
+typealias StateStream<Value> = StateFlow<Value>
 
 /**
  * A function for accepting / rejecting a [Proposal] and updating and emitting resulting [State].
@@ -21,10 +35,18 @@ typealias Selector<State, Model> = (State) -> Model
 
 typealias Dispatcher<Action> = suspend (Action) -> Unit
 
-data class ThunkContext<State, Action>(val getState: GetState<State>, val action: Action, val dispatch: Dispatcher<Action>)
+data class ThunkContext<State, Action>(
+    val getState: GetState<State>,
+    val action: Action, val
+    dispatch: Dispatcher<Action>
+)
 
 typealias Thunk<State, Action> = suspend ThunkContext<State, Action>.() -> Unit
 
 data class ReducerContext<State, Action>(val state: State, val action: Action)
 
 typealias Reducer<State, Action, Proposal> = ReducerContext<State, Action>.() -> Proposal
+
+data class SideEffectContext<State, Action>(val state: State, val action: Action)
+
+typealias SideEffect<State, Action, SideEffect> = SideEffectContext<State, Action>.() -> SideEffect

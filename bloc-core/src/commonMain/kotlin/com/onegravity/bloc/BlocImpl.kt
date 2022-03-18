@@ -38,6 +38,9 @@ class BlocImpl<State, Action: Any, Proposal>(
     override val value
         get() = blocState.value
 
+    override val replayCache: List<State>
+        get() = blocState.replayCache
+
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(action: Action) {
         logger.d("emit action $action")
@@ -48,9 +51,12 @@ class BlocImpl<State, Action: Any, Proposal>(
         }
     }
 
-    override suspend fun collect(collector: FlowCollector<State>) {
+    override suspend fun collect(collector: FlowCollector<State>): Nothing {
         blocState.collect(collector)
     }
+
+//    override val sideEffects: Stream<SideEffect>
+//        get() = TODO("Not yet implemented")
 
     private fun CoroutineScope.start() = launch(dispatcher) {
         for (action in actions) {

@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import com.onegravity.bloc.sample.MainMenu.ActionState
 import com.onegravity.bloc.sample.MainMenu.ActionState.*
 import com.onegravity.bloc.sample.MainMenu.bloc
+import com.onegravity.bloc.utils.Stream
 
 class MainViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
 

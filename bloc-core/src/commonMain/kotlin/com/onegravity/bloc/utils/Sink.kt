@@ -1,4 +1,4 @@
-package com.onegravity.bloc
+package com.onegravity.bloc.utils
 
 /**
  * A Sink is a generic destination for data.

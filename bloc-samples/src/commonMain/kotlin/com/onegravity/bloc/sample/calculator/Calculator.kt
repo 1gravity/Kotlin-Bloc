@@ -3,7 +3,6 @@ package com.onegravity.bloc.sample.calculator
 import com.onegravity.bloc.BlocBuilder
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.state.blocState
 
 // if BlocBuilder and BlocImpl are merged and called BlocContainer then we can define it analogous Orbit
 class Calculator(context: BlocContext) : BlocBuilder<State, Action, Action>() {

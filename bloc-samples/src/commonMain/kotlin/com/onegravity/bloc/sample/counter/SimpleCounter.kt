@@ -50,36 +50,31 @@ object SimpleCounter {
             // TODO
             // *******************************************************************************
 
-// FIRST ONE DONE:
-//            thunk<Action.Increment> {
-//                // state, action and dispatch are variables not function parameters
-//                logger.d("thunk 4 started: $action")
-//                dispatch(action)                        // dispatches to thunk reduce
-//            }
-//
-// SECOND ONE DONE:
-//            reduce<Action.Increment> {
-//                // state, action are variables not function parameters
-//                logger.d("reduce started: $action")
-//                val result = when (action) {
-//                    is Action.Increment -> state + action.value
-//                    is Action.Decrement -> (state - action.value).coerceAtLeast(0)
-//                }
-//                result
-//            }
-//
 // TBD:
 //            sideEffect<Action.Increment> {
 //                // return value is the side effect which is an Object
 //                // can e.g. be used for navigation, logging, analytics etc.
 //            }
 
+//            sideEffect<Action.Increment> {
+//                // return value is the side effect which is an Object
+//                // can e.g. be used for navigation, logging, analytics etc.
+//            }
+//
             // *******************************************************************************
             // *******************************************************************************
 
             reduce<Action.Increment> { state + action.value }
 
             reduce<Action.Decrement> { (state - action.value).coerceAtLeast(0) }
+
+// does the same as the two reducers above
+//            reduce {
+//                when (action) {
+//                    is Action.Increment -> state + action.value
+//                    is Action.Decrement -> (state - action.value).coerceAtLeast(0)
+//                }
+//            }
         }
     }
 

@@ -11,6 +11,7 @@ open class BlocBuilder<State, Action: Any, Proposal> {
 
     private val _thunks = ArrayList<MatcherThunk<State, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Proposal>>()
+    private val _sideEffects = ArrayList<MatcherSideEffect<State, Action, Proposal>>()
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
     fun build(context: BlocContext, blocState: BlocState<State, Proposal>) = BlocImpl(
