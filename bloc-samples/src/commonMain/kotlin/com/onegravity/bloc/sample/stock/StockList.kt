@@ -15,7 +15,7 @@ object StockList {
         data class Decrement(private val _value: Int = 1): Action(_value)
     }
 
-    fun bloc(context: BlocContext) : Bloc<Int, Action, Int> {
+    fun bloc(context: BlocContext) : Bloc<Int, Action, Nothing, Int> {
         val interceptorBloc = bloc<Int, Int>(context, 1) {
             reduce {
                 logger.d("interceptor: $action -> ${action + 1}")

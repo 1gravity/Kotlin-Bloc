@@ -9,27 +9,31 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
 
-class BlocImpl<State, Action: Any, Proposal>(
-    context: BlocContext,
+class BlocImpl<State, Action: Any, SideEffect, Proposal>(
+    override val blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<MatcherThunk<State, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Proposal>> = emptyList(),
+    private val sideEffects: List<MatcherSideEffect<State, Action, SideEffect>> = emptyList(),
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Bloc<State, Action, Proposal> {
+) : Bloc<State, Action, SideEffect, Proposal> {
 
-    private val actions = Channel<Action>(UNLIMITED)
+    private val actionChannel = Channel<Action>(UNLIMITED)
+
+    private val sideEffectChannel = Channel<SideEffect>(UNLIMITED)
 
     init {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-        context.lifecycle.doOnCreate {
+        blocContext.lifecycle.doOnCreate {
             logger.d("onCreate -> start Bloc")
             coroutineScope.start()
         }
 
-        context.lifecycle.doOnDestroy {
+        blocContext.lifecycle.doOnDestroy {
             logger.d("onDestroy -> stop Bloc")
             coroutineScope.cancel("Stop Bloc")
         }
@@ -45,7 +49,7 @@ class BlocImpl<State, Action: Any, Proposal>(
     override fun emit(action: Action) {
         logger.d("emit action $action")
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
-            actions.trySend(action)
+            actionChannel.trySend(action)
         } else {
             getReducer(action)?.runReducer(action)
         }
@@ -55,11 +59,10 @@ class BlocImpl<State, Action: Any, Proposal>(
         blocState.collect(collector)
     }
 
-//    override val sideEffects: Stream<SideEffect>
-//        get() = TODO("Not yet implemented")
+    override val sideEffectStream = sideEffectChannel.receiveAsFlow()
 
     private fun CoroutineScope.start() = launch(dispatcher) {
-        for (action in actions) {
+        for (action in actionChannel) {
             processActions(action)
         }
     }

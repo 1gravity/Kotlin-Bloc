@@ -1,6 +1,5 @@
 package com.onegravity.bloc.sample.counter
 
-import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.utils.logger
@@ -15,15 +14,14 @@ object SimpleCounter {
         data class Decrement(private val _value: Int = 1): Action(_value)
     }
 
-    fun bloc(context: BlocContext) : Bloc<Int, Action, Int> {
-        val interceptorBloc = bloc<Int, Int>(context, 1) {
-            reduce {
-                logger.d("interceptor: $action -> ${action + 1}")
-                action + 1
-            }
+    private fun BlocContext.interceptorBloc() = bloc<Int, Int>(this, 1) {
+        reduce {
+            logger.d("interceptor: $action -> ${action + 1}")
+            action + 1
         }
+    }
 
-        return bloc<Int, Action, Int>(context, interceptorBloc) {
+    fun bloc(context: BlocContext) = bloc<Int, Action, String, Int>(context, context.interceptorBloc()) {
             // thunk 1
             thunk<Action.Increment> {
                 logger.d("thunk 1 started: $action")
@@ -46,23 +44,15 @@ object SimpleCounter {
                 dispatch(action)                        // dispatches to thunk reduce
             }
 
-            // *******************************************************************************
-            // TODO
-            // *******************************************************************************
+            sideEffect<Action.Increment> {
+                "Increment: ${action.value}"
+            }
 
-// TBD:
-//            sideEffect<Action.Increment> {
-//                // return value is the side effect which is an Object
-//                // can e.g. be used for navigation, logging, analytics etc.
-//            }
+            sideEffect {
+                "Hello World"
+            }
 
-//            sideEffect<Action.Increment> {
-//                // return value is the side effect which is an Object
-//                // can e.g. be used for navigation, logging, analytics etc.
-//            }
-//
-            // *******************************************************************************
-            // *******************************************************************************
+            // TODO add a postSideEffect function to the ReducerContext
 
             reduce<Action.Increment> { state + action.value }
 
@@ -78,14 +68,13 @@ object SimpleCounter {
         }
     }
 
-    // shortest possible implementation
+// shortest possible implementation
 //    fun bloc(context: BlocContext) =
 //        bloc<Int, Boolean>(context, 1) {
-    //            reduce { state + if (action) 1 else -1 }
+//            reduce { state + if (action) 1 else -1 }
 //        }
 //    fun blocIncrement(context: BlocContext) =
 //        bloc<Int, Nothing>(context, 1) {
 //            reduce { state + 1 }
 //        }
 
-}

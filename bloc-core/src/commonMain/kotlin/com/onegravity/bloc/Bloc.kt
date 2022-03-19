@@ -1,6 +1,8 @@
 package com.onegravity.bloc
 
+import com.onegravity.bloc.context.BlocContextOwner
 import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.utils.Stream
 
 /**
  * The core interface of the BLoC framework.
@@ -9,11 +11,13 @@ import com.onegravity.bloc.state.BlocState
  * values that are emitted after the subscription (no initial value).
  * in Rx terms Stream<SideEffect> is a PublishSubject and Stream<State> is a BehaviorSubject.
  */
-interface Bloc<out State, in Action/*, out SideEffect*/, out Proposal> :
+interface Bloc<out State, in Action, out SideEffect, out Proposal> :
     BlocFacade<State, Action>,
-    BlocState<State, Action> {  // this declaration is redundant but let's be explicit
+    // the following declaration is redundant (a BlocState is a BlocFacade) but let's be explicit
+    BlocState<State, Action>,
+    BlocContextOwner {
 
-//    val sideEffects: Stream<SideEffect>
+    val sideEffectStream: Stream<SideEffect>
 
 }
 

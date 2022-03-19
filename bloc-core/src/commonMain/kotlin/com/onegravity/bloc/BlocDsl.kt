@@ -20,14 +20,39 @@ import kotlin.jvm.JvmName
  * }
  * ```
  */
+@JvmName("bloc")
+@BlocDSL
+fun <State, Action: Any, SideEffect, Proposal> bloc(
+    context: BlocContext,
+    blocState: BlocState<State, Proposal>,
+    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit
+): Bloc<State, Action, SideEffect, Proposal> =
+    BlocBuilder<State, Action, SideEffect, Proposal>()
+        .also(block)
+        .build(context, blocState)
+
+/**
+ * Creates a [Bloc] instance using a [BlocBuilder].
+ *
+ * ```
+ * bloc<State, Action, Proposal>(context, blocState) {
+ *    thunk { getState, action, dispatch ->
+ *       ...
+ *    }
+ *    reduce { state, action ->
+ *       ...
+ *    }
+ * }
+ * ```
+ */
 @JvmName("blocFull")
 @BlocDSL
 fun <State, Action: Any, Proposal> bloc(
     context: BlocContext,
     blocState: BlocState<State, Proposal>,
-    block: BlocBuilder<State, Action, Proposal>.() -> Unit
-): Bloc<State, Action, Proposal> =
-    BlocBuilder<State, Action, Proposal>()
+    block: BlocBuilder<State, Action, Nothing, Proposal>.() -> Unit
+): Bloc<State, Action, Nothing, Proposal> =
+    BlocBuilder<State, Action, Nothing, Proposal>()
         .also(block)
         .build(context, blocState)
 
@@ -51,9 +76,9 @@ fun <State, Action: Any, Proposal> bloc(
 fun <State, Action: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
-    block: BlocBuilder<State, Action, State>.() -> Unit
-): Bloc<State, Action, State> =
-    BlocBuilder<State, Action, State>()
+    block: BlocBuilder<State, Action, Nothing, State>.() -> Unit
+): Bloc<State, Action, Nothing, State> =
+    BlocBuilder<State, Action, Nothing, State>()
         .also(block)
         .build(context, blocState)
 
@@ -77,8 +102,8 @@ fun <State, Action: Any> bloc(
 fun <State, Action: Any> bloc(
     context: BlocContext,
     initialValue: State,
-    block: BlocBuilder<State, Action, State>.() -> Unit
-): Bloc<State, Action, State> =
-    BlocBuilder<State, Action, State>()
+    block: BlocBuilder<State, Action, Nothing, State>.() -> Unit
+): Bloc<State, Action, Nothing, State> =
+    BlocBuilder<State, Action, Nothing, State>()
         .also(block)
         .build(context, blocState(initialValue))

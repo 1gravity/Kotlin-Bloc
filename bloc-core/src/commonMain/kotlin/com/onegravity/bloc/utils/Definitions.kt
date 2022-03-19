@@ -10,6 +10,10 @@ annotation class BlocDSL
 @RequiresOptIn(message = "This is an internal API designed for Bloc extensions.")
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+annotation class BlocProtected
+
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
 annotation class BlocInternal
 
 /**

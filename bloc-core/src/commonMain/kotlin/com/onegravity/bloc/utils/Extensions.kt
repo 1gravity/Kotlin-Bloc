@@ -1,11 +1,14 @@
 package com.onegravity.bloc.utils
 
-import com.arkivanov.essenty.lifecycle.doOnDestroy
+import com.arkivanov.essenty.lifecycle.*
 import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
+import com.onegravity.bloc.Bloc
+import com.onegravity.bloc.BlocImpl
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.select.select
 import com.onegravity.bloc.state.reduxBlocState
+import kotlinx.coroutines.*
 import org.reduxkotlin.Store
 
 /**
@@ -95,4 +98,30 @@ fun <State: Any, Proposal: Any, Model: Any, ReduxModel: Any> Store<ReduxModel>.t
     this.initialState = initialState
     select(selector)
     map(mapper)
+}
+
+fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.subscribe(
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) {
+    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    blocContext.lifecycle.doOnStart {
+        logger.d("onStart -> start subscription")
+        state?.let {
+            coroutineScope.launch {
+                collect { state(it) }
+            }
+        }
+        sideEffect?.let {
+            coroutineScope.launch {
+                sideEffectStream.collect { sideEffect(it) }
+            }
+        }
+    }
+
+    blocContext.lifecycle.doOnDestroy {
+        logger.d("onDestroy -> stop subscription")
+        coroutineScope.cancel("Stop Subscription")
+    }
 }
