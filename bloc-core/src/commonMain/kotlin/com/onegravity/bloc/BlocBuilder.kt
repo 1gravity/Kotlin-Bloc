@@ -8,7 +8,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.JvmName
 
 // TODO consider combining side effects with reducers (analogous Knot)
-open class BlocBuilder<State, Action: Any, SE, Proposal> {
+class BlocBuilder<State, Action: Any, SE, Proposal> {
 
     private val _thunks = ArrayList<MatcherThunk<State, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Proposal>>()

@@ -21,7 +21,9 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, SideEffect, Proposal> {
 
-    private val actionChannel = Channel<Action>(UNLIMITED)
+    private val thunkChannel = Channel<Action>(UNLIMITED)
+
+    private val reduceChannel = Channel<Action>(UNLIMITED)
 
     private val sideEffectChannel = Channel<SideEffect>(UNLIMITED)
 
@@ -48,10 +50,9 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(action: Action) {
         logger.d("emit action $action")
-        if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
-            actionChannel.trySend(action)
-        } else {
-            getReducer(action)?.runReducer(action)
+        when (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
+            true -> thunkChannel.trySend(action)
+            else -> reduceChannel.trySend(action)
         }
     }
 
@@ -59,15 +60,23 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         blocState.collect(collector)
     }
 
-    override val sideEffectStream = sideEffectChannel.receiveAsFlow()
+    override val sideEffectStream: Stream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
-    private fun CoroutineScope.start() = launch(dispatcher) {
-        for (action in actionChannel) {
-            processActions(action)
+    private fun CoroutineScope.start() {
+        launch(dispatcher) {
+            for (action in thunkChannel) {
+                runThunks(action)
+            }
+        }
+
+        launch(dispatcher) {
+            for (action in reduceChannel) {
+                getReducer(action)?.runReducer(action)
+            }
         }
     }
 
-    private suspend fun processActions(action: Action) {
+    private suspend fun runThunks(action: Action) {
         logger.d("process action $action")
         thunks.forEachIndexed { index, (matcher, _) ->
             if (matcher == null || matcher.matches(action)) {
@@ -84,7 +93,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         ThunkContext({ blocState.value }, action, dispatcher).thunk()
     }
 
-    private fun Reducer<State, Action, Proposal>.runReducer(action: Action) {
+    private suspend fun Reducer<State, Action, Proposal>.runReducer(action: Action) {
         val proposal = ReducerContext(blocState.value, action).this()
         blocState.emit(proposal)
     }
