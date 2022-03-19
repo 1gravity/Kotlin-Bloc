@@ -12,6 +12,7 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
 
     private val _thunks = ArrayList<MatcherThunk<State, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Proposal>>()
+    private val _reducersSideEffect = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
     private val _sideEffects = ArrayList<MatcherSideEffect<State, Action, SE>>()
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
@@ -53,6 +54,25 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     @JvmName("reducerMatching")
     inline fun <reified A : Action> reduce(noinline reducer: Reducer<State, Action, Proposal>) {
         addReducer(Matcher.any<Action, A>(), reducer)
+        val newReducer: Reducer<State, Action, Effect<Proposal, SE>> = { reducer.invoke(this).noSideEffect }
+        addReducer2(Matcher.any<Action, A>(), newReducer)
+    }
+
+    @BlocDSL
+    @JvmName("reduceWithSideEffect")
+    inline fun <reified A : Action> reduceWithSideEffect(noinline reducer: Reducer<State, Action, Effect<Proposal, SE>>) {
+        addReducer2(Matcher.any<Action, A>(), reducer)
+    }
+
+    @BlocInternal
+    fun <A : Action> addReducer2(
+        matcher: Matcher<Action, A>,
+        reducer: Reducer<State, Action, Effect<Proposal, SE>>
+    ) {
+        _reducers
+            .firstOrNull { it.matcher != null && it.matcher == matcher }
+            ?.run { logger.e("Duplicate reduce<${matcher.clazzName()}>") }
+        _reducersSideEffect.add(MatcherReducer(matcher, reducer))
     }
 
     @BlocInternal
@@ -99,4 +119,26 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
             _dispatcher = value
         }
 
+    @BlocDSL
+    val Proposal.noSideEffect: Effect<Proposal, SE> get() = Effect(this)
+
+    @BlocDSL
+    operator fun Proposal.plus(sideEffect: SE) = Effect(this, listOf(sideEffect))
+
+    @BlocDSL
+    infix fun Proposal.and(sideEffect: SE) = Effect(this, listOf(sideEffect))
+
 }
+
+data class Effect<Proposal, SideEffect>(
+    val proposal: Proposal,
+    val sideEffects: List<SideEffect> = emptyList()
+) {
+
+    @BlocDSL
+    operator fun plus(sideEffect: SideEffect): Effect<Proposal, SideEffect> = Effect(proposal, sideEffects + sideEffect)
+    @BlocDSL
+    infix fun and(sideEffect: SideEffect): Effect<Proposal, SideEffect> = Effect(proposal, sideEffects + sideEffect)
+}
+
+

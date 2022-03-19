@@ -1,7 +1,7 @@
 package com.onegravity.bloc.state
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
-import com.onegravity.bloc.utils.MutableStream
+import com.onegravity.bloc.utils.MutableStateStream
 import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
 import com.onegravity.bloc.utils.selectScoped
@@ -21,7 +21,7 @@ class ReduxBlocState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
 ) : BlocState<State, Proposal>,
     DisposableScope by disposableScope {
 
-    private val state = MutableStream(initialState, 1)
+    private val state = MutableStateStream(initialState)
 
     // we need this to execute Thunks, it's tied to the DisposableScope which is tied to the
     // lifecycle of the BlocContext
@@ -46,10 +46,7 @@ class ReduxBlocState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
     override val value: State
         get() = state.value
 
-    override val replayCache: List<State>
-        get() = state.replayCache
-
-    override suspend fun collect(collector: FlowCollector<State>): Nothing {
+    override suspend fun collect(collector: FlowCollector<State>) {
         state.collect(collector)
     }
 

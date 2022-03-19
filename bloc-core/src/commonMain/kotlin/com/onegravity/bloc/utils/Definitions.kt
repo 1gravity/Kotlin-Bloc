@@ -1,7 +1,6 @@
 package com.onegravity.bloc.utils
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import org.reduxkotlin.GetState
 
 @DslMarker
@@ -21,12 +20,6 @@ annotation class BlocInternal
  * It's identical to kotlinx.coroutines.flow.Flow.
  */
 typealias Stream<Value> = Flow<Value>
-
-/**
- * A Stream is a source of asynchronous data.
- * It's identical to kotlinx.coroutines.flow.StateFlow.
- */
-typealias StateStream<Value> = StateFlow<Value>
 
 /**
  * A function for accepting / rejecting a [Proposal] and updating and emitting resulting [State].

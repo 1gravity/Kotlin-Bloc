@@ -18,55 +18,63 @@ object SimpleCounter {
         reduce {
             logger.d("interceptor: $action -> ${action + 1}")
             action + 1
+            action
         }
     }
 
     fun bloc(context: BlocContext) = bloc<Int, Action, String, Int>(context, context.interceptorBloc()) {
-            // thunk 1
-            thunk<Action.Increment> {
-                logger.d("thunk 1 started: $action")
-                dispatch(action)                         // dispatches to thunk 3
-                dispatch(Action.Decrement(1))      // dispatches to thunk 2
-            }
-            // thunk 2
-            thunk<Action.Decrement> {
-                logger.d("thunk 2 started: $action")
-                dispatch(Action.Decrement(3))      // dispatches to thunk 4
-            }
-            // thunk 3
-            thunk<Action.Increment> {
-                logger.d("thunk 3 started: $action")
-                dispatch(action)                         // dispatches to thunk 4
-            }
-            // thunk 4
-            thunk {
-                logger.d("thunk 4 started: $action")
-                dispatch(action)                        // dispatches to thunk reduce
-            }
+        // thunk 1
+        thunk<Action.Increment> {
+            logger.d("thunk 1 started: $action")
+            dispatch(action)                         // dispatches to thunk 3
+            dispatch(Action.Decrement(1))      // dispatches to thunk 2
+        }
+        // thunk 2
+        thunk<Action.Decrement> {
+            logger.d("thunk 2 started: $action")
+            dispatch(Action.Decrement(3))      // dispatches to thunk 4
+        }
+        // thunk 3
+        thunk<Action.Increment> {
+            logger.d("thunk 3 started: $action")
+            dispatch(action)                         // dispatches to thunk 4
+        }
+        // thunk 4
+        thunk {
+            logger.d("thunk 4 started: $action")
+            dispatch(action)                        // dispatches to thunk reduce
+        }
 
-            sideEffect<Action.Increment> {
-                "Increment: ${action.value}"
-            }
+        // sideEffect: reducer without state
+        // reduce: reducer without side effect
+        // reduceWithSideEffect: reducer with side effect
 
-            sideEffect {
-                "Hello World"
-            }
+        sideEffect<Action.Increment> {
+            "Increment: ${action.value}"
+        }
 
-            // TODO add a postSideEffect function to the ReducerContext
+        sideEffect {
+            "Hello World"
+        }
 
-            reduce<Action.Increment> { state + action.value }
+        // TODO add a postSideEffect function to the ReducerContext
 
-            reduce<Action.Decrement> { (state - action.value).coerceAtLeast(0) }
+        reduceWithSideEffect<Action.Increment> {
+            state + action.value and "Increment: ${action.value}" and "Hello World"
+            state.noSideEffect
+        }
 
-// does the same as the two reducers above
+        reduce<Action.Decrement> { (state - action.value).coerceAtLeast(0) }
+
+        // does the same as the two reducers above
 //            reduce {
 //                when (action) {
 //                    is Action.Increment -> state + action.value
 //                    is Action.Decrement -> (state - action.value).coerceAtLeast(0)
 //                }
 //            }
-        }
     }
+}
 
 // shortest possible implementation
 //    fun bloc(context: BlocContext) =

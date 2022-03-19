@@ -106,11 +106,13 @@ fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, P
 ) {
     val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    blocContext.lifecycle.doOnStart {
-        logger.d("onStart -> start subscription")
+    blocContext.lifecycle.doOnCreate {
+        logger.d("onCreate -> start subscription")
         state?.let {
             coroutineScope.launch {
-                collect { state(it) }
+                collect {
+                    state(it)
+                }
             }
         }
         sideEffect?.let {

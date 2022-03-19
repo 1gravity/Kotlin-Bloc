@@ -15,10 +15,16 @@ class CounterSimpleViewModel(context: ActivityBlocContext) : BaseViewModel(conte
 
     init {
         bloc.subscribe(
-            state = { Log.i("bloc", "state: $it") },
-            sideEffect = { Log.i("bloc", "side effect: $it") }
+            state = {
+                Log.i("bloc", "state: $it")
+            },
+            sideEffect = {
+                Log.i("bloc", "side effect: $it")
+            }
         )
     }
+
+
 
     val state = toLiveData(bloc)
     //  alternatively:

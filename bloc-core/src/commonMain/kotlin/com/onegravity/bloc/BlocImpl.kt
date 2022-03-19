@@ -44,9 +44,6 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
     override val value
         get() = blocState.value
 
-    override val replayCache: List<State>
-        get() = blocState.replayCache
-
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(action: Action) {
         logger.d("emit action $action")
@@ -56,7 +53,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         }
     }
 
-    override suspend fun collect(collector: FlowCollector<State>): Nothing {
+    override suspend fun collect(collector: FlowCollector<State>) {
         blocState.collect(collector)
     }
 
