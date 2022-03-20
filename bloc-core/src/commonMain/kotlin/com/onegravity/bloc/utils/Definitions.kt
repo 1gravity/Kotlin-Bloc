@@ -44,6 +44,4 @@ data class ReducerContext<State, Action>(val state: State, val action: Action)
 
 typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
 
-data class SideEffectContext<State, Action>(val state: State, val action: Action)
-
-typealias SideEffect<State, Action, SideEffect> = SideEffectContext<State, Action>.() -> SideEffect
+typealias SideEffect<State, Action, SideEffect> = ReducerContext<State, Action>.() -> SideEffect

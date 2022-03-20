@@ -24,26 +24,26 @@ object SimpleCounter {
 
     fun bloc(context: BlocContext) = bloc<Int, Action, String, Int>(context, context.interceptorBloc()) {
         // thunk 1
-        thunk<Action.Increment> {
-            logger.d("thunk 1 started: $action")
-            dispatch(action)                         // dispatches to thunk 3
-            dispatch(Action.Decrement(1))      // dispatches to thunk 2
-        }
-        // thunk 2
-        thunk<Action.Decrement> {
-            logger.d("thunk 2 started: $action")
-            dispatch(Action.Decrement(3))      // dispatches to thunk 4
-        }
-        // thunk 3
-        thunk<Action.Increment> {
-            logger.d("thunk 3 started: $action")
-            dispatch(action)                         // dispatches to thunk 4
-        }
-        // thunk 4
-        thunk {
-            logger.d("thunk 4 started: $action")
-            dispatch(action)                        // dispatches to thunk reduce
-        }
+//        thunk<Action.Increment> {
+//            logger.d("thunk 1 started: $action")
+//            dispatch(action)                         // dispatches to thunk 3
+//            dispatch(Action.Decrement(1))      // dispatches to thunk 2
+//        }
+//        // thunk 2
+//        thunk<Action.Decrement> {
+//            logger.d("thunk 2 started: $action")
+//            dispatch(Action.Decrement(3))      // dispatches to thunk 4
+//        }
+//        // thunk 3
+//        thunk<Action.Increment> {
+//            logger.d("thunk 3 started: $action")
+//            dispatch(action)                         // dispatches to thunk 4
+//        }
+//        // thunk 4
+//        thunk {
+//            logger.d("thunk 4 started: $action")
+//            dispatch(action)                        // dispatches to thunk reduce
+//        }
 
         // sideEffect: reducer without state
         // reduce: reducer without side effect
@@ -57,14 +57,18 @@ object SimpleCounter {
             "Hello World"
         }
 
+        reduce<Action.Decrement> {
+            (state - action.value).coerceAtLeast(0)
+        }
+
         // TODO add a postSideEffect function to the ReducerContext
 
         reduceWithSideEffect<Action.Increment> {
             state + action.value and "Increment: ${action.value}" and "Hello World"
-            state.noSideEffect
+            state.noSideEffect and "test"
+            "Hello World" and state and "Test"
+            "test".noState
         }
-
-        reduce<Action.Decrement> { (state - action.value).coerceAtLeast(0) }
 
         // does the same as the two reducers above
 //            reduce {

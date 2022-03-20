@@ -16,8 +16,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
     override val blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<MatcherThunk<State, Action>> = emptyList(),
-    private val reducers: List<MatcherReducer<State, Action, Proposal>> = emptyList(),
-    private val sideEffects: List<MatcherSideEffect<State, Action, SideEffect>> = emptyList(),
+    private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, SideEffect, Proposal> {
 
@@ -90,9 +89,12 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         ThunkContext({ blocState.value }, action, dispatcher).thunk()
     }
 
-    private suspend fun Reducer<State, Action, Proposal>.runReducer(action: Action) {
-        val proposal = ReducerContext(blocState.value, action).this()
-        blocState.emit(proposal)
+    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action) {
+        val effect = ReducerContext(blocState.value, action).this()
+        if (effect.proposal != null) blocState.emit(effect.proposal)
+        effect.sideEffects.forEach {
+            sideEffectChannel.send(it)
+        }
     }
 
     private fun nextThunkDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
@@ -106,7 +108,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         return { getReducer(action)?.runReducer(action) }
     }
 
-    private fun getReducer(action: Action): Reducer<State, Action, Proposal>? {
+    private fun getReducer(action: Action): Reducer<State, Action, Effect<Proposal, SideEffect>>? {
         val reducer = reducers
             .firstOrNull { it.matcher == null || it.matcher.matches(action) }
             ?.reducer
