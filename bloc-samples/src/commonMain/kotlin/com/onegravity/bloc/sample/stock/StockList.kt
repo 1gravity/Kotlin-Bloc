@@ -17,7 +17,7 @@ object StockList {
 
     fun bloc(context: BlocContext) : Bloc<Int, Action, Nothing, Int> {
         val interceptorBloc = bloc<Int, Int>(context, 1) {
-            reduce {
+            state {
                 logger.d("interceptor: $action -> ${action + 1}")
                 action + 1
             }
@@ -45,7 +45,7 @@ object StockList {
                 logger.d("thunk 4 started: $action")
                 dispatch(action)                        // dispatches to thunk reduce
             }
-            reduce {
+            state {
                 logger.d("reduce started: $action")
                 val result = when (action) {
                     is Action.Increment -> state + action.value

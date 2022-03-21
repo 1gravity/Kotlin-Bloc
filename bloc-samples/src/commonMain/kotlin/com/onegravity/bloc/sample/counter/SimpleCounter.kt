@@ -15,7 +15,7 @@ object SimpleCounter {
     }
 
     private fun BlocContext.interceptorBloc() = bloc<Int, Int>(this, 1) {
-        reduce {
+        state {
             logger.d("interceptor: $action -> ${action + 1}")
             action + 1
             action
@@ -46,8 +46,8 @@ object SimpleCounter {
 //        }
 
         // sideEffect: reducer without state
-        // reduce: reducer without side effect
-        // reduceWithSideEffect: reducer with side effect
+        // state: reducer without side effect
+        // reduce: reducer with side effect
 
         sideEffect<Action.Increment> {
             "Increment: ${action.value}"
@@ -57,17 +57,24 @@ object SimpleCounter {
             "Hello World"
         }
 
-        reduce<Action.Decrement> {
+        state<Action.Decrement> {
             (state - action.value).coerceAtLeast(0)
         }
 
-        // TODO add a postSideEffect function to the ReducerContext
+//        state {
+//            (state + action.value).coerceAtLeast(0)
+//        }
 
-        reduceWithSideEffect<Action.Increment> {
+        reduce<Action.Increment> {
+            state + action.value and "Increment: ${action.value}" and "Hello World"
+//            state and "test"
+//            "Hello World" and state and "Test"
+        }
+
+        reduce {
             state + action.value and "Increment: ${action.value}" and "Hello World"
             state.noSideEffect and "test"
             "Hello World" and state and "Test"
-            "test".noState
         }
 
         // does the same as the two reducers above

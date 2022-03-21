@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.JvmName
 
-// TODO consider combining side effects with reducers (analogous Knot)
 class BlocBuilder<State, Action: Any, SE, Proposal> {
 
     private val _thunks = ArrayList<MatcherThunk<State, Action>>()
@@ -43,20 +42,20 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     /* Reducer with state but without side effect(s) */
 
     @BlocDSL
-    fun reduce(reducer: Reducer<State, Action, Proposal>) {
+    fun state(reducer: Reducer<State, Action, Proposal>) {
         val reducerNoSideEffect: Reducer<State, Action, Effect<Proposal, SE>> = {
             reducer.invoke(this).noSideEffect
         }
-        _reducers.add(MatcherReducer(null, reducerNoSideEffect))
+        _reducers.add(MatcherReducer(null, reducerNoSideEffect, true))
     }
 
     @BlocDSL
     @JvmName("reduceMatching")
-    inline fun <reified A : Action> reduce(noinline reducer: Reducer<State, Action, Proposal>) {
+    inline fun <reified A : Action> state(noinline reducer: Reducer<State, Action, Proposal>) {
         val reducerNoSideEffect: Reducer<State, Action, Effect<Proposal, SE>> = {
             reducer.invoke(this).noSideEffect
         }
-        addReducer(Matcher.any<Action, A>(), reducerNoSideEffect)
+        addReducer(Matcher.any<Action, A>(), reducerNoSideEffect, true)
     }
 
     /* Reducer without state but with side effect(s) */
@@ -64,44 +63,45 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     @BlocDSL
     fun sideEffect(sideEffect: SideEffect<State, Action, SE>) {
         val reducerNoState: Reducer<State, Action, Effect<Proposal, SE>> = {
-            sideEffect.invoke(this).noState
+            Effect(null, listOf(sideEffect.invoke(this)))
         }
-        _reducers.add(MatcherReducer(null, reducerNoState))
+        _reducers.add(MatcherReducer(null, reducerNoState, false))
     }
 
     @BlocDSL
     @JvmName("sideEffectMatching")
     inline fun <reified A : Action> sideEffect(noinline sideEffect: SideEffect<State, Action, SE>) {
         val reducerNoState: Reducer<State, Action, Effect<Proposal, SE>> = {
-            sideEffect.invoke(this).noState
+            Effect(null, listOf(sideEffect.invoke(this)))
         }
-        addReducer(Matcher.any<Action, A>(), reducerNoState)
+        addReducer(Matcher.any<Action, A>(), reducerNoState, false)
     }
 
     /* Reducers with state and side effect(s) */
 
     @BlocDSL
-    fun reduceWithSideEffect(reducer: Reducer<State, Action, Effect<Proposal, SE>>) {
-        _reducers.add(MatcherReducer(null, reducer))
+    fun reduce(reducer: Reducer<State, Action, Effect<Proposal, SE>>) {
+        _reducers.add(MatcherReducer(null, reducer, true))
     }
 
     @BlocDSL
     @JvmName("reduceWithSideEffectMatching")
-    inline fun <reified A : Action> reduceWithSideEffect(
+    inline fun <reified A : Action> reduce(
         noinline reducer: Reducer<State, Action, Effect<Proposal, SE>>
     ) {
-        addReducer(Matcher.any<Action, A>(), reducer)
+        addReducer(Matcher.any<Action, A>(), reducer, true)
     }
 
     @BlocInternal
     fun <A : Action> addReducer(
         matcher: Matcher<Action, A>,
-        reducer: Reducer<State, Action, Effect<Proposal, SE>>
+        reducer: Reducer<State, Action, Effect<Proposal, SE>>,
+        expectsProposal: Boolean
     ) {
         _reducers
             .firstOrNull { it.matcher != null && it.matcher == matcher }
             ?.run { logger.e("Duplicate reduce<${matcher.clazzName()}>") }
-        _reducers.add(MatcherReducer(matcher, reducer))
+        _reducers.add(MatcherReducer(matcher, reducer, expectsProposal))
     }
 
     /* Dispatcher */
@@ -120,15 +120,15 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
         get() = Effect<Proposal, SE>(this, emptyList())
 
     @BlocDSL
-    val SE.noState
-        get() = Effect<Proposal, SE>(null, listOf(this))
-
-    @BlocDSL
     @JvmName("proposalAnd")
     infix fun Proposal.and(sideEffect: SE) = Effect(this, listOf(sideEffect))
 
     @BlocDSL
     @JvmName("sideEffectAnd")
     infix fun SE.and(proposal: Proposal) = Effect(proposal, listOf(this))
+
+    @BlocDSL
+    @JvmName("sideEffectAndSideEffect")
+    infix fun SE.and(sideEffect: SE): List<SE> = listOf(this, sideEffect)
 
 }

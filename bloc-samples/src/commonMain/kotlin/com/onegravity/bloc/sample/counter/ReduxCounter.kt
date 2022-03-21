@@ -14,8 +14,8 @@ object ReduxCounter {
         context,
         reduxStore.toBlocState(context = context, initialState = 1)
     ) {
-        reduce<Action.Increment> { ReduxAction.Increment(action.value) }
-        reduce<Action.Decrement> { ReduxAction.Decrement(action.value) }
+        state<Action.Increment> { ReduxAction.Increment(action.value) }
+        state<Action.Decrement> { ReduxAction.Decrement(action.value) }
     }
 }
 

@@ -1,6 +1,5 @@
 package com.onegravity.bloc.sample.calculator
 
-import com.onegravity.bloc.BlocBuilder
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 
@@ -21,26 +20,26 @@ import com.onegravity.bloc.context.BlocContext
 fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
     fun State.resetErrors() = if (register1.isError() || register2.isError()) State() else this
 
-    reduce<Action.Equals> { state.resetErrors().equals() }
+    state<Action.Equals> { state.resetErrors().equals() }
 
-    reduce<Action.Clear> { State() }
+    state<Action.Clear> { State() }
 
-    reduce<Action.Add> { state.resetErrors().apply(Operator.Add) }
+    state<Action.Add> { state.resetErrors().apply(Operator.Add) }
 
-    reduce<Action.Subtract> { state.resetErrors().apply(Operator.Subtract) }
+    state<Action.Subtract> { state.resetErrors().apply(Operator.Subtract) }
 
-    reduce<Action.Multiply> { state.resetErrors().apply(Operator.Multiply) }
+    state<Action.Multiply> { state.resetErrors().apply(Operator.Multiply) }
 
-    reduce<Action.Divide> { state.resetErrors().apply(Operator.Divide) }
+    state<Action.Divide> { state.resetErrors().apply(Operator.Divide) }
 
-    reduce<Action.PlusMinus> { state.resetErrors().plusMinus() }
+    state<Action.PlusMinus> { state.resetErrors().plusMinus() }
 
-    reduce<Action.Percentage> { state.resetErrors().percentage() }
+    state<Action.Percentage> { state.resetErrors().percentage() }
 
     /**
      * We can either define reducers per Action (see above) or define a reducer for multiple actions
      */
-    reduce {
+    state {
         try {
             val newState = state.resetErrors()
             when (action) {

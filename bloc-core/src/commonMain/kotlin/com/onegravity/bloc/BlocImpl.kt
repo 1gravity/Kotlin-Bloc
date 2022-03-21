@@ -56,7 +56,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         blocState.collect(collector)
     }
 
-    override val sideEffectStream: Stream<SideEffect> = sideEffectChannel.receiveAsFlow()
+    override val sideEffects: Stream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
     private fun CoroutineScope.start() {
         launch(dispatcher) {
@@ -67,7 +67,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
 
         launch(dispatcher) {
             for (action in reduceChannel) {
-                getReducer(action)?.runReducer(action)
+                runReducers(action)
             }
         }
     }
@@ -89,14 +89,6 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         ThunkContext({ blocState.value }, action, dispatcher).thunk()
     }
 
-    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action) {
-        val effect = ReducerContext(blocState.value, action).this()
-        if (effect.proposal != null) blocState.emit(effect.proposal)
-        effect.sideEffects.forEach {
-            sideEffectChannel.send(it)
-        }
-    }
-
     private fun nextThunkDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
         (startIndex..thunks.lastIndex).forEach { index ->
             val matcher = thunks[index].matcher
@@ -105,17 +97,49 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
             }
         }
 
-        return { getReducer(action)?.runReducer(action) }
+        return { runReducers(action) }
     }
 
-    private fun getReducer(action: Action): Reducer<State, Action, Effect<Proposal, SideEffect>>? {
-        val reducer = reducers
-            .firstOrNull { it.matcher == null || it.matcher.matches(action) }
-            ?.reducer
-        if (reducer == null) {
-            logger.e("No reducer found, did you define reduce { }?")
+    private suspend fun runReducers(action: Action) {
+        getMatchingReducers(action)
+            .fold(false) { proposalEmitted, matcherReducer ->
+                val (_, reducer, expectsProposal) = matcherReducer
+                when {
+                    ! expectsProposal -> {                  // running sideEffect { }
+                        reducer.runReducer(action)
+                        proposalEmitted
+                    }
+                    ! proposalEmitted -> {                  // running reduce { } or state { }
+                        reducer.runReducer(action)
+                        true
+                    }
+                    else -> proposalEmitted                 // skipping reduce { } or state { }
+                }
+            }
+    }
+
+    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action) : Boolean {
+        val (proposal, sideEffects) = ReducerContext(blocState.value, action).this()
+        return if (proposal != null) {
+            blocState.emit(proposal)
+            postSideEffects(sideEffects)
+            true
+        } else {
+            postSideEffects(sideEffects)
+            false
         }
-        return reducer
+    }
+
+    private fun getMatchingReducers(action: Action) = reducers
+        .filter { it.matcher == null || it.matcher.matches(action) }
+        .also {
+            if (it.isEmpty()) logger.e("No reducer found, did you define reduce { }?")
+        }
+
+    private suspend fun postSideEffects(sideEffects: List<SideEffect>) {
+        sideEffects.forEach {
+            sideEffectChannel.send(it)
+        }
     }
 
 }

@@ -4,7 +4,6 @@ import com.arkivanov.essenty.lifecycle.*
 import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
 import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.BlocImpl
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.select.select
 import com.onegravity.bloc.state.reduxBlocState
@@ -117,7 +116,7 @@ fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, P
         }
         sideEffect?.let {
             coroutineScope.launch {
-                sideEffectStream.collect { sideEffect(it) }
+                sideEffects.collect { sideEffect(it) }
             }
         }
     }

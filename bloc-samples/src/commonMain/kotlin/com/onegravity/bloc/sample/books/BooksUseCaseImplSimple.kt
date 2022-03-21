@@ -32,11 +32,11 @@ class BooksUseCaseImplSimple(
 //            }
 //        }
 
-        reduce<BookAction.Clear> { BookState.Empty }
+        state<BookAction.Clear> { BookState.Empty }
 
-        reduce<BookAction.Loading> { BookState.Loading }
+        state<BookAction.Loading> { BookState.Loading }
 
-        reduce<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
+        state<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
     }
 
     override val state: Stream<BookState>

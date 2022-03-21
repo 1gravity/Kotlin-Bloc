@@ -17,7 +17,7 @@ interface Bloc<out State, in Action, out SideEffect, out Proposal> :
     BlocState<State, Action>,
     BlocContextOwner {
 
-    val sideEffectStream: Stream<SideEffect>
+    val sideEffects: Stream<SideEffect>
 
 }
 

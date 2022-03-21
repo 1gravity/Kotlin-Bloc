@@ -41,8 +41,8 @@ class BooksUseCaseImplRedux(
     }
 
     private val bloc = bloc<BookState, BookAction, Any>(context, blocState) {
-        reduce<BookAction.Load> { ReduxProposal.Load(blocState.coroutineScope, repository) }
-        reduce<BookAction.Clear> { ReduxProposal.Clear }
+        state<BookAction.Load> { ReduxProposal.Load(blocState.coroutineScope, repository) }
+        state<BookAction.Clear> { ReduxProposal.Clear }
     }
 
     override val state: Stream<BookState>

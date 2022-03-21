@@ -15,6 +15,6 @@ object MainMenu {
 
     fun bloc(context: BlocContext) =
         bloc<ActionState, ActionState>(context, ActionState.MainMenu) {
-            reduce { action }
+            state { action }
         }
 }

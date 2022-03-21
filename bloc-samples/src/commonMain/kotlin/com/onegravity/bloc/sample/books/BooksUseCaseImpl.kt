@@ -17,7 +17,7 @@ class BooksUseCaseImpl(
     private val commonState = blocState<BookState>(BookState.Empty)
 
     private val clearBloc = bloc<BookState, BookAction.Clear>(context, commonState) {
-        reduce {
+        state {
             if (state is BookState.Loaded) BookState.Empty else state
         }
     }
@@ -29,9 +29,9 @@ class BooksUseCaseImpl(
             dispatch(nextAction)
         }
 
-        reduce<BookAction.Loading> { BookState.Loading }
+        state<BookAction.Loading> { BookState.Loading }
 
-        reduce<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
+        state<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
     }
 
     override val state: Stream<BookState>
