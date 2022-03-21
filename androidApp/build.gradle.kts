@@ -50,12 +50,19 @@ dependencies {
     implementation(AndroidX.lifecycle.viewModelKtx)
     implementation(AndroidX.fragment.ktx)
     implementation(AndroidX.constraintLayout)
+    implementation(AndroidX.navigation.fragmentKtx)
+    implementation(AndroidX.navigation.uiKtx)
+    implementation(AndroidX.recyclerView)
 
     implementation(Google.android.material)
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
 
     implementation(Koin.android)
+
+    implementation("com.github.bumptech.glide:glide:_")
+    implementation("com.github.lisawray.groupie:groupie:_")
+    implementation("com.github.lisawray.groupie:groupie-viewbinding:_")
 
     // Essenty (https://github.com/arkivanov/Essenty)
     implementation("com.arkivanov.essenty:lifecycle:_")

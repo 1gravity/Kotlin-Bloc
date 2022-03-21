@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.onegravity.bloc.utils.Stream
+import com.onegravity.bloc.utils.subscribe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -28,3 +29,16 @@ fun <State> Stream<State>.toLiveData(scope: CoroutineScope): LiveData<State> =
  * ```
  */
 fun <State> ViewModel.toLiveData(stream: Stream<State>) = stream.toLiveData(viewModelScope)
+
+/**
+ * Call from a Fragment/Activity:
+ * ```
+ *   viewModel.subscribe(state = ::render, sideEffect = ::sideEffect)
+ * ```
+ */
+fun <State, Action: Any, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) {
+    bloc.subscribe(state, sideEffect)
+}

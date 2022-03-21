@@ -63,7 +63,7 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     @BlocDSL
     fun sideEffect(sideEffect: SideEffect<State, Action, SE>) {
         val reducerNoState: Reducer<State, Action, Effect<Proposal, SE>> = {
-            Effect(null, listOf(sideEffect.invoke(this)))
+            Effect(null, sideEffect.invoke(this))
         }
         _reducers.add(MatcherReducer(null, reducerNoState, false))
     }
@@ -72,7 +72,7 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     @JvmName("sideEffectMatching")
     inline fun <reified A : Action> sideEffect(noinline sideEffect: SideEffect<State, Action, SE>) {
         val reducerNoState: Reducer<State, Action, Effect<Proposal, SE>> = {
-            Effect(null, listOf(sideEffect.invoke(this)))
+            Effect(null, sideEffect.invoke(this))
         }
         addReducer(Matcher.any<Action, A>(), reducerNoState, false)
     }
@@ -121,11 +121,11 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
 
     @BlocDSL
     @JvmName("proposalAnd")
-    infix fun Proposal.and(sideEffect: SE) = Effect(this, listOf(sideEffect))
+    infix fun Proposal.and(sideEffect: SE) = Effect(this, sideEffect)
 
     @BlocDSL
     @JvmName("sideEffectAnd")
-    infix fun SE.and(proposal: Proposal) = Effect(proposal, listOf(this))
+    infix fun SE.and(proposal: Proposal) = Effect(proposal, this)
 
     @BlocDSL
     @JvmName("sideEffectAndSideEffect")

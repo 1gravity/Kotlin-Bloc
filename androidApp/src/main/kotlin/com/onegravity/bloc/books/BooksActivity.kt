@@ -1,5 +1,6 @@
 package com.onegravity.bloc.books
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -46,6 +47,7 @@ class BooksActivity : BaseActivity() {
         errorMessage.text = state.message
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showContent(state: BookState.Loaded) {
         pageContent.show()
         val text = state.books.joinToString(separator = "\n") {

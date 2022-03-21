@@ -42,4 +42,11 @@
     <string name="button_9">9</string>
 
     <string name="button_period">.</string>
+
+    <string name="emptyContentDescription" />
+
+    <plurals name="comments">
+        <item quantity="one">%d post</item>
+        <item quantity="other">%d comments</item>
+    </plurals>
 </resources>

@@ -6,19 +6,18 @@ import com.onegravity.bloc.sample.MainMenu.ActionState.*
 import com.onegravity.bloc.sample.MainMenu.bloc
 import com.onegravity.bloc.utils.Stream
 
-class MainViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
+class MainViewModel(context: ActivityBlocContext) :
+    BaseViewModel(context),
+    BlocOwner<ActionState, ActionState, ActionState, ActionState> {
 
-    private val bloc = bloc(viewModelContext)
-
-    val state: Stream<ActionState>
-        get() = bloc
+    override val bloc = bloc(viewModelContext)
 
     private val view2Action = mapOf(
         R.id.counter_1 to Counter1,
         R.id.counter_2 to Counter2,
         R.id.books to Books,
         R.id.calculator to Calculator,
-        R.id.stock to Stock,
+        R.id.posts to Posts,
     )
 
     fun launch(@LayoutRes viewId: Int) {

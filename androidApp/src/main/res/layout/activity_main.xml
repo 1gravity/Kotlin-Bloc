@@ -81,10 +81,10 @@
             app:layout_constraintVertical_bias="0.2" />
 
         <Button
-            android:id="@+id/stock"
+            android:id="@+id/posts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stocks"
+            android:text="Posts"
             android:onClick="@{(view) -> viewmodel.launch(view.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/books"

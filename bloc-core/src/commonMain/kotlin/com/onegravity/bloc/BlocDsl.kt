@@ -10,8 +10,11 @@ import kotlin.jvm.JvmName
  * Creates a [Bloc] instance using a [BlocBuilder].
  *
  * ```
- * bloc<State, Action, Proposal>(context, blocState) {
+ * bloc<State, Action, SideEffect, Proposal>(context, blocState) {
  *    thunk { getState, action, dispatch ->
+ *       ...
+ *    }
+ *    sideEffect { state, action ->
  *       ...
  *    }
  *    reduce { state, action ->
@@ -45,7 +48,7 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
  * }
  * ```
  */
-@JvmName("blocFull")
+@JvmName("blocSimplified1")
 @BlocDSL
 fun <State, Action: Any, Proposal> bloc(
     context: BlocContext,
@@ -71,7 +74,7 @@ fun <State, Action: Any, Proposal> bloc(
  * }
  * ```
  */
-@JvmName("blocSimple")
+@JvmName("blocSimplified2")
 @BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,
@@ -97,7 +100,7 @@ fun <State, Action: Any> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplest")
+@JvmName("blocSimplified3")
 @BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,

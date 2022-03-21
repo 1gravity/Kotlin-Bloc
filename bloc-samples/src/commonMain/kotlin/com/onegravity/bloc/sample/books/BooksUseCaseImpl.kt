@@ -1,5 +1,6 @@
 package com.onegravity.bloc.sample.books
 
+import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.utils.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
