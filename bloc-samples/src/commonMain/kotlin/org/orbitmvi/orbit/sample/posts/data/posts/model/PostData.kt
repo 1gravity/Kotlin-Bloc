@@ -20,6 +20,9 @@
 
 package org.orbitmvi.orbit.sample.posts.data.posts.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PostData(
     val id: Int,
     val userId: Int,

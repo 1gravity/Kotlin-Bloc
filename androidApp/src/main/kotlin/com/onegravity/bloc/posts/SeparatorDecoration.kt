@@ -18,7 +18,7 @@
  * See: https://github.com/orbit-mvi/orbit-mvi/compare/c5b8b3f2b83b5972ba2ad98f73f75086a89653d3...main
  */
 
-package org.orbitmvi.orbit.sample.posts.app.common
+package com.onegravity.bloc.posts
 
 import android.content.Context
 import android.graphics.Canvas

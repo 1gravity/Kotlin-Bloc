@@ -36,8 +36,8 @@
             android:exported="false"/>
 
         <activity
-            android:name=".posts.PostsActivity"
-            android:label="Stock"
+            android:name=".posts.PostActivity"
+            android:label="Posts"
             android:exported="false"/>
 
         <activity

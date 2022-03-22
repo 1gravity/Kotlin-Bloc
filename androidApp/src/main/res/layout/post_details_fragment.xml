@@ -22,13 +22,13 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="org.orbitmvi.orbit.sample.posts.app.common.ShadowScrollBehavior">
+        app:layout_behavior="com.onegravity.bloc.posts.ShadowScrollBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postdetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context="org.orbitmvi.orbit.sample.posts.app.features.postdetails.ui.PostDetailsFragment">
+            tools:context="com.onegravity.bloc.posts.PostDetailsFragment">
 
             <TextView
                 android:id="@+id/post_title"

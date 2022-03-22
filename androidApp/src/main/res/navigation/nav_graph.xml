@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="org.orbitmvi.orbit.sample.posts.app.features.postlist.ui.PostListFragment"
+        android:name="com.onegravity.bloc.posts.PostListFragment"
         android:label="@string/app_name"
         tools:layout="@layout/post_list_fragment">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="org.orbitmvi.orbit.sample.posts.app.features.postdetails.ui.PostDetailsFragment"
+        android:name="com.onegravity.bloc.posts.PostDetailsFragment"
         android:label="@string/app_name"
         tools:layout="@layout/post_details_fragment">
         <argument

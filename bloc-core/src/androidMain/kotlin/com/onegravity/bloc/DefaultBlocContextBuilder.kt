@@ -7,6 +7,7 @@ package com.onegravity.bloc
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryOwner
@@ -20,6 +21,12 @@ fun AppCompatActivity.activityBlocContext() = ActivityBlocContext(
     savedStateRegistry = savedStateRegistry,
     viewModelStore = viewModelStore,
     onBackPressedDispatcher = onBackPressedDispatcher
+)
+
+fun Fragment.activityBlocContext() = ActivityBlocContext(
+    savedStateRegistry = savedStateRegistry,
+    viewModelStore = viewModelStore,
+    onBackPressedDispatcher = activity?.onBackPressedDispatcher
 )
 
 data class ActivityBlocContext(

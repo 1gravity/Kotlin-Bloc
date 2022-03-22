@@ -1,13 +1,42 @@
 package com.onegravity.bloc
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
 import com.onegravity.bloc.utils.Stream
 import com.onegravity.bloc.utils.subscribe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+/**
+ * AppCompatActivity.
+ */
+
+fun <T : ViewDataBinding> AppCompatActivity.bind(@LayoutRes layoutId: Int, bind2ViewModel: (T) -> Unit) {
+    val binding = DataBindingUtil.setContentView<T>(this, layoutId)
+    bind2ViewModel(binding)
+    binding.lifecycleOwner = this
+    setContentView(binding.root)
+}
+
+@Suppress("UNCHECKED_CAST")
+inline fun <VM : ViewModel> AppCompatActivity.factory(crossinline f: (context: ActivityBlocContext) -> VM) =
+    object : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>):T = f(activityBlocContext()) as T
+    }
+
+/**
+ * Fragment.
+ */
+
+@Suppress("UNCHECKED_CAST")
+inline fun <VM : ViewModel> Fragment.factory(crossinline f: (context: ActivityBlocContext) -> VM) =
+    object : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>):T = f(activityBlocContext()) as T
+    }
 
 /**
  * Adapter(s) for Android to use [Stream]s as LiveData to be used with Data Binding.

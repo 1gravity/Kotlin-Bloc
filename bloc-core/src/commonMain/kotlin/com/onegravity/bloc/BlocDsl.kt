@@ -34,6 +34,19 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
         .also(block)
         .build(context, blocState)
 
+@JvmName("blocInitialValue")
+@BlocDSL
+fun <State, Action: Any, SideEffect, Proposal> bloc(
+    context: BlocContext,
+    initialValue: State,
+    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit
+): Bloc<State, Action, SideEffect, Proposal> =
+    BlocBuilder<State, Action, SideEffect, Proposal>()
+        .also(block)
+        .build(context, blocState<State, Proposal>{
+            initialState = initialValue
+        })
+
 /**
  * Creates a [Bloc] instance using a [BlocBuilder].
  *

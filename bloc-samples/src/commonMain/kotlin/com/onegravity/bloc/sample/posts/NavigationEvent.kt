@@ -18,9 +18,6 @@
  * See: https://github.com/orbit-mvi/orbit-mvi/compare/c5b8b3f2b83b5972ba2ad98f73f75086a89653d3...main
  */
 
-package org.orbitmvi.orbit.sample.posts.domain.repositories
+package com.onegravity.bloc.sample.posts
 
-sealed class Status<T : Any> {
-    data class Success<T : Any>(val data: T) : Status<T>()
-    data class Failure<T : Any>(val exception: Exception) : Status<T>()
-}
+interface NavigationEvent

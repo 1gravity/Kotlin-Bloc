@@ -26,8 +26,8 @@
         android:clipToPadding="false"
         android:padding="1dp"
         android:scrollbars="vertical"
-        app:layout_behavior="org.orbitmvi.orbit.sample.posts.app.common.ShadowScrollBehavior"
-        tools:context="org.orbitmvi.orbit.sample.posts.app.features.postlist.ui.PostListFragment"
+        app:layout_behavior="com.onegravity.bloc.posts.ShadowScrollBehavior"
+        tools:context="com.onegravity.bloc.posts.PostListFragment"
         tools:listitem="@layout/post_list_item" />
 
     <com.google.android.material.appbar.AppBarLayout

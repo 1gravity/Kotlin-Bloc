@@ -20,7 +20,9 @@
 
 package org.orbitmvi.orbit.sample.posts.domain.repositories
 
+import com.github.michaelbull.result.Result
+
 interface PostRepository {
-    suspend fun getOverviews(): List<PostOverview>
-    suspend fun getDetail(id: Int): Status<PostDetail>
+    suspend fun getOverviews(): Result<List<PostOverview>, Exception>
+    suspend fun getDetail(id: Int): Result<PostDetail, Exception>
 }

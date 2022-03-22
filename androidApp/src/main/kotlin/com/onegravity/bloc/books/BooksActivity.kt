@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
+import com.onegravity.bloc.factory
 import com.onegravity.bloc.sample.books.BookState
 import kotlinx.coroutines.launch
 
-class BooksActivity : BaseActivity() {
+class BooksActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<BooksViewModel> { factory { BooksViewModel(it) } }
 

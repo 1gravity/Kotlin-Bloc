@@ -59,6 +59,11 @@ kotlin {
                 implementation(AndroidX.appCompat)
                 implementation(AndroidX.activity.ktx)
                 implementation(AndroidX.lifecycle.viewModelKtx)
+                implementation(AndroidX.fragment.ktx)
+                implementation(AndroidX.constraintLayout)
+                implementation(AndroidX.navigation.fragmentKtx)
+                implementation(AndroidX.navigation.uiKtx)
+                implementation(AndroidX.recyclerView)
             }
         }
         val androidTest by getting
@@ -80,5 +85,11 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 32
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+    dataBinding {
+        isEnabled = true
     }
 }

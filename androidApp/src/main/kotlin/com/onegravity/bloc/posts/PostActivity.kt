@@ -21,16 +21,17 @@
 package com.onegravity.bloc.posts
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.onegravity.bloc.BaseActivity
 import com.onegravity.bloc.R
 
-class PostsActivity : BaseActivity() {
+class PostActivity : AppCompatActivity() {
 
     private val navController by lazy { findNavController(R.id.nav_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_posts)
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
