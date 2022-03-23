@@ -11,9 +11,7 @@ import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.posts.PostActivity
-import com.onegravity.bloc.sample.MainMenu
 import com.onegravity.bloc.sample.MainMenu.ActionState.*
-import com.onegravity.bloc.utils.subscribe
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,8 +21,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         bind<ActivityMainBinding>(R.layout.activity_main) { it.viewmodel = viewModel }
+    }
 
-        viewModel.subscribe(sideEffect = { mapping[it]?.start() })
+    override fun onResume() {
+        super.onResume()
+        viewModel.subscribe(this, sideEffect = { mapping[it]?.start() })
     }
 
     private val mapping = mapOf(

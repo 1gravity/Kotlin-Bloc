@@ -25,7 +25,7 @@ fun BlocContext.disposableScope() = DisposableScope()
  *    }
  * ```
  */
-fun <State: Any, SelectedState: Any> DisposableScope.selectScoped(
+fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
     store: Store<State>,
     selector: (State) -> SelectedState,
     block: (selectedState: SelectedState) -> Unit
@@ -44,7 +44,7 @@ fun <State: Any, SelectedState: Any> DisposableScope.selectScoped(
  *    }
  * ```
  */
-fun <State: Any, SelectedState: Any> Store<State>.selectScoped(
+fun <State : Any, SelectedState : Any> Store<State>.selectScoped(
     disposableScope: DisposableScope,
     selector: (State) -> SelectedState,
     block: (selectedState: SelectedState) -> Unit
@@ -59,7 +59,7 @@ fun <State: Any, SelectedState: Any> Store<State>.selectScoped(
  *    store.toBlocState(context, initialValue)
  * ```
  */
-fun <State: Any, Proposal: Any> Store<State>.toBlocState(
+fun <State : Any, Proposal : Any> Store<State>.toBlocState(
     context: BlocContext,
     initialState: State,
 ) = reduxBlocState<State, Proposal, State>(context.disposableScope(), this) {
@@ -73,7 +73,7 @@ fun <State: Any, Proposal: Any> Store<State>.toBlocState(
  *    store.toBlocState(context, initialValue) { /* select function */ }
  * ```
  */
-fun <State: Any, Proposal: Any, ReduxModel: Any> Store<ReduxModel>.toBlocState(
+fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,
     selector: Selector<ReduxModel, State>
@@ -88,7 +88,7 @@ fun <State: Any, Proposal: Any, ReduxModel: Any> Store<ReduxModel>.toBlocState(
  *    store.toBlocState(context, initialValue, { /* select function */ },  { /* map function */ })
  * ```
  */
-fun <State: Any, Proposal: Any, Model: Any, ReduxModel: Any> Store<ReduxModel>.toBlocState(
+fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,
     selector: Selector<ReduxModel, Model>,
@@ -99,14 +99,22 @@ fun <State: Any, Proposal: Any, Model: Any, ReduxModel: Any> Store<ReduxModel>.t
     map(mapper)
 }
 
-fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.subscribe(
+/**
+ * Subscribes to the state and side effects streams of a Bloc.
+ *
+ * The subscription is tied to the lifecycle of the caller. The subscription starts with onStart()
+ * and is cancelled with onStop().
+
+ */
+fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.subscribe(
+    lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
     val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    blocContext.lifecycle.doOnCreate {
-        logger.d("onCreate -> start subscription")
+    lifecycle.doOnStart {
+        logger.d("onStart -> start subscription")
         state?.let {
             coroutineScope.launch {
                 collect { state(it) }
@@ -119,8 +127,8 @@ fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, P
         }
     }
 
-    blocContext.lifecycle.doOnDestroy {
-        logger.d("onDestroy -> stop subscription")
+    lifecycle.doOnStop {
+        logger.d("onStop -> stop subscription")
         coroutineScope.cancel("Stop Subscription")
     }
 }
@@ -138,10 +146,11 @@ fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, P
 fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.toObservable() =
     object : BlocObservable<State, SideEffect> {
         override fun subscribe(
+            lifecycle: Lifecycle,
             state: (suspend (state: State) -> Unit)?,
             sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
         ) {
-            this@toObservable.subscribe(state, sideEffect)
+            this@toObservable.subscribe(lifecycle, state, sideEffect)
         }
     }
 
@@ -150,12 +159,19 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
  * (BlocObservableOwner in Android is typically a ViewModel, the observing component a Fragment or
  * an Activity):
  * ```
- *   component.subscribe(state = ::render, sideEffect = ::sideEffect)
+ *   component.subscribe(lifecycle, state = ::render, sideEffect = ::sideEffect)
+ * ```
+ *
+ * Note: there are extension functions for Fragments and Activities to get an Essenty lifecycle,
+ * so a call typically looks like:
+ * ```
+ *   component.subscribe(this, state = ::render, sideEffect = ::sideEffect)
  * ```
  */
 fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
+    lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
-    observable.subscribe(state, sideEffect)
+    observable.subscribe(lifecycle, state, sideEffect)
 }

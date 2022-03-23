@@ -45,7 +45,7 @@ import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.onegravity.bloc.sample.posts.bloc.PostState
-import com.onegravity.bloc.utils.subscribe
+import com.onegravity.bloc.subscribe
 
 class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
 
@@ -74,7 +74,11 @@ class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
 
         binding.postCommentsList.adapter = adapter
 
-        viewModel.subscribe(state = ::render)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.subscribe(this, state = ::render)
     }
 
     private fun render(state: PostState) {
@@ -100,7 +104,9 @@ class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
                 adapter.update(post.comments.map(::PostCommentItem))
             },
             { error ->
-                Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG).show()
+                Snackbar
+                    .make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG)
+                    .show()
             }
         )
     }

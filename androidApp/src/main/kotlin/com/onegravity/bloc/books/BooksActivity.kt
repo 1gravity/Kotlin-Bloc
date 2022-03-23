@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.factory
 import com.onegravity.bloc.sample.books.BookState
-import com.onegravity.bloc.utils.subscribe
+import com.onegravity.bloc.subscribe
 
 class BooksActivity : AppCompatActivity() {
 
@@ -26,8 +26,11 @@ class BooksActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
         setupView()
+    }
 
-        viewModel.subscribe(::observeState)
+    override fun onResume() {
+        super.onResume()
+        viewModel.subscribe(this, state = ::observeState)
     }
 
     private fun observeState(state: BookState) {

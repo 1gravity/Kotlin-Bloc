@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
+import com.onegravity.bloc.utils.BlocObservableOwner
 import com.onegravity.bloc.utils.Stream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -28,6 +30,17 @@ inline fun <VM : ViewModel> AppCompatActivity.factory(crossinline f: (context: A
     }
 
 /**
+ * Subscribes to a BlocObservableOwner (typically a ViewModel). The subscription
+ */
+fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
+    activity: AppCompatActivity,
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) {
+    observable.subscribe(activity.lifecycle.asEssentyLifecycle(), state, sideEffect)
+}
+
+/**
  * Fragment.
  */
 
@@ -36,6 +49,14 @@ inline fun <VM : ViewModel> Fragment.factory(crossinline f: (context: ActivityBl
     object : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>):T = f(activityBlocContext()) as T
     }
+
+fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
+    fragment: Fragment,
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) {
+    observable.subscribe(fragment.lifecycle.asEssentyLifecycle(), state, sideEffect)
+}
 
 /**
  * Adapter(s) for Android to use [Stream]s as LiveData to be used with Data Binding.
