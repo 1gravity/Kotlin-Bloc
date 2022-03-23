@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 class BlocImpl<State, Action: Any, SideEffect, Proposal>(
     override val blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
-    private val initializer: Initializer<Action> = { },
+    private val initializer: Initializer<State, Action> = { },
     private val thunks: List<MatcherThunk<State, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
@@ -61,6 +61,11 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
 
     private fun CoroutineScope.start() {
         launch(dispatcher) {
+            val context = InitializerContext<State, Action>(value) { action -> emit(action) }
+            context.initializer()
+        }
+
+        launch(dispatcher) {
             for (action in thunkChannel) {
                 runThunks(action)
             }
@@ -70,11 +75,6 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
             for (action in reduceChannel) {
                 runReducers(action)
             }
-        }
-
-        launch(dispatcher) {
-            val context = InitializerContext<Action> { action -> emit(action) }
-            context.initializer()
         }
     }
 

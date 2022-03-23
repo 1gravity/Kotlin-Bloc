@@ -45,6 +45,6 @@
         tools:layout="@layout/post_details_fragment">
         <argument
             android:name="overview"
-            app:argType="org.orbitmvi.orbit.sample.posts.domain.repositories.PostOverview" />
+            app:argType="com.onegravity.bloc.sample.posts.domain.repositories.PostOverview" />
     </fragment>
 </navigation>

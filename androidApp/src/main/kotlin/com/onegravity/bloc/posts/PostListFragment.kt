@@ -29,16 +29,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
 import com.onegravity.bloc.factory
-import com.onegravity.bloc.sample.posts.PostList
+import com.onegravity.bloc.sample.posts.bloc.PostList
 import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import org.orbitmvi.orbit.sample.posts.app.features.postlist.viewmodel.PostListState
+import com.onegravity.bloc.sample.posts.bloc.PostListState
 
 class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
-    private val viewModel: PostListViewModel by viewModels<PostListViewModel> { factory { PostListViewModel(it) } }
+    private val viewModel: PostListViewModel by viewModels { factory { PostListViewModel(it) } }
 
     private val binding by viewBinding<PostListFragmentBinding>()
 
@@ -49,10 +49,11 @@ class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
         binding.toolbar.apply {
             setTitle(R.string.app_name)
-            setLogo(R.drawable.ic_orbit_toolbar)
+            setLogo(R.drawable.ic_bloc_toolbar)
         }
 
         binding.content.layoutManager = LinearLayoutManager(activity)
+
         binding.content.addItemDecoration(
             SeparatorDecoration(requireActivity(), R.dimen.separator_margin_start_icon, R.dimen.separator_margin_end)
         )
@@ -63,7 +64,10 @@ class PostListFragment : Fragment(R.layout.post_list_fragment) {
     }
 
     private fun render(state: PostListState) {
-        adapter.update(state.overviews.map { PostListItem(it, viewModel) })
+        val posts = state.overviews
+            .sortedBy { it.title }
+            .map { PostListItem(it, viewModel) }
+        adapter.update(posts)
     }
 
     private fun sideEffect(sideEffect: PostList.OpenPost) {

@@ -1,20 +1,20 @@
 package com.onegravity.bloc.util
 
+import com.onegravity.bloc.sample.posts.data.PostDataRepository
+import com.onegravity.bloc.sample.posts.data.posts.network.AvatarUrlGenerator
+import com.onegravity.bloc.sample.posts.data.posts.network.PostNetworkDataSource
+import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.utils.Logger
 import com.onegravity.bloc.utils.LoggerImpl
 import com.onegravity.bloc.utils.logger
 import io.ktor.client.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.logging.*
-import kotlinx.serialization.json.Json
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.features.logging.*
 import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.dsl.module
-import org.orbitmvi.orbit.sample.posts.data.PostDataRepository
-import org.orbitmvi.orbit.sample.posts.data.posts.network.AvatarUrlGenerator
-import org.orbitmvi.orbit.sample.posts.data.posts.network.PostNetworkDataSource
-import org.orbitmvi.orbit.sample.posts.domain.repositories.PostRepository
 
 // called by Android and iOS
 fun KoinApplication.initKoin() {
@@ -34,22 +34,15 @@ private val commonModule = module {
         LoggerImpl
     }
 
-    // todo
-//    single {
-//        Retrofit.Builder()
-//            .addConverterFactory(JacksonConverterFactory.create(get()))
-//            .baseUrl("https://jsonplaceholder.typicode.com").build()
-//    }
-    // single { get<Retrofit>().create(TypicodeService::class.java) }
-
     single {
-        HttpClient() {
+        HttpClient {
             install(Logging)
-            install(ContentNegotiation) {
-                Json {
+            install(JsonFeature) {
+                serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
                     prettyPrint = true
                     isLenient = true
-                }
+                    ignoreUnknownKeys = true
+                })
             }
         }
     }

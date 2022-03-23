@@ -27,7 +27,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
@@ -38,14 +37,13 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostDetailsFragmentBinding
-import com.onegravity.bloc.factory
 import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import org.orbitmvi.orbit.sample.posts.app.features.postdetails.viewmodel.PostDetailState
+import com.onegravity.bloc.sample.posts.bloc.PostDetailState
 
 class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
 

@@ -26,7 +26,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListItemBinding
 import com.xwray.groupie.viewbinding.BindableItem
-import org.orbitmvi.orbit.sample.posts.domain.repositories.PostOverview
+import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
 
 data class PostListItem(private val post: PostOverview, private val viewModel: PostListViewModel) : BindableItem<PostListItemBinding>() {
 

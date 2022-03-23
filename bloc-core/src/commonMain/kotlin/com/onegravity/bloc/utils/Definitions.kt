@@ -32,11 +32,12 @@ typealias Selector<State, Model> = (State) -> Model
 
 typealias Dispatcher<Action> = suspend (Action) -> Unit
 
-data class InitializerContext<Action>(
+data class InitializerContext<State, Action>(
+    val state: State,
     val dispatch: Dispatcher<Action>
 )
 
-typealias Initializer<Action> = suspend InitializerContext<Action>.() -> Unit
+typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
 
 data class ThunkContext<State, Action>(
     val getState: GetState<State>,

@@ -13,6 +13,7 @@
         <activity
             android:name=".MainActivity"
             android:label="BLoC Framework"
+            android:theme="@style/AppTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,26 +24,31 @@
         <activity
             android:name=".counter.CounterActivity"
             android:label="Counter Simple"
+            android:theme="@style/AppTheme"
             android:exported="false"/>
 
         <activity
             android:name=".counter.CounterReduxActivity"
             android:label="Counter Redux"
+            android:theme="@style/AppTheme"
             android:exported="false"/>
 
         <activity
             android:name=".books.BooksActivity"
             android:label="Books"
+            android:theme="@style/AppTheme"
             android:exported="false"/>
 
         <activity
             android:name=".posts.PostActivity"
-            android:label="Posts"
+            android:label="BLoC Posts"
+            android:theme="@style/AppTheme"
             android:exported="false"/>
 
         <activity
             android:name=".calculator.CalculatorActivity"
             android:label="Calculator"
+            android:theme="@style/AppTheme"
             android:exported="false"/>
 
     </application>
