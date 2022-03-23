@@ -5,10 +5,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
  * A SideEffectStream and a Sink at the same time.
- * It's basically a wrapper around MutableSharedFlow with a default replay cache of 0, optional
- * initial value and the extra Sink functionality.
+ *
+ * It's a wrapper around MutableSharedFlow with a default replay cache of 0, optional initial value
+ * and the extra Sink functionality.
  */
-class MutableSideEffectStream<Value>(private val initialValue: Value?) :
+internal class MutableSideEffectStream<Value>(private val initialValue: Value?) :
     SideEffectStream<Value>,
     Sink<Value> {
 

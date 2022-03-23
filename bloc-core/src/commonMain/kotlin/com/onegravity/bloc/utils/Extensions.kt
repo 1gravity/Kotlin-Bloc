@@ -109,9 +109,7 @@ fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, P
         logger.d("onCreate -> start subscription")
         state?.let {
             coroutineScope.launch {
-                collect {
-                    state(it)
-                }
+                collect { state(it) }
             }
         }
         sideEffect?.let {
@@ -125,4 +123,39 @@ fun <State, Action: Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, P
         logger.d("onDestroy -> stop subscription")
         coroutineScope.cancel("Stop Subscription")
     }
+}
+
+/**
+ * If a components implements the BlocObservableOwner interface it needs to provide
+ * ```
+ *   val observable: BlocObservable<State, SideEffect>
+ * ```
+ * This extension functions converts a Bloc into that BlocObservable:
+ * ```
+ *   override val observable = bloc.toObservable()
+ * ```
+ */
+fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.toObservable() =
+    object : BlocObservable<State, SideEffect> {
+        override fun subscribe(
+            state: (suspend (state: State) -> Unit)?,
+            sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
+        ) {
+            this@toObservable.subscribe(state, sideEffect)
+        }
+    }
+
+/**
+ * Call in a component to observe state and side effect updates in a BlocObservableOwner
+ * (BlocObservableOwner in Android is typically a ViewModel, the observing component a Fragment or
+ * an Activity):
+ * ```
+ *   component.subscribe(state = ::render, sideEffect = ::sideEffect)
+ * ```
+ */
+fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) {
+    observable.subscribe(state, sideEffect)
 }

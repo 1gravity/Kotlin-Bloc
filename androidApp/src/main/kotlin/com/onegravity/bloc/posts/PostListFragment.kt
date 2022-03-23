@@ -30,11 +30,11 @@ import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
 import com.onegravity.bloc.factory
 import com.onegravity.bloc.sample.posts.bloc.PostList
-import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.onegravity.bloc.sample.posts.bloc.PostListState
+import com.onegravity.bloc.utils.subscribe
 
 class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
@@ -60,7 +60,7 @@ class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
         binding.content.adapter = adapter
 
-        viewModel.subscribe(state = ::render, sideEffect = ::sideEffect)
+        viewModel.subscribe(::render, ::sideEffect)
     }
 
     private fun render(state: PostListState) {

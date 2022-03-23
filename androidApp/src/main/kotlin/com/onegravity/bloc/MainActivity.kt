@@ -11,7 +11,9 @@ import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.posts.PostActivity
+import com.onegravity.bloc.sample.MainMenu
 import com.onegravity.bloc.sample.MainMenu.ActionState.*
+import com.onegravity.bloc.utils.subscribe
 
 class MainActivity : AppCompatActivity() {
 
