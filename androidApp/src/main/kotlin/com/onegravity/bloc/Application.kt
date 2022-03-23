@@ -1,6 +1,7 @@
 package com.onegravity.bloc
 
 import androidx.multidex.MultiDexApplication
+import com.onegravity.bloc.util.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -15,12 +16,13 @@ class Application: MultiDexApplication() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@Application)
-            modules(listOf(mainModule))
-        }
-    }
 
-    private val mainModule = module {
-        // TBD
+            module {
+                // here go the app specific dependencies
+            }
+
+            initKoin()
+        }
     }
 
 }

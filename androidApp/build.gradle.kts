@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -50,12 +51,23 @@ dependencies {
     implementation(AndroidX.lifecycle.viewModelKtx)
     implementation(AndroidX.fragment.ktx)
     implementation(AndroidX.constraintLayout)
+    implementation(AndroidX.navigation.fragmentKtx)
+    implementation(AndroidX.navigation.uiKtx)
+    implementation(AndroidX.recyclerView)
 
     implementation(Google.android.material)
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
 
     implementation(Koin.android)
+
+    implementation("com.github.bumptech.glide:glide:_")
+    implementation("com.github.lisawray.groupie:groupie:_")
+    implementation("com.github.lisawray.groupie:groupie-viewbinding:_")
+
+    // Kotlin Result (https://github.com/michaelbull/kotlin-result)
+    implementation("com.michael-bull.kotlin-result:kotlin-result:_")
+    implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
 
     // Essenty (https://github.com/arkivanov/Essenty)
     implementation("com.arkivanov.essenty:lifecycle:_")

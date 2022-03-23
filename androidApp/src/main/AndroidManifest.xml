@@ -8,11 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Reduce">
+        android:theme="@style/Theme.Bloc">
 
         <activity
             android:name=".MainActivity"
             android:label="BLoC Framework"
+            android:theme="@style/Theme.Bloc"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,26 +24,31 @@
         <activity
             android:name=".counter.CounterActivity"
             android:label="Counter Simple"
+            android:theme="@style/Theme.Bloc"
             android:exported="false"/>
 
         <activity
             android:name=".counter.CounterReduxActivity"
             android:label="Counter Redux"
+            android:theme="@style/Theme.Bloc"
             android:exported="false"/>
 
         <activity
             android:name=".books.BooksActivity"
             android:label="Books"
+            android:theme="@style/Theme.Bloc"
             android:exported="false"/>
 
         <activity
-            android:name="com.onegravity.bloc.traffic.TrafficActivity"
-            android:label="Traffic"
+            android:name=".posts.PostActivity"
+            android:label="BLoC Posts"
+            android:theme="@style/AppThemePosts"
             android:exported="false"/>
 
         <activity
-            android:name="com.onegravity.bloc.calculator.CalculatorActivity"
+            android:name=".calculator.CalculatorActivity"
             android:label="Calculator"
+            android:theme="@style/AppThemeCalculator"
             android:exported="false"/>
 
     </application>

@@ -30,4 +30,11 @@
     <color name="buttonSubtractBackground">#03a9f4</color>
     <color name="buttonAddBackground">#ff9800</color>
     <color name="buttonEqualsBackground">#4caf50</color>
+
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#018786</color>
+
+    <color name="separator">#1f000000</color>
+
 </resources>

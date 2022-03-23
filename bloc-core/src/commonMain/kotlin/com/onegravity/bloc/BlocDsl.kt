@@ -3,7 +3,49 @@ package com.onegravity.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.state.blocState
+import com.onegravity.bloc.utils.BlocDSL
 import kotlin.jvm.JvmName
+
+/**
+ * Creates a [Bloc] instance using a [BlocBuilder].
+ *
+ * ```
+ * bloc<State, Action, SideEffect, Proposal>(context, blocState) {
+ *    thunk { getState, action, dispatch ->
+ *       ...
+ *    }
+ *    sideEffect { state, action ->
+ *       ...
+ *    }
+ *    reduce { state, action ->
+ *       ...
+ *    }
+ * }
+ * ```
+ */
+@JvmName("bloc")
+@BlocDSL
+fun <State, Action: Any, SideEffect, Proposal> bloc(
+    context: BlocContext,
+    blocState: BlocState<State, Proposal>,
+    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit
+): Bloc<State, Action, SideEffect, Proposal> =
+    BlocBuilder<State, Action, SideEffect, Proposal>()
+        .also(block)
+        .build(context, blocState)
+
+@JvmName("blocInitialValue")
+@BlocDSL
+fun <State, Action: Any, SideEffect, Proposal> bloc(
+    context: BlocContext,
+    initialValue: State,
+    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit
+): Bloc<State, Action, SideEffect, Proposal> =
+    BlocBuilder<State, Action, SideEffect, Proposal>()
+        .also(block)
+        .build(context, blocState<State, Proposal>{
+            initialState = initialValue
+        })
 
 /**
  * Creates a [Bloc] instance using a [BlocBuilder].
@@ -19,13 +61,14 @@ import kotlin.jvm.JvmName
  * }
  * ```
  */
-@JvmName("blocFull")
+@JvmName("blocSimplified1")
+@BlocDSL
 fun <State, Action: Any, Proposal> bloc(
     context: BlocContext,
     blocState: BlocState<State, Proposal>,
-    block: BlocBuilder<State, Action, Proposal>.() -> Unit
-): Bloc<State, Action, Proposal> =
-    BlocBuilder<State, Action, Proposal>()
+    block: BlocBuilder<State, Action, Nothing, Proposal>.() -> Unit
+): Bloc<State, Action, Nothing, Proposal> =
+    BlocBuilder<State, Action, Nothing, Proposal>()
         .also(block)
         .build(context, blocState)
 
@@ -44,13 +87,14 @@ fun <State, Action: Any, Proposal> bloc(
  * }
  * ```
  */
-@JvmName("blocSimple")
+@JvmName("blocSimplified2")
+@BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
-    block: BlocBuilder<State, Action, State>.() -> Unit
-): Bloc<State, Action, State> =
-    BlocBuilder<State, Action, State>()
+    block: BlocBuilder<State, Action, Nothing, State>.() -> Unit
+): Bloc<State, Action, Nothing, State> =
+    BlocBuilder<State, Action, Nothing, State>()
         .also(block)
         .build(context, blocState)
 
@@ -69,12 +113,13 @@ fun <State, Action: Any> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplest")
+@JvmName("blocSimplified3")
+@BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,
     initialValue: State,
-    block: BlocBuilder<State, Action, State>.() -> Unit
-): Bloc<State, Action, State> =
-    BlocBuilder<State, Action, State>()
+    block: BlocBuilder<State, Action, Nothing, State>.() -> Unit
+): Bloc<State, Action, Nothing, State> =
+    BlocBuilder<State, Action, Nothing, State>()
         .also(block)
         .build(context, blocState(initialValue))

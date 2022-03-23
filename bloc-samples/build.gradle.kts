@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
     id("kotlin-parcelize")
 }
@@ -9,9 +10,9 @@ version = "1.0"
 
 kotlin {
     android()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    ios()
+    // Note: iosSimulatorArm64 target requires that all dependencies have M1 support
+//    iosSimulatorArm64()
 
     cocoapods {
         summary = "Some description for the Shared Module"
@@ -42,6 +43,15 @@ kotlin {
                 implementation("com.arkivanov.essenty:instance-keeper:_")
                 implementation("com.arkivanov.essenty:back-pressed:_")
 
+                // Koin
+                implementation(Koin.core)
+
+                // Ktor
+                implementation(Ktor.client.core)
+                implementation(Ktor.client.serialization)
+                implementation(Ktor.client.json)
+                implementation(Ktor.client.logging)
+
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
 
@@ -58,25 +68,24 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
-        val androidTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+        val androidMain by getting {
+            dependencies {
+                implementation(Ktor.client.cio)
+            }
         }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
+        val androidTest by getting
+//        val iosSimulatorArm64Main by getting
+        val iosMain by getting {
+            dependsOn(commonMain)
+//            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:_")
+            }
+        }
+//        val iosSimulatorArm64Test by getting
+        val iosTest by getting {
             dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+//            iosSimulatorArm64Test.dependsOn(this)
         }
     }
 }
@@ -87,5 +96,11 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 32
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+    dataBinding {
+        isEnabled = true
     }
 }

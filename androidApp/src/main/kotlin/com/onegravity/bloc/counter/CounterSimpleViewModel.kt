@@ -1,17 +1,20 @@
 package com.onegravity.bloc.counter
 
-import androidx.lifecycle.viewModelScope
 import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.BaseViewModel
+import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Decrement
+import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Increment
 import com.onegravity.bloc.sample.counter.SimpleCounter.bloc
-import com.onegravity.bloc.sample.counter.SimpleCounter.Action.*
 import com.onegravity.bloc.toLiveData
+import org.koin.core.component.KoinComponent
 
-class CounterSimpleViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
+class CounterSimpleViewModel(context: ActivityBlocContext) : BaseViewModel(context), KoinComponent {
 
     private val bloc = bloc(viewModelContext)
 
-    val state = bloc.toLiveData(viewModelScope)
+    val state = toLiveData(bloc)
+    //  alternatively:
+    //  val state = bloc.toLiveData(viewModelScope)
 
     fun increment() {
         bloc.emit(Increment(1))

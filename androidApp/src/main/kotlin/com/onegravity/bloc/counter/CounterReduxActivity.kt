@@ -2,11 +2,13 @@ package com.onegravity.bloc.counter
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.onegravity.bloc.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
+import com.onegravity.bloc.bind
 import com.onegravity.bloc.databinding.ActivityCounterReduxBinding
+import com.onegravity.bloc.factory
 
-class CounterReduxActivity : BaseActivity() {
+class CounterReduxActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<CounterReduxViewModel> { factory { CounterReduxViewModel(it) } }
 

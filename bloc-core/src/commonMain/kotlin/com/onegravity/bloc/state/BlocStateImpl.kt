@@ -1,8 +1,7 @@
 package com.onegravity.bloc.state
 
-import com.onegravity.MutableStream
+import com.onegravity.bloc.utils.MutableStateStream
 import com.onegravity.bloc.utils.Acceptor
-import com.onegravity.bloc.utils.logger
 import kotlinx.coroutines.flow.FlowCollector
 
 open class BlocStateImpl<State, Proposal>(
@@ -10,7 +9,7 @@ open class BlocStateImpl<State, Proposal>(
     private val acceptor: Acceptor<Proposal, State>,
 ) : BlocState<State, Proposal> {
 
-    private val state = MutableStream(initialState)
+    private val state = MutableStateStream(initialState)
 
     /**
      * The Stream<State>.
@@ -27,8 +26,8 @@ open class BlocStateImpl<State, Proposal>(
      */
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun emit(proposal: Proposal) {
-        logger.d("BlocState proposal: $proposal")
         val newState = acceptor(proposal, value)
         state.emit(newState)
     }
+
 }

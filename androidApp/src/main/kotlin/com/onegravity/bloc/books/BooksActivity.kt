@@ -1,16 +1,17 @@
 package com.onegravity.bloc.books
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.onegravity.bloc.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
+import com.onegravity.bloc.factory
 import com.onegravity.bloc.sample.books.BookState
-import kotlinx.coroutines.launch
+import com.onegravity.bloc.subscribe
 
-class BooksActivity : BaseActivity() {
+class BooksActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<BooksViewModel> { factory { BooksViewModel(it) } }
 
@@ -25,19 +26,19 @@ class BooksActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
         setupView()
-        observeState()
     }
 
-    private fun observeState() {
-        lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                when (state) {
-                    is BookState.Loaded -> showContent(state)
-                    BookState.Empty -> pageEmpty.show()
-                    is BookState.Failure -> showError(state)
-                    BookState.Loading -> pageLoading.show()
-                }
-            }
+    override fun onResume() {
+        super.onResume()
+        viewModel.subscribe(this, state = ::observeState)
+    }
+
+    private fun observeState(state: BookState) {
+        when (state) {
+            is BookState.Loaded -> showContent(state)
+            BookState.Empty -> pageEmpty.show()
+            is BookState.Failure -> showError(state)
+            BookState.Loading -> pageLoading.show()
         }
     }
 
@@ -46,6 +47,7 @@ class BooksActivity : BaseActivity() {
         errorMessage.text = state.message
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showContent(state: BookState.Loaded) {
         pageContent.show()
         val text = state.books.joinToString(separator = "\n") {

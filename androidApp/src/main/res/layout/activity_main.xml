@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.onegravity.bloc.sample.MainMenu.ActionState"/>
         <variable name="viewmodel" type="com.onegravity.bloc.MainViewModel" />
     </data>
 
@@ -37,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Counter 1"
-            android:onClick="@{() -> viewmodel.counter1()}"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Counter 2"
-            android:onClick="@{() -> viewmodel.counter2()}"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter2)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Books"
-            android:onClick="@{() -> viewmodel.books()}"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Books)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/counter_1"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,11 +70,11 @@
             app:layout_constraintVertical_bias="0.2" />
 
         <Button
-            android:id="@+id/traffic"
+            android:id="@+id/calculator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Traffic"
-            android:onClick="@{() -> viewmodel.traffic()}"
+            android:text="Calculator"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Calculator)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/counter_2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,11 +82,11 @@
             app:layout_constraintVertical_bias="0.2" />
 
         <Button
-            android:id="@+id/calculator"
+            android:id="@+id/posts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calculator"
-            android:onClick="@{() -> viewmodel.calculator()}"
+            android:text="Posts"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Posts)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/books"
             app:layout_constraintStart_toStartOf="parent"

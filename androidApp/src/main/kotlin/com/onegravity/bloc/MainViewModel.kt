@@ -1,34 +1,20 @@
 package com.onegravity.bloc
 
 import com.onegravity.bloc.sample.MainMenu.ActionState
-import com.onegravity.bloc.sample.MainMenu.ActionState.*
 import com.onegravity.bloc.sample.MainMenu.bloc
+import com.onegravity.bloc.utils.BlocObservableOwner
+import com.onegravity.bloc.utils.toObservable
 
-class MainViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
+class MainViewModel(context: ActivityBlocContext) :
+    BaseViewModel(context),
+    BlocObservableOwner<ActionState, ActionState> {
 
     private val bloc = bloc(viewModelContext)
 
-    val state: Stream<ActionState>
-        get() = bloc
+    override val observable = bloc.toObservable()
 
-    fun counter1() {
-        bloc.emit(Counter1)
-    }
-
-    fun counter2() {
-        bloc.emit(Counter2)
-    }
-
-    fun books() {
-        bloc.emit(Books)
-    }
-
-    fun traffic() {
-        bloc.emit(Traffic)
-    }
-
-    fun calculator() {
-        bloc.emit(Calculator)
+    fun onClick(action: ActionState) {
+        bloc.emit(action)
     }
 
 }

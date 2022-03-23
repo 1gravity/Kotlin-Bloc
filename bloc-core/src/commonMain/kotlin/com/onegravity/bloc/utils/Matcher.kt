@@ -8,6 +8,8 @@ class Matcher<SuperClazz : Any, out ChildClazz : SuperClazz> constructor(
     private val clazz: KClass<ChildClazz>
 ) {
 
+    fun clazzName() = clazz.qualifiedName
+
     private val defaultPredicate: (SuperClazz) -> Boolean = { superClazz -> clazz.isInstance(superClazz) }
 
     private val predicates = mutableListOf(defaultPredicate)
@@ -29,5 +31,14 @@ class Matcher<SuperClazz : Any, out ChildClazz : SuperClazz> constructor(
                 Matcher<SuperClazz, ChildClazz> =
             any<SuperClazz, ChildClazz>().where { this == value }
     }
+
+    override fun equals(other: Any?) = when {
+        other == null -> false
+        other !is Matcher<*, *> -> false
+        other.clazzName() == clazzName() -> true
+        else -> false
+    }
+
+    override fun hashCode() = clazzName().hashCode()
 
 }

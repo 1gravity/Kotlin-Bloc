@@ -1,10 +1,13 @@
 package com.onegravity.bloc.sample.books
 
-import com.onegravity.bloc.Stream
+import com.onegravity.bloc.Bloc
+import com.onegravity.bloc.utils.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.sample.books.BooksRepository.*
+import com.onegravity.bloc.utils.BlocObservable
+import com.onegravity.bloc.utils.toObservable
 
 /**
  * Implements the BooksUseCase with two [Bloc]s to demonstrate shared [BlocState]
@@ -17,29 +20,22 @@ class BooksUseCaseImpl(
     private val commonState = blocState<BookState>(BookState.Empty)
 
     private val clearBloc = bloc<BookState, BookAction.Clear>(context, commonState) {
-        reduce { state, _ ->
+        state {
             if (state is BookState.Loaded) BookState.Empty else state
         }
     }
 
     private val loadBloc = bloc<BookState, BookAction, BookState>(context, commonState) {
-        thunkMatching<BookAction.Load> { _, _, dispatch ->
+        thunk<BookAction.Load> {
             dispatch(BookAction.Loading)
             val nextAction = repository.loadBooks().toAction()
             dispatch(nextAction)
         }
 
-        reduce { state, action ->
-            when (action) {
-                BookAction.Loading -> BookState.Loading
-                is BookAction.LoadComplete -> action.result.toState()
-                else -> state
-            }
-        }
-    }
+        state<BookAction.Loading> { BookState.Loading }
 
-    override val state: Stream<BookState>
-        get() = commonState
+        state<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
+    }
 
     override fun load() {
         loadBloc.emit(BookAction.Load)
@@ -48,5 +44,8 @@ class BooksUseCaseImpl(
     override fun clear() {
         clearBloc.emit(BookAction.Clear)
     }
+
+    // there's no need to observe both Blocs because they share the same BlocState!
+    override val observable = loadBloc.toObservable()
 
 }

@@ -1,5 +1,6 @@
 package com.onegravity.bloc.state
 
+import com.onegravity.bloc.utils.BlocDSL
 import com.onegravity.bloc.utils.Selector
 
 /**
@@ -8,8 +9,10 @@ import com.onegravity.bloc.utils.Selector
  */
 interface ReduxSimpleBlocStateBuilder<State, ReduxModel> {
 
+    @BlocDSL
     var initialState: State
 
+    @BlocDSL
     fun select(selector: Selector<ReduxModel, State>)
 
 }
