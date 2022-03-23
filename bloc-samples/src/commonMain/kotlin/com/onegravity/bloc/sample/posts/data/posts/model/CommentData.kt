@@ -20,6 +20,9 @@
 
 package com.onegravity.bloc.sample.posts.data.posts.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CommentData(
     val id: Int,
     val postId: Int,

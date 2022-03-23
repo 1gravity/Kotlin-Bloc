@@ -65,6 +65,10 @@ dependencies {
     implementation("com.github.lisawray.groupie:groupie:_")
     implementation("com.github.lisawray.groupie:groupie-viewbinding:_")
 
+    // Kotlin Result (https://github.com/michaelbull/kotlin-result)
+    implementation("com.michael-bull.kotlin-result:kotlin-result:_")
+    implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
+
     // Essenty (https://github.com/arkivanov/Essenty)
     implementation("com.arkivanov.essenty:lifecycle:_")
     implementation("com.arkivanov.essenty:parcelable:_")

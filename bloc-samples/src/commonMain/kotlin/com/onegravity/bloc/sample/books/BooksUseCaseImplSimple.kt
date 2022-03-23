@@ -1,8 +1,8 @@
 package com.onegravity.bloc.sample.books
 
-import com.onegravity.bloc.utils.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.utils.toObservable
 
 /**
  * Implements the BooksUseCase with a single [Bloc] and [Thunk]s
@@ -39,9 +39,6 @@ class BooksUseCaseImplSimple(
         state<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
     }
 
-    override val state: Stream<BookState>
-        get() = bloc
-
     override fun load() {
         bloc.emit(BookAction.Load)
     }
@@ -49,5 +46,7 @@ class BooksUseCaseImplSimple(
     override fun clear() {
         bloc.emit(BookAction.Clear)
     }
+
+    override val observable = bloc.toObservable()
 
 }

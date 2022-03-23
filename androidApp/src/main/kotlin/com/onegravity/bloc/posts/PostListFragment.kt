@@ -26,6 +26,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.michaelbull.result.mapBoth
+import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
 import com.onegravity.bloc.factory
@@ -36,6 +38,7 @@ import com.xwray.groupie.GroupieViewHolder
 import com.onegravity.bloc.sample.posts.bloc.PostListState
 import com.onegravity.bloc.utils.subscribe
 
+// TODO fix java.lang.IllegalStateException: Fragment PostListFragment not associated with a fragment manager
 class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
     private val viewModel: PostListViewModel by viewModels { factory { PostListViewModel(it) } }
@@ -49,13 +52,16 @@ class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
         binding.toolbar.apply {
             setTitle(R.string.app_name)
-            setLogo(R.drawable.ic_bloc_toolbar)
         }
 
         binding.content.layoutManager = LinearLayoutManager(activity)
 
         binding.content.addItemDecoration(
-            SeparatorDecoration(requireActivity(), R.dimen.separator_margin_start_icon, R.dimen.separator_margin_end)
+            SeparatorDecoration(
+                requireActivity(),
+                R.dimen.separator_margin_start_icon,
+                R.dimen.separator_margin_end
+            )
         )
 
         binding.content.adapter = adapter
@@ -64,10 +70,22 @@ class PostListFragment : Fragment(R.layout.post_list_fragment) {
     }
 
     private fun render(state: PostListState) {
-        val posts = state.overviews
-            .sortedBy { it.title }
-            .map { PostListItem(it, viewModel) }
-        adapter.update(posts)
+        val (spinnerVisibility, listVisibility) = when (state.loading) {
+            true -> Pair(View.VISIBLE, View.INVISIBLE)
+            else -> Pair(View.GONE, View.VISIBLE)
+        }
+        binding.indeterminateBar.visibility = spinnerVisibility
+        binding.content.visibility = listVisibility
+
+        state.overviews.mapBoth(
+            { posts -> posts.sortedBy { it.title }
+                .map { PostListItem(it, viewModel) }
+                .also { adapter.update(it) }
+            },
+            { error ->
+                Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG).show()
+            }
+        )
     }
 
     private fun sideEffect(sideEffect: PostList.OpenPost) {

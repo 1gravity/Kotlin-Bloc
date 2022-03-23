@@ -31,9 +31,9 @@
     <color name="buttonAddBackground">#ff9800</color>
     <color name="buttonEqualsBackground">#4caf50</color>
 
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#018786</color>
 
     <color name="separator">#1f000000</color>
 

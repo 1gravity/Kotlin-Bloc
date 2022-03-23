@@ -1,10 +1,8 @@
 package com.onegravity.bloc.sample.books
 
-import com.onegravity.bloc.utils.Stream
+import com.onegravity.bloc.utils.BlocObservableOwner
 
-interface BooksUseCase {
-    val state: Stream<BookState>
-
+interface BooksUseCase : BlocObservableOwner<BookState, Nothing> {
     fun load()
     fun clear()
 }

@@ -36,25 +36,23 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.github.michaelbull.result.mapBoth
+import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostDetailsFragmentBinding
 import com.onegravity.bloc.factory
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
-import com.onegravity.bloc.sample.posts.bloc.PostDetailState
+import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.utils.subscribe
 
 class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
 
     private val args: PostDetailsFragmentArgs by navArgs()
-
-    private val viewModel by viewModels<PostDetailsViewModel> { factory { PostDetailsViewModel(it, args.overview) } }
-
-//    private val viewModel: PostDetailsViewModel by viewModel { parametersOf(args.overview) }
-
+    private val viewModel by viewModels<PostDetailsViewModel> {
+        factory { PostDetailsViewModel(it, args.overview) }
+    }
     private var initialised: Boolean = false
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
@@ -79,41 +77,55 @@ class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
         viewModel.subscribe(state = ::render)
     }
 
-    private fun render(state: PostDetailState) {
-        if (!initialised) {
-            initialised = true
-            binding.toolbar.apply {
-                title = state.postOverview.username
-                Glide.with(requireContext()).load(state.postOverview.avatarUrl)
-                    .apply(RequestOptions.overrideOf(resources.getDimensionPixelSize(R.dimen.toolbar_logo_size)))
-                    .apply(RequestOptions.circleCropTransform()).into(
-                        object : CustomTarget<Drawable>() {
-                            override fun onLoadCleared(placeholder: Drawable?) {
-                                placeholder?.let(::setLogo)
-                            }
+    private fun render(state: PostState) {
+        if (! initialised) initialize(state)
 
-                            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                                val logo = LayerDrawable(arrayOf(resource)).apply {
-                                    setLayerInset(0, 0, 0, resources.getDimensionPixelSize(R.dimen.toolbar_logo_padding_end), 0)
-                                }
-
-                                setLogo(logo)
-                            }
-                        }
-                    )
-            }
-        }
         binding.postTitle.text = state.postOverview.title
 
-        state.post?.let { post ->
-            binding.postBody.text = post.body
-            val comments = post.comments.size
-            binding.postCommentCount.text = context?.resources?.getQuantityString(
-                R.plurals.comments,
-                comments,
-                comments
-            )
-            adapter.update(post.comments.map(::PostCommentItem))
+        val visibility = when (state.loading) {
+            true -> View.VISIBLE
+            else -> View.GONE
+        }
+        binding.indeterminateBar.visibility = visibility
+
+        state.post?.mapBoth(
+            { post ->
+                binding.postBody.text = post.body
+                val comments = post.comments.size
+                binding.postCommentCount.text = context?.resources?.getQuantityString(
+                    R.plurals.comments,
+                    comments,
+                    comments
+                )
+                adapter.update(post.comments.map(::PostCommentItem))
+            },
+            { error ->
+                Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG).show()
+            }
+        )
+    }
+
+    private fun initialize(state: PostState) {
+        initialised = true
+        binding.toolbar.apply {
+            title = state.postOverview.username
+            Glide.with(requireContext()).load(state.postOverview.avatarUrl)
+                .apply(RequestOptions.overrideOf(resources.getDimensionPixelSize(R.dimen.toolbar_logo_size)))
+                .apply(RequestOptions.circleCropTransform()).into(
+                    object : CustomTarget<Drawable>() {
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            placeholder?.let(::setLogo)
+                        }
+
+                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                            val logo = LayerDrawable(arrayOf(resource)).apply {
+                                setLayerInset(0, 0, 0, resources.getDimensionPixelSize(R.dimen.toolbar_logo_padding_end), 0)
+                            }
+
+                            setLogo(logo)
+                        }
+                    }
+                )
         }
     }
 }

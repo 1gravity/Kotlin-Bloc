@@ -14,6 +14,7 @@
   ~ limitations under the License.
   -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,6 +30,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context="com.onegravity.bloc.posts.PostDetailsFragment">
+
+            <ProgressBar
+                android:id="@+id/indeterminateBar"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
                 android:id="@+id/post_title"

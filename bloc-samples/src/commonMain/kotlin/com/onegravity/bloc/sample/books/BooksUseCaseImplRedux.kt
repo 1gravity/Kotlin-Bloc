@@ -1,11 +1,11 @@
 package com.onegravity.bloc.sample.books
 
 import com.github.michaelbull.result.mapBoth
-import com.onegravity.bloc.utils.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.ReduxBlocState
 import com.onegravity.bloc.utils.toBlocState
+import com.onegravity.bloc.utils.toObservable
 
 /**
  * Implements the BooksUseCase with a single Bloc and a [ReduxBlocState].
@@ -29,10 +29,12 @@ class BooksUseCaseImplRedux(
     private val blocState = reduxStore.toBlocState<BookState, Any, ReduxModel>(
         context = context,
         initialState = BookState.Empty,
-        selector = { reduxModel -> when {
-            reduxModel.isLoading -> BookState.Loading
-            else -> reduxModel.books.toState()
-        } }
+        selector = { reduxModel ->
+            when {
+                reduxModel.isLoading -> BookState.Loading
+                else -> reduxModel.books.toState()
+            }
+        }
     )
 
     sealed class BookAction {
@@ -45,8 +47,7 @@ class BooksUseCaseImplRedux(
         state<BookAction.Clear> { ReduxProposal.Clear }
     }
 
-    override val state: Stream<BookState>
-        get() = bloc
+    override val observable = bloc.toObservable()
 
     override fun load() {
         bloc.emit(BookAction.Load)

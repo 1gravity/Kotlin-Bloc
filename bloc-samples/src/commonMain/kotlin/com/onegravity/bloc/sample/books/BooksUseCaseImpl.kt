@@ -6,6 +6,8 @@ import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.sample.books.BooksRepository.*
+import com.onegravity.bloc.utils.BlocObservable
+import com.onegravity.bloc.utils.toObservable
 
 /**
  * Implements the BooksUseCase with two [Bloc]s to demonstrate shared [BlocState]
@@ -35,9 +37,6 @@ class BooksUseCaseImpl(
         state<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
     }
 
-    override val state: Stream<BookState>
-        get() = commonState
-
     override fun load() {
         loadBloc.emit(BookAction.Load)
     }
@@ -45,5 +44,8 @@ class BooksUseCaseImpl(
     override fun clear() {
         clearBloc.emit(BookAction.Clear)
     }
+
+    // there's no need to observe both Blocs because they share the same BlocState!
+    override val observable = loadBloc.toObservable()
 
 }

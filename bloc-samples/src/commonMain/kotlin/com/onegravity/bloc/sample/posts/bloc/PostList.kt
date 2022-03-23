@@ -1,6 +1,6 @@
 package com.onegravity.bloc.sample.posts.bloc
 
-import com.github.michaelbull.result.mapBoth
+import com.github.michaelbull.result.Result
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.blocState
@@ -12,7 +12,7 @@ object PostList {
     sealed class Action {
         object Load : Action()
         object Loading : Action()
-        data class Loaded(val postList: List<PostOverview>) : Action()
+        data class Loaded(val postList: Result<List<PostOverview>, Exception>) : Action()
         data class Clicked(val post: PostOverview) : Action()
     }
 
@@ -25,14 +25,14 @@ object PostList {
         val repository = getKoinInstance<PostRepository>()
 
         onCreate {
-            if (state.overviews.isEmpty()) dispatch(Action.Load)
+            if (state.isEmpty()) dispatch(Action.Load)
         }
 
         // we could also put the thunk code into the onCreate block but we want to illustrate the
         // ability to use initializing code
         thunk<Action.Load> {
             dispatch(Action.Loading)
-            val result = repository.getOverviews().mapBoth({ it }, { emptyList() })
+            val result = repository.getOverviews()
             dispatch(Action.Loaded(result))
         }
 

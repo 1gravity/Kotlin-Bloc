@@ -1,6 +1,6 @@
 package com.onegravity.bloc.sample.posts.bloc
 
-import com.github.michaelbull.result.mapBoth
+import com.github.michaelbull.result.Result
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.util.getKoinInstance
@@ -11,28 +11,27 @@ import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 
 object Post {
     sealed class Action {
-        class Load(id: Int) : Action()
+        object Load : Action()
         object Loading : Action()
-        data class Loaded(val post: PostDetail?) : Action()
+        data class Loaded(val post: Result<PostDetail, Exception>) : Action()
     }
 
-    fun bloc(context: BlocContext, overview: PostOverview) = bloc<PostDetailState, Action>(
+    fun bloc(context: BlocContext, overview: PostOverview) = bloc<PostState, Action>(
         context,
-        PostDetailState(overview)
+        PostState(overview)
     ) {
         val repository = getKoinInstance<PostRepository>()
         val logger = getKoinInstance<Logger>()
 
         onCreate {
-            dispatch(Action.Load(overview.id))
+            dispatch(Action.Load)
         }
 
         thunk<Action.Load> {
-            logger.d("thunk 1 started: $action")
+            logger.d("thunk Action.Load started: $action")
             dispatch(Action.Loading)
             val postOverview = getState().postOverview
             val result = repository.getDetail(postOverview.id)
-                .mapBoth({ it }, { null })
             dispatch(Action.Loaded(result))
         }
 

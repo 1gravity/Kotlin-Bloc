@@ -6,11 +6,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.onegravity.bloc.R
 import com.onegravity.bloc.factory
 import com.onegravity.bloc.sample.books.BookState
-import kotlinx.coroutines.launch
+import com.onegravity.bloc.utils.subscribe
 
 class BooksActivity : AppCompatActivity() {
 
@@ -27,19 +26,16 @@ class BooksActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
         setupView()
-        observeState()
+
+        viewModel.subscribe(::observeState)
     }
 
-    private fun observeState() {
-        lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                when (state) {
-                    is BookState.Loaded -> showContent(state)
-                    BookState.Empty -> pageEmpty.show()
-                    is BookState.Failure -> showError(state)
-                    BookState.Loading -> pageLoading.show()
-                }
-            }
+    private fun observeState(state: BookState) {
+        when (state) {
+            is BookState.Loaded -> showContent(state)
+            BookState.Empty -> pageEmpty.show()
+            is BookState.Failure -> showError(state)
+            BookState.Loading -> pageLoading.show()
         }
     }
 
