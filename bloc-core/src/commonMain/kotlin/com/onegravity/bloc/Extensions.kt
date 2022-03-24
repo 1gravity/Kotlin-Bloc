@@ -60,7 +60,38 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
     }
 
 /**
- * Call in a component to observe state and side effect updates in a BlocObservableOwner
+ * The assumption is that all Blocs use the same BlocState with the same type parameters (enforced
+ * at compile time) but also that they share the same instance of a BlocState (not enforced at all).
+ * Under that assumption we only need to observe the state of the first Bloc to observe all state
+ * changes.
+ * The edge-case that one passes in multiple Blocs using different BlocStates could be covered by
+ * using a UUID for BlocState instances and then verify that all BlocStates have the same UUID but
+ * that would be over-engineering imo.
+ */
+fun <State, Action : Any, SideEffect, Proposal> List<Bloc<State, Action, SideEffect, Proposal>>.toObservable() =
+    object : BlocObservable<State, SideEffect> {
+        override fun subscribe(
+            lifecycle: Lifecycle,
+            state: (suspend (state: State) -> Unit)?,
+            sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
+        ) {
+            this@toObservable.forEachIndexed { index, bloc ->
+                // ignore all but the first Bloc's state changes
+                val stateListener = if (index == 0) state else { _ -> }
+                bloc.subscribe(lifecycle, stateListener, sideEffect)
+            }
+        }
+    }
+
+/**
+ * Same as above but combine just two Blocs to BlocObservable.
+ */
+fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.toObservable(
+    bloc: Bloc<State, Action, SideEffect, Proposal>
+) = listOf(this, bloc).toObservable()
+
+/**
+ * Call from a component to observe state and side effect updates in a BlocObservableOwner
  * (BlocObservableOwner in Android is typically a ViewModel, the observing component a Fragment or
  * an Activity):
  * ```

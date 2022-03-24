@@ -12,6 +12,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.FlowCollector
 import org.reduxkotlin.Store
 
+// TODO walk through the whole Redux integration again and clean it up
 class ReduxBlocState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
     disposableScope: DisposableScope,
     initialState: State,

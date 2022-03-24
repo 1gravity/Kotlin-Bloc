@@ -1,7 +1,6 @@
 package com.onegravity.bloc.sample.books
 
-import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.bloc
+import com.onegravity.bloc.*
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.sample.books.BooksRepository.*
 import com.onegravity.bloc.state.blocState
@@ -45,11 +44,11 @@ class BooksUseCaseImpl(
         clearBloc.send(BookAction.Clear)
     }
 
-    // there's no need to observe both Blocs because they share the same BlocState and only loadBloc
-    // has side effects
+    // There's no need to observe both Blocs because they share the same BlocState and only loadBloc
+    // has side effects. We can merge multiple blocs sharing the same BlocState by doing:
+    //   listOf(loadBloc, clearBloc).toObservable()
+    // or less generics for just two blocs:
+    //   loadBloc.toObservable(clearBloc)
     override val observable = loadBloc.toObservable()
-
-    // todo create operator to merge multiple Blocs into one BlocObservable
-    //      (if they share the same BlocState)
 
 }
