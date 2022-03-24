@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.onegravity.bloc.utils.BlocObservableOwner
+import com.onegravity.bloc.utils.StateStream
 import com.onegravity.bloc.utils.Stream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -64,7 +65,7 @@ fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
  *   val state = bloc.toLiveData(viewModelScope)
  * ```
  */
-fun <State> Stream<State>.toLiveData(scope: CoroutineScope): LiveData<State> =
+fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State> =
     MutableLiveData<State>().apply {
         scope.launch {
             collect { value = it }
@@ -77,4 +78,4 @@ fun <State> Stream<State>.toLiveData(scope: CoroutineScope): LiveData<State> =
  *   val state = toLiveData(bloc)
  * ```
  */
-fun <State> ViewModel.toLiveData(stream: Stream<State>) = stream.toLiveData(viewModelScope)
+fun <State> ViewModel.toLiveData(stream: StateStream<State>) = stream.toLiveData(viewModelScope)

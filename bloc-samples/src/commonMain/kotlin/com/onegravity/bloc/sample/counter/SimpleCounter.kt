@@ -73,7 +73,7 @@ object SimpleCounter {
 
         reduceAnd {
             state + action.value and "Increment: ${action.value}" and "Hello World"
-            state.noSideEffect and "test"
+            state.noSideEffect() and "test"
             "Hello World" and state and "Test"
         }
 

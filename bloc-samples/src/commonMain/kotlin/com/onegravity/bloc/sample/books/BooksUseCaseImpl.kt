@@ -5,7 +5,7 @@ import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.sample.books.BooksRepository.*
 import com.onegravity.bloc.state.blocState
-import com.onegravity.bloc.utils.toObservable
+import com.onegravity.bloc.toObservable
 
 /**
  * Implements the BooksUseCase with two [Bloc]s to demonstrate shared [BlocState]

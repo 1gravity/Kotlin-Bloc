@@ -47,8 +47,21 @@ data class ThunkContext<State, Action, A: Action>(
 
 typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
 
+data class ThunkContextNoAction<State, Action>(
+    val getState: GetState<State>,
+    val dispatch: Dispatcher<Action>
+)
+
+typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit
+
 data class ReducerContext<State, Action>(val state: State, val action: Action)
 
 typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
 
+data class ReducerContextNoAction<State>(val state: State)
+
+typealias ReducerNoAction<State, Proposal> = suspend ReducerContextNoAction<State>.() -> Proposal
+
 typealias SideEffect<State, Action, SideEffect> = ReducerContext<State, Action>.() -> SideEffect
+
+typealias SideEffectNoAction<State, SideEffect> = ReducerContextNoAction<State>.() -> SideEffect

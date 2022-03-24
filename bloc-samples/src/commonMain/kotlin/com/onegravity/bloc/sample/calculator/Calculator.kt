@@ -3,21 +3,6 @@ package com.onegravity.bloc.sample.calculator
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 
-// TODO
-// if BlocBuilder and BlocImpl are merged and called BlocContainer then we can define it analogous Orbit
-//class Calculator(context: BlocContext) : BlocBuilder<State, Action, Action>() {
-//
-//    fun reduce() = reduce {
-//        action
-//    }
-//
-//    fun thunk() = thunk {
-//        dispatch(action)
-//        dispatcher
-//    }
-//
-//}
-
 fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
     fun State.resetErrors() = if (register1.isError() || register2.isError()) State() else this
 

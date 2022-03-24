@@ -1,6 +1,7 @@
 package com.onegravity.bloc.utils
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 
 
 /**
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
  * - all values even duplicates
  * - no initial value upon subscription (analogous PublishSubject)
  */
-interface StateStream<out Value> : Flow<Value> {
+interface StateStream<out Value> {
     val value: Value
+    suspend fun collect(collector: FlowCollector<Value>)
 }

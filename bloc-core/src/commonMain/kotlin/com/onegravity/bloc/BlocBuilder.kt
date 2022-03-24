@@ -54,7 +54,7 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     @BlocDSL
     fun reduce(reducer: Reducer<State, Action, Proposal>) {
         val reducerNoSideEffect: Reducer<State, Action, Effect<Proposal, SE>> = {
-            reducer.invoke(this).noSideEffect
+            reducer.invoke(this).noSideEffect()
         }
         _reducers.add(MatcherReducer(null, reducerNoSideEffect, true))
     }
@@ -64,7 +64,7 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     @Suppress("UNCHECKED_CAST")
     inline fun <reified A : Action> reduce(noinline reducer: Reducer<State, A, Proposal>) {
         val reducerNoSideEffect: Reducer<State, A, Effect<Proposal, SE>> = {
-            reducer.invoke(this).noSideEffect
+            reducer.invoke(this).noSideEffect()
         }
         addReducer(Matcher.any<Action, A>(), reducerNoSideEffect as Reducer<State, Action, Effect<Proposal, SE>>, true)
     }
@@ -128,8 +128,7 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     /* Extension functions */
 
     @BlocDSL
-    val Proposal.noSideEffect
-        get() = Effect<Proposal, SE>(this, emptyList())
+    fun Proposal.noSideEffect() = Effect<Proposal, SE>(this, emptyList())
 
     @BlocDSL
     @JvmName("proposalAnd")

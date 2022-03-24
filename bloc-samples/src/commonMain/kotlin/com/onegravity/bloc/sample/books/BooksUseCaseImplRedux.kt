@@ -3,9 +3,9 @@ package com.onegravity.bloc.sample.books
 import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.state.ReduxBlocState
-import com.onegravity.bloc.utils.toBlocState
-import com.onegravity.bloc.utils.toObservable
+import com.onegravity.bloc.state.redux.ReduxBlocState
+import com.onegravity.bloc.state.redux.toBlocState
+import com.onegravity.bloc.toObservable
 
 /**
  * Implements the BooksUseCase with a single Bloc and a [ReduxBlocState].

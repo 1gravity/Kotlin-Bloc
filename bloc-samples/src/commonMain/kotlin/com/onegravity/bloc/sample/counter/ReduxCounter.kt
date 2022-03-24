@@ -2,7 +2,7 @@ package com.onegravity.bloc.sample.counter
 
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.utils.toBlocState
+import com.onegravity.bloc.state.redux.toBlocState
 
 object ReduxCounter {
     sealed class Action(val value: Int) {

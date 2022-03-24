@@ -27,9 +27,11 @@ class BlocImpl<State, Action : Any, SideEffect, Proposal>(
 
     private val sideEffectChannel = Channel<SideEffect>(UNLIMITED)
 
-    init {
-        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    // we can use this scope internally, it's tied to the lifecycle of the BlocContext.lifecycle
+    // and will be cancelled when that lifecycle is destroyed (onDestroy())
+    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
+    init {
         blocContext.lifecycle.doOnCreate {
             logger.d("onCreate -> start Bloc")
             coroutineScope.start()
@@ -146,6 +148,29 @@ class BlocImpl<State, Action : Any, SideEffect, Proposal>(
         sideEffects.forEach {
             sideEffectChannel.send(it)
         }
+    }
+
+    /**
+     * Public API to run thunks / reducers "externally" (using extension functions)
+     */
+
+    suspend fun runReducer(reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Boolean {
+        val (proposal, sideEffects) = ReducerContextNoAction(blocState.value).reducer()
+        return if (proposal != null) {
+            blocState.send(proposal)
+            postSideEffects(sideEffects)
+            true
+        } else {
+            postSideEffects(sideEffects)
+            false
+        }
+    }
+
+    suspend fun runThunk(thunk: ThunkNoAction<State, Action>) {
+        val dispatcher: Dispatcher<Action> = {
+            nextThunkDispatcher(0, it).invoke(it)
+        }
+        ThunkContextNoAction({ blocState.value }, dispatcher).thunk()
     }
 
 }

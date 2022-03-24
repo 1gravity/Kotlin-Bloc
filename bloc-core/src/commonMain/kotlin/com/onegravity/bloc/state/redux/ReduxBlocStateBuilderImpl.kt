@@ -1,4 +1,4 @@
-package com.onegravity.bloc.state
+package com.onegravity.bloc.state.redux
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.onegravity.bloc.utils.Mapper

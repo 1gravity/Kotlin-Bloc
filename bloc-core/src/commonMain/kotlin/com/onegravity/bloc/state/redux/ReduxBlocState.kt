@@ -1,10 +1,10 @@
-package com.onegravity.bloc.state
+package com.onegravity.bloc.state.redux
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
+import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.MutableStateStream
 import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
-import com.onegravity.bloc.utils.selectScoped
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

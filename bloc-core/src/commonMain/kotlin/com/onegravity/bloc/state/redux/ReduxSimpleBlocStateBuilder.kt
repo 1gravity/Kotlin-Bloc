@@ -1,4 +1,4 @@
-package com.onegravity.bloc.state
+package com.onegravity.bloc.state.redux
 
 import com.onegravity.bloc.utils.BlocDSL
 import com.onegravity.bloc.utils.Selector

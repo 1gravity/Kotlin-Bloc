@@ -2,7 +2,7 @@ package com.onegravity.bloc.sample.books
 
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.utils.toObservable
+import com.onegravity.bloc.toObservable
 
 /**
  * Implements the BooksUseCase with a single [Bloc] and [Thunk]s
