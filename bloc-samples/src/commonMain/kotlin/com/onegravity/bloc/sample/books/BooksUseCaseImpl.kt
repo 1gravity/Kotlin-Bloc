@@ -36,11 +36,11 @@ class BooksUseCaseImpl(
     }
 
     override fun load() {
-        loadBloc.emit(BookAction.Load)
+        loadBloc.send(BookAction.Load)
     }
 
     override fun clear() {
-        clearBloc.emit(BookAction.Clear)
+        clearBloc.send(BookAction.Clear)
     }
 
     // there's no need to observe both Blocs because they share the same BlocState!

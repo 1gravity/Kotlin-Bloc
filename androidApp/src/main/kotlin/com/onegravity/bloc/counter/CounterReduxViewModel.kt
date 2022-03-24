@@ -14,11 +14,11 @@ class CounterReduxViewModel(context: ActivityBlocContext) : BaseViewModel(contex
     val state = bloc.toLiveData(viewModelScope)
 
     fun increment() {
-        bloc.emit(Increment(1))
+        bloc.send(Increment(1))
     }
 
     fun decrement() {
-        bloc.emit(Decrement(1))
+        bloc.send(Decrement(1))
     }
 
 }

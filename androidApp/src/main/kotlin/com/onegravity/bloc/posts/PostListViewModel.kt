@@ -18,7 +18,7 @@ class PostListViewModel(context: ActivityBlocContext) :
     override val observable = bloc.toObservable()
 
     fun onPostClicked(post: PostOverview) {
-        bloc.emit(PostList.Action.Clicked(post))
+        bloc.send(PostList.Action.Clicked(post))
     }
 
 }

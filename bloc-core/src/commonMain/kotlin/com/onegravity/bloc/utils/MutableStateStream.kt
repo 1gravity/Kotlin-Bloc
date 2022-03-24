@@ -21,7 +21,7 @@ internal class MutableStateStream<Value>(initialValue: Value) :
         state.collect(collector)
     }
 
-    override fun emit(value: Value) {
+    override fun send(value: Value) {
         state.tryEmit(value)
     }
 

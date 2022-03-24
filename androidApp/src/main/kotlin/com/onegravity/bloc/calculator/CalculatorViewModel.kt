@@ -37,7 +37,7 @@ class CalculatorViewModel(context: ActivityBlocContext) : BaseViewModel(context)
     )
 
     fun button(id: Int) {
-        view2Action[id]?.let { bloc.emit(it) }
+        view2Action[id]?.let { bloc.send(it) }
     }
 
 }

@@ -32,7 +32,7 @@ class ReduxBlocState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
         // using selectScoped will unsubscribe from the store automatically when the Bloc's
         // lifecycle ends (onDestroy() called)
         store.selectScoped(this, selector) { model ->
-            state.emit(mapper(model))
+            state.send(mapper(model))
         }
 
         scope {
@@ -53,7 +53,7 @@ class ReduxBlocState<State, Proposal: Any, Model: Any, ReduxModel: Any>(
     /**
      * The Sink<Proposal>.
      */
-    override fun emit(value: Proposal) {
+    override fun send(value: Proposal) {
         store.dispatch(value)
     }
 

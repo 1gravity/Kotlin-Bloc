@@ -45,7 +45,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
         get() = blocState.value
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun emit(action: Action) {
+    override fun send(action: Action) {
         logger.d("emit action $action")
         when (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             true -> thunkChannel.trySend(action)
@@ -61,7 +61,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
 
     private fun CoroutineScope.start() {
         launch(dispatcher) {
-            val context = InitializerContext<State, Action>(value) { action -> emit(action) }
+            val context = InitializerContext<State, Action>(value) { action -> send(action) }
             context.initializer()
         }
 
@@ -127,7 +127,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
     private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action) : Boolean {
         val (proposal, sideEffects) = ReducerContext(blocState.value, action).this()
         return if (proposal != null) {
-            blocState.emit(proposal)
+            blocState.send(proposal)
             postSideEffects(sideEffects)
             true
         } else {

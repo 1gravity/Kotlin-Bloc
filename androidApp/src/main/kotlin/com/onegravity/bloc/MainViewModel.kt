@@ -14,7 +14,7 @@ class MainViewModel(context: ActivityBlocContext) :
     override val observable = bloc.toObservable()
 
     fun onClick(action: ActionState) {
-        bloc.emit(action)
+        bloc.send(action)
     }
 
 }

@@ -40,11 +40,11 @@ class BooksUseCaseImplSimple(
     }
 
     override fun load() {
-        bloc.emit(BookAction.Load)
+        bloc.send(BookAction.Load)
     }
 
     override fun clear() {
-        bloc.emit(BookAction.Clear)
+        bloc.send(BookAction.Clear)
     }
 
     override val observable = bloc.toObservable()

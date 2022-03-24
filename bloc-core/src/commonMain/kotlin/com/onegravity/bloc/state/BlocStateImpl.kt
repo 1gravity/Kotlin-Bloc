@@ -25,9 +25,9 @@ open class BlocStateImpl<State, Proposal>(
      * The Sink<Proposal>.
      */
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun emit(proposal: Proposal) {
+    override fun send(proposal: Proposal) {
         val newState = acceptor(proposal, value)
-        state.emit(newState)
+        state.send(newState)
     }
 
 }
