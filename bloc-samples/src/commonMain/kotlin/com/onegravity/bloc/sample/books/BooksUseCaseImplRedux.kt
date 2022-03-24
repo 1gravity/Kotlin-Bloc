@@ -42,9 +42,9 @@ class BooksUseCaseImplRedux(
         object Clear : BookAction()
     }
 
-    private val bloc = bloc<BookState, BookAction, Any>(context, blocState) {
-        state<BookAction.Load> { ReduxProposal.Load(blocState.coroutineScope, repository) }
-        state<BookAction.Clear> { ReduxProposal.Clear }
+    private val bloc = bloc<BookState, BookAction, Nothing, Any>(context, blocState) {
+        reduce<BookAction.Load> { ReduxProposal.Load(blocState.coroutineScope, repository) }
+        reduce<BookAction.Clear> { ReduxProposal.Clear }
     }
 
     override val observable = bloc.toObservable()

@@ -24,16 +24,16 @@ fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
     /**
      * We can either define reducers per action:
      */
-    state<Action.Equals> { state.resetErrors().equals() }
-    state<Action.Clear> { State() }
-    state<Action.Add> { state.resetErrors().apply(Operator.Add) }
-    state<Action.Subtract> { state.resetErrors().apply(Operator.Subtract) }
-    state<Action.Multiply> { state.resetErrors().apply(Operator.Multiply) }
-    state<Action.Divide> { state.resetErrors().apply(Operator.Divide) }
-    state<Action.PlusMinus> { state.resetErrors().plusMinus() }
-    state<Action.Percentage> { state.resetErrors().percentage() }
-    state<Action.Period> { state.resetErrors().period() }
-    state<Action.Digit> {
+    reduce<Action.Equals> { state.resetErrors().equals() }
+    reduce<Action.Clear> { State() }
+    reduce<Action.Add> { state.resetErrors().apply(Operator.Add) }
+    reduce<Action.Subtract> { state.resetErrors().apply(Operator.Subtract) }
+    reduce<Action.Multiply> { state.resetErrors().apply(Operator.Multiply) }
+    reduce<Action.Divide> { state.resetErrors().apply(Operator.Divide) }
+    reduce<Action.PlusMinus> { state.resetErrors().plusMinus() }
+    reduce<Action.Percentage> { state.resetErrors().percentage() }
+    reduce<Action.Period> { state.resetErrors().period() }
+    reduce<Action.Digit> {
         try {
             state.resetErrors().digit(action.digit)
         } catch (ex: Exception) {
@@ -44,7 +44,7 @@ fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
     /**
      * ...or use a single reducer for multiple actions:
      */
-//    state {
+//    reduce {
 //        try {
 //            val newState = state.resetErrors()
 //            when (action) {

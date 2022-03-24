@@ -10,12 +10,12 @@ object ReduxCounter {
         data class Decrement(private val _value: Int = 1): Action(_value)
     }
 
-    fun bloc(context: BlocContext) = bloc<Int, Action, ReduxAction>(
+    fun bloc(context: BlocContext) = bloc<Int, Action, Nothing, ReduxAction>(
         context,
         reduxStore.toBlocState(context = context, initialState = 1)
     ) {
-        state<Action.Increment> { ReduxAction.Increment(action.value) }
-        state<Action.Decrement> { ReduxAction.Decrement(action.value) }
+        reduce<Action.Increment> { ReduxAction.Increment(action.value) }
+        reduce<Action.Decrement> { ReduxAction.Decrement(action.value) }
     }
 }
 

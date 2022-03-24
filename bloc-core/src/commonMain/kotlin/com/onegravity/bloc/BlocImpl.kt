@@ -115,11 +115,11 @@ class BlocImpl<State, Action : Any, SideEffect, Proposal>(
                         reducer.runReducer(action)
                         proposalEmitted
                     }
-                    !proposalEmitted -> {                  // running reduce { } or state { }
+                    !proposalEmitted -> {                  // running reduce { } or reduceAnd { }
                         reducer.runReducer(action)
                         true
                     }
-                    else -> proposalEmitted                 // skipping reduce { } or state { }
+                    else -> proposalEmitted                 // skipping reduce { } or reduceAnd { }
                 }
             }
     }

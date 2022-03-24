@@ -15,14 +15,14 @@ object SimpleCounter {
     }
 
     private fun BlocContext.interceptorBloc() = bloc<Int, Int>(this, 1) {
-        state {
+        reduce {
             logger.d("interceptor: $action -> ${action + 1}")
             action + 1
             action
         }
     }
 
-    fun bloc(context: BlocContext) = bloc<Int, Action, String, Int>(context, context.interceptorBloc()) {
+    fun bloc(context: BlocContext) = bloc<Int, Action, String>(context, context.interceptorBloc()) {
         // thunk 1
 //        thunk<Action.Increment> {
 //            logger.d("thunk 1 started: $action")
@@ -57,21 +57,21 @@ object SimpleCounter {
             "Hello World"
         }
 
-        state<Action.Decrement> {
+        reduce<Action.Decrement> {
             (state - action.value).coerceAtLeast(0)
         }
 
-//        state {
+//        reduce {
 //            (state + action.value).coerceAtLeast(0)
 //        }
 
-        reduce<Action.Increment> {
+        reduceAnd<Action.Increment> {
             state + action.value and "Increment: ${action.value}" and "Hello World"
 //            state and "test"
 //            "Hello World" and state and "Test"
         }
 
-        reduce {
+        reduceAnd {
             state + action.value and "Increment: ${action.value}" and "Hello World"
             state.noSideEffect and "test"
             "Hello World" and state and "Test"

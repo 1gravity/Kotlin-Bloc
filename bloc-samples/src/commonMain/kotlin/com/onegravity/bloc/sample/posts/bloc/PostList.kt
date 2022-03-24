@@ -38,9 +38,9 @@ object PostList {
 
         sideEffect<Action.Clicked> { OpenPost(action.post) }
 
-        state<Action.Loading> { state.copy(loading = true) }
+        reduce<Action.Loading> { state.copy(loading = true) }
 
-        state<Action.Loaded> {
+        reduce<Action.Loaded> {
             state.copy(loading = false, overviews = action.postList)
         }
     }

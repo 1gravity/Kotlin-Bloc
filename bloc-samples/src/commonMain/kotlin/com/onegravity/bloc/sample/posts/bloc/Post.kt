@@ -32,9 +32,9 @@ object Post {
             dispatch(Action.Loaded(result))
         }
 
-        state<Action.Loading> { state.copy(loading = true) }
+        reduce<Action.Loading> { state.copy(loading = true) }
 
-        state<Action.Loaded> {
+        reduce<Action.Loaded> {
             state.copy(loading = false, post = action.post)
         }
     }

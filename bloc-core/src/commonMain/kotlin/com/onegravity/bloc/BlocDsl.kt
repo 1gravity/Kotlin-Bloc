@@ -51,8 +51,11 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
  * Creates a [Bloc] instance using a [BlocBuilder].
  *
  * ```
- * bloc<State, Action, Proposal>(context, blocState) {
+ * bloc<State, Action, SideEffect>(context, blocState) {
  *    thunk { getState, action, dispatch ->
+ *       ...
+ *    }
+ *    sideEffect { state, action ->
  *       ...
  *    }
  *    reduce { state, action ->
@@ -63,12 +66,12 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
  */
 @JvmName("blocSimplified1")
 @BlocDSL
-fun <State, Action: Any, Proposal> bloc(
+fun <State, Action: Any, SideEffect> bloc(
     context: BlocContext,
-    blocState: BlocState<State, Proposal>,
-    block: BlocBuilder<State, Action, Unit, Proposal>.() -> Unit
-): Bloc<State, Action, Unit, Proposal> =
-    BlocBuilder<State, Action, Unit, Proposal>()
+    blocState: BlocState<State, State>,
+    block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit
+): Bloc<State, Action, SideEffect, State> =
+    BlocBuilder<State, Action, SideEffect, State>()
         .also(block)
         .build(context, blocState)
 

@@ -32,11 +32,11 @@ class BooksUseCaseImplSimple(
 //            }
 //        }
 
-        state<BookAction.Clear> { BookState.Empty }
+        reduce<BookAction.Clear> { BookState.Empty }
 
-        state<BookAction.Loading> { BookState.Loading }
+        reduce<BookAction.Loading> { BookState.Loading }
 
-        state<BookAction.LoadComplete> { action.result.toState() }
+        reduce<BookAction.LoadComplete> { action.result.toState() }
     }
 
     override fun load() {

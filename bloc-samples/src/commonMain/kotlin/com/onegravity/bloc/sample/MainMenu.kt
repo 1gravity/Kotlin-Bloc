@@ -14,12 +14,12 @@ object MainMenu {
         Posts
     }
 
-    fun bloc(context: BlocContext) = bloc<ActionState, ActionState, ActionState, ActionState>(
+    fun bloc(context: BlocContext) = bloc<ActionState, ActionState, ActionState>(
         context,
         blocState(ActionState.MainMenu)
     ) {
-        sideEffect { action }
-        state { action }
+        sideEffect { action }   // the navigation happens as side effect
+        reduce { action }        // not really necessary
         // does the same thing:
         // reduce { Effect(action, action) }
     }
