@@ -93,7 +93,7 @@ object SimpleCounter {
 //            reduce { state + if (action) 1 else -1 }
 //        }
 //    fun blocIncrement(context: BlocContext) =
-//        bloc<Int, Nothing>(context, 1) {
+//        bloc<Int, Unit>(context, 1) {
 //            reduce { state + 1 }
 //        }
 

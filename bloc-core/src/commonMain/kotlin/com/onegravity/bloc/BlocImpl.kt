@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
 
-class BlocImpl<State, Action: Any, SideEffect, Proposal>(
+class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     override val blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val initializer: Initializer<State, Action> = { },
@@ -111,11 +111,11 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
             .fold(false) { proposalEmitted, matcherReducer ->
                 val (_, reducer, expectsProposal) = matcherReducer
                 when {
-                    ! expectsProposal -> {                  // running sideEffect { }
+                    !expectsProposal -> {                  // running sideEffect { }
                         reducer.runReducer(action)
                         proposalEmitted
                     }
-                    ! proposalEmitted -> {                  // running reduce { } or state { }
+                    !proposalEmitted -> {                  // running reduce { } or state { }
                         reducer.runReducer(action)
                         true
                     }
@@ -124,7 +124,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
             }
     }
 
-    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action) : Boolean {
+    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action): Boolean {
         val (proposal, sideEffects) = ReducerContext(blocState.value, action).this()
         return if (proposal != null) {
             blocState.send(proposal)

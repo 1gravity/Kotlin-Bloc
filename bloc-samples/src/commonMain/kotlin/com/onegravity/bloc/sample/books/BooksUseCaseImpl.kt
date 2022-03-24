@@ -30,7 +30,9 @@ class BooksUseCaseImpl(
             dispatch(nextAction)
         }
 
-        state<BookAction.Loading> { BookState.Loading }
+        state<BookAction.Loading> {
+            BookState.Loading
+        }
 
         state<BookAction.LoadComplete> { action.result.toState() }
     }
@@ -43,7 +45,11 @@ class BooksUseCaseImpl(
         clearBloc.send(BookAction.Clear)
     }
 
-    // there's no need to observe both Blocs because they share the same BlocState!
+    // there's no need to observe both Blocs because they share the same BlocState and only loadBloc
+    // has side effects
     override val observable = loadBloc.toObservable()
+
+    // todo create operator to merge multiple Blocs into one BlocObservable
+    //      (if they share the same BlocState)
 
 }

@@ -8,7 +8,7 @@ import com.onegravity.bloc.utils.BlocObservableOwner
 
 class BooksViewModel(context: ActivityBlocContext) :
     BaseViewModel(context),
-    BlocObservableOwner<BookState, Nothing>,
+    BlocObservableOwner<BookState, Unit>,
     BooksUseCase {
 
 //    private val useCase: BooksUseCase = BooksUseCaseImplRedux(viewModelContext, BooksRepositoryImpl())

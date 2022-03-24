@@ -66,9 +66,9 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
 fun <State, Action: Any, Proposal> bloc(
     context: BlocContext,
     blocState: BlocState<State, Proposal>,
-    block: BlocBuilder<State, Action, Nothing, Proposal>.() -> Unit
-): Bloc<State, Action, Nothing, Proposal> =
-    BlocBuilder<State, Action, Nothing, Proposal>()
+    block: BlocBuilder<State, Action, Unit, Proposal>.() -> Unit
+): Bloc<State, Action, Unit, Proposal> =
+    BlocBuilder<State, Action, Unit, Proposal>()
         .also(block)
         .build(context, blocState)
 
@@ -79,7 +79,7 @@ fun <State, Action: Any, Proposal> bloc(
  * ```
  * bloc<State, Action>(context, blocState) {
  *    thunk { getState, action, dispatch ->
- *       ...
+ *       ...Uni
  *    }
  *    reduce { state, action ->
  *       ...
@@ -92,9 +92,9 @@ fun <State, Action: Any, Proposal> bloc(
 fun <State, Action: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
-    block: BlocBuilder<State, Action, Nothing, State>.() -> Unit
-): Bloc<State, Action, Nothing, State> =
-    BlocBuilder<State, Action, Nothing, State>()
+    block: BlocBuilder<State, Action, Unit, State>.() -> Unit
+): Bloc<State, Action, Unit, State> =
+    BlocBuilder<State, Action, Unit, State>()
         .also(block)
         .build(context, blocState)
 
@@ -118,8 +118,8 @@ fun <State, Action: Any> bloc(
 fun <State, Action: Any> bloc(
     context: BlocContext,
     initialValue: State,
-    block: BlocBuilder<State, Action, Nothing, State>.() -> Unit
-): Bloc<State, Action, Nothing, State> =
-    BlocBuilder<State, Action, Nothing, State>()
+    block: BlocBuilder<State, Action, Unit, State>.() -> Unit
+): Bloc<State, Action, Unit, State> =
+    BlocBuilder<State, Action, Unit, State>()
         .also(block)
         .build(context, blocState(initialValue))

@@ -36,13 +36,10 @@ object PostList {
             dispatch(Action.Loaded(result))
         }
 
-        sideEffect<Action.Clicked> {
-            OpenPost(action.post)
-        }
+        sideEffect<Action.Clicked> { OpenPost(action.post) }
 
         state<Action.Loading> { state.copy(loading = true) }
 
-        // TODO investigate if we can eliminate the type cast
         state<Action.Loaded> {
             state.copy(loading = false, overviews = action.postList)
         }

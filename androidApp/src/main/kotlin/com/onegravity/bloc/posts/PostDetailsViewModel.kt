@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 
 class PostDetailsViewModel(context: ActivityBlocContext, postOverview: PostOverview) :
     BaseViewModel(context),
-    BlocObservableOwner<PostState, Nothing>,
+    BlocObservableOwner<PostState, Unit>,
     KoinComponent {
 
     override val observable = Post.bloc(viewModelContext, postOverview).toObservable()
