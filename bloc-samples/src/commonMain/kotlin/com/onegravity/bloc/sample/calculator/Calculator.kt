@@ -3,6 +3,7 @@ package com.onegravity.bloc.sample.calculator
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 
+// TODO
 // if BlocBuilder and BlocImpl are merged and called BlocContainer then we can define it analogous Orbit
 //class Calculator(context: BlocContext) : BlocBuilder<State, Action, Action>() {
 //
@@ -20,37 +21,48 @@ import com.onegravity.bloc.context.BlocContext
 fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
     fun State.resetErrors() = if (register1.isError() || register2.isError()) State() else this
 
-    state<Action.Equals> { state.resetErrors().equals() }
-
-    state<Action.Clear> { State() }
-
-    state<Action.Add> { state.resetErrors().apply(Operator.Add) }
-
-    state<Action.Subtract> { state.resetErrors().apply(Operator.Subtract) }
-
-    state<Action.Multiply> { state.resetErrors().apply(Operator.Multiply) }
-
-    state<Action.Divide> { state.resetErrors().apply(Operator.Divide) }
-
-    state<Action.PlusMinus> { state.resetErrors().plusMinus() }
-
-    state<Action.Percentage> { state.resetErrors().percentage() }
-
     /**
-     * We can either define reducers per Action (see above) or define a reducer for multiple actions
+     * We can either define reducers per action:
      */
-    state {
+    state<Action.Equals> { state.resetErrors().equals() }
+    state<Action.Clear> { State() }
+    state<Action.Add> { state.resetErrors().apply(Operator.Add) }
+    state<Action.Subtract> { state.resetErrors().apply(Operator.Subtract) }
+    state<Action.Multiply> { state.resetErrors().apply(Operator.Multiply) }
+    state<Action.Divide> { state.resetErrors().apply(Operator.Divide) }
+    state<Action.PlusMinus> { state.resetErrors().plusMinus() }
+    state<Action.Percentage> { state.resetErrors().percentage() }
+    state<Action.Period> { state.resetErrors().period() }
+    state<Action.Digit> {
         try {
-            val newState = state.resetErrors()
-            when (action) {
-                is Action.Digit -> newState.digit((action as Action.Digit).digit)
-                is Action.Period -> newState.period()
-                else -> state
-            }
-        } catch(ex: Exception) {
+            state.resetErrors().digit(action.digit)
+        } catch (ex: Exception) {
             State.error(ex.message)
         }
     }
+
+    /**
+     * ...or use a single reducer for multiple actions:
+     */
+//    state {
+//        try {
+//            val newState = state.resetErrors()
+//            when (action) {
+//                Action.Clear -> State()
+//                Action.Equals -> newState.equals()
+//                Action.Add -> newState.apply(Operator.Add)
+//                Action.Subtract -> newState.apply(Operator.Subtract)
+//                Action.Multiply -> newState.apply(Operator.Multiply)
+//                Action.Divide -> newState.apply(Operator.Divide)
+//                Action.PlusMinus -> newState.plusMinus()
+//                Action.Percentage -> newState.percentage()
+//                Action.Period -> newState.period()
+//                is Action.Digit -> newState.digit(action.digit)
+//            }
+//        } catch (ex: Exception) {
+//            State.error(ex.message)
+//        }
+//    }
 }
 
 private fun State.apply(op: Operator): State {
@@ -64,7 +76,7 @@ private fun State.apply(op: Operator): State {
                 register2 = if (state.register1.isNotEmpty()) state.register1 else state.register2,
                 operator = op
             )
-    } catch(ex: Exception) {
+    } catch (ex: Exception) {
         State.error(ex.message)
     }
 }
@@ -80,7 +92,7 @@ private fun State.percentage() =
 
 private fun State.equals(): State {
     if (register2.isEmpty()) return this
-    val reg1 = when(operator) {
+    val reg1 = when (operator) {
         Operator.Add -> register2 + register1
         Operator.Subtract -> register2 - register1
         Operator.Multiply -> register2 * register1

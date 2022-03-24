@@ -39,13 +39,13 @@ data class InitializerContext<State, Action>(
 
 typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
 
-data class ThunkContext<State, Action>(
+data class ThunkContext<State, Action, A: Action>(
     val getState: GetState<State>,
-    val action: Action,
+    val action: A,
     val dispatch: Dispatcher<Action>
 )
 
-typealias Thunk<State, Action> = suspend ThunkContext<State, Action>.() -> Unit
+typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
 
 data class ReducerContext<State, Action>(val state: State, val action: Action)
 

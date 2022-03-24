@@ -1,12 +1,10 @@
 package com.onegravity.bloc.sample.books
 
 import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.utils.Stream
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.sample.books.BooksRepository.*
-import com.onegravity.bloc.utils.BlocObservable
+import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.utils.toObservable
 
 /**
@@ -34,7 +32,7 @@ class BooksUseCaseImpl(
 
         state<BookAction.Loading> { BookState.Loading }
 
-        state<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
+        state<BookAction.LoadComplete> { action.result.toState() }
     }
 
     override fun load() {

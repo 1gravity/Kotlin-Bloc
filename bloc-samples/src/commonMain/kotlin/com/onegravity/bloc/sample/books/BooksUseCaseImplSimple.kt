@@ -36,7 +36,7 @@ class BooksUseCaseImplSimple(
 
         state<BookAction.Loading> { BookState.Loading }
 
-        state<BookAction.LoadComplete> { (action as BookAction.LoadComplete).result.toState() }
+        state<BookAction.LoadComplete> { action.result.toState() }
     }
 
     override fun load() {

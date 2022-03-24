@@ -24,14 +24,20 @@ class CalculatorViewModel(context: ActivityBlocContext) : BaseViewModel(context)
         R.id.button_percentage to Percentage,
         R.id.button_period to Period,
         R.id.button_equals to Equals,
+        R.id.button_0 to Digit(0),
+        R.id.button_1 to Digit(1),
+        R.id.button_2 to Digit(2),
+        R.id.button_3 to Digit(3),
+        R.id.button_4 to Digit(4),
+        R.id.button_5 to Digit(5),
+        R.id.button_6 to Digit(6),
+        R.id.button_7 to Digit(7),
+        R.id.button_8 to Digit(8),
+        R.id.button_9 to Digit(9)
     )
 
     fun button(id: Int) {
         view2Action[id]?.let { bloc.emit(it) }
-    }
-
-    fun digit(digit: Int) {
-        bloc.emit(Digit(digit))
     }
 
 }

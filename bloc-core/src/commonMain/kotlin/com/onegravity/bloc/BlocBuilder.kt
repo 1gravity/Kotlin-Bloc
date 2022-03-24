@@ -10,7 +10,7 @@ import kotlin.jvm.JvmName
 class BlocBuilder<State, Action: Any, SE, Proposal> {
 
     private var _initializer: Initializer<State, Action> = { }
-    private val _thunks = ArrayList<MatcherThunk<State, Action>>()
+    private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
@@ -33,19 +33,20 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
     /* *** Thunks *** */
 
     @BlocDSL
-    fun thunk(thunk: Thunk<State, Action>) {
+    fun thunk(thunk: Thunk<State, Action, Action>) {
         _thunks.add(MatcherThunk(null, thunk))
     }
 
     @BlocDSL
     @JvmName("thunkMatching")
-    inline fun <reified A : Action> thunk(noinline thunk: Thunk<State, Action>) {
-        addThunk(Matcher.any<Action, A>(), thunk)
+    inline fun <reified A : Action> thunk(noinline thunk: Thunk<State, Action, A>) {
+        addThunk(Matcher.any(), thunk)
     }
 
     @BlocInternal
-    fun <A : Action> addThunk(matcher: Matcher<Action, A>, thunk: Thunk<State, Action>) {
-        _thunks.add(MatcherThunk(matcher, thunk))
+    @Suppress("UNCHECKED_CAST")
+    fun <A : Action> addThunk(matcher: Matcher<Action, A>, thunk: Thunk<State, Action, A>) {
+        _thunks.add(MatcherThunk(matcher, thunk as Thunk<State, Action, Action>))
     }
 
     /* Reducer with state but without side effect(s) */
@@ -60,11 +61,12 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
 
     @BlocDSL
     @JvmName("reduceMatching")
-    inline fun <reified A : Action> state(noinline reducer: Reducer<State, Action, Proposal>) {
-        val reducerNoSideEffect: Reducer<State, Action, Effect<Proposal, SE>> = {
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified A : Action> state(noinline reducer: Reducer<State, A, Proposal>) {
+        val reducerNoSideEffect: Reducer<State, A, Effect<Proposal, SE>> = {
             reducer.invoke(this).noSideEffect
         }
-        addReducer(Matcher.any<Action, A>(), reducerNoSideEffect, true)
+        addReducer(Matcher.any<Action, A>(), reducerNoSideEffect as Reducer<State, Action, Effect<Proposal, SE>>, true)
     }
 
     /* Reducer without state but with side effect(s) */
@@ -79,11 +81,12 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
 
     @BlocDSL
     @JvmName("sideEffectMatching")
-    inline fun <reified A : Action> sideEffect(noinline sideEffect: SideEffect<State, Action, SE>) {
-        val reducerNoState: Reducer<State, Action, Effect<Proposal, SE>> = {
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified A : Action> sideEffect(noinline sideEffect: SideEffect<State, A, SE>) {
+        val reducerNoState: Reducer<State, A, Effect<Proposal, SE>> = {
             Effect(null, sideEffect.invoke(this))
         }
-        addReducer(Matcher.any<Action, A>(), reducerNoState, false)
+        addReducer(Matcher.any<Action, A>(), reducerNoState as Reducer<State, Action, Effect<Proposal, SE>>, false)
     }
 
     /* Reducers with state and side effect(s) */

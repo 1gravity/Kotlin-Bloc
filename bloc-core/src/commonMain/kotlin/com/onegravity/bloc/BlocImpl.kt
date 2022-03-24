@@ -16,7 +16,7 @@ class BlocImpl<State, Action: Any, SideEffect, Proposal>(
     override val blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val initializer: Initializer<State, Action> = { },
-    private val thunks: List<MatcherThunk<State, Action>> = emptyList(),
+    private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, SideEffect, Proposal> {

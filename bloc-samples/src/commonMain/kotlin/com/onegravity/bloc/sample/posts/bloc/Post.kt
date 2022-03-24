@@ -4,7 +4,6 @@ import com.github.michaelbull.result.Result
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.util.getKoinInstance
-import com.onegravity.bloc.utils.Logger
 import com.onegravity.bloc.sample.posts.domain.repositories.PostDetail
 import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
@@ -21,14 +20,12 @@ object Post {
         PostState(overview)
     ) {
         val repository = getKoinInstance<PostRepository>()
-        val logger = getKoinInstance<Logger>()
 
         onCreate {
             dispatch(Action.Load)
         }
 
         thunk<Action.Load> {
-            logger.d("thunk Action.Load started: $action")
             dispatch(Action.Loading)
             val postOverview = getState().postOverview
             val result = repository.getDetail(postOverview.id)
@@ -38,7 +35,7 @@ object Post {
         state<Action.Loading> { state.copy(loading = true) }
 
         state<Action.Loaded> {
-            state.copy(loading = false, post = (action as Action.Loaded).post)
+            state.copy(loading = false, post = action.post)
         }
     }
 }

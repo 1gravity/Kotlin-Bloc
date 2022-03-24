@@ -36,17 +36,15 @@ object PostList {
             dispatch(Action.Loaded(result))
         }
 
-        // TODO investigate if we can eliminate the type cast
         sideEffect<Action.Clicked> {
-            OpenPost((action as Action.Clicked).post)
+            OpenPost(action.post)
         }
-
-        // TODO consider the concept of a proposal...
 
         state<Action.Loading> { state.copy(loading = true) }
 
+        // TODO investigate if we can eliminate the type cast
         state<Action.Loaded> {
-            state.copy(loading = false, overviews = (action as Action.Loaded).postList)
+            state.copy(loading = false, overviews = action.postList)
         }
     }
 }

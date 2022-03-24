@@ -19,7 +19,6 @@ object ReduxCounter {
     }
 }
 
-// TODO implement sample with list + detail view + navigation
 // TODO implement some samples with Compose
 // TODO think about the initial value, who/what provides it?
 // TODO iOS
