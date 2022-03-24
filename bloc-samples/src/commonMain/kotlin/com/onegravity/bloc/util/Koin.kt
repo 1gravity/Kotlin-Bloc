@@ -15,6 +15,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.dsl.module
+import co.touchlab.kermit.Logger as KermitLogger
 
 // called by Android and iOS
 fun KoinApplication.initKoin() {
@@ -29,8 +30,8 @@ inline fun <reified T> getKoinInstance() =
 private val commonModule = module {
     // we can either inject a Logger or just use the static Logger.x(msg)
     single<Logger> {
-        co.touchlab.kermit.Logger.setTag("bloc")
-        co.touchlab.kermit.Logger.setLogWriters(logger())
+        KermitLogger.setTag("bloc")
+        KermitLogger.setLogWriters(logger())
         LoggerImpl
     }
 
