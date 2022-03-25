@@ -11,8 +11,8 @@ class BooksViewModel(context: ActivityBlocContext) :
     BlocObservableOwner<BookState, Unit>,
     BooksUseCase {
 
-//    private val useCase: BooksUseCase = BooksUseCaseImplRedux(viewModelContext, BooksRepositoryImpl())
-    private val useCase: BooksUseCase = BooksUseCaseImpl(viewModelContext, BooksRepositoryImpl())
+    private val useCase: BooksUseCase = BooksUseCaseImplRedux(viewModelContext, BooksRepositoryImpl())
+//    private val useCase: BooksUseCase = BooksUseCaseImpl(viewModelContext, BooksRepositoryImpl())
 //    private val useCase: BooksUseCase = BooksUseCaseImplSimple(viewModelContext, BooksRepositoryImpl())
 
     override val observable = useCase.observable

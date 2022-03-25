@@ -3,12 +3,16 @@ package com.onegravity.bloc.sample.books
 import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.sample.books.BookStore.reduxStore
 import com.onegravity.bloc.state.redux.ReduxBlocState
 import com.onegravity.bloc.state.redux.toBlocState
 import com.onegravity.bloc.toObservable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import org.reduxkotlin.Thunk
 
 /**
- * Implements the BooksUseCase with a single Bloc and a [ReduxBlocState].
+ * Implements the BooksUseCase with a single Bloc and a ReduxBlocState.
  */
 class BooksUseCaseImplRedux(
     context: BlocContext,
@@ -26,7 +30,7 @@ class BooksUseCaseImplRedux(
             }
         )
 
-    private val blocState = reduxStore.toBlocState<BookState, Any, ReduxModel>(
+    private val blocState = reduxStore.toBlocState<BookState, Any, BookStore.ReduxModel>(
         context = context,
         initialState = BookState.Empty,
         selector = { reduxModel ->
@@ -42,9 +46,20 @@ class BooksUseCaseImplRedux(
         object Clear : BookAction()
     }
 
+    // The Load Books Thunk
+    private fun loadThunk(
+        coroutineScope: CoroutineScope,
+        repository: BooksRepository
+    ): Thunk<BookStore.ReduxModel> = { dispatch, _, _ ->
+        dispatch(BookStore.ReduxAction.Loading)
+        coroutineScope.launch {
+            dispatch(BookStore.ReduxAction.Loaded(repository.loadBooks()))
+        }
+    }
+
     private val bloc = bloc<BookState, BookAction, Nothing, Any>(context, blocState) {
-        reduce<BookAction.Load> { ReduxProposal.Load(blocState.coroutineScope, repository) }
-        reduce<BookAction.Clear> { ReduxProposal.Clear }
+        reduce<BookAction.Load> { loadThunk(coroutineScope, repository) }
+        reduce<BookAction.Clear> { BookStore.ReduxAction.Clear }
     }
 
     override val observable = bloc.toObservable()

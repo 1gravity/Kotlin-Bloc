@@ -5,7 +5,7 @@ import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.toObservable
 
 /**
- * Implements the BooksUseCase with a single [Bloc] and [Thunk]s
+ * Implements the BooksUseCase with a single Bloc and Thunks
  */
 class BooksUseCaseImplSimple(
     context: BlocContext,
@@ -19,11 +19,12 @@ class BooksUseCaseImplSimple(
             dispatch(nextAction)
         }
 
-        // does the same as the thunk above
-//        thunk { _, action, dispatch ->
-//            if (action == BookEvent.Load) {
-//                dispatch(BookEvent.Loading)
-//                delay(1000)
+        // this does the same as the thunk above
+        // note that we explicitly need to handle the else case and dispatch = forward the action
+        // we didn't handle in the thunk
+//        thunk {
+//            if (action == BookAction.Load) {
+//                dispatch(BookAction.Loading)
 //                val nextAction = repository.loadBooks().toAction()
 //                dispatch(nextAction)
 //            } else {
@@ -33,9 +34,7 @@ class BooksUseCaseImplSimple(
 //        }
 
         reduce<BookAction.Clear> { BookState.Empty }
-
         reduce<BookAction.Loading> { BookState.Loading }
-
         reduce<BookAction.LoadComplete> { action.result.toState() }
     }
 

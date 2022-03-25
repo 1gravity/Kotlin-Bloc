@@ -2,12 +2,11 @@ package com.onegravity.bloc.sample.books
 
 import com.onegravity.bloc.*
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.sample.books.BooksRepository.*
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.toObservable
 
 /**
- * Implements the BooksUseCase with two [Bloc]s to demonstrate shared [BlocState]
+ * Implements the BooksUseCase with two Blocs to demonstrate shared BlocState
  */
 class BooksUseCaseImpl(
     context: BlocContext,
@@ -29,10 +28,7 @@ class BooksUseCaseImpl(
             dispatch(nextAction)
         }
 
-        reduce<BookAction.Loading> {
-            BookState.Loading
-        }
-
+        reduce<BookAction.Loading> { BookState.Loading }
         reduce<BookAction.LoadComplete> { action.result.toState() }
     }
 
@@ -46,9 +42,9 @@ class BooksUseCaseImpl(
 
     // There's no need to observe both Blocs because they share the same BlocState and only loadBloc
     // has side effects. We can merge multiple blocs sharing the same BlocState by doing:
-    //   listOf(loadBloc, clearBloc).toObservable()
-    // or less generics for just two blocs:
-    //   loadBloc.toObservable(clearBloc)
+    //    override val observable = listOf(loadBloc, clearBloc).toObservable()
+    // or less generic (just two blocs):
+    //    override val observable = loadBloc.toObservable(clearBloc)
     override val observable = loadBloc.toObservable()
 
 }

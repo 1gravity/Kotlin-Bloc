@@ -1,5 +1,6 @@
 package com.onegravity.bloc.utils
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import org.reduxkotlin.GetState
 
@@ -16,10 +17,18 @@ annotation class BlocProtected
 annotation class BlocInternal
 
 /**
- * A Stream is a source of asynchronous data.
- * It's identical to kotlinx.coroutines.flow.Flow.
+ * A SideEffectStream is a source of asynchronous (side effect) data.
+ * It's a hot stream meant to deal with SideEffect data (compared to StateStream for State).
+ *
+ * A SideEffectStream emits:
+ * - all values even duplicates
+ * - no initial value upon subscription (analogous PublishSubject)
+ *
+ * A StateStream emits:
+ * - no duplicate values
+ * - an initial value upon subscription (analogous BehaviorSubject)
  */
-typealias Stream<Value> = Flow<Value>
+typealias SideEffectStream<Value> = Flow<Value>
 
 /**
  * A function for accepting / rejecting a [Proposal] and updating and emitting resulting [State].
@@ -39,7 +48,7 @@ data class InitializerContext<State, Action>(
 
 typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
 
-data class ThunkContext<State, Action, A: Action>(
+data class ThunkContext<State, Action, A : Action>(
     val getState: GetState<State>,
     val action: A,
     val dispatch: Dispatcher<Action>
@@ -54,11 +63,17 @@ data class ThunkContextNoAction<State, Action>(
 
 typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit
 
-data class ReducerContext<State, Action>(val state: State, val action: Action)
+data class ReducerContext<State, Action>(
+    val state: State,
+    val action: Action,
+    // we need the CoroutineScope to use suspend functions in Redux Thunks
+    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
+    val coroutineScope: CoroutineScope
+)
 
 typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
 
-data class ReducerContextNoAction<State>(val state: State)
+data class ReducerContextNoAction<State>(val state: State, val scope: CoroutineScope)
 
 typealias ReducerNoAction<State, Proposal> = suspend ReducerContextNoAction<State>.() -> Proposal
 

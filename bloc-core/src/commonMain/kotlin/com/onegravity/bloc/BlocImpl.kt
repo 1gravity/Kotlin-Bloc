@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
 
 class BlocImpl<State, Action : Any, SideEffect, Proposal>(
-    override val blocContext: BlocContext,
+    blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val initializer: Initializer<State, Action> = { },
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
@@ -59,7 +59,7 @@ class BlocImpl<State, Action : Any, SideEffect, Proposal>(
         blocState.collect(collector)
     }
 
-    override val sideEffects: Stream<SideEffect> = sideEffectChannel.receiveAsFlow()
+    override val sideEffects: SideEffectStream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
     private fun CoroutineScope.start() {
         launch(dispatcher) {
@@ -126,8 +126,10 @@ class BlocImpl<State, Action : Any, SideEffect, Proposal>(
             }
     }
 
-    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action): Boolean {
-        val (proposal, sideEffects) = ReducerContext(blocState.value, action).this()
+    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(
+        action: Action
+    ): Boolean {
+        val (proposal, sideEffects) = ReducerContext(blocState.value, action, coroutineScope).this()
         return if (proposal != null) {
             blocState.send(proposal)
             postSideEffects(sideEffects)
@@ -155,7 +157,7 @@ class BlocImpl<State, Action : Any, SideEffect, Proposal>(
      */
 
     suspend fun runReducer(reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Boolean {
-        val (proposal, sideEffects) = ReducerContextNoAction(blocState.value).reducer()
+        val (proposal, sideEffects) = ReducerContextNoAction(blocState.value, coroutineScope).reducer()
         return if (proposal != null) {
             blocState.send(proposal)
             postSideEffects(sideEffects)

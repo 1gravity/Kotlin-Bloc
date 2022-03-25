@@ -1,5 +1,6 @@
 package com.onegravity.bloc.state
 
-import com.onegravity.bloc.BlocFacade
+import com.onegravity.bloc.utils.Sink
+import com.onegravity.bloc.utils.StateStream
 
-interface BlocState<out State, in Proposal> : BlocFacade<State, Proposal>
+interface BlocState<out State, in Proposal> : StateStream<State>, Sink<Proposal>

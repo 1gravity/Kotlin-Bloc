@@ -1,23 +1,19 @@
 package com.onegravity.bloc
 
-import com.onegravity.bloc.context.BlocContextOwner
 import com.onegravity.bloc.state.BlocState
-import com.onegravity.bloc.utils.Stream
 
 /**
  * The core interface of the BLoC framework.
  *
- * The Stream<SideEffect> is a hot stream without replay cache meaning consumers will receive
- * values that are emitted after the subscription (no initial value).
- * in Rx terms Stream<SideEffect> is a PublishSubject and Stream<State> is a BehaviorSubject.
+ * A Bloc is (as a BlocFacade)
+ * - a StateStream<State> emitting state
+ * - a Sink<Action> accepting actions that might trigger state changes
+ * - a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation
+ *
+ * A Bloc is also a BlocState since BlocState is an subset of BlocFacade (StateStream and Sink but
+ * no SideEffectStream). This allows us (theoretically) to use a Bloc as BlocState and thus create
+ * a chain of composable Blocs.
  */
 interface Bloc<out State, in Action, SideEffect, Proposal> :
-    BlocFacade<State, Action>,
-    // the following declaration is redundant (a BlocState is a BlocFacade) but let's be explicit
-    BlocState<State, Action>,
-    BlocContextOwner {
-
-    val sideEffects: Stream<SideEffect>
-
-}
-
+    BlocFacade<State, Action, SideEffect>,
+    BlocState<State, Action>
