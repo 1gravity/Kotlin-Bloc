@@ -1,56 +1,76 @@
 package com.onegravity.bloc.posts
 
-import com.onegravity.bloc.ActivityBlocContext
-import com.onegravity.bloc.BaseViewModel
+import com.onegravity.bloc.*
 import com.onegravity.bloc.sample.posts.bloc.PostList
 import com.onegravity.bloc.sample.posts.bloc.PostListState
 import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
-import com.onegravity.bloc.sideEffect
-import com.onegravity.bloc.toObservable
-import com.onegravity.bloc.utils.BlocObservableOwner
 import com.onegravity.bloc.utils.BlocOwner
 import org.koin.core.component.KoinComponent
+import com.onegravity.bloc.bloc
+import com.github.michaelbull.result.Result
+import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
+import com.onegravity.bloc.state.blocState
+import com.onegravity.bloc.util.getKoinInstance
 
 class PostListViewModel(context: ActivityBlocContext) :
     BaseViewModel(context),
     BlocOwner<PostListState, PostList.Action, PostList.OpenPost, PostListState>,
-    BlocObservableOwner<PostListState, PostList.OpenPost>,
     KoinComponent {
 
     override val bloc = PostList.bloc(viewModelContext)
-
-    override val observable = bloc.toObservable()
 
     fun onPostClicked(post: PostOverview) = sideEffect {
         PostList.OpenPost(post)
     }
 
-      // todo clean this up, this is just test code
+    // this does the same
 //    fun onPostClicked(post: PostOverview) {
-//
-//        thunk {
-//            dispatch(PostList.Action.Loading)
-//            val result = repository.getOverviews()
-//            dispatch(PostList.Action.Loaded(result))
-//        }
-//
-//        reduce {
-//            state.copy(loading = true)
-//        }
-//
-//        sideEffect {
-//            PostList.OpenPost(post)
-//        }
-//
-//        reduceAnd {
-//            state and PostList.OpenPost(state.overviews.component1()?.first()!!)
-//        }
-//
-//        bloc.reduceAnd {
-//            state and PostList.OpenPost(state.overviews.component1()?.first()!!)
-//        }
-//
 //        bloc.send(PostList.Action.Clicked(post))
 //    }
 
+    // as does this (no BlocOwner interface needed)
+//    fun onPostClicked(post: PostOverview) = bloc.sideEffect {
+//        PostList.OpenPost(post)
+//    }
+
 }
+
+/**
+ * This PostListViewModel does the same as the one above but instead of sending actions to the Bloc,
+ * it implements the thunk { }, reduce { } and sideEffect { } functions directly. This is similar to
+ * what Orbit MVI does (https://github.com/orbit-mvi/orbit-mvi).
+ */
+//class PostListViewModel(context: ActivityBlocContext) :
+//    BaseViewModel(context),
+//    BlocOwner<PostListState, Nothing, PostList.OpenPost, PostListState>,
+//    KoinComponent {
+//
+//    private val repository = getKoinInstance<PostRepository>()
+//
+//    override val bloc = bloc<PostListState, Nothing, PostList.OpenPost, PostListState>(
+//        viewModelContext,
+//        blocState(PostListState())
+//    )
+//
+//    init {
+//        onCreate { if (state.isEmpty()) load() }
+//    }
+//
+//    private fun load() = thunk {
+//        loading()
+//        loaded(repository.getOverviews())
+//    }
+//
+//    private fun loading() = reduce {
+//        state.copy(loading = true)
+//    }
+//
+//    private fun loaded(postList: Result<List<PostOverview>, Exception>) = reduce {
+//        state.copy(loading = false, overviews = postList)
+//    }
+//
+//    fun onPostClicked(post: PostOverview) = sideEffect {
+//        PostList.OpenPost(post)
+//    }
+//
+//}

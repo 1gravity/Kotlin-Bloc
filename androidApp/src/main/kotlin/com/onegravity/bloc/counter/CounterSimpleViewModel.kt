@@ -13,8 +13,8 @@ class CounterSimpleViewModel(context: ActivityBlocContext) : BaseViewModel(conte
     private val bloc = bloc(viewModelContext)
 
     val state = toLiveData(bloc)
-    //  alternatively:
-    //  val state = bloc.toLiveData(viewModelScope)
+    //  this does the same:
+//    val state = bloc.toLiveData(viewModelScope)
 
     fun increment() {
         bloc.send(Increment(1))

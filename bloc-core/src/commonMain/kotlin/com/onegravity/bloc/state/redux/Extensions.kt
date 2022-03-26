@@ -5,6 +5,7 @@ import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.select.select
+import com.onegravity.bloc.utils.BlocDSL
 import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
 import org.reduxkotlin.Store
@@ -12,6 +13,7 @@ import org.reduxkotlin.Store
 /**
  * Create a DisposableScope that is disposed when the Bloc is destroyed (onDestroy called)
  */
+@BlocDSL
 fun BlocContext.disposableScope() = DisposableScope()
     .apply { lifecycle.doOnDestroy(::dispose) }
 
@@ -24,6 +26,7 @@ fun BlocContext.disposableScope() = DisposableScope()
  *    }
  * ```
  */
+@BlocDSL
 fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
     store: Store<State>,
     selector: (State) -> SelectedState,
@@ -43,6 +46,7 @@ fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
  *    }
  * ```
  */
+@BlocDSL
 fun <State : Any, SelectedState : Any> Store<State>.selectScoped(
     disposableScope: DisposableScope,
     selector: (State) -> SelectedState,
@@ -58,6 +62,7 @@ fun <State : Any, SelectedState : Any> Store<State>.selectScoped(
  *    store.toBlocState(context, initialValue)
  * ```
  */
+@BlocDSL
 fun <State : Any, Proposal : Any> Store<State>.toBlocState(
     context: BlocContext,
     initialState: State,
@@ -72,6 +77,7 @@ fun <State : Any, Proposal : Any> Store<State>.toBlocState(
  *    store.toBlocState(context, initialValue) { /* select function */ }
  * ```
  */
+@BlocDSL
 fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,
@@ -87,6 +93,7 @@ fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocStat
  *    store.toBlocState(context, initialValue, { /* select function */ },  { /* map function */ })
  * ```
  */
+@BlocDSL
 fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,

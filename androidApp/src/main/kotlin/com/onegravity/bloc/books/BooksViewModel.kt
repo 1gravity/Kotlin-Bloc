@@ -3,7 +3,6 @@ package com.onegravity.bloc.books
 import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.BaseViewModel
 import com.onegravity.bloc.sample.books.*
-import com.onegravity.bloc.utils.BlocObservable
 import com.onegravity.bloc.utils.BlocObservableOwner
 
 class BooksViewModel(context: ActivityBlocContext) :

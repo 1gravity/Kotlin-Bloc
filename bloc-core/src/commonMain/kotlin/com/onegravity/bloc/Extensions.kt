@@ -11,6 +11,14 @@ import kotlinx.coroutines.*
  * and is cancelled with onStop().
 
  */
+@BlocDSL
+fun <State, Action : Any, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+    lifecycle: Lifecycle,
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) = bloc.subscribe(lifecycle, state, sideEffect)
+
+@BlocDSL
 fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
@@ -48,6 +56,7 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
  *   override val observable = bloc.toObservable()
  * ```
  */
+@BlocDSL
 fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.toObservable() =
     object : BlocObservable<State, SideEffect> {
         override fun subscribe(
@@ -68,6 +77,7 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
  * using a UUID for BlocState instances and then verify that all BlocStates have the same UUID but
  * that would be over-engineering imo.
  */
+@BlocDSL
 fun <State, Action : Any, SideEffect, Proposal> List<Bloc<State, Action, SideEffect, Proposal>>.toObservable() =
     object : BlocObservable<State, SideEffect> {
         override fun subscribe(
@@ -86,6 +96,7 @@ fun <State, Action : Any, SideEffect, Proposal> List<Bloc<State, Action, SideEff
 /**
  * Same as above but combine just two Blocs to BlocObservable.
  */
+@BlocDSL
 fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.toObservable(
     bloc: Bloc<State, Action, SideEffect, Proposal>
 ) = listOf(this, bloc).toObservable()
@@ -104,6 +115,7 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
  *   component.subscribe(this, state = ::render, sideEffect = ::sideEffect)
  * ```
  */
+@BlocDSL
 fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
@@ -113,11 +125,34 @@ fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
 }
 
 /**
+ * Submit an Initializer to the Bloc to be run.
+ * The initializer will receive the state and a dispatch function.
+ * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
+ */
+@BlocDSL
+fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.onCreate(
+    initializer: Initializer<State, Action>
+) {
+    (this as BlocImpl).coroutineScope.launch {
+        runInitializer(initializer)
+    }
+}
+
+/**
+ * Same for a BlocOwner.
+ */
+@BlocDSL
+fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
+    initializer: Initializer<State, Action>
+) = bloc.onCreate(initializer)
+
+/**
  * Submit a Thunk to the Bloc to be run.
  * The thunk will receive the dispatch and the getState function but no action (since it was
  * triggered "manually", not by sending an action to the Bloc).
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.thunk(
     thunk: ThunkNoAction<State, Action>
 ) {
@@ -129,6 +164,7 @@ fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Propos
 /**
  * Same for a BlocOwner.
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
     thunk: ThunkNoAction<State, Action>
 ) = bloc.thunk(thunk)
@@ -138,6 +174,7 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
  * The reducer will receive the state but no action (since it was triggered "manually", not by
  * sending an action to the Bloc).
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.reduce(
     reducer: ReducerNoAction<State, Proposal>
 ) {
@@ -151,15 +188,17 @@ fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Propos
 /**
  * Same for a BlocOwner.
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.reduce(
     reducer: ReducerNoAction<State, Proposal>
 ) = bloc.reduce(reducer)
 
 /**
- * Submit a Reducer to the Bloc to be run.
+ * Submit a Reducer with side effects to the Bloc to be run.
  * The reducer will receive the state but no action (since it was triggered "manually", not by
  * sending an action to the Bloc).
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) {
@@ -171,6 +210,7 @@ fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Propos
 /**
  * Same for a BlocOwner.
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) = bloc.reduceAnd(reducer)
@@ -180,6 +220,7 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
  * The side effect will receive the state but no action (since it was triggered "manually", not by
  * sending an action to the Bloc).
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) {
@@ -194,6 +235,7 @@ fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Propos
 /**
  * Same for a BlocOwner.
  */
+@BlocDSL
 fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) = bloc.sideEffect(sideEffect)

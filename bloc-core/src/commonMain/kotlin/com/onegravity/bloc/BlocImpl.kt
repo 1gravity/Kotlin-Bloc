@@ -175,4 +175,9 @@ class BlocImpl<State, Action : Any, SideEffect, Proposal>(
         ThunkContextNoAction({ blocState.value }, dispatcher).thunk()
     }
 
+    suspend fun runInitializer(initializer: Initializer<State, Action>) {
+        val context = InitializerContext<State, Action>(value) { action -> send(action) }
+        context.initializer()
+    }
+
 }

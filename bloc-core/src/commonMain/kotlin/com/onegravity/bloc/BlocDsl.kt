@@ -28,7 +28,7 @@ import kotlin.jvm.JvmName
 fun <State, Action: Any, SideEffect, Proposal> bloc(
     context: BlocContext,
     blocState: BlocState<State, Proposal>,
-    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit
+    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit = {}
 ): Bloc<State, Action, SideEffect, Proposal> =
     BlocBuilder<State, Action, SideEffect, Proposal>()
         .also(block)
@@ -39,7 +39,7 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
 fun <State, Action: Any, SideEffect, Proposal> bloc(
     context: BlocContext,
     initialValue: State,
-    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit
+    block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit = {}
 ): Bloc<State, Action, SideEffect, Proposal> =
     BlocBuilder<State, Action, SideEffect, Proposal>()
         .also(block)
@@ -69,7 +69,7 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
 fun <State, Action: Any, SideEffect> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
-    block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit
+    block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit = {}
 ): Bloc<State, Action, SideEffect, State> =
     BlocBuilder<State, Action, SideEffect, State>()
         .also(block)
@@ -95,7 +95,7 @@ fun <State, Action: Any, SideEffect> bloc(
 fun <State, Action: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
-    block: BlocBuilder<State, Action, Unit, State>.() -> Unit
+    block: BlocBuilder<State, Action, Unit, State>.() -> Unit = {}
 ): Bloc<State, Action, Unit, State> =
     BlocBuilder<State, Action, Unit, State>()
         .also(block)
@@ -121,7 +121,7 @@ fun <State, Action: Any> bloc(
 fun <State, Action: Any> bloc(
     context: BlocContext,
     initialValue: State,
-    block: BlocBuilder<State, Action, Unit, State>.() -> Unit
+    block: BlocBuilder<State, Action, Unit, State>.() -> Unit = {}
 ): Bloc<State, Action, Unit, State> =
     BlocBuilder<State, Action, Unit, State>()
         .also(block)

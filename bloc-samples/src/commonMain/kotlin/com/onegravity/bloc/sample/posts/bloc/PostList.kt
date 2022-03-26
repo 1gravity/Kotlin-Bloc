@@ -24,9 +24,7 @@ object PostList {
     ) {
         val repository = getKoinInstance<PostRepository>()
 
-        onCreate {
-            if (state.isEmpty()) dispatch(Action.Load)
-        }
+        onCreate { if (state.isEmpty()) dispatch(Action.Load) }
 
         // we could also put the thunk code into the onCreate block but we want to illustrate the
         // ability to use initializing code

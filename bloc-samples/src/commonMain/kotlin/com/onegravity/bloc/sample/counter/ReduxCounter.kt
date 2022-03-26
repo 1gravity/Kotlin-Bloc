@@ -2,6 +2,8 @@ package com.onegravity.bloc.sample.counter
 
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.sample.counter.CounterStore.reduxStore
+import com.onegravity.bloc.sample.counter.CounterStore.ReduxAction
 import com.onegravity.bloc.state.redux.toBlocState
 
 object ReduxCounter {
