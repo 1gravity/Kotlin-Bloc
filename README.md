@@ -2,9 +2,9 @@
 
 # Kotlin BLoC Framework
 
-![Overview](./docs/BLoC Architecture - Overview.svg)
-
 Concise ui framework for Kotlin Multiplatform Mobile.
+
+<img alt="BLoC Architecture - Overview" src="./docs/BLoC Architecture - Overview.svg" width="625" />
 
 # Inspiration
 Reduce was inspired by :
