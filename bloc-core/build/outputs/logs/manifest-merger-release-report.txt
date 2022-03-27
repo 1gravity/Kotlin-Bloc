@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml:2:1-48
+INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml:2:1-48
+INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml:2:1-48
+	package
+		ADDED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml:2:11-45
+		INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+		INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml:2:1-48
+uses-sdk
+INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+		ADDED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+		INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+		ADDED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml
+		INJECTED from /home/peace/development/Kotlin-Bloc/bloc-core/src/androidMain/AndroidManifest.xml

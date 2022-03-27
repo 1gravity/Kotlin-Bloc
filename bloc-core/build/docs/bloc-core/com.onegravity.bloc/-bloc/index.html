@@ -1,0 +1,274 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Bloc</title>
+<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="bloc-core::com.onegravity.bloc/Bloc///PointingToDeclaration//786880334">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">bloc-core</a>/<a href="../index.html">com.onegravity.bloc</a>/<a href="index.html">Bloc</a></div>
+            <div class="pull-right d-flex">
+              <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector common-like" data-active="" data-filter=":bloc-core:dokkaHtml/commonMain">common</button></div>
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Bloc</span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">interface <a href="index.html">Bloc</a>&lt;out <a href="index.html">State</a>, in <a href="index.html">Action</a>, <a href="index.html">SideEffect</a>, <a href="index.html">Proposal</a>&gt; : <a href="../-bloc-facade/index.html">BlocFacade</a>&lt;<a href="index.html">State</a>, <a href="index.html">Action</a>, <a href="index.html">SideEffect</a>&gt; , <a href="../../com.onegravity.bloc.state/-bloc-state/index.html">BlocState</a>&lt;<a href="index.html">State</a>, <a href="index.html">Action</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">The core interface of the BLoC framework.</p><p class="paragraph">A Bloc is (as a BlocFacade)</p><ul><li><p class="paragraph">a StateStream<State> emitting state</p></li><li><p class="paragraph">a Sink<Action> accepting actions that might trigger state changes</p></li><li><p class="paragraph">a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation</p></li></ul><p class="paragraph">A Bloc is also a BlocState since BlocState is an subset of BlocFacade (StateStream and Sink but no SideEffectStream). This allows us (theoretically) to use a Bloc as BlocState and thus create a chain of composable Blocs.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Extensions">Extensions</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="885926738%2FFunctions%2F786880334" anchor-label="collect" id="885926738%2FFunctions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.onegravity.bloc.utils/-state-stream/collect.html">collect</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="885926738%2FFunctions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">abstract suspend fun <a href="../../com.onegravity.bloc.utils/-state-stream/collect.html">collect</a>(collector: <span data-unresolved-link="/&amp;lt;ERROR CLASS&amp;gt;///PointingToDeclaration/">&lt;ERROR CLASS&gt;</span>&lt;<a href="../../com.onegravity.bloc.utils/-state-stream/index.html">Value</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1143749264%2FFunctions%2F786880334" anchor-label="send" id="-1143749264%2FFunctions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.onegravity.bloc.utils/-sink/send.html">send</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1143749264%2FFunctions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">abstract fun <a href="../../com.onegravity.bloc.utils/-sink/send.html">send</a>(value: <a href="index.html">Action</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1143749264%2FFunctions%2F786880334" anchor-label="send" id="-1143749264%2FFunctions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="-1143749264%2FFunctions%2F786880334" anchor-label="send" id="-1143749264%2FFunctions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>Send a Value into the sink.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="-2029859765%2FProperties%2F786880334" anchor-label="sideEffects" id="-2029859765%2FProperties%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#-2029859765%2FProperties%2F786880334">sideEffects</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2029859765%2FProperties%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><a data-name="-2029859765%2FProperties%2F786880334" anchor-label="sideEffects" id="-2029859765%2FProperties%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="symbol monospace">abstract val <a href="index.html#-2029859765%2FProperties%2F786880334">sideEffects</a>: <span data-unresolved-link="/&amp;lt;ERROR CLASS&amp;gt;///PointingToDeclaration/">&lt;ERROR CLASS&gt;</span>&lt;<a href="../../com.onegravity.bloc.utils/index.html#-2120762860%2FClasslikes%2F786880334">Value</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-627470331%2FProperties%2F786880334" anchor-label="value" id="-627470331%2FProperties%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#-627470331%2FProperties%2F786880334">value</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-627470331%2FProperties%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><a data-name="-627470331%2FProperties%2F786880334" anchor-label="value" id="-627470331%2FProperties%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="symbol monospace">abstract val <a href="index.html#-627470331%2FProperties%2F786880334">value</a>: <a href="index.html">State</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Inheritors</h2>
+              <div class="table" data-togglable="Inheritors"><a data-name="1092490011%2FInheritors%2F786880334" anchor-label="BlocImpl" id="1092490011%2FInheritors%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-bloc-impl/index.html">BlocImpl</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1092490011%2FInheritors%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="tabbedcontent">Extensions</h2>
+              <div class="table" data-togglable="Extensions"><a data-name="1866350949%2FExtensions%2F786880334" anchor-label="onCreate" id="1866350949%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../on-create.html">onCreate</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1866350949%2FExtensions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="../on-create.html">State</a>, <a href="../on-create.html">Action</a>, <a href="../on-create.html">SideEffect</a>, <a href="../on-create.html">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="../on-create.html">State</a>, <a href="../on-create.html">Action</a>, <a href="../on-create.html">SideEffect</a>, <a href="../on-create.html">Proposal</a>&gt;.<a href="../on-create.html">onCreate</a>(initializer: <a href="../../com.onegravity.bloc.utils/index.html#1615225956%2FClasslikes%2F786880334">Initializer</a>&lt;<a href="../on-create.html">State</a>, <a href="../on-create.html">Action</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1866350949%2FExtensions%2F786880334" anchor-label="onCreate" id="1866350949%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="1866350949%2FExtensions%2F786880334" anchor-label="onCreate" id="1866350949%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>Submit an Initializer to the Bloc to be run.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1080314072%2FExtensions%2F786880334" anchor-label="reduce" id="1080314072%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../reduce.html">reduce</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1080314072%2FExtensions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="../reduce.html">State</a>, <a href="../reduce.html">Action</a>, <a href="../reduce.html">SideEffect</a>, <a href="../reduce.html">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="../reduce.html">State</a>, <a href="../reduce.html">Action</a>, <a href="../reduce.html">SideEffect</a>, <a href="../reduce.html">Proposal</a>&gt;.<a href="../reduce.html">reduce</a>(reducer: <a href="../../com.onegravity.bloc.utils/index.html#534619299%2FClasslikes%2F786880334">ReducerNoAction</a>&lt;<a href="../reduce.html">State</a>, <a href="../reduce.html">Proposal</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1080314072%2FExtensions%2F786880334" anchor-label="reduce" id="1080314072%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="1080314072%2FExtensions%2F786880334" anchor-label="reduce" id="1080314072%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>Submit a Reducer without side effects to the Bloc to be run.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1540504622%2FExtensions%2F786880334" anchor-label="reduceAnd" id="1540504622%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../reduce-and.html">reduceAnd</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1540504622%2FExtensions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="../reduce-and.html">State</a>, <a href="../reduce-and.html">Action</a>, <a href="../reduce-and.html">SideEffect</a>, <a href="../reduce-and.html">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="../reduce-and.html">State</a>, <a href="../reduce-and.html">Action</a>, <a href="../reduce-and.html">SideEffect</a>, <a href="../reduce-and.html">Proposal</a>&gt;.<a href="../reduce-and.html">reduceAnd</a>(reducer: <a href="../../com.onegravity.bloc.utils/index.html#534619299%2FClasslikes%2F786880334">ReducerNoAction</a>&lt;<a href="../reduce-and.html">State</a>, <a href="../../com.onegravity.bloc.utils/-effect/index.html">Effect</a>&lt;<a href="../reduce-and.html">Proposal</a>, <a href="../reduce-and.html">SideEffect</a>&gt;&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1540504622%2FExtensions%2F786880334" anchor-label="reduceAnd" id="1540504622%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="1540504622%2FExtensions%2F786880334" anchor-label="reduceAnd" id="1540504622%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>Submit a Reducer with side effects to the Bloc to be run.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-2090245153%2FExtensions%2F786880334" anchor-label="sideEffect" id="-2090245153%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../side-effect.html">sideEffect</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2090245153%2FExtensions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="../side-effect.html">State</a>, <a href="../side-effect.html">Action</a>, <a href="../side-effect.html">SideEffect</a>, <a href="../side-effect.html">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="../side-effect.html">State</a>, <a href="../side-effect.html">Action</a>, <a href="../side-effect.html">SideEffect</a>, <a href="../side-effect.html">Proposal</a>&gt;.<a href="../side-effect.html">sideEffect</a>(sideEffect: <a href="../../com.onegravity.bloc.utils/index.html#519080285%2FClasslikes%2F786880334">SideEffectNoAction</a>&lt;<a href="../side-effect.html">State</a>, <a href="../side-effect.html">SideEffect</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-2090245153%2FExtensions%2F786880334" anchor-label="sideEffect" id="-2090245153%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="-2090245153%2FExtensions%2F786880334" anchor-label="sideEffect" id="-2090245153%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>Submit a SideEffect to the Bloc to be emitted.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1791402398%2FExtensions%2F786880334" anchor-label="subscribe" id="-1791402398%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#-1791402398%2FExtensions%2F786880334">subscribe</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1791402398%2FExtensions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="index.html#-1791402398%2FExtensions%2F786880334">State</a>, <a href="index.html#-1791402398%2FExtensions%2F786880334">Action</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>, <a href="index.html#-1791402398%2FExtensions%2F786880334">SideEffect</a>, <a href="index.html#-1791402398%2FExtensions%2F786880334">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="index.html#-1791402398%2FExtensions%2F786880334">State</a>, <a href="index.html#-1791402398%2FExtensions%2F786880334">Action</a>, <a href="index.html#-1791402398%2FExtensions%2F786880334">SideEffect</a>, <a href="index.html#-1791402398%2FExtensions%2F786880334">Proposal</a>&gt;.<a href="index.html#-1791402398%2FExtensions%2F786880334">subscribe</a>(lifecycle: <span data-unresolved-link="/&amp;lt;ERROR CLASS&amp;gt;///PointingToDeclaration/">&lt;ERROR CLASS&gt;</span>, state: suspend (<a href="index.html#-1791402398%2FExtensions%2F786880334">State</a>) -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>? = null, sideEffect: suspend (<a href="index.html#-1791402398%2FExtensions%2F786880334">SideEffect</a>) -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>? = null)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1611688747%2FExtensions%2F786880334" anchor-label="thunk" id="-1611688747%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../thunk.html">thunk</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1611688747%2FExtensions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="../thunk.html">State</a>, <a href="../thunk.html">Action</a>, <a href="../thunk.html">SideEffect</a>, <a href="../thunk.html">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="../thunk.html">State</a>, <a href="../thunk.html">Action</a>, <a href="../thunk.html">SideEffect</a>, <a href="../thunk.html">Proposal</a>&gt;.<a href="../thunk.html">thunk</a>(thunk: <a href="../../com.onegravity.bloc.utils/index.html#-37533199%2FClasslikes%2F786880334">ThunkNoAction</a>&lt;<a href="../thunk.html">State</a>, <a href="../thunk.html">Action</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1611688747%2FExtensions%2F786880334" anchor-label="thunk" id="-1611688747%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="-1611688747%2FExtensions%2F786880334" anchor-label="thunk" id="-1611688747%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>Submit a Thunk to the Bloc to be run.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-840133040%2FExtensions%2F786880334" anchor-label="toObservable" id="-840133040%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../to-observable.html">toObservable</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-840133040%2FExtensions%2F786880334"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="../to-observable.html">State</a>, <a href="../to-observable.html">Action</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>, <a href="../to-observable.html">SideEffect</a>, <a href="../to-observable.html">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="../to-observable.html">State</a>, <a href="../to-observable.html">Action</a>, <a href="../to-observable.html">SideEffect</a>, <a href="../to-observable.html">Proposal</a>&gt;.<a href="../to-observable.html">toObservable</a>(): <a href="../../com.onegravity.bloc.utils/-bloc-observable/index.html">BlocObservable</a>&lt;<a href="../to-observable.html">State</a>, <a href="../to-observable.html">SideEffect</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1653755124%2FExtensions%2F786880334" anchor-label="toObservable" id="1653755124%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="1653755124%2FExtensions%2F786880334" anchor-label="toObservable" id="1653755124%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>If a components implements the BlocObservableOwner interface it needs to provide<div class="sample-container"><code class="" theme="idea"><pre>val observable: BlocObservable&lt;State, SideEffect&gt;</pre></code></div>This extension functions converts a Bloc into that BlocObservable:<div class="sample-container"><code class="" theme="idea"><pre>override val observable = bloc.toObservable()</pre></code></div></div></div>
+<div class="divergent-group" data-filterable-current=":bloc-core:dokkaHtml/commonMain" data-filterable-set=":bloc-core:dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtml/commonMain"><div class="symbol monospace">fun &lt;<a href="../to-observable.html">State</a>, <a href="../to-observable.html">Action</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>, <a href="../to-observable.html">SideEffect</a>, <a href="../to-observable.html">Proposal</a>&gt; <a href="index.html">Bloc</a>&lt;<a href="../to-observable.html">State</a>, <a href="../to-observable.html">Action</a>, <a href="../to-observable.html">SideEffect</a>, <a href="../to-observable.html">Proposal</a>&gt;.<a href="../to-observable.html">toObservable</a>(bloc: <a href="index.html">Bloc</a>&lt;<a href="../to-observable.html">State</a>, <a href="../to-observable.html">Action</a>, <a href="../to-observable.html">SideEffect</a>, <a href="../to-observable.html">Proposal</a>&gt;): <span data-unresolved-link="/&amp;lt;ERROR CLASS&amp;gt;///PointingToDeclaration/">&lt;ERROR CLASS&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="580858600%2FExtensions%2F786880334" anchor-label="toObservable" id="580858600%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a><div class="brief "><a data-name="580858600%2FExtensions%2F786880334" anchor-label="toObservable" id="580858600%2FExtensions%2F786880334" data-filterable-set=":bloc-core:dokkaHtml/commonMain"></a>Same as above but combine just two Blocs to BlocObservable.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":bloc-core:iosTest" external.linked.project.path="$MODULE_DIR$/../../../bloc-core" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="Kotlin-Bloc" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="4" platform="Common (experimental) " allPlatforms="Native []/Native [ios_arm64]/Native [ios_x64]" useProjectSettings="false" isTestModule="true" externalProjectId=":bloc-core" isHmppProject="true" pureKotlinSourceFolders="$MODULE_DIR$/../../../bloc-core/src/androidDebug/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/debug/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/debug/java;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidDebugAndroidTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidDebugUnitTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidRelease/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/release/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/release/java;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidReleaseUnitTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosArm64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosArm64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosX64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosX64Main/kotlin">
+        <dependsOnModuleNames>:bloc-core:commonTest</dependsOnModuleNames>
+        <newMppModelJpsModuleKind>SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
+        <compilerSettings />
+        <compilerArguments>
+          <option name="languageVersion" value="1.6" />
+          <option name="apiVersion" value="1.6" />
+          <option name="pluginOptions">
+            <array />
+          </option>
+          <option name="pluginClasspaths">
+            <array>
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.6.20-RC2/16e5d5264011660d1b2787d368426e957e8c0a25/kotlin-scripting-jvm-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.6.20-RC2/dc0e40430dc841949475ded0b35550d17be44ab2/kotlin-scripting-common-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.6.20-RC2/3b4b605ebc69e7baedd6b41f9a58e9a7eb33208/kotlin-stdlib-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.6.20-RC2/6b58c76bc04fce8c56e19156fc4e1566953b7719/kotlin-stdlib-common-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.6.20-RC2/716cc9cc7b5fc48920717dfbb49db18fed409157/kotlin-script-runtime-1.6.20-RC2.jar" />
+            </array>
+          </option>
+          <option name="multiPlatform" value="true" />
+        </compilerArguments>
+      </configuration>
+    </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugSources" />
+        <afterSyncTasks>
+          <task>generateDebugSources</task>
+        </afterSyncTasks>
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/androidMain/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../bloc-core/src/main/res;file://$MODULE_DIR$/../../../bloc-core/src/androidMain/res;file://$MODULE_DIR$/../../../bloc-core/src/debug/res;file://$MODULE_DIR$/../../../bloc-core/src/androidDebug/res;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/rs/debug;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/resValues/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../bloc-core/src/androidTest/res;file://$MODULE_DIR$/../../../bloc-core/src/androidAndroidTest/res;file://$MODULE_DIR$/../../../bloc-core/src/androidTestDebug/res;file://$MODULE_DIR$/../../../bloc-core/src/androidAndroidTestDebug/res;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/rs/androidTest/debug;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/resValues/androidTest/debug" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+        <option name="PROJECT_TYPE" value="1" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../bloc-core/src/iosTest/kotlin" />
+    <content url="file://$MODULE_DIR$/../../../bloc-core/src/iosTest/resources" />
+    <orderEntry type="jdk" jdkName="Android API 32 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Kotlin/Native 1.6.20-RC2 - stdlib" level="project" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.commonMain" scope="TEST" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.commonTest" scope="TEST" production-on-test="" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.iosMain" scope="TEST" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.20-RC2" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:commonMain:1.6.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/org.jetbrains.kotlinx-kotlinx-coroutines-core/org.jetbrains.kotlinx-kotlinx-coroutines-core-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.6.0/327ad3b2d2ffb2152dd25e945a8f6fd9dc72a7d0/kotlinx-coroutines-core-1.6.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:concurrentMain:1.6.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/org.jetbrains.kotlinx-kotlinx-coroutines-core/org.jetbrains.kotlinx-kotlinx-coroutines-core-concurrentMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.6.0/327ad3b2d2ffb2152dd25e945a8f6fd9dc72a7d0/kotlinx-coroutines-core-1.6.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:nativeMain:1.6.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonTest/implementation/org.jetbrains.kotlinx-kotlinx-coroutines-core/org.jetbrains.kotlinx-kotlinx-coroutines-core-nativeMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.6.0/327ad3b2d2ffb2152dd25e945a8f6fd9dc72a7d0/kotlinx-coroutines-core-1.6.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:lifecycle:commonMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-lifecycle/com.arkivanov.essenty-lifecycle-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/lifecycle/0.2.2/730d43b3f7e7aa0aaa54916e07fe2a4dc1d4fabe/lifecycle-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:state-keeper:commonMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-state-keeper/com.arkivanov.essenty-state-keeper-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/state-keeper/0.2.2/c71ed77dcd359cc285a9432e967f44c8d449c445/state-keeper-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:parcelable:commonMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-parcelable/com.arkivanov.essenty-parcelable-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/parcelable/0.2.2/a5f61238535917a0d25fbde9693c2370df1a213c/parcelable-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:parcelable:nonAndroidMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonTest/implementation/com.arkivanov.essenty-parcelable/com.arkivanov.essenty-parcelable-nonAndroidMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/parcelable/0.2.2/a5f61238535917a0d25fbde9693c2370df1a213c/parcelable-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:instance-keeper:commonMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-instance-keeper/com.arkivanov.essenty-instance-keeper-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/instance-keeper/0.2.2/c01f91cf9bb1265ec3f9f1a352ad7a6488339d7e/instance-keeper-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:back-pressed:commonMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-back-pressed/com.arkivanov.essenty-back-pressed-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/back-pressed/0.2.2/901c6545c8fdb05433fc62e244d55bd6b9c09231/back-pressed-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: co.touchlab:kermit:commonMain:1.0.3">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/co.touchlab-kermit/co.touchlab-kermit-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.touchlab/kermit/1.0.3/ed20913df4d41d0e6b4ee666d2fba75669201d5d/kermit-1.0.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: co.touchlab:kermit:darwinMain:1.0.3">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonTest/implementation/co.touchlab-kermit/co.touchlab-kermit-darwinMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.touchlab/kermit/1.0.3/ed20913df4d41d0e6b4ee666d2fba75669201d5d/kermit-1.0.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: co.touchlab:kermit:nativeMain:1.0.3">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonTest/implementation/co.touchlab-kermit/co.touchlab-kermit-nativeMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.touchlab/kermit/1.0.3/ed20913df4d41d0e6b4ee666d2fba75669201d5d/kermit-1.0.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="TEST" name="Gradle: com.michael-bull.kotlin-result:kotlin-result:1.1.14" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.14" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.badoo.reaktive:reaktive:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:atomicfu:commonMain:0.17.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:atomicfu:nativeInterop:0.17.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:atomicfu:nativeMain:0.17.0" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: org.reduxkotlin:redux-kotlin-threadsafe-metadata:commonMain:0.5.5">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/org.reduxkotlin-redux-kotlin-threadsafe-metadata/org.reduxkotlin-redux-kotlin-threadsafe-metadata-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-threadsafe-metadata/0.5.5/a41d81b5a04d667a5b2724a1f52d636bb06e9605/redux-kotlin-threadsafe-metadata-0.5.5-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:utils-internal:commonMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonTest/implementation/com.arkivanov.essenty-utils-internal/com.arkivanov.essenty-utils-internal-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/utils-internal/0.2.2/abdfe4619972ecc5054da5fcc083ce7745d6ba46/utils-internal-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.arkivanov.essenty:utils-internal:nativeMain:0.2.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonTest/implementation/com.arkivanov.essenty-utils-internal/com.arkivanov.essenty-utils-internal-nativeMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/utils-internal/0.2.2/abdfe4619972ecc5054da5fcc083ce7745d6ba46/utils-internal-0.2.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: org.reduxkotlin:redux-kotlin-metadata:commonMain:0.5.5">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.gradle/kotlin/sourceSetMetadata/bloc-core.Kotlin-Bloc/commonMain/implementation/org.reduxkotlin-redux-kotlin-metadata/org.reduxkotlin-redux-kotlin-metadata-commonMain.klib!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-metadata/0.5.5/510affbf59e95645dc029abf912623ad28a76bb/redux-kotlin-metadata-0.5.5-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.6.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test-common:1.6.20-RC2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.reduxkotlin:redux-kotlin-thunk-metadata:0.5.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20-RC2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="Kotlin-Bloc.bloc-core.iosMain" />
+</module>
