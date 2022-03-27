@@ -1,6 +1,0 @@
-framework module bloc-samples {
-  umbrella header "placeholder.h"
-
-  export *
-  module * { export * }
-}
