@@ -2,6 +2,8 @@
 
 # Kotlin BLoC Framework
 
+![Overview](./docs/BLoC Architecture - Overview.svg)
+
 Concise ui framework for Kotlin Multiplatform Mobile.
 
 # Inspiration
