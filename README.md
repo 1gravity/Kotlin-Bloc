@@ -6,6 +6,8 @@ Concise ui framework for Kotlin Multiplatform Mobile.
 
 <img alt="BLoC Architecture - Overview" src="./docs/BLoC Architecture - Overview.svg" width="625" />
 
+[Dokka Documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html).
+
 # Inspiration
 Reduce was inspired by :
 * Knot
