@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Kotlin/Native 1.6.20-RC2 - stdlib" type="kotlin.native">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.konan/kotlin-native-prebuilt-linux-x86_64-1.6.20-RC2/klib/common/stdlib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.konan/kotlin-native-prebuilt-linux-x86_64-1.6.20-RC2/sources/kotlin-stdlib-native-sources.zip!/" />
+      <root url="jar://$USER_HOME$/.konan/kotlin-native-prebuilt-linux-x86_64-1.6.20-RC2/sources/kotlin-test-annotations-common-sources.zip!/" />
+      <root url="jar://$USER_HOME$/.konan/kotlin-native-prebuilt-linux-x86_64-1.6.20-RC2/sources/kotlin-stdlib-common-sources.zip!/" />
+      <root url="jar://$USER_HOME$/.konan/kotlin-native-prebuilt-linux-x86_64-1.6.20-RC2/sources/kotlin-test-common-sources.zip!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 7.1.2" type="configured_issues">
+    <config id="GradlePluginVersion" severity="ignore"/>
+    <config id="GradleDependency" severity="ignore"/>
+
+</incidents>

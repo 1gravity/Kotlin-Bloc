@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.reduxkotlin:redux-kotlin-thunk-metadata:0.5.5" type="kotlin.common">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-thunk-metadata/0.5.5/7a496b107d66e7ae675d2eaf063539a38fc52698/redux-kotlin-thunk-metadata-0.5.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-thunk-metadata/0.5.5/2f72d6a67d4f895c37f0e6433b0849cd1c368e09/redux-kotlin-thunk-metadata-0.5.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

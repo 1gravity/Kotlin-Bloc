@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/xml/standalone_badge_gravity_bottom_end.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/xml/standalone_badge_gravity_bottom_end.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/xml/standalone_badge_gravity_bottom_start.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/xml/standalone_badge_gravity_bottom_start.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/xml/standalone_badge_gravity_top_start.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/xml/standalone_badge_gravity_top_start.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/xml/standalone_badge_offset.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/xml/standalone_badge_offset.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/xml/standalone_badge.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/xml/standalone_badge.xml"
+    }
+]

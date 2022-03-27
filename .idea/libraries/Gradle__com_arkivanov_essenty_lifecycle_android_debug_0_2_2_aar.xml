@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arkivanov.essenty:lifecycle-android-debug:0.2.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/802277d6d0e04d23313838fe6a4bdbc2/transformed/lifecycle-debug/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/802277d6d0e04d23313838fe6a4bdbc2/transformed/lifecycle-debug/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/802277d6d0e04d23313838fe6a4bdbc2/transformed/lifecycle-debug/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/lifecycle-android-debug/0.2.2/5ee20ade5d5a2498a656a05ca413bf3726e254b6/lifecycle-android-debug-0.2.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/lifecycle-android-debug/0.2.2/addff7e346435d128af126dcea1b8863f536d5b2/lifecycle-android-debug-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

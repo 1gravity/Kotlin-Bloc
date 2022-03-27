@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.reduxkotlin:redux-kotlin-thunk-iosx64:klib:0.5.5" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-thunk-iosx64/0.5.5/6c2947a71b11f5a3391be62a3db463da93122a7/redux-kotlin-thunk.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-thunk-iosx64/0.5.5/bd2c7d0c0451e56729164f40287cf4c3415af0b9/redux-kotlin-thunk-iosx64-0.5.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

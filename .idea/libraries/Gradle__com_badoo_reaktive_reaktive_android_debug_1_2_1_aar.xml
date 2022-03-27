@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.badoo.reaktive:reaktive-android-debug:1.2.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b6ee8a46b3f1f0a78742a034119ac5fb/transformed/reaktive-debug/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b6ee8a46b3f1f0a78742a034119ac5fb/transformed/reaktive-debug/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b6ee8a46b3f1f0a78742a034119ac5fb/transformed/reaktive-debug/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badoo.reaktive/reaktive-android-debug/1.2.1/c0598cde3a0efcf2658140ee8400a2c56e2e3988/reaktive-android-debug-1.2.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badoo.reaktive/reaktive-android-debug/1.2.1/8c7af46011ffcbfe42669f8c98b95a9de93a4bc/reaktive-android-debug-1.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

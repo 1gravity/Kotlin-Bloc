@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.badoo.reaktive:reaktive-annotations-iosarm64:klib:1.2.1" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badoo.reaktive/reaktive-annotations-iosarm64/1.2.1/50c739a90aeee955a305319fd0ecdbec5787d2f8/reaktive-annotations.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badoo.reaktive/reaktive-annotations-iosarm64/1.2.1/11bf3573be06759205466f1b03bfd3e0cdf223ee/reaktive-annotations-iosarm64-1.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

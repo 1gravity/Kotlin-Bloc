@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arkivanov.essenty:back-pressed:commonMain:0.2.2" type="kotlin.common">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/kotlin/sourceSetMetadata/bloc-samples.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-back-pressed/com.arkivanov.essenty-back-pressed-commonMain.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/back-pressed/0.2.2/901c6545c8fdb05433fc62e244d55bd6b9c09231/back-pressed-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arkivanov.essenty:utils-internal-iosx64:klib:0.2.2" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/utils-internal-iosx64/0.2.2/65ec7ad477e57a612ab13258d5eb8565040408c7/utils-internal.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/utils-internal-iosx64/0.2.2/a5ea6ec7effa014a7e1e1a1b1899a4b144b247a5/utils-internal-iosx64-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

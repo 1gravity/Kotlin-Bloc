@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arkivanov.essenty:instance-keeper-android-debug:0.2.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/daf7ff8034d36a1a5b4d42d92120dc7e/transformed/instance-keeper-debug/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/daf7ff8034d36a1a5b4d42d92120dc7e/transformed/instance-keeper-debug/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/daf7ff8034d36a1a5b4d42d92120dc7e/transformed/instance-keeper-debug/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/instance-keeper-android-debug/0.2.2/ea3134a291e3693cf8fff949aa38105608fbb78e/instance-keeper-android-debug-0.2.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/instance-keeper-android-debug/0.2.2/59404478f46eb9e6e02d0a1699acd12315ccb7d2/instance-keeper-android-debug-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

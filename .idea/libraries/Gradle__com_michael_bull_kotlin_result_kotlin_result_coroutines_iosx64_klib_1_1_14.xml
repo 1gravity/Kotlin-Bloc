@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.michael-bull.kotlin-result:kotlin-result-coroutines-iosx64:klib:1.1.14" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michael-bull.kotlin-result/kotlin-result-coroutines-iosx64/1.1.14/d4d3ab37b81021fdc63384eb0ba449655d6eab14/kotlin-result-coroutines.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michael-bull.kotlin-result/kotlin-result-coroutines-iosx64/1.1.14/8b02a9c873195c33f26ee48fa8c029c85b27015/kotlin-result-coroutines-iosx64-1.1.14-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

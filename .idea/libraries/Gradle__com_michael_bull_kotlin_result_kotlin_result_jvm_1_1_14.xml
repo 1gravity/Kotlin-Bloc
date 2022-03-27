@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.michael-bull.kotlin-result:kotlin-result-jvm:1.1.14">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michael-bull.kotlin-result/kotlin-result-jvm/1.1.14/7b7cbd8ce167e6d34bf88f4365375ded3bcdd830/kotlin-result-jvm-1.1.14.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michael-bull.kotlin-result/kotlin-result-jvm/1.1.14/80781189b5d84a4567fc2e53d3dbfcbabf9ab095/kotlin-result-jvm-1.1.14-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michael-bull.kotlin-result/kotlin-result-jvm/1.1.14/2d8bfc458f371ea3375e8786e9bf775acf1040f6/kotlin-result-jvm-1.1.14-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

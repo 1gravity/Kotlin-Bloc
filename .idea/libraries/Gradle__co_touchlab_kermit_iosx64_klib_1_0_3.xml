@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: co.touchlab:kermit-iosx64:klib:1.0.3" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.touchlab/kermit-iosx64/1.0.3/7701cf4634d1701c024ddf653a89ca866360ca4d/kermit.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.touchlab/kermit-iosx64/1.0.3/aff870e614fa95962b76a31eb689050608665e7/kermit-iosx64-1.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

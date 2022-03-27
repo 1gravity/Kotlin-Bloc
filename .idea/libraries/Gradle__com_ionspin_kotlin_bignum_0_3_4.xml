@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ionspin.kotlin:bignum:0.3.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ionspin.kotlin/bignum/0.3.4/fa216fb78508eda6f47dc1803dd8c95347176c2c/bignum-metadata-0.3.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ionspin.kotlin/bignum/0.3.4/3a97f2324637bd8f668e297efc815142b96ff503/bignum-0.3.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

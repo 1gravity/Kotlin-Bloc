@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.onegravity.bloc.sample"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="32" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name="com.onegravity.bloc.Application"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:testOnly="true"
+        android:theme="@style/Theme.Bloc" >
+        <activity
+            android:name="com.onegravity.bloc.MainActivity"
+            android:exported="true"
+            android:label="BLoC Framework"
+            android:theme="@style/Theme.Bloc" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.onegravity.bloc.counter.CounterActivity"
+            android:exported="false"
+            android:label="Counter Simple"
+            android:theme="@style/Theme.Bloc" />
+        <activity
+            android:name="com.onegravity.bloc.counter.CounterReduxActivity"
+            android:exported="false"
+            android:label="Counter Redux"
+            android:theme="@style/Theme.Bloc" />
+        <activity
+            android:name="com.onegravity.bloc.books.BooksActivity"
+            android:exported="false"
+            android:label="Books"
+            android:theme="@style/Theme.Bloc" />
+        <activity
+            android:name="com.onegravity.bloc.posts.PostActivity"
+            android:exported="false"
+            android:label="BLoC Posts"
+            android:theme="@style/AppThemePosts" />
+        <activity
+            android:name="com.onegravity.bloc.calculator.CalculatorActivity"
+            android:exported="false"
+            android:label="Calculator"
+            android:theme="@style/AppThemeCalculator" />
+
+        <uses-library
+            android:name="androidx.window.extensions"
+            android:required="false" />
+        <uses-library
+            android:name="androidx.window.sidecar"
+            android:required="false" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.onegravity.bloc.sample.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
+
+</manifest>

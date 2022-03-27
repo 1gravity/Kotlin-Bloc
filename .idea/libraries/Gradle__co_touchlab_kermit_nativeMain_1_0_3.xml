@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: co.touchlab:kermit:nativeMain:1.0.3" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/kotlin/sourceSetMetadata/bloc-samples.Kotlin-Bloc/commonTest/implementation/co.touchlab-kermit/co.touchlab-kermit-nativeMain.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.touchlab/kermit/1.0.3/ed20913df4d41d0e6b4ee666d2fba75669201d5d/kermit-1.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

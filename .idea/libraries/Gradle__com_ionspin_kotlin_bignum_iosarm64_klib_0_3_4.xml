@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ionspin.kotlin:bignum-iosarm64:klib:0.3.4" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ionspin.kotlin/bignum-iosarm64/0.3.4/5831c7326514600827f1475d33b7467ebadc3c88/bignum.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ionspin.kotlin/bignum-iosarm64/0.3.4/ce7cd2fdba441a115183713de4fc85a36fd0e614/bignum-iosarm64-0.3.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

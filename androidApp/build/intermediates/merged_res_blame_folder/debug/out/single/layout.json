@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/part_books_loading.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/part_books_loading.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_counter_redux.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/activity_counter_redux.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/part_books_error.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/part_books_error.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_counter_simple.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/activity_counter_simple.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/post_list_item.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/post_list_item.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/part_books_content.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/part_books_content.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_posts.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/activity_posts.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/post_details_fragment.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/post_details_fragment.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/post_comment_list_item.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/post_comment_list_item.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_main.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_calculator.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/activity_calculator.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_books.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/activity_books.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/post_list_fragment.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/post_list_fragment.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/androidApp/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/part_books_empty.xml",
+        "source": "/home/peace/development/Kotlin-Bloc/androidApp/src/main/res/layout/part_books_empty.xml"
+    }
+]

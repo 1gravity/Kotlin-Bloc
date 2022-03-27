@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/layout-v26/mtrl_calendar_month.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/layout-v26/mtrl_calendar_month.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/layout-v26/abc_screen_toolbar.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/layout-v26/abc_screen_toolbar.xml"
+    }
+]

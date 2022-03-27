@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arkivanov.essenty:parcelable-iosx64:klib:0.2.2" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/parcelable-iosx64/0.2.2/ae587220a22470217a41d05d1216121bc2e486d3/parcelable.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/parcelable-iosx64/0.2.2/f2d0c6817c005f3805abc770d5e918229c8ea2d4/parcelable-iosx64-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

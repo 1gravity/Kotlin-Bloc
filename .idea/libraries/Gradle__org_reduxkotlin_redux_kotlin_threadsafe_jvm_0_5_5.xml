@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.reduxkotlin:redux-kotlin-threadsafe-jvm:0.5.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-threadsafe-jvm/0.5.5/68f64afa8946a4f8f0cc3bbff74727d07f607eca/redux-kotlin-threadsafe-jvm-0.5.5.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-threadsafe-jvm/0.5.5/c0335c08b6a4e6c91836068d6ad1664922eb97d3/redux-kotlin-threadsafe-jvm-0.5.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-threadsafe-jvm/0.5.5/3d10d4677ab445c2d4590a682e6a6fdb91286656/redux-kotlin-threadsafe-jvm-0.5.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

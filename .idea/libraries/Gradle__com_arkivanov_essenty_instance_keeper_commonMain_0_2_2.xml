@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arkivanov.essenty:instance-keeper:commonMain:0.2.2" type="kotlin.common">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/kotlin/sourceSetMetadata/bloc-samples.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-instance-keeper/com.arkivanov.essenty-instance-keeper-commonMain.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/instance-keeper/0.2.2/c01f91cf9bb1265ec3f9f1a352ad7a6488339d7e/instance-keeper-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

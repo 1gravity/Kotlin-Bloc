@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    }
+]

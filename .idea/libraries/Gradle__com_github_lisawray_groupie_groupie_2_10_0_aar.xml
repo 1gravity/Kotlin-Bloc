@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.lisawray.groupie:groupie:2.10.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/9bd661de6308097b68d83a2ab4511b51/transformed/groupie-2.10.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9bd661de6308097b68d83a2ab4511b51/transformed/groupie-2.10.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9bd661de6308097b68d83a2ab4511b51/transformed/groupie-2.10.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

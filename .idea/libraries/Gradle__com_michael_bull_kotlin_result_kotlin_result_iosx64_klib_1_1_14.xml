@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.michael-bull.kotlin-result:kotlin-result-iosx64:klib:1.1.14" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michael-bull.kotlin-result/kotlin-result-iosx64/1.1.14/1afc1e51835545d3b10604a36f1fbfc7fd97ae6/kotlin-result.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michael-bull.kotlin-result/kotlin-result-iosx64/1.1.14/4343a8624d0e5404b98239634c1279c0b6fc9171/kotlin-result-iosx64-1.1.14-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

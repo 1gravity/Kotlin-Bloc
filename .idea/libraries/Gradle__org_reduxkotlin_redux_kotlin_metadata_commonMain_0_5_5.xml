@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.reduxkotlin:redux-kotlin-metadata:commonMain:0.5.5" type="kotlin.common">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/kotlin/sourceSetMetadata/bloc-samples.Kotlin-Bloc/commonMain/implementation/org.reduxkotlin-redux-kotlin-metadata/org.reduxkotlin-redux-kotlin-metadata-commonMain.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reduxkotlin/redux-kotlin-metadata/0.5.5/510affbf59e95645dc029abf912623ad28a76bb/redux-kotlin-metadata-0.5.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

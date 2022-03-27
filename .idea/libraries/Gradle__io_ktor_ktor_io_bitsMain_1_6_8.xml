@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.ktor:ktor-io:bitsMain:1.6.8" type="kotlin.native">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/kotlin/sourceSetMetadata/bloc-samples.Kotlin-Bloc/commonTest/implementation/io.ktor-ktor-io/io.ktor-ktor-io-bitsMain.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-io/1.6.8/c2894c0b778667d571dc76c06144e7a612424e39/ktor-io-1.6.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

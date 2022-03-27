@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":bloc-samples:commonMain" external.linked.project.path="$MODULE_DIR$/../../../bloc-samples" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="Kotlin-Bloc" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="4" platform="Common (experimental) " allPlatforms="JVM [1.8]/Native []/Native [general]" useProjectSettings="false" isTestModule="false" externalProjectId=":bloc-samples" isHmppProject="true" pureKotlinSourceFolders="$MODULE_DIR$/../../../bloc-samples/src/androidDebug/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/debug/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/debug/java;/home/peace/development/Kotlin-Bloc/bloc-samples/src/androidDebugAndroidTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/androidDebugUnitTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/androidRelease/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/release/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/release/java;/home/peace/development/Kotlin-Bloc/bloc-samples/src/androidReleaseUnitTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/iosArm64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/iosArm64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/iosX64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-samples/src/iosX64Main/kotlin">
+        <newMppModelJpsModuleKind>SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
+        <compilerSettings />
+        <compilerArguments>
+          <option name="languageVersion" value="1.6" />
+          <option name="apiVersion" value="1.6" />
+          <option name="pluginOptions">
+            <array />
+          </option>
+          <option name="pluginClasspaths">
+            <array>
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.6.20-RC2/e1a54848cc51c49df5791ecc954fe0cd0999602b/kotlin-gradle-plugin-api-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.6.20-RC2/16e5d5264011660d1b2787d368426e957e8c0a25/kotlin-scripting-jvm-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.6.20-RC2/dc0e40430dc841949475ded0b35550d17be44ab2/kotlin-scripting-common-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.6.20-RC2/3b4b605ebc69e7baedd6b41f9a58e9a7eb33208/kotlin-stdlib-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-native-utils/1.6.20-RC2/7f97a1a6238e46601ec2463241b7219ec3950c5/kotlin-native-utils-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-project-model/1.6.20-RC2/7a0c3bb3b8b7150093e97bf68460fc7b338c2681/kotlin-project-model-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.6.20-RC2/6b58c76bc04fce8c56e19156fc4e1566953b7719/kotlin-stdlib-common-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-util-io/1.6.20-RC2/f997196f14e7213b28ad01ab02be189947cccbf5/kotlin-util-io-1.6.20-RC2.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.6.20-RC2/716cc9cc7b5fc48920717dfbb49db18fed409157/kotlin-script-runtime-1.6.20-RC2.jar" />
+              <option value="$KOTLIN_BUNDLED$/lib/kotlinx-serialization-compiler-plugin.jar" />
+            </array>
+          </option>
+          <option name="multiPlatform" value="true" />
+        </compilerArguments>
+      </configuration>
+    </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugSources" />
+        <afterSyncTasks>
+          <task>generateDebugSources</task>
+        </afterSyncTasks>
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/androidMain/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../bloc-samples/src/main/res;file://$MODULE_DIR$/../../../bloc-samples/src/androidMain/res;file://$MODULE_DIR$/../../../bloc-samples/src/debug/res;file://$MODULE_DIR$/../../../bloc-samples/src/androidDebug/res;file://$MODULE_DIR$/../../../bloc-samples/build/generated/res/rs/debug;file://$MODULE_DIR$/../../../bloc-samples/build/generated/res/resValues/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../bloc-samples/src/androidTest/res;file://$MODULE_DIR$/../../../bloc-samples/src/androidAndroidTest/res;file://$MODULE_DIR$/../../../bloc-samples/src/androidTestDebug/res;file://$MODULE_DIR$/../../../bloc-samples/src/androidAndroidTestDebug/res;file://$MODULE_DIR$/../../../bloc-samples/build/generated/res/rs/androidTest/debug;file://$MODULE_DIR$/../../../bloc-samples/build/generated/res/resValues/androidTest/debug" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+        <option name="PROJECT_TYPE" value="1" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../bloc-samples/src/commonMain/kotlin">
+      <sourceFolder url="file://$MODULE_DIR$/../../../bloc-samples/src/commonMain/kotlin" type="kotlin-source" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../bloc-samples/src/commonMain/resources" />
+    <orderEntry type="jdk" jdkName="Android API 32 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.commonMain" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.20-RC2" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-client-serialization:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-client-json:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-client-logging:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-client-core:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:commonMain:1.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:concurrentMain:1.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.arkivanov.essenty:lifecycle:commonMain:0.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.arkivanov.essenty:state-keeper:commonMain:0.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.arkivanov.essenty:parcelable:commonMain:0.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.arkivanov.essenty:instance-keeper:commonMain:0.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.arkivanov.essenty:back-pressed:commonMain:0.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.insert-koin:koin-core:commonMain:3.1.5" level="project" />
+    <orderEntry type="library" name="Gradle: co.touchlab:kermit:commonMain:1.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.michael-bull.kotlin-result:kotlin-result:1.1.14" level="project" />
+    <orderEntry type="library" name="Gradle: com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.14" level="project" />
+    <orderEntry type="library" name="Gradle: com.badoo.reaktive:reaktive:1.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.ionspin.kotlin:bignum:0.3.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-serialization-json:commonMain:1.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-http-cio:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-http:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.reduxkotlin:redux-kotlin-threadsafe-metadata:commonMain:0.5.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.reduxkotlin:redux-kotlin-thunk-metadata:0.5.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-serialization-core:commonMain:1.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-utils:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: io.ktor:ktor-io:commonMain:1.6.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.reduxkotlin:redux-kotlin-metadata:commonMain:0.5.5" level="project" />
+  </component>
+</module>

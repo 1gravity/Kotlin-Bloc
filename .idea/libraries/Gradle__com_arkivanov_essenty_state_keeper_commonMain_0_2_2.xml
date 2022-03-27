@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arkivanov.essenty:state-keeper:commonMain:0.2.2" type="kotlin.common">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/kotlin/sourceSetMetadata/bloc-samples.Kotlin-Bloc/commonMain/implementation/com.arkivanov.essenty-state-keeper/com.arkivanov.essenty-state-keeper-commonMain.klib!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.arkivanov.essenty/state-keeper/0.2.2/c71ed77dcd359cc285a9432e967f44c8d449c445/state-keeper-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

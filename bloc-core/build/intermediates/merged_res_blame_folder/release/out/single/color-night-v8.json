@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-night-v8/material_timepicker_clockface.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/color-night-v8/material_timepicker_clockface.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-night-v8/material_timepicker_button_stroke.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/color-night-v8/material_timepicker_button_stroke.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-night-v8/material_timepicker_modebutton_tint.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/f28362cce85a54d592a8bc142d1a47b7/transformed/material-1.4.0-beta01/res/color-night-v8/material_timepicker_modebutton_tint.xml"
+    }
+]

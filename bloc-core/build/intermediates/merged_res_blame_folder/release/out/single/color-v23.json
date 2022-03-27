@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_tint_edittext.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_color_highlight_material.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_tint_spinner.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_tint_switch_track.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_btn_colored_text_material.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_tint_default.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "/home/peace/development/Kotlin-Bloc/bloc-core/build/intermediates/merged_res/release/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/home/peace/.gradle/caches/transforms-3/e36403aef73547a0f49ef99052d357e5/transformed/appcompat-1.4.1/res/color-v23/abc_tint_btn_checkable.xml"
+    }
+]

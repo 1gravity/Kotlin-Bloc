@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":bloc-core:iosX64Test" external.linked.project.path="$MODULE_DIR$/../../../bloc-core" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="Kotlin-Bloc" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="4" platform="Native (ios_x64) " allPlatforms="Native []/Native [ios_x64]" useProjectSettings="false" isTestModule="true" externalProjectId=":bloc-core" isHmppProject="true" pureKotlinSourceFolders="$MODULE_DIR$/../../../bloc-core/src/androidDebug/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/debug/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/debug/java;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidDebugAndroidTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidDebugUnitTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidRelease/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/release/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/release/java;/home/peace/development/Kotlin-Bloc/bloc-core/src/androidReleaseUnitTest/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosArm64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosArm64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosX64Main/kotlin;/home/peace/development/Kotlin-Bloc/bloc-core/src/iosX64Main/kotlin">
+        <dependsOnModuleNames>
+          <dependsOn>:bloc-core:commonTest</dependsOn>
+          <dependsOn>:bloc-core:iosTest</dependsOn>
+        </dependsOnModuleNames>
+        <sourceSets>
+          <sourceSet>Kotlin-Bloc.bloc-core.commonTest</sourceSet>
+          <sourceSet>Kotlin-Bloc.bloc-core.iosTest</sourceSet>
+          <sourceSet>Kotlin-Bloc.bloc-core.iosX64Main</sourceSet>
+          <sourceSet>Kotlin-Bloc.bloc-core.iosMain</sourceSet>
+          <sourceSet>Kotlin-Bloc.bloc-core.commonMain</sourceSet>
+        </sourceSets>
+        <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
+        <compilerSettings />
+        <compilerArguments>
+          <option name="languageVersion" value="1.6" />
+          <option name="apiVersion" value="1.6" />
+          <option name="pluginOptions">
+            <array />
+          </option>
+          <option name="pluginClasspaths">
+            <array />
+          </option>
+          <option name="multiPlatform" value="true" />
+          <option name="errors">
+            <ArgumentParseErrors />
+          </option>
+        </compilerArguments>
+      </configuration>
+    </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugSources" />
+        <afterSyncTasks>
+          <task>generateDebugSources</task>
+        </afterSyncTasks>
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/androidMain/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../bloc-core/src/main/res;file://$MODULE_DIR$/../../../bloc-core/src/androidMain/res;file://$MODULE_DIR$/../../../bloc-core/src/debug/res;file://$MODULE_DIR$/../../../bloc-core/src/androidDebug/res;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/rs/debug;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/resValues/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../bloc-core/src/androidTest/res;file://$MODULE_DIR$/../../../bloc-core/src/androidAndroidTest/res;file://$MODULE_DIR$/../../../bloc-core/src/androidTestDebug/res;file://$MODULE_DIR$/../../../bloc-core/src/androidAndroidTestDebug/res;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/rs/androidTest/debug;file://$MODULE_DIR$/../../../bloc-core/build/generated/res/resValues/androidTest/debug" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+        <option name="PROJECT_TYPE" value="1" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output-test url="file://$MODULE_DIR$/../../../bloc-core/build/classes/kotlin/iosX64/test/klib" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../bloc-core/src/iosX64Test/kotlin" />
+    <content url="file://$MODULE_DIR$/../../../bloc-core/src/iosX64Test/resources" />
+    <orderEntry type="jdk" jdkName="Android API 32 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Kotlin/Native 1.6.20-RC2 - stdlib" level="project" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.commonMain" scope="TEST" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.commonTest" scope="TEST" production-on-test="" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.iosMain" scope="TEST" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.iosTest" scope="TEST" production-on-test="" />
+    <orderEntry type="module" module-name="Kotlin-Bloc.bloc-core.iosX64Main" scope="TEST" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.michael-bull.kotlin-result:kotlin-result-coroutines-iosx64:klib:1.1.14" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:klib:1.6.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.badoo.reaktive:reaktive:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.reduxkotlin:redux-kotlin-threadsafe-iosx64:klib:0.5.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.reduxkotlin:redux-kotlin-thunk-iosx64:klib:0.5.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.badoo.reaktive:reaktive-iosx64:klib:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.arkivanov.essenty:lifecycle-iosx64:klib:0.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.arkivanov.essenty:state-keeper-iosx64:klib:0.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.arkivanov.essenty:parcelable-iosx64:klib:0.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.arkivanov.essenty:instance-keeper-iosx64:klib:0.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.arkivanov.essenty:back-pressed-iosx64:klib:0.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.michael-bull.kotlin-result:kotlin-result:1.1.14" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: co.touchlab:kermit-iosx64:klib:1.0.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.14" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.michael-bull.kotlin-result:kotlin-result-iosx64:klib:1.1.14" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.5.30" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:atomicfu-iosx64:klib:0.17.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.reduxkotlin:redux-kotlin-thunk-metadata:0.5.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:atomicfu-iosx64:klib:cinterop-interop:0.17.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.6.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.reduxkotlin:redux-kotlin-iosx64:klib:0.5.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.badoo.reaktive:utils-iosx64:klib:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.badoo.reaktive:reaktive-annotations-iosx64:klib:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.arkivanov.essenty:utils-internal-iosx64:klib:0.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="Kotlin-Bloc.bloc-core.iosX64Main" />
+</module>
