@@ -4,7 +4,7 @@ import com.onegravity.bloc.utils.MutableStateStream
 import com.onegravity.bloc.utils.Acceptor
 import kotlinx.coroutines.flow.FlowCollector
 
-open class BlocStateImpl<State, Proposal>(
+internal open class BlocStateImpl<State, Proposal>(
     initialState: State,
     private val acceptor: Acceptor<Proposal, State>,
 ) : BlocState<State, Proposal> {

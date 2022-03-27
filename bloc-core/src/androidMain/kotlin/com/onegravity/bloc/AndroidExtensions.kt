@@ -25,9 +25,9 @@ fun <T : ViewDataBinding> AppCompatActivity.bind(@LayoutRes layoutId: Int, bind2
 
 @Suppress("UNCHECKED_CAST")
 @BlocDSL
-inline fun <VM : ViewModel> AppCompatActivity.factory(crossinline f: (context: ActivityBlocContext) -> VM) =
+inline fun <VM : ViewModel> AppCompatActivity.factory(crossinline createInstance: (context: ActivityBlocContext) -> VM) =
     object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>):T = f(activityBlocContext()) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>):T = createInstance(activityBlocContext()) as T
     }
 
 /**

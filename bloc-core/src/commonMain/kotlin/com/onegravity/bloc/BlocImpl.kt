@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
 
-class BlocImpl<State, Action : Any, SideEffect, Proposal>(
+internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val initializer: Initializer<State, Action> = { },

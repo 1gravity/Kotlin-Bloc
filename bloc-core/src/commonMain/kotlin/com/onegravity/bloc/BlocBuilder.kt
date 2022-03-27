@@ -7,14 +7,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.JvmName
 
-class BlocBuilder<State, Action: Any, SE, Proposal> {
+class BlocBuilder<State, Action : Any, SE, Proposal> {
 
     private var _initializer: Initializer<State, Action> = { }
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
     private var _dispatcher: CoroutineContext = Dispatchers.Default
 
-    fun build(context: BlocContext, blocState: BlocState<State, Proposal>) = BlocImpl(
+    fun build(
+        context: BlocContext,
+        blocState: BlocState<State, Proposal>
+    ): Bloc<State, Action, SE, Proposal> = BlocImpl(
         blocContext = context,
         blocState = blocState,
         initializer = _initializer,
@@ -66,7 +69,11 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
         val reducerNoSideEffect: Reducer<State, A, Effect<Proposal, SE>> = {
             reducer.invoke(this).noSideEffect()
         }
-        addReducer(Matcher.any<Action, A>(), reducerNoSideEffect as Reducer<State, Action, Effect<Proposal, SE>>, true)
+        addReducer(
+            Matcher.any<Action, A>(),
+            reducerNoSideEffect as Reducer<State, Action, Effect<Proposal, SE>>,
+            true
+        )
     }
 
     /* Reducer without state but with side effect(s) */
@@ -86,7 +93,11 @@ class BlocBuilder<State, Action: Any, SE, Proposal> {
         val reducerNoState: Reducer<State, A, Effect<Proposal, SE>> = {
             Effect(null, sideEffect.invoke(this))
         }
-        addReducer(Matcher.any<Action, A>(), reducerNoState as Reducer<State, Action, Effect<Proposal, SE>>, false)
+        addReducer(
+            Matcher.any<Action, A>(),
+            reducerNoState as Reducer<State, Action, Effect<Proposal, SE>>,
+            false
+        )
     }
 
     /* Reducers with state and side effect(s) */
