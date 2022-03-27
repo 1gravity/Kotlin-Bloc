@@ -2,6 +2,8 @@
 
 ![Overview](./docs/BLoC Architecture - Overview.svg)
 
+[Dokka Documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
+
 You can use the [editor on GitHub](https://github.com/1gravity/Kotlin-Bloc/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
