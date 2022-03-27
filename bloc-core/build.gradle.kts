@@ -3,6 +3,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("kotlin-parcelize")
+    id("org.jetbrains.dokka")
 }
 
 version = "1.0"
