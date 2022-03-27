@@ -37,7 +37,16 @@ data class ActivityBlocContext(
 
 /** --------------------------------------------------------------------------------------------- */
 
-fun ViewModel.defaultBlocContext(
+fun ActivityBlocContext.toBlocContext(
+    lifecycleRegistry: LifecycleRegistry
+) = DefaultBlocContext(
+    lifecycle = lifecycleRegistry.asEssentyLifecycle(),
+    stateKeeper = savedStateRegistry?.let(::StateKeeper),
+    instanceKeeper = viewModelStore?.let(::InstanceKeeper),
+    backPressedHandler = onBackPressedDispatcher?.let(::BackPressedHandler)
+)
+
+fun defaultBlocContext(
     activityBlocContext: ActivityBlocContext,
     lifecycleRegistry: LifecycleRegistry
 ) = DefaultBlocContext(

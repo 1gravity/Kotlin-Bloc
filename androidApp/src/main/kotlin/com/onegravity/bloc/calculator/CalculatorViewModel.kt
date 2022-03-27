@@ -1,16 +1,14 @@
 package com.onegravity.bloc.calculator
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.onegravity.bloc.ActivityBlocContext
-import com.onegravity.bloc.BaseViewModel
-import com.onegravity.bloc.R
+import com.onegravity.bloc.*
 import com.onegravity.bloc.sample.calculator.Action.*
 import com.onegravity.bloc.sample.calculator.bloc
-import com.onegravity.bloc.toLiveData
 
-class CalculatorViewModel(context: ActivityBlocContext) : BaseViewModel(context) {
+class CalculatorViewModel(context: ActivityBlocContext) : ViewModel() {
 
-    private val bloc = viewModelContext.bloc()
+    private val bloc = blocContext(context).bloc()
 
     val state = bloc.toLiveData(viewModelScope)
 

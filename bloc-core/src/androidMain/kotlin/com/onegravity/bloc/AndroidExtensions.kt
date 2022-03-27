@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
+import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -95,6 +96,10 @@ fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State
     }
 
 /**
+ * ViewModel.
+ */
+
+/**
  * Call from a ViewModel:
  * ```
  *   val state = toLiveData(bloc)
@@ -102,3 +107,6 @@ fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State
  */
 @BlocDSL
 fun <State> ViewModel.toLiveData(stream: StateStream<State>) = stream.toLiveData(viewModelScope)
+
+fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
+    BlocContextOwnerImpl(this, context).blocContext
