@@ -1,8 +1,3 @@
----
-layout: page
-title: Kotlin BLoC
----
-
 ## Welcome to GitHub Pages
 
 ![Overview](./home/BLoC Architecture - Overview.svg)
