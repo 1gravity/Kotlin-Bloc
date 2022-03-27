@@ -1,2 +1,9 @@
 ./build
 ./idea
+.gradle
+.idea
+./bloc-core
+./bloc-samples
+./androidApp
+./iosApp
+./gradlew
