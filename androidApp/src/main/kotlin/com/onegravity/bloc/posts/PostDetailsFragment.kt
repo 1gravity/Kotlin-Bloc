@@ -51,7 +51,7 @@ class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
 
     private val args: PostDetailsFragmentArgs by navArgs()
     private val viewModel by viewModels<PostDetailsViewModel> {
-        factory { PostDetailsViewModel(it, args.overview) }
+        factory { PostDetailsViewModel(args.overview) }
     }
     private var initialised: Boolean = false
     private val adapter = GroupAdapter<GroupieViewHolder>()

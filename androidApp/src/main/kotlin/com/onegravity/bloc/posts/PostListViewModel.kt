@@ -13,12 +13,12 @@ import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.util.getKoinInstance
 
-class PostListViewModel(context: ActivityBlocContext) :
+class PostListViewModel :
     ViewModel(),
     BlocOwner<PostListState, PostList.Action, PostList.OpenPost, PostListState>,
     KoinComponent {
 
-    override val bloc = PostList.bloc(blocContext(context))
+    override val bloc = PostList.bloc(blocContext())
 
     fun onPostClicked(post: PostOverview) = sideEffect {
         PostList.OpenPost(post)
@@ -41,15 +41,14 @@ class PostListViewModel(context: ActivityBlocContext) :
  * it implements the thunk { }, reduce { } and sideEffect { } functions directly. This is similar to
  * what Orbit MVI does (https://github.com/orbit-mvi/orbit-mvi).
  */
-//class PostListViewModel2(context: ActivityBlocContext) :
-//    ViewModel(),
+//class PostListViewModel : ViewModel(),
 //    BlocOwner<PostListState, Nothing, PostList.OpenPost, PostListState>,
 //    KoinComponent {
 //
 //    private val repository = getKoinInstance<PostRepository>()
 //
 //    override val bloc = bloc<PostListState, Nothing, PostList.OpenPost, PostListState>(
-//        blocContext(context),
+//        blocContext(),
 //        blocState(PostListState())
 //    )
 //

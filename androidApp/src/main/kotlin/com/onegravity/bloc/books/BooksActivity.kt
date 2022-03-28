@@ -7,13 +7,12 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
-import com.onegravity.bloc.factory
 import com.onegravity.bloc.sample.books.BookState
 import com.onegravity.bloc.subscribe
 
 class BooksActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<BooksViewModel> { factory { BooksViewModel(it) } }
+    private val viewModel by viewModels<BooksViewModel>()
 
     lateinit var pageEmpty: View
     lateinit var pageLoading: View

@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.bind
 import com.onegravity.bloc.databinding.ActivityCounterSimpleBinding
-import com.onegravity.bloc.factory
 
 class CounterActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<CounterSimpleViewModel> { factory { CounterSimpleViewModel(it) } }
+    private val viewModel by viewModels<CounterSimpleViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

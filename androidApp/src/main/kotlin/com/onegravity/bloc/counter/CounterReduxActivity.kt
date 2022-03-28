@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.bind
 import com.onegravity.bloc.databinding.ActivityCounterReduxBinding
-import com.onegravity.bloc.factory
 
 class CounterReduxActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<CounterReduxViewModel> { factory { CounterReduxViewModel(it) } }
+    private val viewModel by viewModels<CounterReduxViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

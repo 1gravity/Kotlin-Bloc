@@ -31,7 +31,6 @@ import com.github.michaelbull.result.mapBoth
 import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
-import com.onegravity.bloc.factory
 import com.onegravity.bloc.sample.posts.bloc.PostList
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
@@ -41,7 +40,7 @@ import com.onegravity.bloc.subscribe
 
 class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
-    private val viewModel: PostListViewModel by viewModels { factory { PostListViewModel(it) } }
+    private val viewModel: PostListViewModel by viewModels()
 
     private val binding by viewBinding<PostListFragmentBinding>()
 

@@ -5,11 +5,9 @@ import com.onegravity.bloc.sample.MainMenu.ActionState
 import com.onegravity.bloc.sample.MainMenu.bloc
 import com.onegravity.bloc.utils.BlocObservableOwner
 
-class MainViewModel(activityBlocContext: ActivityBlocContext) :
-    ViewModel(),
-    BlocObservableOwner<ActionState, ActionState> {
+class MainViewModel : ViewModel(), BlocObservableOwner<ActionState, ActionState> {
 
-    private val bloc = bloc(blocContext(activityBlocContext))
+    private val bloc = bloc(blocContext())
 
     override val observable = bloc.toObservable()
 

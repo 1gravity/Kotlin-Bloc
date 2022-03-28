@@ -15,7 +15,7 @@ import com.onegravity.bloc.sample.MainMenu.ActionState.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<MainViewModel> { factory { MainViewModel(it) } }
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

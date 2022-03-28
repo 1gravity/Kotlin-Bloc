@@ -1,16 +1,15 @@
 package com.onegravity.bloc.counter
 
 import androidx.lifecycle.ViewModel
-import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.blocContext
 import com.onegravity.bloc.sample.counter.ReduxCounter.Action.Decrement
 import com.onegravity.bloc.sample.counter.ReduxCounter.Action.Increment
 import com.onegravity.bloc.sample.counter.ReduxCounter.bloc
 import com.onegravity.bloc.toLiveData
 
-class CounterReduxViewModel(context: ActivityBlocContext) : ViewModel() {
+class CounterReduxViewModel : ViewModel() {
 
-    private val bloc = bloc(blocContext(context))
+    private val bloc = bloc(blocContext())
 
     val state = toLiveData(bloc)
     //  this does the same:

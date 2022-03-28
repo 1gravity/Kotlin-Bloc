@@ -110,3 +110,6 @@ fun <State> ViewModel.toLiveData(stream: StateStream<State>) = stream.toLiveData
 
 fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
     BlocContextOwnerImpl(this, context).blocContext
+
+fun ViewModel.blocContext(): BlocContext =
+    BlocContextOwnerImpl(this, ActivityBlocContext(null, null, null)).blocContext
