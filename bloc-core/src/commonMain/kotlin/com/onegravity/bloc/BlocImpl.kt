@@ -62,7 +62,6 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     override val sideEffects: SideEffectStream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
     private fun CoroutineScope.start() {
-        coroutineContext.run {  }
         launch(dispatcher) {
             val context = InitializerContext<State, Action>(value) { action -> send(action) }
             context.initializer()
@@ -72,7 +71,6 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
                     runThunks(action)
                 }
             }
-
             launch(dispatcher) {
                 for (action in reduceChannel) {
                     runReducers(action)
