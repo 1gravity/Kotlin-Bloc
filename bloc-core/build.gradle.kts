@@ -61,22 +61,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(AndroidX.appCompat)
-                implementation(AndroidX.activity.ktx)
-                implementation(AndroidX.fragment.ktx)
-                implementation(AndroidX.navigation.fragmentKtx)
-
-                implementation(AndroidX.lifecycle.viewModelKtx)
-                implementation(AndroidX.lifecycle.viewModelCompose)
-                implementation(AndroidX.lifecycle.viewModelSavedState)
-                implementation(AndroidX.lifecycle.liveDataKtx)
-                implementation(AndroidX.lifecycle.runtimeKtx)
-
                 implementation(AndroidX.activity.compose)
-                implementation(AndroidX.compose.runtime)
-                implementation(AndroidX.compose.compiler)
-                implementation(AndroidX.compose.ui)
-                implementation(AndroidX.compose.animation)
-                implementation(AndroidX.compose.material)
             }
         }
         val androidTest by getting
@@ -119,7 +104,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-beta04"
+        kotlinCompilerExtensionVersion = "1.1.1"
         useLiveLiterals = true
     }
 }

@@ -4,6 +4,8 @@ plugins {
     kotlin("plugin.serialization")
     id("com.android.library")
     id("kotlin-parcelize")
+    // todo create a separate module for Jetbrains Compose
+    id("org.jetbrains.compose")
 }
 
 version = "1.0"
@@ -72,8 +74,8 @@ kotlin {
             dependencies {
                 implementation(Ktor.client.cio)
 
+                implementation(AndroidX.appCompat)
                 implementation(AndroidX.activity.compose)
-                implementation(AndroidX.lifecycle.viewModelCompose)
                 implementation(AndroidX.compose.material)
                 implementation(AndroidX.compose.animation)
                 implementation(AndroidX.compose.ui.tooling)
