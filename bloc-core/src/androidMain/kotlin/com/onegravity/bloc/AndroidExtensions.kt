@@ -1,7 +1,8 @@
 package com.onegravity.bloc
 
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.compose.runtime.*
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -9,15 +10,14 @@ import androidx.lifecycle.*
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.utils.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /**
- * AppCompatActivity.
+ * ComponentActivity/AppCompatActivity.
  */
 
 @BlocDSL
-fun <T : ViewDataBinding> AppCompatActivity.bind(@LayoutRes layoutId: Int, bind2ViewModel: (T) -> Unit) {
+fun <T : ViewDataBinding> ComponentActivity.bind(@LayoutRes layoutId: Int, bind2ViewModel: (T) -> Unit) {
     val binding = DataBindingUtil.setContentView<T>(this, layoutId)
     bind2ViewModel(binding)
     binding.lifecycleOwner = this
@@ -26,7 +26,7 @@ fun <T : ViewDataBinding> AppCompatActivity.bind(@LayoutRes layoutId: Int, bind2
 
 @Suppress("UNCHECKED_CAST")
 @BlocDSL
-inline fun <VM : ViewModel> AppCompatActivity.factory(crossinline createInstance: (context: ActivityBlocContext) -> VM) =
+inline fun <VM : ViewModel> ComponentActivity.factory(crossinline createInstance: (context: ActivityBlocContext) -> VM) =
     object : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>):T = createInstance(activityBlocContext()) as T
     }
@@ -36,7 +36,7 @@ inline fun <VM : ViewModel> AppCompatActivity.factory(crossinline createInstance
  */
 @BlocDSL
 fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
-    activity: AppCompatActivity,
+    activity: ComponentActivity,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
@@ -45,7 +45,7 @@ fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
 
 @BlocDSL
 fun <State, Action : Any, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
-    activity: AppCompatActivity,
+    activity: ComponentActivity,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
@@ -113,3 +113,28 @@ fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
 
 fun ViewModel.blocContext(): BlocContext =
     BlocContextOwnerImpl(this, ActivityBlocContext(null, null, null)).blocContext
+
+/**
+ * Adapter for Jetpack Compose.
+ *
+ * This allows us to select sub state and subscribe to it as androidx.compose.runtime.State in one
+ * line of code:
+ *   val state = bloc.subscribeAsState()
+ */
+@Composable
+fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeAsState(): State<S> {
+    val state = remember(this) { mutableStateOf(value) }
+    DisposableEffect(this) {
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+        coroutineScope.launch {
+            this@observeAsState.collect {
+                state.value = it
+            }
+        }
+        onDispose {
+            coroutineScope.cancel()
+        }
+    }
+
+    return state
+}

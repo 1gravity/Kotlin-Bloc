@@ -2,20 +2,24 @@ Pod::Spec.new do |spec|
     spec.name                     = 'bloc_core'
     spec.version                  = '1.0'
     spec.homepage                 = 'https://github.com/1gravity/Knot'
-    spec.source                   = { :http=> ''}
+    spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''
     spec.license                  = ''
     spec.summary                  = 'Reactive state container library for KMM'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/bloc-core.framework'
-    spec.libraries                = 'c++'
+
+    spec.vendored_frameworks      = "build/cocoapods/framework/bloc-core.framework"
+    spec.libraries                = "c++"
+    spec.module_name              = "#{spec.name}_umbrella"
+
     spec.ios.deployment_target = '14.1'
+
                 
-                
+
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':bloc-core',
-        'PRODUCT_MODULE_NAME' => 'bloc-core',
+        'PRODUCT_MODULE_NAME' => 'bloc_core',
     }
-                
+
     spec.script_phases = [
         {
             :name => 'Build bloc_core',
@@ -31,9 +35,8 @@ Pod::Spec.new do |spec|
                 "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" $KOTLIN_PROJECT_PATH:syncFramework \
                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME \
                     -Pkotlin.native.cocoapods.archs="$ARCHS" \
-                    -Pkotlin.native.cocoapods.configuration="$CONFIGURATION"
+                    -Pkotlin.native.cocoapods.configuration=$CONFIGURATION
             SCRIPT
         }
     ]
-                
 end

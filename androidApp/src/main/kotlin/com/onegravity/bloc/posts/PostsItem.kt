@@ -28,13 +28,14 @@ import com.onegravity.bloc.databinding.PostListItemBinding
 import com.xwray.groupie.viewbinding.BindableItem
 import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
 
-data class PostListItem(private val post: PostOverview, private val viewModel: PostListViewModel) : BindableItem<PostListItemBinding>() {
+data class PostsItem(private val post: PostOverview, private val viewModel: PostsViewModel) :
+    BindableItem<PostListItemBinding>() {
 
     override fun initializeViewBinding(view: View) = PostListItemBinding.bind(view)
 
-    override fun isSameAs(other: com.xwray.groupie.Item<*>) = other is PostListItem && post.id == other.post.id
+    override fun isSameAs(other: com.xwray.groupie.Item<*>) = other is PostsItem && post.id == other.post.id
 
-    override fun hasSameContentAs(other: com.xwray.groupie.Item<*>) = other is PostListItem && post == other.post
+    override fun hasSameContentAs(other: com.xwray.groupie.Item<*>) = other is PostsItem && post == other.post
 
     override fun getLayout() = R.layout.post_list_item
 

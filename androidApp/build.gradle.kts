@@ -30,9 +30,13 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
     dataBinding {
         isEnabled = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
 }
 
@@ -54,6 +58,17 @@ dependencies {
     implementation(AndroidX.navigation.fragmentKtx)
     implementation(AndroidX.navigation.uiKtx)
     implementation(AndroidX.recyclerView)
+
+    // Integration with activities
+    implementation(AndroidX.activity.compose)
+    // Integration with ViewModels
+    implementation(AndroidX.lifecycle.viewModelCompose)
+    // Compose Material Design
+    implementation(AndroidX.compose.material)
+    // Animations
+    implementation(AndroidX.compose.animation)
+    // Tooling support (Previews, etc.)
+    implementation(AndroidX.compose.ui.tooling)
 
     implementation(Google.android.material)
 

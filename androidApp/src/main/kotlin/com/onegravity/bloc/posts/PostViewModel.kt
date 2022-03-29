@@ -9,7 +9,7 @@ import com.onegravity.bloc.utils.BlocObservableOwner
 import com.onegravity.bloc.toObservable
 import org.koin.core.component.KoinComponent
 
-class PostDetailsViewModel(postOverview: PostOverview) :
+class PostViewModel(postOverview: PostOverview) :
     ViewModel(),
     BlocObservableOwner<PostState, Unit>,
     KoinComponent {

@@ -71,6 +71,12 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Ktor.client.cio)
+
+                implementation(AndroidX.activity.compose)
+                implementation(AndroidX.lifecycle.viewModelCompose)
+                implementation(AndroidX.compose.material)
+                implementation(AndroidX.compose.animation)
+                implementation(AndroidX.compose.ui.tooling)
             }
         }
         val androidTest by getting
@@ -98,9 +104,13 @@ android {
         targetSdk = 32
     }
     buildFeatures {
-        viewBinding = true
+//        viewBinding = true
+        compose = true
     }
     dataBinding {
-        isEnabled = true
+//        isEnabled = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
 }

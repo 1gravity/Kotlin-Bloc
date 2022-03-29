@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.onegravity.bloc.posts.PostListFragment"
+        android:name="com.onegravity.bloc.posts.PostsFragment"
         android:label="@string/app_name"
         tools:layout="@layout/post_list_fragment">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.onegravity.bloc.posts.PostDetailsFragment"
+        android:name="com.onegravity.bloc.posts.PostFragment"
         android:label="@string/app_name"
         tools:layout="@layout/post_details_fragment">
         <argument

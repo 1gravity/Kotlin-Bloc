@@ -13,7 +13,7 @@ import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.util.getKoinInstance
 
-class PostListViewModel :
+class PostsViewModel :
     ViewModel(),
     BlocOwner<PostListState, PostList.Action, PostList.OpenPost, PostListState>,
     KoinComponent {

@@ -59,12 +59,21 @@ kotlin {
             dependencies {
                 implementation(AndroidX.appCompat)
                 implementation(AndroidX.activity.ktx)
-                implementation(AndroidX.lifecycle.viewModelKtx)
                 implementation(AndroidX.fragment.ktx)
-                implementation(AndroidX.constraintLayout)
                 implementation(AndroidX.navigation.fragmentKtx)
-                implementation(AndroidX.navigation.uiKtx)
-                implementation(AndroidX.recyclerView)
+
+                implementation(AndroidX.lifecycle.viewModelKtx)
+                implementation(AndroidX.lifecycle.viewModelCompose)
+                implementation(AndroidX.lifecycle.viewModelSavedState)
+                implementation(AndroidX.lifecycle.liveDataKtx)
+                implementation(AndroidX.lifecycle.runtimeKtx)
+
+                implementation(AndroidX.activity.compose)
+                implementation(AndroidX.compose.runtime)
+                implementation(AndroidX.compose.compiler)
+                implementation(AndroidX.compose.ui)
+                implementation(AndroidX.compose.animation)
+                implementation(AndroidX.compose.material)
             }
         }
         val androidTest by getting
@@ -82,16 +91,33 @@ kotlin {
 
 android {
     compileSdk = 32
+    buildToolsVersion = "32.0.0"
+
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
     defaultConfig {
         minSdk = 21
         targetSdk = 32
+        multiDexEnabled = true
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
     buildFeatures {
         viewBinding = true
+        compose = true
     }
+
     dataBinding {
         isEnabled = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.0-beta04"
+        useLiveLiterals = true
     }
 }
 

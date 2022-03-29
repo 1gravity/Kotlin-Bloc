@@ -20,7 +20,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="Take your pick"
+            android:text="Take a pick"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
             android:id="@+id/counter_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Counter 1"
+            android:text="Counter"
             android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +49,7 @@
             android:id="@+id/counter_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Counter 2"
+            android:text="Redux\nCounter"
             android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter2)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -91,6 +91,18 @@
             app:layout_constraintTop_toBottomOf="@id/books"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <Button
+            android:id="@+id/compose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compose"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Compose)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/calculator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintVertical_bias="0.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

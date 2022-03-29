@@ -38,9 +38,9 @@ import com.xwray.groupie.GroupieViewHolder
 import com.onegravity.bloc.sample.posts.bloc.PostListState
 import com.onegravity.bloc.subscribe
 
-class PostListFragment : Fragment(R.layout.post_list_fragment) {
+class PostsFragment : Fragment(R.layout.post_list_fragment) {
 
-    private val viewModel: PostListViewModel by viewModels()
+    private val viewModel: PostsViewModel by viewModels()
 
     private val binding by viewBinding<PostListFragmentBinding>()
 
@@ -83,7 +83,7 @@ class PostListFragment : Fragment(R.layout.post_list_fragment) {
             state.overviews.mapBoth(
                 { posts ->
                     posts.sortedBy { it.title }
-                        .map { PostListItem(it, viewModel) }
+                        .map { PostsItem(it, viewModel) }
                         .also { adapter.update(it) }
                 },
                 { error ->
@@ -97,7 +97,7 @@ class PostListFragment : Fragment(R.layout.post_list_fragment) {
 
     private fun sideEffect(sideEffect: PostList.OpenPost) {
         findNavController().navigate(
-            PostListFragmentDirections.actionListFragmentToDetailFragment(
+            PostsFragmentDirections.actionListFragmentToDetailFragment(
                 sideEffect.postOverview
             )
         )

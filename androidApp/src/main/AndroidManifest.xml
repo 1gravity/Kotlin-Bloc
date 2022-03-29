@@ -51,6 +51,12 @@
             android:theme="@style/AppThemeCalculator"
             android:exported="false"/>
 
+        <activity
+            android:name=".compose.ComposeActivity"
+            android:label="Compose"
+            android:theme="@style/Theme.Bloc"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

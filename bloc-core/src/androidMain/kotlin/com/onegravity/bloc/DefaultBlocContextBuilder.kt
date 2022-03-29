@@ -4,11 +4,14 @@
 
 package com.onegravity.bloc
 
+import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryOwner
 import com.arkivanov.essenty.backpressed.BackPressedHandler
@@ -17,7 +20,7 @@ import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.onegravity.bloc.context.DefaultBlocContext
 
-fun AppCompatActivity.activityBlocContext() = ActivityBlocContext(
+fun ComponentActivity.activityBlocContext() = ActivityBlocContext(
     savedStateRegistry = savedStateRegistry,
     viewModelStore = viewModelStore,
     onBackPressedDispatcher = onBackPressedDispatcher
@@ -58,6 +61,7 @@ fun defaultBlocContext(
 
 /** --------------------------------------------------------------------------------------------- */
 
+// todo this is the Activity lifecycle when called from an Activity, what to do about it?
 fun <T> T.defaultBlocContext(): DefaultBlocContext where
         T : SavedStateRegistryOwner, T : OnBackPressedDispatcherOwner, T : ViewModelStoreOwner, T : LifecycleOwner =
     DefaultBlocContext(

@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.books.BooksActivity
 import com.onegravity.bloc.calculator.CalculatorActivity
+import com.onegravity.bloc.compose.ComposeActivity
 import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         bind<ActivityMainBinding>(R.layout.activity_main) { it.viewmodel = viewModel }
     }
 
@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         Books to BooksActivity::class.java,
         Calculator to CalculatorActivity::class.java,
         Posts to PostActivity::class.java,
+        Compose to ComposeActivity::class.java
     )
 
     private fun <A: Activity, C: Class<A>> C.start() {

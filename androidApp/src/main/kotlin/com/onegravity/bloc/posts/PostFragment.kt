@@ -47,11 +47,11 @@ import com.xwray.groupie.GroupieViewHolder
 import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.subscribe
 
-class PostDetailsFragment : Fragment(R.layout.post_details_fragment) {
+class PostFragment : Fragment(R.layout.post_details_fragment) {
 
-    private val args: PostDetailsFragmentArgs by navArgs()
-    private val viewModel by viewModels<PostDetailsViewModel> {
-        factory { PostDetailsViewModel(args.overview) }
+    private val args: PostFragmentArgs by navArgs()
+    private val viewModel by viewModels<PostViewModel> {
+        factory { PostViewModel(args.overview) }
     }
     private var initialised: Boolean = false
     private val adapter = GroupAdapter<GroupieViewHolder>()

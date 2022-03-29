@@ -11,7 +11,8 @@ object MainMenu {
         Counter2,
         Books,
         Calculator,
-        Posts
+        Posts,
+        Compose
     }
 
     fun bloc(context: BlocContext) = bloc<ActionState, ActionState, ActionState>(
