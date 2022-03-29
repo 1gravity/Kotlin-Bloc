@@ -9,7 +9,7 @@
         android:id="@+id/loadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tap to load books"
+        android:text="@string/books_load"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

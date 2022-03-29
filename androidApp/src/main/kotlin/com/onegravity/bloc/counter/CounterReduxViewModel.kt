@@ -12,7 +12,7 @@ class CounterReduxViewModel : ViewModel() {
     private val bloc = bloc(blocContext())
 
     val state = toLiveData(bloc)
-    //  this does the same:
+    //  this does the same but it's more verbose:
 //    val state = bloc.toLiveData(viewModelScope)
 
     fun increment() {

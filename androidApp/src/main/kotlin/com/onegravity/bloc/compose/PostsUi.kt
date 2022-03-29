@@ -22,15 +22,11 @@ import com.onegravity.bloc.observeAsState
 import com.onegravity.bloc.sample.posts.bloc.PostList
 import com.onegravity.bloc.sample.posts.bloc.PostListState
 import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
-import com.onegravity.bloc.toLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 
 @Composable
 fun PostsUi(bloc: Bloc<PostListState, PostList.Action, PostList.OpenPost, PostListState>, modifier: Modifier = Modifier) {
-    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     val model: PostListState by bloc.observeAsState()
+
     if (model.loading) {
         // todo loading message
     } else {

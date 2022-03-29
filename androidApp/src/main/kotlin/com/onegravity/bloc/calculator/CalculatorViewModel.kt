@@ -1,7 +1,6 @@
 package com.onegravity.bloc.calculator
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.onegravity.bloc.*
 import com.onegravity.bloc.sample.calculator.Action.*
 import com.onegravity.bloc.sample.calculator.bloc
@@ -10,7 +9,7 @@ class CalculatorViewModel(context: ActivityBlocContext) : ViewModel() {
 
     private val bloc = blocContext(context).bloc()
 
-    val state = bloc.toLiveData(viewModelScope)
+    val state = toLiveData(bloc)
 
     private val view2Action = mapOf(
         R.id.button_clear to Clear,

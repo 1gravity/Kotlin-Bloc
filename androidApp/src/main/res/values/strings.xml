@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">BLoC Framework</string>
+
+    <string name="main_menu_title">Take your pick</string>
+    <string name="main_menu_counter">Counter</string>
+    <string name="main_menu_counter_redux">Counter\nRedux</string>
+    <string name="main_menu_books">Books</string>
+    <string name="main_menu_calculator">Calculator</string>
+    <string name="main_menu_posts">Posts</string>
+    <string name="main_menu_posts_compose">Posts\nCompose</string>
+
+    <string name="counter_value">Counter: %s</string>
+    <string name="counter_increment">Increment</string>
+    <string name="counter_decrement">Decrement</string>
+
+    <string name="books_load">Tap to load books</string>
+    <string name="books_reload">Reload</string>
+    <string name="books_clear">Clear</string>
+    <string name="books_retry">Try Again</string>
+
+    <string name="rotate_device">Rotate device now to see how the state persists</string>
+
 </resources>
