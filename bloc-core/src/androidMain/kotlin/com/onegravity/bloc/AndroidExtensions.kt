@@ -115,7 +115,7 @@ fun ViewModel.blocContext(): BlocContext =
     BlocContextOwnerImpl(this, ActivityBlocContext(null, null, null)).blocContext
 
 /**
- * Adapter for Jetpack Compose.
+ * Adapter for Jetbrains Compose.
  *
  * This allows us to select sub state and subscribe to it as androidx.compose.runtime.State in one
  * line of code:

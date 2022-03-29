@@ -4,6 +4,9 @@ plugins {
     id("com.android.library")
     id("kotlin-parcelize")
     id("org.jetbrains.dokka")
+
+    // todo create a separate module for Jetbrains Compose
+    id("org.jetbrains.compose")
 }
 
 version = "1.0"
