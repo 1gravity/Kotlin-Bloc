@@ -9,6 +9,10 @@
     <string name="main_menu_posts">Posts</string>
     <string name="main_menu_posts_compose">Posts\nCompose</string>
 
+    <string name="posts_compose_title">Blocs with Compose</string>
+    <string name="posts_compose_error">Error: %s</string>
+    <string name="posts_compose_retry">Retry</string>
+
     <string name="counter_value">Counter: %s</string>
     <string name="counter_increment">Increment</string>
     <string name="counter_decrement">Decrement</string>

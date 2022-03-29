@@ -7,8 +7,15 @@ import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
+import com.onegravity.bloc.utils.BlocOwner
 
-object PostList {
+object Posts {
+    // you can either send actions to the Bloc directly or call these functions instead
+    fun PostsBloc.load() = send(Action.Load)
+    fun PostsBloc.clicked(post: PostOverview) = send(Action.Clicked(post))
+
+    fun BlocOwner<PostsState, Action, OpenPost, PostsState>.clicked(post: PostOverview) = bloc.clicked(post)
+
     sealed class Action {
         object Load : Action()
         object Loading : Action()
@@ -16,11 +23,11 @@ object PostList {
         data class Clicked(val post: PostOverview) : Action()
     }
 
-    class OpenPost(val postOverview: PostOverview)
+    class OpenPost(val post: PostOverview)
 
-    fun bloc(context: BlocContext) = bloc<PostListState, Action, OpenPost, PostListState>(
+    fun bloc(context: BlocContext) = bloc<PostsState, Action, OpenPost, PostsState>(
         context,
-        blocState(PostListState())
+        blocState(PostsState())
     ) {
         val repository = getKoinInstance<PostRepository>()
 

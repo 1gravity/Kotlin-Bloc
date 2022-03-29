@@ -25,7 +25,6 @@ import com.arkivanov.essenty.parcelable.Parcelize
 
 @Parcelize
 data class PostDetail(
-    val id: Int,
-    val body: String,
+    val overView: PostOverview,
     val comments: List<PostComment>
 ) : Parcelable

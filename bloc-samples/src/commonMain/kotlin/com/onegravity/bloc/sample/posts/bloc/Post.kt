@@ -5,30 +5,24 @@ import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.sample.posts.domain.repositories.PostDetail
-import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 
 object Post {
+    // you can either send actions to the Bloc directly or call these functions instead
+    fun PostBloc.load(postId: Int) = send(Action.Load(postId))
+
     sealed class Action {
-        object Load : Action()
+        data class Load(val postId: Int) : Action()
         object Loading : Action()
         data class Loaded(val post: Result<PostDetail, Exception>) : Action()
     }
 
-    fun bloc(context: BlocContext, overview: PostOverview) = bloc<PostState, Action>(
-        context,
-        PostState(overview)
-    ) {
+    fun bloc(context: BlocContext): PostBloc = bloc(context, PostState()) {
         val repository = getKoinInstance<PostRepository>()
-
-        onCreate {
-            dispatch(Action.Load)
-        }
 
         thunk<Action.Load> {
             dispatch(Action.Loading)
-            val postOverview = getState().postOverview
-            val result = repository.getDetail(postOverview.id)
+            val result = repository.getDetail(action.postId)
             dispatch(Action.Loaded(result))
         }
 

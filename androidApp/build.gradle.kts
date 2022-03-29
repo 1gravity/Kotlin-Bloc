@@ -76,6 +76,7 @@ dependencies {
 
     implementation(Koin.android)
 
+    implementation("com.github.skydoves:landscapist-glide:_")
     implementation("com.github.bumptech.glide:glide:_")
     implementation("com.github.lisawray.groupie:groupie:_")
     implementation("com.github.lisawray.groupie:groupie-viewbinding:_")

@@ -122,12 +122,12 @@ fun ViewModel.blocContext(): BlocContext =
  *   val state = bloc.subscribeAsState()
  */
 @Composable
-fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeAsState(): State<S> {
+fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeState(): State<S> {
     val state = remember(this) { mutableStateOf(value) }
     DisposableEffect(this) {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
         coroutineScope.launch {
-            this@observeAsState.collect {
+            this@observeState.collect {
                 state.value = it
             }
         }
@@ -138,3 +138,29 @@ fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeAsStat
 
     return state
 }
+
+@Composable
+fun <S, Action: Any, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>
+        .observeState() = bloc.observeState()
+
+@Composable
+fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeSideEffects(): State<SideEffect?> {
+    val state: MutableState<SideEffect?> = remember(this) { mutableStateOf(null) }
+    DisposableEffect(this) {
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+        coroutineScope.launch {
+            this@observeSideEffects.sideEffects.collect {
+                state.value = it
+            }
+        }
+        onDispose {
+            coroutineScope.cancel()
+        }
+    }
+
+    return state
+}
+
+@Composable
+fun <S, Action: Any, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>
+        .observeSideEffects() = bloc.observeSideEffects()

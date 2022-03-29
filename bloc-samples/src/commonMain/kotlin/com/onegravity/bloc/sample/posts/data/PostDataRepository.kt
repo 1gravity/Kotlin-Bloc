@@ -17,28 +17,35 @@ class PostDataRepository(
     override suspend fun getOverviews(): Result<List<PostOverview>, Exception> =
         coroutineScope {
             binding {
+                val posts = networkDataSource.getPosts().bind()
                 val users = networkDataSource.getUsers().bind()
-                networkDataSource.getPosts().bind().map { post ->
+                posts.map { post ->
                     val user = users.first { it.id == post.userId }
                     PostOverview(
-                        post.id,
-                        avatarUrlGenerator.generateUrl(user.email),
-                        post.title,
-                        user.name
+                        id = post.id,
+                        avatarUrl = avatarUrlGenerator.generateUrl(user.email),
+                        title = post.title,
+                        body = post.body,
+                        username = user.name
                     )
-                }
+                }.sortedBy { it.title }
             }
         }
 
     override suspend fun getDetail(id: Int): Result<PostDetail, Exception> =
         coroutineScope {
             binding {
-                val postData = networkDataSource.getPost(id).bind()
-                val comments = networkDataSource.getComments().bind()
-                    .filter { comment -> comment.postId == postData.id }
+                val post = networkDataSource.getPost(id).bind()
+                val user = networkDataSource.getUser(post.userId).bind()
+                val comments = networkDataSource.getComments(post.id).bind()
                 PostDetail(
-                    postData.id,
-                    postData.body,
+                    PostOverview(
+                        id = post.id,
+                        avatarUrl = avatarUrlGenerator.generateUrl(user.email),
+                        title = post.title,
+                        body = post.body,
+                        username = user.name
+                    ),
                     comments.map { PostComment(it.id, it.name, it.email, it.body) }
                 )
             }

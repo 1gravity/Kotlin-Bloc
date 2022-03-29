@@ -17,9 +17,9 @@ class PostNetworkDataSource : KoinComponent {
 
     private val httClient by inject<HttpClient>()
 
-    suspend fun getPost(id: Int) =
+    suspend fun getPost(postId: Int) =
         try {
-            val response: PostData = httClient.get("$baseURL/posts/$id") {
+            val response: PostData = httClient.get("$baseURL/posts/$postId") {
                 contentType(ContentType.Application.Json)
             }
             Ok(response)
@@ -48,9 +48,20 @@ class PostNetworkDataSource : KoinComponent {
             Err(e)
         }
 
-    suspend fun getComments() =
+    suspend fun getUser(userId: Int) =
         try {
-            val response: List<CommentData> = httClient.get("$baseURL/comments") {
+            val response: UserData = httClient.get("$baseURL/users/$userId") {
+                method = HttpMethod.Get
+                contentType(ContentType.Application.Json)
+            }
+            Ok(response)
+        } catch (e: Exception) {
+            Err(e)
+        }
+
+    suspend fun getComments(postId: Int) =
+        try {
+            val response: List<CommentData> = httClient.get("$baseURL/posts/$postId/comments") {
                 contentType(ContentType.Application.Json)
             }
             Ok(response)

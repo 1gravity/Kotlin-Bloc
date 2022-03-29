@@ -28,5 +28,6 @@ data class PostOverview(
     val id: Int,
     val avatarUrl: String,
     val title: String,
+    val body: String,
     val username: String
 ) : Parcelable

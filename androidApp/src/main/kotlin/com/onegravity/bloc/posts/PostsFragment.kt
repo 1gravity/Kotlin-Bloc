@@ -31,11 +31,11 @@ import com.github.michaelbull.result.mapBoth
 import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
-import com.onegravity.bloc.sample.posts.bloc.PostList
+import com.onegravity.bloc.sample.posts.bloc.Posts
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.onegravity.bloc.sample.posts.bloc.PostListState
+import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.subscribe
 
 class PostsFragment : Fragment(R.layout.post_list_fragment) {
@@ -71,7 +71,7 @@ class PostsFragment : Fragment(R.layout.post_list_fragment) {
         viewModel.subscribe(this, ::render, ::sideEffect)
     }
 
-    private fun render(state: PostListState) {
+    private fun render(state: PostsState) {
         lifecycleScope.launchWhenResumed {
             val (spinnerVisibility, listVisibility) = when (state.loading) {
                 true -> Pair(View.VISIBLE, View.INVISIBLE)
@@ -82,7 +82,7 @@ class PostsFragment : Fragment(R.layout.post_list_fragment) {
 
             state.overviews.mapBoth(
                 { posts ->
-                    posts.sortedBy { it.title }
+                    posts
                         .map { PostsItem(it, viewModel) }
                         .also { adapter.update(it) }
                 },
@@ -95,10 +95,10 @@ class PostsFragment : Fragment(R.layout.post_list_fragment) {
         }
     }
 
-    private fun sideEffect(sideEffect: PostList.OpenPost) {
+    private fun sideEffect(sideEffect: Posts.OpenPost) {
         findNavController().navigate(
             PostsFragmentDirections.actionListFragmentToDetailFragment(
-                sideEffect.postOverview
+                sideEffect.post
             )
         )
     }

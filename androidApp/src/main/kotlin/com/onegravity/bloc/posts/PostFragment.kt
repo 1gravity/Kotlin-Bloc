@@ -84,7 +84,7 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
     private fun render(state: PostState) {
         if (! initialised) initialize(state)
 
-        binding.postTitle.text = state.postOverview.title
+        binding.postTitle.text = state.postOverview?.title
 
         val visibility = when (state.loading) {
             true -> View.VISIBLE
@@ -94,7 +94,7 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
 
         state.post?.mapBoth(
             { post ->
-                binding.postBody.text = post.body
+                binding.postBody.text = post.overView.body
                 val comments = post.comments.size
                 binding.postCommentCount.text = context?.resources?.getQuantityString(
                     R.plurals.comments,
@@ -114,8 +114,8 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
     private fun initialize(state: PostState) {
         initialised = true
         binding.toolbar.apply {
-            title = state.postOverview.username
-            Glide.with(requireContext()).load(state.postOverview.avatarUrl)
+            title = state.postOverview?.username
+            Glide.with(requireContext()).load(state.postOverview?.avatarUrl)
                 .apply(RequestOptions.overrideOf(resources.getDimensionPixelSize(R.dimen.toolbar_logo_size)))
                 .apply(RequestOptions.circleCropTransform()).into(
                     object : CustomTarget<Drawable>() {

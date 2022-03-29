@@ -54,7 +54,7 @@
         <activity
             android:name=".compose.ComposeActivity"
             android:label="Compose"
-            android:theme="@style/Theme.Bloc"
+            android:theme="@style/AppThemePosts"
             android:exported="false"/>
 
     </application>

@@ -14,6 +14,9 @@ class PostViewModel(postOverview: PostOverview) :
     BlocObservableOwner<PostState, Unit>,
     KoinComponent {
 
-    override val observable = Post.bloc(blocContext(), postOverview).toObservable()
+    private val bloc = Post.bloc(blocContext())
+        .also { it.send(Post.Action.Load(postOverview.id)) }
+
+    override val observable = bloc.toObservable()
 
 }
