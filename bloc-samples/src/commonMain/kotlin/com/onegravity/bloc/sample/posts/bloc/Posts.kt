@@ -5,25 +5,25 @@ import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.util.getKoinInstance
-import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
+import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.utils.BlocOwner
 
 object Posts {
     // you can either send actions to the Bloc directly or call these functions instead
     fun PostsBloc.load() = send(Action.Load)
-    fun PostsBloc.clicked(post: PostOverview) = send(Action.Clicked(post))
+    fun PostsBloc.clicked(post: Post) = send(Action.Clicked(post))
 
-    fun BlocOwner<PostsState, Action, OpenPost, PostsState>.clicked(post: PostOverview) = bloc.clicked(post)
+    fun BlocOwner<PostsState, Action, OpenPost, PostsState>.clicked(post: Post) = bloc.clicked(post)
 
     sealed class Action {
         object Load : Action()
         object Loading : Action()
-        data class Loaded(val postList: Result<List<PostOverview>, Exception>) : Action()
-        data class Clicked(val post: PostOverview) : Action()
+        data class Loaded(val posts: Result<List<Post>, Exception>) : Action()
+        data class Clicked(val post: Post) : Action()
     }
 
-    class OpenPost(val post: PostOverview)
+    class OpenPost(val post: Post)
 
     fun bloc(context: BlocContext) = bloc<PostsState, Action, OpenPost, PostsState>(
         context,
@@ -46,7 +46,7 @@ object Posts {
         reduce<Action.Loading> { state.copy(loading = true) }
 
         reduce<Action.Loaded> {
-            state.copy(loading = false, overviews = action.postList)
+            state.copy(loading = false, posts = action.posts)
         }
     }
 }

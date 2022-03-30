@@ -80,16 +80,14 @@ class PostsFragment : Fragment(R.layout.post_list_fragment) {
             binding.indeterminateBar.visibility = spinnerVisibility
             binding.content.visibility = listVisibility
 
-            state.overviews.mapBoth(
+            state.posts.mapBoth(
                 { posts ->
                     posts
                         .map { PostsItem(it, viewModel) }
                         .also { adapter.update(it) }
                 },
                 { error ->
-                    Snackbar
-                        .make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG)
-                        .show()
+                    Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG).show()
                 }
             )
         }

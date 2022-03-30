@@ -26,9 +26,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListItemBinding
 import com.xwray.groupie.viewbinding.BindableItem
-import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
+import com.onegravity.bloc.sample.posts.domain.repositories.Post
 
-data class PostsItem(private val post: PostOverview, private val viewModel: PostsViewModel) :
+data class PostsItem(private val post: Post, private val viewModel: PostsViewModel) :
     BindableItem<PostListItemBinding>() {
 
     override fun initializeViewBinding(view: View) = PostListItemBinding.bind(view)

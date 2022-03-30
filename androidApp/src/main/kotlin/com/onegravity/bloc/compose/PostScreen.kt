@@ -12,6 +12,8 @@ import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
 
+// todo handle back button
+
 @Composable
 internal fun PostScreen(component: PostsComponent) {
     val model by component.observeState()

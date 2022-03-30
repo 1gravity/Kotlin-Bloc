@@ -3,9 +3,9 @@ package com.onegravity.bloc.sample.posts.bloc
 import com.github.michaelbull.result.Result
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.util.getKoinInstance
-import com.onegravity.bloc.sample.posts.domain.repositories.PostDetail
+import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
+import com.onegravity.bloc.util.getKoinInstance
 
 object Post {
     // you can either send actions to the Bloc directly or call these functions instead
@@ -14,7 +14,7 @@ object Post {
     sealed class Action {
         data class Load(val postId: Int) : Action()
         object Loading : Action()
-        data class Loaded(val post: Result<PostDetail, Exception>) : Action()
+        data class Loaded(val post: Result<Post, Exception>) : Action()
     }
 
     fun bloc(context: BlocContext): PostBloc = bloc(context, PostState()) {

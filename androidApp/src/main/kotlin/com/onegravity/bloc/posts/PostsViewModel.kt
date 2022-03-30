@@ -1,11 +1,15 @@
 package com.onegravity.bloc.posts
 
+import com.github.michaelbull.result.Result
 import androidx.lifecycle.ViewModel
 import com.onegravity.bloc.*
 import com.onegravity.bloc.sample.posts.bloc.Posts
 import com.onegravity.bloc.sample.posts.bloc.Posts.clicked
 import com.onegravity.bloc.sample.posts.bloc.PostsState
-import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
+import com.onegravity.bloc.sample.posts.domain.repositories.Post
+import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
+import com.onegravity.bloc.state.blocState
+import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.utils.BlocOwner
 import org.koin.core.component.KoinComponent
 
@@ -16,24 +20,24 @@ class PostsViewModel :
 
     override val bloc = Posts.bloc(blocContext())
 
-    fun onPostClicked(post: PostOverview) = sideEffect {
+    fun onPostClicked(post: Post) = sideEffect {
         Posts.OpenPost(post)
     }
 
     // this does the same
-//    fun onPostClicked(post: PostOverview) {
+//    fun onPostClicked(post: Post) {
 //        bloc.send(Posts.Action.Clicked(post))
 //    }
 
     // so does this
-//    fun onPostClicked(post: PostOverview) {
+//    fun onPostClicked(post: Post) {
 //        clicked(post)
 //        // or
 //        bloc.clicked(post)
 //    }
 
     // and this one too (no BlocOwner interface needed)
-//    fun onPostClicked(post: PostOverview) = bloc.sideEffect {
+//    fun onPostClicked(post: Post) = bloc.sideEffect {
 //        Posts.OpenPost(post)
 //    }
 
@@ -45,14 +49,14 @@ class PostsViewModel :
  * what Orbit MVI does (https://github.com/orbit-mvi/orbit-mvi).
  */
 //class PostListViewModel : ViewModel(),
-//    BlocOwner<PostListState, Nothing, PostList.OpenPost, PostListState>,
+//    BlocOwner<PostsState, Nothing, Posts.OpenPost, PostsState>,
 //    KoinComponent {
 //
 //    private val repository = getKoinInstance<PostRepository>()
 //
-//    override val bloc = bloc<PostListState, Nothing, PostList.OpenPost, PostListState>(
+//    override val bloc = bloc<PostsState, Nothing, Posts.OpenPost, PostsState>(
 //        blocContext(),
-//        blocState(PostListState())
+//        blocState(PostsState())
 //    )
 //
 //    init {
@@ -68,12 +72,12 @@ class PostsViewModel :
 //        state.copy(loading = true)
 //    }
 //
-//    private fun loaded(postList: Result<List<PostOverview>, Exception>) = reduce {
-//        state.copy(loading = false, overviews = postList)
+//    private fun loaded(posts: Result<List<Post>, Exception>) = reduce {
+//        state.copy(loading = false, posts = posts)
 //    }
 //
-//    fun onPostClicked(post: PostOverview) = sideEffect {
-//        PostList.OpenPost(post)
+//    fun onPostClicked(post: Post) = sideEffect {
+//        Posts.OpenPost(post)
 //    }
 //
 //}

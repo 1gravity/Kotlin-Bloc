@@ -13,11 +13,7 @@ import com.onegravity.bloc.R
 @Composable
 fun Error(retry: () -> Unit, error: Exception) {
     Snackbar(
-        action = {
-            Button(retry) {
-                Text(stringResource(id = R.string.posts_compose_retry))
-            }
-        },
+        action = { Button(retry) { Text(stringResource(id = R.string.posts_compose_retry)) } },
         modifier = Modifier.padding(8.dp)
     ) {
         Text(stringResource(id = R.string.posts_compose_error, error.message ?: ""))

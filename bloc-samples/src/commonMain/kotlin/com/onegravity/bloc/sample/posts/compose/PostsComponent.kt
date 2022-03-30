@@ -4,8 +4,7 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.Ok
 import com.onegravity.bloc.*
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.sample.posts.domain.repositories.PostDetail
-import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
+import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.util.getKoinInstance
@@ -19,31 +18,32 @@ data class State(
     fun isEmpty() = postsState.posts is Ok && postsState.posts.value.isEmpty()
 }
 
-sealed class Action {
-    object LoadingPosts : Action()
-    data class LoadedPosts(val result: Result<List<PostOverview>, Exception>) : Action()
-
-    object LoadingPost : Action()
-    data class LoadedPost(val result: Result<PostDetail, Exception>) : Action()
-}
-
 data class PostsState(
     val loading: Boolean = false,
-    val posts: Result<List<PostOverview>, Exception> = Ok(emptyList()),
+    val posts: Result<List<Post>, Exception> = Ok(emptyList()),
 )
 
 data class PostState(
     val loading: Boolean = false,
-    val post: Result<PostDetail, Exception>? = null
+    val post: Result<Post, Exception>? = null
 )
 
 interface PostsComponent : BlocOwner<State, Any, Unit, State> {
-    fun onClicked(post: PostOverview)
+    fun onClicked(post: Post)
+    fun onClosed()
     fun loadPosts()
     fun loadPost()
 }
 
 class PostsComponentImpl(context: BlocContext) : PostsComponent {
+    sealed class Action {
+        object LoadingPosts : Action()
+        data class LoadedPosts(val result: Result<List<Post>, Exception>) : Action()
+
+        object LoadingPost : Action()
+        data class LoadedPost(val result: Result<Post, Exception>) : Action()
+    }
+
     private val repository = getKoinInstance<PostRepository>()
 
     override val bloc = bloc<State, Any>(
@@ -73,9 +73,13 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
         }
     }
 
-    override fun onClicked(post: PostOverview) {
+    override fun onClicked(post: Post) {
         reduce { state.copy(selectedPost = post.id) }
         loadPost()
+    }
+
+    override fun onClosed() = reduce {
+        state.copy(selectedPost = null)
     }
 
     override fun loadPosts() = thunk {

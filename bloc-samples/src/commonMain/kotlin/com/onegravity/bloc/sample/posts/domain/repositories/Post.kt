@@ -24,10 +24,11 @@ import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 
 @Parcelize
-data class PostOverview(
+data class Post(
     val id: Int,
     val avatarUrl: String,
     val title: String,
     val body: String,
-    val username: String
+    val username: String,
+    val comments: List<PostComment> = emptyList()
 ) : Parcelable

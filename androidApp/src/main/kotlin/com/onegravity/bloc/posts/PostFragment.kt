@@ -45,6 +45,7 @@ import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.onegravity.bloc.sample.posts.bloc.PostState
+import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.subscribe
 
 class PostFragment : Fragment(R.layout.post_details_fragment) {
@@ -82,10 +83,6 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
     }
 
     private fun render(state: PostState) {
-        if (! initialised) initialize(state)
-
-        binding.postTitle.text = state.postOverview?.title
-
         val visibility = when (state.loading) {
             true -> View.VISIBLE
             else -> View.GONE
@@ -94,7 +91,9 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
 
         state.post?.mapBoth(
             { post ->
-                binding.postBody.text = post.overView.body
+                if (! initialised) initialize(post)
+                binding.postTitle.text = post.title
+                binding.postBody.text = post.body
                 val comments = post.comments.size
                 binding.postCommentCount.text = context?.resources?.getQuantityString(
                     R.plurals.comments,
@@ -104,18 +103,16 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
                 adapter.update(post.comments.map(::PostCommentItem))
             },
             { error ->
-                Snackbar
-                    .make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG)
-                    .show()
+                Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG).show()
             }
         )
     }
 
-    private fun initialize(state: PostState) {
+    private fun initialize(post: Post) {
         initialised = true
         binding.toolbar.apply {
-            title = state.postOverview?.username
-            Glide.with(requireContext()).load(state.postOverview?.avatarUrl)
+            title = post.username
+            Glide.with(requireContext()).load(post.avatarUrl)
                 .apply(RequestOptions.overrideOf(resources.getDimensionPixelSize(R.dimen.toolbar_logo_size)))
                 .apply(RequestOptions.circleCropTransform()).into(
                     object : CustomTarget<Drawable>() {

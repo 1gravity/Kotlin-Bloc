@@ -13,17 +13,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.onegravity.bloc.sample.posts.domain.repositories.PostOverview
+import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 internal fun PostsList(
-    model: List<PostOverview>,
+    posts: List<Post>,
     modifier: Modifier = Modifier,
-    onClicked: (post: PostOverview) -> Unit
+    onClicked: (post: Post) -> Unit
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(model) { post ->
+        items(posts) { post ->
             val isSelected = false // todo article.id == model.selectedArticleId
 
             Row(
@@ -54,7 +54,7 @@ internal fun PostsList(
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = post.username,
-                        fontSize = 20.sp,
+                        fontSize = 14.sp,
                         modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
                     )
                     Text(
@@ -70,15 +70,6 @@ internal fun PostsList(
     }
 }
 
-/*
-Glide.with(viewBinding.root.context).load(post.avatarUrl)
-.apply(RequestOptions.circleCropTransform()).into(viewBinding.postAvatar)
-
-viewBinding.postTitle.text = post.title
-viewBinding.postUsername.text = post.username
-
-
- */
 @Composable
 private fun selectionColor(): Color =
     MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)
