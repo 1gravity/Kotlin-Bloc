@@ -19,12 +19,13 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 internal fun PostsList(
     posts: List<Post>,
+    selected: Int?,
     modifier: Modifier = Modifier,
     onClicked: (post: Post) -> Unit
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(posts) { post ->
-            val isSelected = false // todo article.id == model.selectedArticleId
+            val isSelected = post.id == selected
 
             Row(
                 modifier = Modifier

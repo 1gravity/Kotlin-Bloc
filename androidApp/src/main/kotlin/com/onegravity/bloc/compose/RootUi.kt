@@ -10,7 +10,6 @@ import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.R
 import com.onegravity.bloc.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
-import com.onegravity.bloc.sample.posts.compose.State
 
 // todo implement multipane
 

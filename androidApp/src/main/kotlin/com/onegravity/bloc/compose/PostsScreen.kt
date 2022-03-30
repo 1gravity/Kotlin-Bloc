@@ -27,7 +27,7 @@ internal fun Posts(component: PostsComponent) {
         }
     } else {
         model.postsState.posts.mapBoth(
-            { posts -> PostsList(posts, Modifier) { component.onClicked(it) } },
+            { posts -> PostsList(posts, model.selectedPost, Modifier) { component.onClicked(it) } },
             { error -> Error({ component.loadPosts() }, error) }
         )
     }
