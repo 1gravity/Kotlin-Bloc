@@ -14,7 +14,7 @@ object Post {
     sealed class Action {
         data class Load(val postId: Int) : Action()
         object Loading : Action()
-        data class Loaded(val post: Result<Post, Exception>) : Action()
+        data class Loaded(val post: Result<Post, Throwable>) : Action()
     }
 
     fun bloc(context: BlocContext): PostBloc = bloc(context, PostState()) {

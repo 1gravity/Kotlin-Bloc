@@ -19,7 +19,7 @@ object Posts {
     sealed class Action {
         object Load : Action()
         object Loading : Action()
-        data class Loaded(val posts: Result<List<Post>, Exception>) : Action()
+        data class Loaded(val posts: Result<List<Post>, Throwable>) : Action()
         data class Clicked(val post: Post) : Action()
     }
 

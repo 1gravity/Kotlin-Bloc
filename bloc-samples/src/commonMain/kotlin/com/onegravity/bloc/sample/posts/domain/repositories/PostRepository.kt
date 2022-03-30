@@ -23,6 +23,6 @@ package com.onegravity.bloc.sample.posts.domain.repositories
 import com.github.michaelbull.result.Result
 
 interface PostRepository {
-    suspend fun getOverviews(): Result<List<Post>, Exception>
-    suspend fun getDetail(id: Int): Result<Post, Exception>
+    suspend fun getOverviews(): Result<List<Post>, Throwable>
+    suspend fun getDetail(id: Int): Result<Post, Throwable>
 }

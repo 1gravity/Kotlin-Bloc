@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.onegravity.bloc.R
 
 @Composable
-fun Error(retry: () -> Unit, error: Exception) {
+fun Error(retry: () -> Unit, error: Throwable) {
     Snackbar(
         action = { Button(retry) { Text(stringResource(id = R.string.posts_compose_retry)) } },
         modifier = Modifier.padding(8.dp)

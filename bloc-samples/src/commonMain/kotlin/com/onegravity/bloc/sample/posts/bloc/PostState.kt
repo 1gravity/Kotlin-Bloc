@@ -5,6 +5,6 @@ import com.onegravity.bloc.sample.posts.domain.repositories.Post
 
 data class PostState(
     val loading: Boolean = false,
-    val post: Result<Post, Exception>? = null
+    val post: Result<Post, Throwable>? = null
 )
 

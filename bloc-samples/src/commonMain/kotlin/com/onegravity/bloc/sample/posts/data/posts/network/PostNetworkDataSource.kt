@@ -1,7 +1,6 @@
 package com.onegravity.bloc.sample.posts.data.posts.network
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.runCatching
 import com.onegravity.bloc.sample.posts.data.posts.model.CommentData
 import com.onegravity.bloc.sample.posts.data.posts.model.PostData
 import com.onegravity.bloc.sample.posts.data.posts.model.UserData
@@ -17,56 +16,34 @@ class PostNetworkDataSource : KoinComponent {
 
     private val httClient by inject<HttpClient>()
 
-    suspend fun getPost(postId: Int) =
-        try {
-            val response: PostData = httClient.get("$baseURL/posts/$postId") {
-                contentType(ContentType.Application.Json)
-            }
-            Ok(response)
-        } catch (e: Exception) {
-            Err(e)
+    suspend fun getPost(postId: Int) = runCatching {
+        httClient.get<PostData>("$baseURL/posts/$postId") {
+            contentType(ContentType.Application.Json)
         }
+    }
 
-    suspend fun getPosts() =
-        try {
-            val response: List<PostData> = httClient.get("$baseURL/posts") {
-                contentType(ContentType.Application.Json)
-            }
-            Ok(response)
-        } catch (e: Exception) {
-            Err(e)
+    suspend fun getPosts() = runCatching {
+        httClient.get<List<PostData>>("$baseURL/posts") {
+            contentType(ContentType.Application.Json)
         }
+    }
 
-    suspend fun getUsers() =
-        try {
-            val response: List<UserData> = httClient.get("$baseURL/users") {
-                method = HttpMethod.Get
-                contentType(ContentType.Application.Json)
-            }
-            Ok(response)
-        } catch (e: Exception) {
-            Err(e)
+    suspend fun getUsers() = runCatching {
+        httClient.get<List<UserData>>("$baseURL/users") {
+            contentType(ContentType.Application.Json)
         }
+    }
 
-    suspend fun getUser(userId: Int) =
-        try {
-            val response: UserData = httClient.get("$baseURL/users/$userId") {
-                method = HttpMethod.Get
-                contentType(ContentType.Application.Json)
-            }
-            Ok(response)
-        } catch (e: Exception) {
-            Err(e)
+    suspend fun getUser(userId: Int) = runCatching {
+        httClient.get<UserData>("$baseURL/users/$userId") {
+            contentType(ContentType.Application.Json)
         }
+    }
 
-    suspend fun getComments(postId: Int) =
-        try {
-            val response: List<CommentData> = httClient.get("$baseURL/posts/$postId/comments") {
-                contentType(ContentType.Application.Json)
-            }
-            Ok(response)
-        } catch (e: Exception) {
-            Err(e)
+    suspend fun getComments(postId: Int) = runCatching {
+        httClient.get<List<CommentData>>("$baseURL/posts/$postId/comments") {
+            contentType(ContentType.Application.Json)
         }
+    }
 
 }

@@ -6,7 +6,7 @@ import com.onegravity.bloc.sample.posts.domain.repositories.Post
 
 data class PostsState(
     val loading: Boolean = false,
-    val posts: Result<List<Post>, Exception> = Ok(emptyList()),
+    val posts: Result<List<Post>, Throwable> = Ok(emptyList()),
 ) {
     fun isEmpty() = posts is Ok && posts.value.isEmpty()
 }

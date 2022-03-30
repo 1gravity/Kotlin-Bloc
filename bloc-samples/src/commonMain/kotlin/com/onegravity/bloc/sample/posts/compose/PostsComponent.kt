@@ -20,12 +20,12 @@ data class State(
 
 data class PostsState(
     val loading: Boolean = false,
-    val posts: Result<List<Post>, Exception> = Ok(emptyList()),
+    val posts: Result<List<Post>, Throwable> = Ok(emptyList()),
 )
 
 data class PostState(
     val loading: Boolean = false,
-    val post: Result<Post, Exception>? = null
+    val post: Result<Post, Throwable>? = null
 )
 
 interface PostsComponent : BlocOwner<State, Any, Unit, State> {
@@ -38,10 +38,10 @@ interface PostsComponent : BlocOwner<State, Any, Unit, State> {
 class PostsComponentImpl(context: BlocContext) : PostsComponent {
     sealed class Action {
         object LoadingPosts : Action()
-        data class LoadedPosts(val result: Result<List<Post>, Exception>) : Action()
+        data class LoadedPosts(val result: Result<List<Post>, Throwable>) : Action()
 
         object LoadingPost : Action()
-        data class LoadedPost(val result: Result<Post, Exception>) : Action()
+        data class LoadedPost(val result: Result<Post, Throwable>) : Action()
     }
 
     private val repository = getKoinInstance<PostRepository>()
