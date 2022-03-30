@@ -61,7 +61,15 @@ fun defaultBlocContext(
 
 /** --------------------------------------------------------------------------------------------- */
 
-// todo this is the Activity lifecycle when called from an Activity, what to do about it?
+/**
+ * If you use this (from an Activity or a Fragment) the Bloc needs to make sure to retain its state
+ * "manually" using the InstanceKeeper like:
+ * ```
+ *   private val blocState = context.instanceKeeper.getOrCreate("BLOC_STATE") {
+ *      blocState(initialState)
+ *   }
+ * ```
+ */
 fun <T> T.defaultBlocContext(): DefaultBlocContext where
         T : SavedStateRegistryOwner, T : OnBackPressedDispatcherOwner, T : ViewModelStoreOwner, T : LifecycleOwner =
     DefaultBlocContext(

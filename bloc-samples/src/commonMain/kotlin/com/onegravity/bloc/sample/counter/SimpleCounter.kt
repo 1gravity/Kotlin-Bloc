@@ -2,11 +2,11 @@ package com.onegravity.bloc.sample.counter
 
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.asBlocState
 import com.onegravity.bloc.utils.logger
 
 /**
- * Demo to show how a Bloc can "act" as a BlocState (interceptorBloc) and how the thunk
- * routing / dispatching works.
+ * Demo to show how a Bloc can "act" as a BlocState (interceptorBloc).
  */
 object SimpleCounter {
     sealed class Action(val value: Int) {
@@ -22,7 +22,10 @@ object SimpleCounter {
         }
     }
 
-    fun bloc(context: BlocContext) = bloc<Int, Action>(context, context.interceptorBloc()) {
+    fun bloc(context: BlocContext) = bloc<Int, Action>(
+        context,
+        context.interceptorBloc().asBlocState()
+    ) {
         reduce<Action.Increment> { state + action.value }
         reduce<Action.Decrement> { (state - action.value).coerceAtLeast(0) }
 

@@ -1,5 +1,6 @@
 package com.onegravity.bloc.sample.posts.compose
 
+import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.Ok
 import com.onegravity.bloc.*
@@ -36,6 +37,10 @@ interface PostsComponent : BlocOwner<State, Any, Unit, State> {
 }
 
 class PostsComponentImpl(context: BlocContext) : PostsComponent {
+    private val blocState = context.instanceKeeper.getOrCreate("BLOC_STATE") {
+        blocState(State(postsState = PostsState(), postState = PostState()))
+    }
+
     sealed class Action {
         object LoadingPosts : Action()
         data class LoadedPosts(val result: Result<List<Post>, Throwable>) : Action()
@@ -46,10 +51,7 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
 
     private val repository = getKoinInstance<PostRepository>()
 
-    override val bloc = bloc<State, Any>(
-        context,
-        blocState(State(postsState = PostsState(), postState = PostState()))
-    ) {
+    override val bloc = bloc<State, Any>(context, blocState) {
         reduce<Action.LoadingPosts> {
             state.copy(postsState = state.postsState.copy(loading = true))
         }

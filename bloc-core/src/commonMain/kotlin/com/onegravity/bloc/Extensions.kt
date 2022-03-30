@@ -1,8 +1,10 @@
 package com.onegravity.bloc
 
 import com.arkivanov.essenty.lifecycle.*
+import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.FlowCollector
 
 /**
  * Subscribes to the state and side effects streams of a Bloc.
@@ -239,3 +241,24 @@ fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Propos
 fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) = bloc.sideEffect(sideEffect)
+
+/**
+ * Adapts a Bloc to BlocState provided the Action type is the same as the Proposal type (what goes
+ * in, goes out).
+ */
+fun <State, SideEffect, Proposal> Bloc<State, Proposal, SideEffect, Proposal>.asBlocState(): BlocState<State, Proposal> =
+    object : BlocState<State, Proposal> {
+        override fun onDestroy() {}
+
+        override fun send(value: Proposal) {
+            this@asBlocState.send(value)
+        }
+
+        override val value: State
+            get() = this@asBlocState.value
+
+        override suspend fun collect(collector: FlowCollector<State>) {
+            this@asBlocState.collect(collector)
+        }
+
+    }

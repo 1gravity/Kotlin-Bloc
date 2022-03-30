@@ -108,9 +108,15 @@ fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State
 @BlocDSL
 fun <State> ViewModel.toLiveData(stream: StateStream<State>) = stream.toLiveData(viewModelScope)
 
+/**
+ * Use this if we need the SavedStateRegistry, the ViewModelStore or the OnBackPressedDispatcher
+ */
 fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
     BlocContextOwnerImpl(this, context).blocContext
 
+/**
+ * Use this if we don't need the SavedStateRegistry, the ViewModelStore or the OnBackPressedDispatcher
+ */
 fun ViewModel.blocContext(): BlocContext =
     BlocContextOwnerImpl(this, ActivityBlocContext(null, null, null)).blocContext
 
