@@ -21,12 +21,11 @@ internal fun Post(
     post: Post,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)) {
+    Column(modifier = modifier.padding(start = 16.dp, end = 16.dp)) {
         Text(
             text = post.title,
             fontSize = 32.sp,
             modifier = Modifier.fillMaxWidth()
-
         )
         Text(
             text = post.body,

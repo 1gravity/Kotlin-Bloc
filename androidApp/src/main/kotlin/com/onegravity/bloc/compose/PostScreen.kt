@@ -15,19 +15,20 @@ import com.onegravity.bloc.sample.posts.compose.PostsComponent
 // todo handle back button
 
 @Composable
-internal fun PostScreen(component: PostsComponent) {
+internal fun PostScreen(
+    component: PostsComponent,
+    modifier: Modifier
+) {
     val model by component.observeState()
 
     if (model.postState.loading) {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
+        Box(modifier = modifier
             .background(Color.Transparent)) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     } else {
         model.postState.post?.mapBoth(
-            { post -> Post(post) },
+            { post -> Post(post, modifier) },
             { error -> Error({ component.loadPost() }, error) }
         )
     }

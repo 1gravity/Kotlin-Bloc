@@ -15,19 +15,19 @@ import com.onegravity.bloc.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
 
 @Composable
-internal fun Posts(component: PostsComponent) {
+internal fun Posts(
+    component: PostsComponent,
+    modifier: Modifier
+) {
     val model by component.observeState()
 
     if (model.postsState.loading) {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(Color.Transparent)) {
+        Box(modifier = modifier.background(Color.Transparent)) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     } else {
         model.postsState.posts.mapBoth(
-            { posts -> PostsList(posts, model.selectedPost, Modifier) { component.onClicked(it) } },
+            { posts -> PostsList(posts, model.selectedPost, modifier) { component.onClicked(it) } },
             { error -> Error({ component.loadPosts() }, error) }
         )
     }

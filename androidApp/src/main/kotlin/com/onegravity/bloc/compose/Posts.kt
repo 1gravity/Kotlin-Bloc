@@ -23,7 +23,7 @@ internal fun PostsList(
     modifier: Modifier = Modifier,
     onClicked: (post: Post) -> Unit
 ) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
+    LazyColumn(modifier = modifier) {
         items(posts) { post ->
             val isSelected = post.id == selected
 
