@@ -17,31 +17,29 @@ import com.onegravity.bloc.R
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 
 @Composable
-internal fun Post(
-    post: Post,
-    modifier: Modifier = Modifier,
-) {
+internal fun Post(post: Post, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(start = 16.dp, end = 16.dp)) {
-        Text(
-            text = post.title,
-            fontSize = 32.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = post.body,
-            fontSize = 18.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Divider(modifier = Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 24.dp))
-
-        Text(
-            text = stringResource(id = R.string.posts_compose_comments, post.comments.size),
-            fontSize = 16.sp,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp)
-        )
-
         LazyColumn(modifier = modifier.fillMaxSize()) {
+            item {
+                Text(
+                    text = post.title,
+                    fontSize = 32.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = post.body,
+                    fontSize = 18.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Divider(modifier = Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 24.dp))
+
+                Text(
+                    text = stringResource(id = R.string.posts_compose_comments, post.comments.size),
+                    fontSize = 16.sp,
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp)
+                )
+            }
             items(post.comments) { comment ->
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(

@@ -1,5 +1,6 @@
 package com.onegravity.bloc.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,7 +23,8 @@ private val MULTI_PANE_WIDTH_THRESHOLD = 700.dp
 @Composable
 fun RootUi(component: PostsComponent) {
     val state by component.observeState()
-    BoxWithConstraints(Modifier.fillMaxWidth().fillMaxHeight()) {
+    BoxWithConstraints(
+        Modifier.fillMaxWidth().fillMaxHeight()) {
         val isMultiPane = this@BoxWithConstraints.maxWidth >= MULTI_PANE_WIDTH_THRESHOLD
         Scaffold(
             topBar = { ToolBar(component, isMultiPane) }
@@ -31,9 +33,10 @@ fun RootUi(component: PostsComponent) {
 
             when {
                 isMultiPane && showDetail ->
-                    Row(Modifier.fillMaxWidth().fillMaxHeight()) {
+                    Row(
+                        Modifier.fillMaxWidth().fillMaxHeight()) {
                         Posts(component, Modifier.fillMaxWidth(0.33f).fillMaxHeight())
-                        PostScreen(component, Modifier.fillMaxWidth(0.67f).fillMaxHeight())
+                        PostScreen(component, Modifier.fillMaxWidth().fillMaxHeight())
                     }
                 showDetail -> PostScreen(component, Modifier.fillMaxWidth().fillMaxHeight())
                 else -> Posts(component, Modifier.fillMaxWidth().fillMaxHeight())
@@ -46,14 +49,16 @@ fun RootUi(component: PostsComponent) {
 private fun ToolBar(component: PostsComponent, isMultiPane: Boolean) {
     val state by component.observeState()
     val showDetail = state.selectedPost != null
-    val defaultTitle = stringResource(R.string.posts_compose_title)
+
     val title = when (showDetail) {
         true -> state.postState.post?.mapBoth({ it.username }, { it.message })
-        else -> defaultTitle
-    } ?: defaultTitle
+        else -> null
+    } ?: stringResource(R.string.posts_compose_title)
+
     if (isMultiPane || !showDetail) {
         TopAppBar(title = { Text(text = title) },)
     } else {
+        BackHandler(onBack = { component.onClosed() })
         TopAppBar(
             title = { Text(text = title) },
             navigationIcon = {

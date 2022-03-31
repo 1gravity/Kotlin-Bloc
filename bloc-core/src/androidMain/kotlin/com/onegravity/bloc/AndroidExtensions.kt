@@ -17,7 +17,10 @@ import kotlinx.coroutines.*
  */
 
 @BlocDSL
-fun <T : ViewDataBinding> ComponentActivity.bind(@LayoutRes layoutId: Int, bind2ViewModel: (T) -> Unit) {
+fun <T : ViewDataBinding> ComponentActivity.bind(
+    @LayoutRes layoutId: Int,
+    bind2ViewModel: (T) -> Unit
+) {
     val binding = DataBindingUtil.setContentView<T>(this, layoutId)
     bind2ViewModel(binding)
     binding.lifecycleOwner = this
@@ -28,7 +31,8 @@ fun <T : ViewDataBinding> ComponentActivity.bind(@LayoutRes layoutId: Int, bind2
 @BlocDSL
 inline fun <VM : ViewModel> ComponentActivity.factory(crossinline createInstance: (context: ActivityBlocContext) -> VM) =
     object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>):T = createInstance(activityBlocContext()) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T =
+            createInstance(activityBlocContext()) as T
     }
 
 /**
@@ -44,7 +48,7 @@ fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
 }
 
 @BlocDSL
-fun <State, Action : Any, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     activity: ComponentActivity,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -60,11 +64,11 @@ fun <State, Action : Any, SideEffect, Proposal> BlocOwner<State, Action, SideEff
 @BlocDSL
 inline fun <VM : ViewModel> Fragment.factory(crossinline f: (context: ActivityBlocContext) -> VM) =
     object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>):T = f(activityBlocContext()) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = f(activityBlocContext()) as T
     }
 
 @BlocDSL
-fun <State, Action : Any, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     fragment: Fragment,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -128,7 +132,7 @@ fun ViewModel.blocContext(): BlocContext =
  *   val state = bloc.subscribeAsState()
  */
 @Composable
-fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeState(): State<S> {
+fun <S, Action, SideEffect> BlocFacade<S, Action, SideEffect>.observeState(): State<S> {
     val state = remember(this) { mutableStateOf(value) }
     DisposableEffect(this) {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -146,11 +150,11 @@ fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeState(
 }
 
 @Composable
-fun <S, Action: Any, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>
-        .observeState() = bloc.observeState()
+fun <S, Action, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>.observeState() =
+    bloc.observeState()
 
 @Composable
-fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeSideEffects(): State<SideEffect?> {
+fun <S, Action, SideEffect> BlocFacade<S, Action, SideEffect>.observeSideEffects(): State<SideEffect?> {
     val state: MutableState<SideEffect?> = remember(this) { mutableStateOf(null) }
     DisposableEffect(this) {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -168,5 +172,5 @@ fun <S, Action: Any, SideEffect> BlocFacade<S, Action, SideEffect>.observeSideEf
 }
 
 @Composable
-fun <S, Action: Any, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>
-        .observeSideEffects() = bloc.observeSideEffects()
+fun <S, Action, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>.observeSideEffects() =
+    bloc.observeSideEffects()

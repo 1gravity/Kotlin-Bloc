@@ -12,8 +12,6 @@ import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
 
-// todo handle back button
-
 @Composable
 internal fun PostScreen(
     component: PostsComponent,
@@ -21,13 +19,11 @@ internal fun PostScreen(
 ) {
     val model by component.observeState()
 
-    if (model.postState.loading) {
-        Box(modifier = modifier
-            .background(Color.Transparent)) {
+    when (model.postState.loading) {
+        true -> Box(modifier = modifier.background(Color.Transparent)) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
-    } else {
-        model.postState.post?.mapBoth(
+        else -> model.postState.post?.mapBoth(
             { post -> Post(post, modifier) },
             { error -> Error({ component.loadPost() }, error) }
         )
