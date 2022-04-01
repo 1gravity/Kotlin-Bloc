@@ -35,11 +35,11 @@ fun RootUi(component: PostsComponent) {
                 isMultiPane && showDetail ->
                     Row(
                         Modifier.fillMaxWidth().fillMaxHeight()) {
-                        Posts(component, Modifier.fillMaxWidth(0.33f).fillMaxHeight())
-                        PostScreen(component, Modifier.fillMaxWidth().fillMaxHeight())
+                        PostsPane(component, Modifier.fillMaxWidth(0.33f).fillMaxHeight())
+                        PostPane(component, Modifier.fillMaxWidth().fillMaxHeight())
                     }
-                showDetail -> PostScreen(component, Modifier.fillMaxWidth().fillMaxHeight())
-                else -> Posts(component, Modifier.fillMaxWidth().fillMaxHeight())
+                showDetail -> PostPane(component, Modifier.fillMaxWidth().fillMaxHeight())
+                else -> PostsPane(component, Modifier.fillMaxWidth().fillMaxHeight())
             }
         }
     }

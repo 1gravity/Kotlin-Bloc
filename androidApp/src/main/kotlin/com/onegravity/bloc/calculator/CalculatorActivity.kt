@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.bind
 import com.onegravity.bloc.databinding.ActivityCalculatorBinding
+import com.onegravity.bloc.defaultBlocContext
 import com.onegravity.bloc.factory
+import com.onegravity.bloc.sample.calculator.bloc
 
 class CalculatorActivity : AppCompatActivity() {
 
@@ -22,6 +24,11 @@ class CalculatorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // todo remove this, but make an example on how to use blocs from Activities directly
+        //      also this will crash the app since the ViewModel creates the Bloc as well:
+        //      SavedStateProvider with the given key is already registered
+//        val bloc = defaultBlocContext { bloc() }
 
         bind<ActivityCalculatorBinding>(R.layout.activity_calculator) { it.viewmodel = viewModel }
     }

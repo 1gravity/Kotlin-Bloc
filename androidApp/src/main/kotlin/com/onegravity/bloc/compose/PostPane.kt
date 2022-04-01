@@ -13,7 +13,7 @@ import com.onegravity.bloc.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
 
 @Composable
-internal fun PostScreen(
+internal fun PostPane(
     component: PostsComponent,
     modifier: Modifier
 ) {

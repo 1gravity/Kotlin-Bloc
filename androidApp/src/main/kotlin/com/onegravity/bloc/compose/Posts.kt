@@ -17,12 +17,16 @@ import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-internal fun PostsList(
+internal fun Posts(
     posts: List<Post>,
     selected: Int?,
     modifier: Modifier = Modifier,
     onClicked: (post: Post) -> Unit
 ) {
+    @Composable
+    fun selectionColor(): Color =
+        MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)
+
     LazyColumn(modifier = modifier) {
         items(posts) { post ->
             val isSelected = post.id == selected
@@ -71,6 +75,3 @@ internal fun PostsList(
     }
 }
 
-@Composable
-private fun selectionColor(): Color =
-    MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)

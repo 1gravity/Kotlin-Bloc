@@ -44,6 +44,4 @@ internal class ReduxBlocState<State, Proposal : Any, Model : Any, ReduxModel : A
         store.dispatch(value)
     }
 
-    override fun onDestroy() {}
-
 }

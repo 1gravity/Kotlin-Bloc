@@ -2,21 +2,25 @@
  * From https://github.com/arkivanov/Decompose
  */
 
+@file:Suppress("SpellCheckingInspection")
+
 package com.onegravity.bloc
 
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryOwner
 import com.arkivanov.essenty.backpressed.BackPressedHandler
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
-import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
+import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
+import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.arkivanov.essenty.lifecycle.*
+import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.onegravity.bloc.context.DefaultBlocContext
 
@@ -70,11 +74,49 @@ fun defaultBlocContext(
  *   }
  * ```
  */
-fun <T> T.defaultBlocContext(): DefaultBlocContext where
+inline fun <T, reified C> T.defaultBlocContext(block: DefaultBlocContext.() -> C): C where
         T : SavedStateRegistryOwner, T : OnBackPressedDispatcherOwner, T : ViewModelStoreOwner, T : LifecycleOwner =
-    DefaultBlocContext(
-        lifecycle = (this as LifecycleOwner).lifecycle.asEssentyLifecycle(),
+    createBlocContext().run {
+        instanceKeeper.getOrCreate(C::class.java)  { InstanceKeeperWrapper(block()) }.component
+    }
+
+class InstanceKeeperWrapper<C>(val component: C) : InstanceKeeper.Instance {
+    override fun onDestroy() {}
+}
+
+fun <T> T.createBlocContext(): DefaultBlocContext where
+        T : SavedStateRegistryOwner, T : OnBackPressedDispatcherOwner, T : ViewModelStoreOwner, T : LifecycleOwner {
+    val viewModel = viewModelStore.let(::blocViewModel)
+    return DefaultBlocContext(
+        lifecycle = viewModel.lifecycleRegistry,
         stateKeeper = savedStateRegistry.let(::StateKeeper),
-        instanceKeeper = viewModelStore.let(::InstanceKeeper),
+        instanceKeeper = viewModel.instanceKeeperDispatcher,
         backPressedHandler = onBackPressedDispatcher.let(::BackPressedHandler)
     )
+}
+
+/**
+ * Creates a new instance of [Lifecycle] and attaches it to the provided AndroidX [ViewModelStore]
+ */
+private fun blocViewModel(viewModelStore: ViewModelStore): BlocViewModel =
+    ViewModelProvider(
+        viewModelStore,
+        object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel?> create(modelClass: Class<T>) = BlocViewModel() as T
+        }
+    ).get()
+
+internal class BlocViewModel : ViewModel() {
+    val lifecycleRegistry = LifecycleRegistry()
+    val instanceKeeperDispatcher = InstanceKeeperDispatcher()
+
+    init {
+        lifecycleRegistry.create()
+    }
+
+    override fun onCleared() {
+        lifecycleRegistry.destroy()
+        instanceKeeperDispatcher.destroy()
+    }
+}

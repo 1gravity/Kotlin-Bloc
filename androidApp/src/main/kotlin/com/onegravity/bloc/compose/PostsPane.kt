@@ -2,8 +2,6 @@ package com.onegravity.bloc.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,7 +13,7 @@ import com.onegravity.bloc.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
 
 @Composable
-internal fun Posts(
+internal fun PostsPane(
     component: PostsComponent,
     modifier: Modifier
 ) {
@@ -27,7 +25,7 @@ internal fun Posts(
         }
     } else {
         model.postsState.posts.mapBoth(
-            { posts -> PostsList(posts, model.selectedPost, modifier) { component.onClicked(it) } },
+            { posts -> Posts(posts, model.selectedPost, modifier) { component.onClicked(it) } },
             { error -> Error({ component.loadPosts() }, error) }
         )
     }

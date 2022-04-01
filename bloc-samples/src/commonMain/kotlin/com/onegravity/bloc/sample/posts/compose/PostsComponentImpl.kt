@@ -1,18 +1,18 @@
 package com.onegravity.bloc.sample.posts.compose
 
-import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.github.michaelbull.result.Result
-import com.onegravity.bloc.*
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.onCreate
+import com.onegravity.bloc.reduce
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.blocState
+import com.onegravity.bloc.thunk
 import com.onegravity.bloc.util.getKoinInstance
 
 class PostsComponentImpl(context: BlocContext) : PostsComponent {
-    private val blocState = context.instanceKeeper.getOrCreate("BLOC_STATE") {
-        blocState(PostsRootState(postsState = PostsState(), postState = PostState()))
-    }
+    private val blocState = blocState(PostsRootState(postsState = PostsState(), postState = PostState()))
 
     sealed class Action {
         object LoadingPosts : Action()
@@ -46,6 +46,10 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
         onCreate {
             if (state.isEmpty()) loadPosts()
         }
+    }
+
+    override fun onDestroy() {
+        // todo
     }
 
     override fun onClicked(post: Post) {

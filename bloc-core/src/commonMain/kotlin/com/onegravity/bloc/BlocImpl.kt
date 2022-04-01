@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
+import com.onegravity.bloc.utils.BlocLifecycle.State.*
 
 internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     blocContext: BlocContext,
@@ -27,19 +28,24 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
 
     private val sideEffectChannel = Channel<SideEffect>(UNLIMITED)
 
-    // we can use this scope internally, it's tied to the lifecycle of the BlocContext.lifecycle
-    // and will be cancelled when that lifecycle is destroyed (onDestroy())
-    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    // we use this scope internally, it's tied to the lifecycle of the BlocInstance and will be
+    // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    private val lifecycle = BlocLifecycle()
 
     init {
         blocContext.lifecycle.doOnCreate {
-            logger.d("onCreate -> start Bloc")
-            coroutineScope.start()
+            lifecycle.transition(NOT_STARTED, STARTED) {
+                logger.d("onCreate -> start Bloc")
+                coroutineScope.start()
+            }
         }
-
         blocContext.lifecycle.doOnDestroy {
-            logger.d("onDestroy -> stop Bloc")
-            coroutineScope.cancel("Stop Bloc")
+            lifecycle.transition(STARTED, DESTROYED) {
+                logger.d("onDestroy -> stop Bloc")
+                coroutineScope.cancel("Stop Bloc")
+            }
         }
     }
 
@@ -108,21 +114,20 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     }
 
     private suspend fun runReducers(action: Action) {
-        getMatchingReducers(action)
-            .fold(false) { proposalEmitted, matcherReducer ->
-                val (_, reducer, expectsProposal) = matcherReducer
-                when {
-                    !expectsProposal -> {                  // running sideEffect { }
-                        reducer.runReducer(action)
-                        proposalEmitted
-                    }
-                    !proposalEmitted -> {                  // running reduce { } or reduceAnd { }
-                        reducer.runReducer(action)
-                        true
-                    }
-                    else -> proposalEmitted                 // skipping reduce { } or reduceAnd { }
+        getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
+            val (_, reducer, expectsProposal) = matcherReducer
+            when {
+                !expectsProposal -> {                  // running sideEffect { }
+                    reducer.runReducer(action)
+                    proposalEmitted
                 }
+                !proposalEmitted -> {                  // running reduce { } or reduceAnd { }
+                    reducer.runReducer(action)
+                    true
+                }
+                else -> proposalEmitted                 // skipping reduce { } or reduceAnd { }
             }
+        }
     }
 
     private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(
@@ -155,28 +160,33 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
      * Public API to run thunks / reducers "externally" (using extension functions)
      */
 
-    suspend fun runReducer(reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Boolean {
-        val (proposal, sideEffects) = ReducerContextNoAction(blocState.value, coroutineScope).reducer()
-        return if (proposal != null) {
+    fun runReducer(reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>) = launch {
+        val (proposal, sideEffects) = ReducerContextNoAction(
+            blocState.value,
+            coroutineScope
+        ).reducer()
+        if (proposal != null) {
             blocState.send(proposal)
             postSideEffects(sideEffects)
-            true
         } else {
             postSideEffects(sideEffects)
-            false
         }
     }
 
-    suspend fun runThunk(thunk: ThunkNoAction<State, Action>) {
+    fun runThunk(thunk: ThunkNoAction<State, Action>) = launch {
         val dispatcher: Dispatcher<Action> = {
             nextThunkDispatcher(0, it).invoke(it)
         }
         ThunkContextNoAction({ blocState.value }, dispatcher).thunk()
     }
 
-    suspend fun runInitializer(initializer: Initializer<State, Action>) {
+    fun runInitializer(initializer: Initializer<State, Action>) = launch {
         val context = InitializerContext<State, Action>(value) { action -> send(action) }
         context.initializer()
+    }
+
+    private fun launch(block: suspend CoroutineScope.() -> Unit) {
+        coroutineScope.launch { block() }
     }
 
 }

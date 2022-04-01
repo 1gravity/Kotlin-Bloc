@@ -30,6 +30,4 @@ internal open class BlocStateImpl<State, Proposal>(
         state.send(newState)
     }
 
-    override fun onDestroy() {}
-
 }

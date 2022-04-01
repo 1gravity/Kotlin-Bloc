@@ -135,9 +135,7 @@ fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.onCreate(
     initializer: Initializer<State, Action>
 ) {
-    (this as BlocImpl).coroutineScope.launch {
-        runInitializer(initializer)
-    }
+    (this as BlocImpl).runInitializer(initializer)
 }
 
 /**
@@ -158,9 +156,7 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.thunk(
     thunk: ThunkNoAction<State, Action>
 ) {
-    (this as BlocImpl).coroutineScope.launch {
-        runThunk(thunk)
-    }
+    (this as BlocImpl).runThunk(thunk)
 }
 
 /**
@@ -204,9 +200,7 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) {
-    (this as BlocImpl).coroutineScope.launch {
-        runReducer(reducer)
-    }
+    (this as BlocImpl).runReducer(reducer)
 }
 
 /**
@@ -229,9 +223,7 @@ fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Propos
     val reducerNoState: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
         Effect(null, sideEffect.invoke(this))
     }
-    (this as BlocImpl).coroutineScope.launch {
-        runReducer(reducerNoState)
-    }
+    (this as BlocImpl).runReducer(reducerNoState)
 }
 
 /**
@@ -248,8 +240,6 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
  */
 fun <State, SideEffect, Proposal> Bloc<State, Proposal, SideEffect, Proposal>.asBlocState(): BlocState<State, Proposal> =
     object : BlocState<State, Proposal> {
-        override fun onDestroy() {}
-
         override fun send(value: Proposal) {
             this@asBlocState.send(value)
         }
@@ -260,5 +250,4 @@ fun <State, SideEffect, Proposal> Bloc<State, Proposal, SideEffect, Proposal>.as
         override suspend fun collect(collector: FlowCollector<State>) {
             this@asBlocState.collect(collector)
         }
-
     }
