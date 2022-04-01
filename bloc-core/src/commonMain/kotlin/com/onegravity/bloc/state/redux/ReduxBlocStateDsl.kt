@@ -13,7 +13,7 @@ import kotlin.jvm.JvmName
  */
 @JvmName("reduxBlocState")
 @BlocDSL
-fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
+internal fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxBlocStateBuilder<State, Model, ReduxModel>.() -> Unit
@@ -30,7 +30,7 @@ fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
  */
 @JvmName("simpleReduxBlocState")
 @BlocDSL
-fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
+internal fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxSimpleBlocStateBuilder<State, ReduxModel>.() -> Unit

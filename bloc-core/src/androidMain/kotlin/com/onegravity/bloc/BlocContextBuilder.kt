@@ -45,8 +45,9 @@ import kotlinx.coroutines.launch
  *
  * The component will be tied to a ViewModel which is created "on the fly" and the component
  */
-inline fun <A, reified Component> A.getOrCreate(createInstance: (context: DefaultBlocContext) -> Component):
-        Component where
+inline fun <A, reified Component> A.getOrCreate(
+    createInstance: (context: DefaultBlocContext) -> Component
+): Component where
         A : SavedStateRegistryOwner,
         A : OnBackPressedDispatcherOwner,
         A : ViewModelStoreOwner,
@@ -60,8 +61,9 @@ inline fun <A, reified Component> A.getOrCreate(createInstance: (context: Defaul
 /**
  * The same from a fragment
  */
-inline fun <reified Component> Fragment.getOrCreate(createInstance: (context: DefaultBlocContext) -> Component):
-        Component? = activity?.getOrCreate(createInstance)
+inline fun <reified Component> Fragment.getOrCreate(
+    createInstance: (context: DefaultBlocContext) -> Component
+): Component? = activity?.getOrCreate(createInstance)
 
 /**
  * We wrap a component into an InstanceWrapper so that components don't have to implement the

@@ -12,52 +12,6 @@ import com.onegravity.bloc.utils.Selector
 import org.reduxkotlin.Store
 
 /**
- * Create a DisposableScope that is disposed when the Bloc is destroyed (onDestroy called)
- */
-@BlocDSL
-fun BlocContext.disposableScope() = DisposableScope()
-    .apply { lifecycle.doOnDestroy(::dispose) }
-
-/**
- * Add a state selection subscription to a DisposableScope so it will be properly disposed when
- * the DisposableScope is disposed. Call this as:
- * ```
- *    selectScoped(store, selector) { model ->
- *       // do stuff with the selected model
- *    }
- * ```
- */
-@BlocDSL
-fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
-    store: Store<State>,
-    selector: (State) -> SelectedState,
-    block: (selectedState: SelectedState) -> Unit
-) {
-    store
-        .select(selector) { block(it) }
-        .scope { unsubscribe -> unsubscribe() }
-}
-
-/**
- * Add a state selection subscription to a DisposableScope so it will be properly disposed when
- * the DisposableScope is disposed. Call this as:
- * ```
- *    store.selectScoped(disposableScope, selector) { model ->
- *       // do stuff with the selected model
- *    }
- * ```
- */
-@BlocDSL
-fun <State : Any, SelectedState : Any> Store<State>.selectScoped(
-    disposableScope: DisposableScope,
-    selector: (State) -> SelectedState,
-    block: (selectedState: SelectedState) -> Unit
-) {
-    val unsubscribe = select(selector) { block(it) }
-    disposableScope.doOnDispose { unsubscribe() }
-}
-
-/**
  * Extension function to convert a Redux store to a ReduxBlocState:
  * ```
  *    store.toBlocState(context, initialValue)
@@ -104,4 +58,50 @@ fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxMode
     this.initialState = initialState
     select(selector)
     map(mapper)
+}
+
+/**
+ * Create a DisposableScope that is disposed when the Bloc is destroyed (onDestroy called)
+ */
+@BlocDSL
+internal fun BlocContext.disposableScope() = DisposableScope()
+    .apply { lifecycle.doOnDestroy(::dispose) }
+
+/**
+ * Add a state selection subscription to a DisposableScope so it will be properly disposed when
+ * the DisposableScope is disposed. Call this as:
+ * ```
+ *    selectScoped(store, selector) { model ->
+ *       // do stuff with the selected model
+ *    }
+ * ```
+ */
+@BlocDSL
+internal fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
+    store: Store<State>,
+    selector: (State) -> SelectedState,
+    block: (selectedState: SelectedState) -> Unit
+) {
+    store
+        .select(selector) { block(it) }
+        .scope { unsubscribe -> unsubscribe() }
+}
+
+/**
+ * Add a state selection subscription to a DisposableScope so it will be properly disposed when
+ * the DisposableScope is disposed. Call this as:
+ * ```
+ *    store.selectScoped(disposableScope, selector) { model ->
+ *       // do stuff with the selected model
+ *    }
+ * ```
+ */
+@BlocDSL
+internal fun <State : Any, SelectedState : Any> Store<State>.selectScoped(
+    disposableScope: DisposableScope,
+    selector: (State) -> SelectedState,
+    block: (selectedState: SelectedState) -> Unit
+) {
+    val unsubscribe = select(selector) { block(it) }
+    disposableScope.doOnDispose { unsubscribe() }
 }
