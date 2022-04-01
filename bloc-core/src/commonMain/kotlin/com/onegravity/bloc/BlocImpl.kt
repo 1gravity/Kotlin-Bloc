@@ -32,10 +32,7 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val lifecycle = BlocLifecycle(
-        { coroutineScope.start() },
-        { coroutineScope.cancel("Stop Bloc") }
-    )
+    private val lifecycle = BlocLifecycle({ coroutineScope.start() }, { coroutineScope.cancel() })
 
     init {
         with(blocContext.lifecycle) {

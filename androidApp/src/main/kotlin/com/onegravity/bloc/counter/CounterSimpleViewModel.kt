@@ -1,6 +1,7 @@
 package com.onegravity.bloc.counter
 
 import androidx.lifecycle.ViewModel
+import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.blocContext
 import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Decrement
 import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Increment
@@ -8,9 +9,9 @@ import com.onegravity.bloc.sample.counter.SimpleCounter.bloc
 import com.onegravity.bloc.toLiveData
 import org.koin.core.component.KoinComponent
 
-class CounterSimpleViewModel : ViewModel(), KoinComponent {
+class CounterSimpleViewModel(context: ActivityBlocContext) : ViewModel(), KoinComponent {
 
-    private val bloc = bloc(blocContext())
+    private val bloc = bloc(blocContext(context))
 
     val state = toLiveData(bloc)
     //  this does the same but it's more verbose:

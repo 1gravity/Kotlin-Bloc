@@ -8,12 +8,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
-import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
 
 /**
- * ComponentActivity/AppCompatActivity.
+ * ComponentActivity / AppCompatActivity
  */
 
 @BlocDSL
@@ -26,14 +25,6 @@ fun <T : ViewDataBinding> ComponentActivity.bind(
     binding.lifecycleOwner = this
     setContentView(binding.root)
 }
-
-@Suppress("UNCHECKED_CAST")
-@BlocDSL
-inline fun <VM : ViewModel> ComponentActivity.factory(crossinline createInstance: (context: ActivityBlocContext) -> VM) =
-    object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T =
-            createInstance(activityBlocContext()) as T
-    }
 
 /**
  * Subscribes to a BlocObservableOwner (typically a ViewModel). The subscription
@@ -57,15 +48,8 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
 }
 
 /**
- * Fragment.
+ * Fragment
  */
-
-@Suppress("UNCHECKED_CAST")
-@BlocDSL
-inline fun <VM : ViewModel> Fragment.factory(crossinline f: (context: ActivityBlocContext) -> VM) =
-    object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = f(activityBlocContext()) as T
-    }
 
 @BlocDSL
 fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
@@ -100,29 +84,17 @@ fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State
     }
 
 /**
- * ViewModel.
+ * ViewModel
  */
 
 /**
- * Call from a ViewModel:
+ * Expose a StateStream<State> as LiveData<State> so it can be used with Android data binding, e.g.:
  * ```
  *   val state = toLiveData(bloc)
  * ```
  */
 @BlocDSL
 fun <State> ViewModel.toLiveData(stream: StateStream<State>) = stream.toLiveData(viewModelScope)
-
-/**
- * Use this if we need the SavedStateRegistry, the ViewModelStore or the OnBackPressedDispatcher
- */
-fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
-    BlocContextOwnerImpl(this, context).blocContext
-
-/**
- * Use this if we don't need the SavedStateRegistry, the ViewModelStore or the OnBackPressedDispatcher
- */
-fun ViewModel.blocContext(): BlocContext =
-    BlocContextOwnerImpl(this, ActivityBlocContext(null, null, null)).blocContext
 
 /**
  * Adapter for Jetbrains Compose.

@@ -1,14 +1,11 @@
 package com.onegravity.bloc.calculator
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.bind
 import com.onegravity.bloc.databinding.ActivityCalculatorBinding
-import com.onegravity.bloc.defaultBlocContext
-import com.onegravity.bloc.factory
-import com.onegravity.bloc.sample.calculator.bloc
+import com.onegravity.bloc.viewModel
 
 class CalculatorActivity : AppCompatActivity() {
 
@@ -20,7 +17,7 @@ class CalculatorActivity : AppCompatActivity() {
      *    private val viewModel by viewModels<CalculatorViewModel>()
      * ```
      */
-    private val viewModel by viewModels<CalculatorViewModel> { factory { CalculatorViewModel(it) } }
+    private val viewModel by viewModel { CalculatorViewModel(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

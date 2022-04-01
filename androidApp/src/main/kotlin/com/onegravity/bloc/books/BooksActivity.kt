@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.sample.books.BookState
 import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.viewModel
 
 class BooksActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<BooksViewModel>()
+    private val viewModel by viewModel { BooksViewModel(it) }
 
     lateinit var pageEmpty: View
     lateinit var pageLoading: View

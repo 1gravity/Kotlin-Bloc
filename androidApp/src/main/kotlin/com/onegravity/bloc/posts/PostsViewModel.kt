@@ -1,24 +1,19 @@
 package com.onegravity.bloc.posts
 
-import com.github.michaelbull.result.Result
 import androidx.lifecycle.ViewModel
 import com.onegravity.bloc.*
 import com.onegravity.bloc.sample.posts.bloc.Posts
-import com.onegravity.bloc.sample.posts.bloc.Posts.clicked
 import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
-import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
-import com.onegravity.bloc.state.blocState
-import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.utils.BlocOwner
 import org.koin.core.component.KoinComponent
 
-class PostsViewModel :
+class PostsViewModel(context: ActivityBlocContext) :
     ViewModel(),
     BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState>,
     KoinComponent {
 
-    override val bloc = Posts.bloc(blocContext())
+    override val bloc = Posts.bloc(blocContext(context))
 
     fun onPostClicked(post: Post) = sideEffect {
         Posts.OpenPost(post)

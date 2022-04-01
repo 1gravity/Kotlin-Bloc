@@ -27,7 +27,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
@@ -40,20 +39,20 @@ import com.github.michaelbull.result.mapBoth
 import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostDetailsFragmentBinding
-import com.onegravity.bloc.factory
-import com.onegravity.bloc.utils.viewBinding
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
+import com.onegravity.bloc.viewModel
 import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.utils.viewBinding
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 
 class PostFragment : Fragment(R.layout.post_details_fragment) {
 
     private val args: PostFragmentArgs by navArgs()
-    private val viewModel by viewModels<PostViewModel> {
-        factory { PostViewModel(args.overview) }
-    }
+
+    private val viewModel by viewModel { PostViewModel(it, args.overview) }
+
     private var initialised: Boolean = false
     private val adapter = GroupAdapter<GroupieViewHolder>()
 

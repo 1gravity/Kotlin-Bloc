@@ -1,7 +1,7 @@
 package com.onegravity.bloc.counter
 
 import android.os.Bundle
-import androidx.activity.viewModels
+import com.onegravity.bloc.viewModel
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.bind
@@ -9,7 +9,7 @@ import com.onegravity.bloc.databinding.ActivityCounterReduxBinding
 
 class CounterReduxActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<CounterReduxViewModel>()
+    private val viewModel by viewModel { CounterReduxViewModel(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,7 +3,6 @@ package com.onegravity.bloc
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.books.BooksActivity
 import com.onegravity.bloc.calculator.CalculatorActivity
@@ -16,7 +15,7 @@ import com.onegravity.bloc.sample.MainMenu.ActionState.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel by viewModel { MainViewModel(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
