@@ -21,6 +21,9 @@ object ReduxCounter {
     }
 }
 
-// TODO think about the initial value, who/what provides it?
-
-// TODO iOS
+// TODO think about the initial value, who/what provides it? should be have a mechanism to populate
+//      the BlocState upon start?
+// TODO think about navigation as well, will side effects be sufficient?
+// TODO think about lifecycle, is a ViewModel "lifecycle" enough? Shouldn't we have more
+//      fine-grained lifecycle with Jetpack Compose (e.g. by screen?)
+// TODO iOS sample app

@@ -24,5 +24,6 @@
     <string name="books_retry">Try Again</string>
 
     <string name="rotate_device">Rotate device now to see how the state persists</string>
+    <string name="rotate_device_counter">Rotate device now to see how the state persists. Specifically with the Redux store, state is even retained when you leave the screen and return.</string>
 
 </resources>
