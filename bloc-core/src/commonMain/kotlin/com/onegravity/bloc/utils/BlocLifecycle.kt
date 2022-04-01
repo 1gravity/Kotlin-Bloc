@@ -1,25 +1,42 @@
 package com.onegravity.bloc.utils
 
-/**
- * No we're not going to use a state machine for this...
- */
-class BlocLifecycle {
-    enum class State {
-        NOT_STARTED,
-        STARTED,
-        DESTROYED
-    }
+import com.onegravity.bloc.fsm.StateMachine
+import com.onegravity.bloc.fsm.Transition
 
-    private var blocState = State.NOT_STARTED
+sealed class BlocState {
+    object NotStarted : BlocState()
+    object Started : BlocState()
+    object Destroyed : BlocState()
+}
 
-    // not thread safe but Atomicfu doesn't seem to be maintained any more
-    fun transition(expectedState: State, newState: State, block: () -> Unit) {
-        blocState = when (blocState) {
-            expectedState -> {
-                block()
-                newState
+sealed class BlocStateEvent {
+    object Started : BlocStateEvent()
+    object Destroyed : BlocStateEvent()
+}
+
+@Suppress("FunctionName")
+fun BlocLifecycle(onStart: () -> Unit, onDestroy: () -> Unit) =
+    StateMachine.create<BlocState, BlocStateEvent, () -> Unit> {
+        initialState(BlocState.NotStarted)
+        state<BlocState.NotStarted> {
+            on<BlocStateEvent.Started> {
+                transitionTo(BlocState.Started, onStart)
             }
-            else -> blocState
+        }
+        state<BlocState.Started> {
+            on<BlocStateEvent.Destroyed> {
+                transitionTo(BlocState.Destroyed, onDestroy)
+            }
+        }
+        state<BlocState.Destroyed> {
+            // this is the final state -> no transitions
+        }
+        onTransition {
+            val validTransition = it as? Transition.Valid ?: return@onTransition
+            when (validTransition.sideEffect) {
+                onStart -> logger.i("onStart -> start Bloc")
+                onDestroy -> logger.i("onDestroy -> stop Bloc")
+            }
+            validTransition.sideEffect?.invoke()
         }
     }
-}

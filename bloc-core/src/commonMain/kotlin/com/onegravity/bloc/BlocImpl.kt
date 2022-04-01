@@ -3,6 +3,7 @@ package com.onegravity.bloc
 import com.arkivanov.essenty.lifecycle.doOnCreate
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.utils.BlocStateEvent.*
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
@@ -11,7 +12,6 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
-import com.onegravity.bloc.utils.BlocLifecycle.State.*
 
 internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     blocContext: BlocContext,
@@ -32,20 +32,15 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val lifecycle = BlocLifecycle()
+    private val lifecycle = BlocLifecycle(
+        { coroutineScope.start() },
+        { coroutineScope.cancel("Stop Bloc") }
+    )
 
     init {
-        blocContext.lifecycle.doOnCreate {
-            lifecycle.transition(NOT_STARTED, STARTED) {
-                logger.d("onCreate -> start Bloc")
-                coroutineScope.start()
-            }
-        }
-        blocContext.lifecycle.doOnDestroy {
-            lifecycle.transition(STARTED, DESTROYED) {
-                logger.d("onDestroy -> stop Bloc")
-                coroutineScope.cancel("Stop Bloc")
-            }
+        with(blocContext.lifecycle) {
+            doOnCreate { lifecycle.transition(Started) }
+            doOnDestroy { lifecycle.transition(Destroyed) }
         }
     }
 
