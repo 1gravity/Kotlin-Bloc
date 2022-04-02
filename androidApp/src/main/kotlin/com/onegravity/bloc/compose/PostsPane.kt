@@ -17,15 +17,18 @@ internal fun PostsPane(
     component: PostsComponent,
     modifier: Modifier
 ) {
-    val model by component.observeState()
+    val state by component.observeState()
 
-    if (model.postsState.loading) {
-        Box(modifier = modifier.background(Color.Transparent)) {
+    when (state.postsState.loading) {
+        true -> Box(modifier = modifier.background(Color.Transparent)) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
-    } else {
-        model.postsState.posts.mapBoth(
-            { posts -> Posts(posts, model.selectedPost, modifier) { component.onClicked(it) } },
+        else -> state.postsState.posts.mapBoth(
+            { posts ->
+                Posts(posts, state.selectedPost, modifier) { post ->
+                    component.onClicked(post)
+                }
+            },
             { error -> Error({ component.loadPosts() }, error) }
         )
     }

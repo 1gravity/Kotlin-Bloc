@@ -7,5 +7,6 @@ data class PostsRootState(
     val postsState: PostsState,
     val postState: PostState,
 ) {
-    fun isEmpty() = postsState.posts is Ok && postsState.posts.value.isEmpty()
+    fun postsAreLoaded() = postsState.posts is Ok && postsState.posts.value.isNotEmpty()
+    fun postIsLoaded() = selectedPost != null && postState.post is Ok && postState.post.value.id == selectedPost
 }

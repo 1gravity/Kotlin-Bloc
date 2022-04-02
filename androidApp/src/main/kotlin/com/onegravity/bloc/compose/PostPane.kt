@@ -1,8 +1,8 @@
 package com.onegravity.bloc.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,13 +17,13 @@ internal fun PostPane(
     component: PostsComponent,
     modifier: Modifier
 ) {
-    val model by component.observeState()
+    val state by component.observeState()
 
-    when (model.postState.loading) {
+    when (state.postState.loading != null) {
         true -> Box(modifier = modifier.background(Color.Transparent)) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
-        else -> model.postState.post?.mapBoth(
+        else -> state.postState.post?.mapBoth(
             { post -> Post(post, modifier) },
             { error -> Error({ component.loadPost() }, error) }
         )

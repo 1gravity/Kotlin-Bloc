@@ -23,6 +23,7 @@ private val MULTI_PANE_WIDTH_THRESHOLD = 700.dp
 @Composable
 fun RootUi(component: PostsComponent) {
     val state by component.observeState()
+
     BoxWithConstraints(
         Modifier.fillMaxWidth().fillMaxHeight()) {
         val isMultiPane = this@BoxWithConstraints.maxWidth >= MULTI_PANE_WIDTH_THRESHOLD
@@ -33,8 +34,7 @@ fun RootUi(component: PostsComponent) {
 
             when {
                 isMultiPane && showDetail ->
-                    Row(
-                        Modifier.fillMaxWidth().fillMaxHeight()) {
+                    Row(Modifier.fillMaxWidth().fillMaxHeight()) {
                         PostsPane(component, Modifier.fillMaxWidth(0.33f).fillMaxHeight())
                         PostPane(component, Modifier.fillMaxWidth().fillMaxHeight())
                     }
@@ -50,10 +50,13 @@ private fun ToolBar(component: PostsComponent, isMultiPane: Boolean) {
     val state by component.observeState()
     val showDetail = state.selectedPost != null
 
-    val title = when (showDetail) {
-        true -> state.postState.post?.mapBoth({ it.username }, { it.message })
-        else -> null
-    } ?: stringResource(R.string.posts_compose_title)
+    val defaultTitle = stringResource(R.string.posts_compose_title)
+    val title = when {
+        isMultiPane -> defaultTitle
+        state.postIsLoaded() -> state.postState.post?.mapBoth({ it.username }, { defaultTitle })
+        state.postState.loading != null -> stringResource(R.string.posts_compose_loading)
+        else -> defaultTitle
+    } ?: defaultTitle
 
     if (isMultiPane || !showDetail) {
         TopAppBar(title = { Text(text = title) },)
@@ -65,7 +68,7 @@ private fun ToolBar(component: PostsComponent, isMultiPane: Boolean) {
                 IconButton(onClick = { component.onClosed() }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
-            },
+            }
         )
     }
 }

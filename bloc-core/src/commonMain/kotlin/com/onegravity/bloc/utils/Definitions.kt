@@ -73,7 +73,10 @@ data class ReducerContext<State, Action>(
 
 typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
 
-data class ReducerContextNoAction<State>(val state: State, val scope: CoroutineScope)
+data class ReducerContextNoAction<State>(
+    val state: State,
+    val coroutineScope: CoroutineScope
+)
 
 typealias ReducerNoAction<State, Proposal> = suspend ReducerContextNoAction<State>.() -> Proposal
 

@@ -27,6 +27,11 @@ internal fun Post(post: Post, modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
+                    text = post.username,
+                    fontSize = 18.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
                     text = post.body,
                     fontSize = 18.sp,
                     modifier = Modifier.fillMaxWidth()

@@ -154,9 +154,10 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
  */
 @BlocDSL
 fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.thunk(
+    coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
 ) {
-    (this as BlocImpl).runThunk(thunk)
+    (this as BlocImpl).runThunk(coroutineScope, thunk)
 }
 
 /**
@@ -164,8 +165,9 @@ fun <State, Action, SideEffect, Proposal> Bloc<State, Action, SideEffect, Propos
  */
 @BlocDSL
 fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
+    coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
-) = bloc.thunk(thunk)
+) = bloc.thunk(coroutineScope, thunk)
 
 /**
  * Submit a Reducer without side effects to the Bloc to be run.

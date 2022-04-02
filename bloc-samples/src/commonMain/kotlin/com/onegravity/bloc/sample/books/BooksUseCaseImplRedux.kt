@@ -57,7 +57,10 @@ class BooksUseCaseImplRedux(
     }
 
     private val bloc = bloc<BookState, BookAction, Nothing, Any>(context, blocState) {
-        reduce<BookAction.Load> { loadThunk(coroutineScope, repository) }
+        reduce<BookAction.Load> {
+            // our Proposal: a Thunk which is being dispatched to the Redux Store
+            loadThunk(coroutineScope, repository)
+        }
         reduce<BookAction.Clear> { BookStore.ReduxAction.Clear }
     }
 
