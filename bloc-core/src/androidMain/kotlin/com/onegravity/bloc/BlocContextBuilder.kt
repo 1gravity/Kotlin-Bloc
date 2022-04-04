@@ -9,18 +9,17 @@ package com.onegravity.bloc
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.lifecycle.LifecycleRegistry
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryOwner
 import com.arkivanov.essenty.backpressed.BackPressedHandler
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
-import com.arkivanov.essenty.instancekeeper.getOrCreate
-import com.arkivanov.essenty.lifecycle.*
+import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
+import com.arkivanov.essenty.lifecycle.create
+import com.arkivanov.essenty.lifecycle.destroy
 import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.context.DefaultBlocContext
@@ -45,25 +44,21 @@ import kotlinx.coroutines.launch
  *
  * The component will be tied to a ViewModel which is created "on the fly" and the component
  */
-inline fun <A, reified Component> A.getOrCreate(
-    createInstance: (context: DefaultBlocContext) -> Component
-): Component where
+inline fun <A, reified Component : Any> A.getOrCreate(
+    noinline createInstance: (context: BlocContext) -> Component
+): Lazy<Component> where
         A : SavedStateRegistryOwner,
         A : OnBackPressedDispatcherOwner,
         A : ViewModelStoreOwner,
         A : LifecycleOwner =
-    createBlocContext().run {
-        instanceKeeper.getOrCreate(Component::class.java) {
-            InstanceWrapper(createInstance(this))
-        }.component
-    }
+    ComponentLazy(ActivityLazy { this }, Component::class, createInstance)
 
 /**
  * The same from a fragment
  */
-inline fun <reified Component> Fragment.getOrCreate(
-    createInstance: (context: DefaultBlocContext) -> Component
-): Component? = activity?.getOrCreate(createInstance)
+inline fun <reified Component: Any> Fragment.getOrCreate(
+    noinline createInstance: (context: BlocContext) -> Component
+): Lazy<Component> = ComponentLazy(ActivityLazy { requireActivity() }, Component::class, createInstance)
 
 /**
  * We wrap a component into an InstanceWrapper so that components don't have to implement the
@@ -159,6 +154,7 @@ fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
 private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner {
     override fun getLifecycle() = lifecycleRegistry
     private val lifecycleRegistry = LifecycleRegistry(this)
+
     init {
         viewModelScope.launch(Dispatchers.Main) {
             lifecycleRegistry.currentState = Lifecycle.State.CREATED
