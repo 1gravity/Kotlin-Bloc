@@ -82,6 +82,16 @@
             app:layout_constraintVertical_bias="0.2" />
 
         <Button
+            android:id="@+id/calculator_no_vm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_menu_calculator_no_vm"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.CalculatorNoVM)}"
+            app:layout_constraintTop_toBottomOf="@id/calculator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"/>
+
+        <Button
             android:id="@+id/posts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

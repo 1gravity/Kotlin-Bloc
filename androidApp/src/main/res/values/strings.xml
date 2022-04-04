@@ -6,6 +6,7 @@
     <string name="main_menu_counter_redux">Counter\nRedux</string>
     <string name="main_menu_books">Books</string>
     <string name="main_menu_calculator">Calculator</string>
+    <string name="main_menu_calculator_no_vm">Calc no VM</string>
     <string name="main_menu_posts">Posts</string>
     <string name="main_menu_posts_compose">Posts\nCompose</string>
 

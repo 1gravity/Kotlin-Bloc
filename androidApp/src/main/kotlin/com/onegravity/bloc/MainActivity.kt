@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.books.BooksActivity
 import com.onegravity.bloc.calculator.CalculatorActivity
+import com.onegravity.bloc.calculator.CalculatorActivityNoVM
 import com.onegravity.bloc.compose.ComposeActivity
 import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         Counter2 to CounterReduxActivity::class.java,
         Books to BooksActivity::class.java,
         Calculator to CalculatorActivity::class.java,
+        CalculatorNoVM to CalculatorActivityNoVM::class.java,
         Posts to PostActivity::class.java,
         Compose to ComposeActivity::class.java
     )

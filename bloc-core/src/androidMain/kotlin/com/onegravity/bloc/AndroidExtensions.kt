@@ -1,7 +1,7 @@
 package com.onegravity.bloc
 
-import androidx.annotation.LayoutRes
 import androidx.activity.ComponentActivity
+import androidx.annotation.LayoutRes
 import androidx.compose.runtime.*
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -95,6 +95,12 @@ fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State
  */
 @BlocDSL
 fun <State> ViewModel.toLiveData(stream: StateStream<State>) = stream.toLiveData(viewModelScope)
+
+/**
+ * The same for Activities
+ */
+@BlocDSL
+fun <State> LifecycleOwner.toLiveData(stream: StateStream<State>) = stream.toLiveData(lifecycleScope)
 
 /**
  * Adapter for Jetbrains Compose.

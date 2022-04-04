@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.onegravity.bloc.R
-import com.onegravity.bloc.sample.books.BookState
-import com.onegravity.bloc.subscribe
-import com.onegravity.bloc.viewModel
+import com.onegravity.bloc.*
+import com.onegravity.bloc.sample.books.*
 
 class BooksActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel { BooksViewModel(it) }
+    private val useCase by getOrCreate { BooksUseCaseImpl(it, BooksRepositoryImpl()) }
+//    private val useCase by getOrCreate { BooksUseCaseImpl(it, BooksRepositoryImpl()) }
+//    private val useCase by getOrCreate { BooksUseCaseImplSimple(it, BooksRepositoryImpl()) }
 
     lateinit var pageEmpty: View
     lateinit var pageLoading: View
@@ -24,12 +24,12 @@ class BooksActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
-        setupView()
+        setupView(useCase)
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.subscribe(this, state = ::observeState)
+        useCase.subscribe(this, state = ::observeState)
     }
 
     private fun observeState(state: BookState) {
@@ -55,19 +55,19 @@ class BooksActivity : AppCompatActivity() {
         booksMessage.text = "Books:\n$text"
     }
 
-    private fun setupView() {
+    private fun setupView(useCase: BooksUseCase) {
         pageEmpty = findViewById(R.id.pageEmpty)
         pageLoading = findViewById(R.id.pageLoading)
         pageContent = findViewById(R.id.pageContent)
         pageError = findViewById(R.id.pageError)
         booksMessage = findViewById(R.id.booksMessage)
         errorMessage = findViewById(R.id.errorMessage)
-        val loadListener = View.OnClickListener { viewModel.load() }
+        val loadListener = View.OnClickListener { useCase.load() }
         findViewById<View>(R.id.tryAgainButton).setOnClickListener(loadListener)
         findViewById<View>(R.id.reloadButton).setOnClickListener(loadListener)
         findViewById<View>(R.id.loadButton).setOnClickListener(loadListener)
 
-        val clearListener = View.OnClickListener { viewModel.clear() }
+        val clearListener = View.OnClickListener { useCase.clear() }
         findViewById<View>(R.id.clearButton).setOnClickListener(clearListener)
     }
 

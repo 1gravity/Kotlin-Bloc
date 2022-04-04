@@ -11,6 +11,7 @@ object MainMenu {
         Counter2,
         Books,
         Calculator,
+        CalculatorNoVM,
         Posts,
         Compose
     }

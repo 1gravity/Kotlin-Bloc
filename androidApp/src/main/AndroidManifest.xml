@@ -52,6 +52,12 @@
             android:exported="false"/>
 
         <activity
+            android:name=".calculator.CalculatorActivityNoVM"
+            android:label="Calculator no VM"
+            android:theme="@style/AppThemeCalculator"
+            android:exported="false"/>
+
+        <activity
             android:name=".compose.ComposeActivity"
             android:label="Compose"
             android:theme="@style/AppThemePosts"
