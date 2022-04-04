@@ -10,6 +10,7 @@ import com.onegravity.bloc.toLiveData
 
 class CounterReduxViewModel(context: ActivityBlocContext) : ViewModel() {
 
+    // once we migrate to Kotlin 1.6.20 we can use multiple receivers and this will be more concise
     private val bloc = bloc(blocContext(context))
 
     val state = toLiveData(bloc)
