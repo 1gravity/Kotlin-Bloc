@@ -70,13 +70,15 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
         state.copy(selectedPost = null)
     }
 
-    override fun loadPosts(coroutineScope: CoroutineScope?) = thunk(coroutineScope) {
+    override fun loadPosts() = thunk {
         dispatch(Action.LoadingPosts)
         val result = repository.getOverviews()
         dispatch(Action.LoadedPosts(result))
     }
 
-    override fun loadPost(coroutineScope: CoroutineScope?) = thunk(coroutineScope) {
+    override fun loadPost() = loadPost(null)
+
+    private fun loadPost(coroutineScope: CoroutineScope?) = thunk(coroutineScope) {
         runCatching {
             val id = getState().selectedPost
             if (id != null) {
