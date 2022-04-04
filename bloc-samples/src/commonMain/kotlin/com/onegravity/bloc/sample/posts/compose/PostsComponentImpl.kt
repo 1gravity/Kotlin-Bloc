@@ -82,7 +82,6 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
             if (id != null) {
                 dispatch(Action.LoadingPost(id))
                 val result = repository.getDetail(id)
-                delay(5000)
                 dispatch(Action.LoadedPost(result))
             }
         }.onFailure {
