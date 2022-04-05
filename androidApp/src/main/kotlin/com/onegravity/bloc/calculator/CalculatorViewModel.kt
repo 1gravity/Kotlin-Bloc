@@ -7,7 +7,7 @@ import com.onegravity.bloc.sample.calculator.bloc
 
 class CalculatorViewModel(context: ActivityBlocContext) : ViewModel() {
 
-    private val bloc = blocContext(context).bloc()
+    private val bloc = bloc(blocContext(context))
 
     val state = toLiveData(bloc)
 

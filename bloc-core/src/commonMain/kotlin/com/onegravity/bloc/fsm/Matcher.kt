@@ -1,6 +1,6 @@
 /** From https://github.com/Tinder/StateMachine */
 
-package com.onegravity.bloc.utils
+package com.onegravity.bloc.fsm
 
 import kotlin.reflect.KClass
 
@@ -30,6 +30,10 @@ class Matcher<SuperClazz : Any, out ChildClazz : SuperClazz> constructor(
         inline fun <SuperClazz : Any, reified ChildClazz : SuperClazz> eq(value: ChildClazz):
                 Matcher<SuperClazz, ChildClazz> =
             any<SuperClazz, ChildClazz>().where { this == value }
+
+        inline fun <SuperClazz : Enum<SuperClazz>, reified ChildClazz : SuperClazz> eq(value: ChildClazz):
+                Matcher<SuperClazz, ChildClazz> =
+            any<SuperClazz, ChildClazz>().where { name == value.name }
     }
 
     override fun equals(other: Any?) = when {

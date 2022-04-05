@@ -1,6 +1,7 @@
 package com.onegravity.bloc
 
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.fsm.Matcher
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +47,19 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
         addThunk(Matcher.any(), thunk)
     }
 
+    @BlocDSL
+    @JvmName("thunkMatchingEnums")
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> thunk(
+        childClazz: A,
+        noinline thunk: Thunk<State, ActionEnum, A>
+    ) {
+        addThunk(
+            Matcher.eq(childClazz) as Matcher<Action, Action>,
+            thunk as Thunk<State, Action, Action>
+        )
+    }
+
     @BlocInternal
     @Suppress("UNCHECKED_CAST")
     fun <A : Action> addThunk(matcher: Matcher<Action, A>, thunk: Thunk<State, Action, A>) {
@@ -76,6 +90,23 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
         )
     }
 
+    @BlocDSL
+    @JvmName("reduceMatchingEnums")
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> reduce(
+        childClazz: A,
+        noinline reducer: Reducer<State, A, Proposal>
+    ) {
+        val reducerNoSideEffect: Reducer<State, A, Effect<Proposal, SE>> = {
+            reducer.invoke(this).noSideEffect()
+        }
+        addReducer(
+            Matcher.eq(childClazz) as Matcher<Action, Action>,
+            reducerNoSideEffect as Reducer<State, Action, Effect<Proposal, SE>>,
+            true
+        )
+    }
+
     /* Reducer without state but with side effect(s) */
 
     @BlocDSL
@@ -100,6 +131,23 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
         )
     }
 
+    @BlocDSL
+    @JvmName("sideEffectMatchingEnums")
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> sideEffect(
+        childClazz: A,
+        noinline sideEffect: SideEffect<State, A, SE>
+    ) {
+        val reducerNoState: Reducer<State, A, Effect<Proposal, SE>> = {
+            Effect(null, sideEffect.invoke(this))
+        }
+        addReducer(
+            Matcher.eq(childClazz) as Matcher<Action, Action>,
+            reducerNoState as Reducer<State, Action, Effect<Proposal, SE>>,
+            false
+        )
+    }
+
     /* Reducers with state and side effect(s) */
 
     @BlocDSL
@@ -113,6 +161,20 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
         noinline reducer: Reducer<State, Action, Effect<Proposal, SE>>
     ) {
         addReducer(Matcher.any<Action, A>(), reducer, true)
+    }
+
+    @BlocDSL
+    @JvmName("reduceWithSideEffectMatchingEnums")
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> reduceAnd(
+        childClazz: A,
+        noinline reducer: Reducer<State, Action, Effect<Proposal, SE>>
+    ) {
+        addReducer(
+            Matcher.eq(childClazz) as Matcher<Action, Action>,
+            reducer,
+            true
+        )
     }
 
     @BlocInternal

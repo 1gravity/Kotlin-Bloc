@@ -5,11 +5,29 @@ import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.sample.calculator.State.Companion.mapToState
 
-fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
+sealed class Action {
+    object Clear: Action()
+    object Add: Action()
+    object Subtract: Action()
+    object Multiply: Action()
+    object Divide: Action()
+    object PlusMinus: Action()
+    object Percentage: Action()
+    data class Digit(val digit: Int): Action()
+    object Period: Action()
+    object Equals: Action()
+}
+
+/**
+ * In this example we're using a sealed class as Action.
+ * This way we can use a data class for the digits (less reduce code) but we need to map the view
+ * clicks to Action (typically in the ViewModel).
+ */
+fun bloc(context: BlocContext) = bloc<State, Action>(context, State()) {
     fun State.resetErrors() = if (register1.isError() || register2.isError()) State() else this
 
     /**
-     * We can either define reducers per action:
+     * We can either define reducers per action...
      */
     reduce<Action.Equals> { state.resetErrors().equals() }
     reduce<Action.Clear> { State() }
@@ -20,13 +38,7 @@ fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
     reduce<Action.PlusMinus> { state.resetErrors().plusMinus() }
     reduce<Action.Percentage> { state.resetErrors().percentage() }
     reduce<Action.Period> { state.resetErrors().period() }
-    reduce<Action.Digit> {
-        try {
-            state.resetErrors().digit(action.digit)
-        } catch (ex: Exception) {
-            State.error(ex.message)
-        }
-    }
+    reduce<Action.Digit> { state.resetErrors().digit(action.digit) }
 
     /**
      * ...or use a single reducer for multiple actions:
@@ -52,7 +64,7 @@ fun BlocContext.bloc() = bloc<State, Action>(this, State()) {
 //    }
 }
 
-private fun State.apply(op: Operator) = runCatching {
+internal fun State.apply(op: Operator) = runCatching {
     val state = if (register1.isNotEmpty() && register2.isNotEmpty()) equals() else this
     if (state.register1.isEmpty())
         state
@@ -63,16 +75,16 @@ private fun State.apply(op: Operator) = runCatching {
     )
 }.mapToState()
 
-private fun State.plusMinus() = copy(register1 = register1.plusMinus())
+internal fun State.plusMinus() = copy(register1 = register1.plusMinus())
 
-private fun State.period() = copy(register1 = register1.appendPeriod())
+internal fun State.period() = copy(register1 = register1.appendPeriod())
 
-private fun State.digit(digit: Int) = copy(register1 = register1.appendDigit(digit))
+internal fun State.digit(digit: Int) = copy(register1 = register1.appendDigit(digit))
 
-private fun State.percentage() =
+internal fun State.percentage() =
     if (register1.isEmpty()) this else copy(register1 = register1 / Register("100"))
 
-private fun State.equals() = runCatching {
+internal fun State.equals() = runCatching {
     if (register2.isEmpty()) return this
     val reg1 = when (operator) {
         Operator.Add -> register2 + register1

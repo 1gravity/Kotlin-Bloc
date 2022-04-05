@@ -2,8 +2,6 @@
 
 package com.onegravity.bloc.fsm
 
-import com.onegravity.bloc.utils.Matcher
-
 class GraphBuilder<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
     graph: Graph<STATE, EVENT, SIDE_EFFECT>? = null
 ) {
@@ -27,7 +25,7 @@ class GraphBuilder<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
     }
 
     inline fun <reified S : STATE> state(state: S, noinline init: StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>.() -> Unit) {
-        state(Matcher.eq<STATE, S>(state), init)
+        state(Matcher.eq(state), init)
     }
 
     fun onTransition(listener: (Transition<STATE, EVENT, SIDE_EFFECT>) -> Unit) {

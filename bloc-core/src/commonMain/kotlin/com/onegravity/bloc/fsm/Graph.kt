@@ -2,8 +2,6 @@
 
 package com.onegravity.bloc.fsm
 
-import com.onegravity.bloc.utils.Matcher
-
 data class Graph<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
     val initialState: STATE,
     val stateDefinitions: Map<Matcher<STATE, STATE>, State<STATE, EVENT, SIDE_EFFECT>>,

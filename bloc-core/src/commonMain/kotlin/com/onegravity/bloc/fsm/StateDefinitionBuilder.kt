@@ -2,8 +2,6 @@
 
 package com.onegravity.bloc.fsm
 
-import com.onegravity.bloc.utils.Matcher
-
 class StateDefinitionBuilder<STATE : Any, S : STATE, EVENT : Any, SIDE_EFFECT : Any> {
 
     private val stateDefinition = Graph.State<STATE, EVENT, SIDE_EFFECT>()
