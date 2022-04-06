@@ -9,6 +9,7 @@ package com.onegravity.bloc
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
+import androidx.compose.runtime.Composable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistry
@@ -208,3 +209,11 @@ inline fun <reified VM : ViewModel> Fragment.viewModel(
     }
     return ViewModelLazy(VM::class, { viewModelStore }, { factory })
 }
+/** --------------------------------------------------------------------------------------------- */
+
+/**
+ * Creates DefaultBlocContext for compose previews with a Composable life cycle but without the
+ * other parameters (StateKeeper, InstanceKeeper, BackPressedHandler)
+ */
+@Composable
+fun previewBlocContext(): BlocContext = DefaultBlocContext(composableLifecycle())
