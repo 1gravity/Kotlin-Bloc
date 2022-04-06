@@ -1,4 +1,4 @@
-package com.onegravity.bloc.compose
+package com.onegravity.bloc.posts_compose
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.BoxWithConstraints

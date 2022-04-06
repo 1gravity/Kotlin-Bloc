@@ -5,7 +5,7 @@
 
     <data>
         <import type="com.onegravity.bloc.sample.MainMenu.ActionState"/>
-        <variable name="viewmodel" type="com.onegravity.bloc.MainViewModel" />
+        <variable name="viewmodel" type="com.onegravity.bloc.menu.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,6 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/counter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -34,27 +33,15 @@
             app:layout_constraintGuide_percent="0.5"/>
 
         <Button
-            android:id="@+id/counter_1"
+            android:id="@+id/menu_compose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_menu_counter"
-            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter1)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/main_menu_compose"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.MainMenuCompose)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.2" />
-
-        <Button
-            android:id="@+id/counter_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_menu_counter_redux"
-            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter2)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintVertical_bias="0.2" />
 
         <Button
@@ -63,11 +50,31 @@
             android:layout_height="wrap_content"
             android:text="@string/main_menu_books"
             android:onClick="@{(view) -> viewmodel.onClick(ActionState.Books)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/counter_1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@id/menu_compose"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.2" />
+
+        <Button
+            android:id="@+id/counter_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter1)}"
+            android:text="@string/main_menu_counter"
+            android:layout_marginTop="@dimen/menu_margins"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/menu_compose" />
+
+        <Button
+            android:id="@+id/counter_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_menu_counter_redux"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter2)}"
+            app:layout_constraintTop_toTopOf="@id/counter_1"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <Button
             android:id="@+id/calculator"
@@ -75,11 +82,10 @@
             android:layout_height="wrap_content"
             android:text="@string/main_menu_calculator"
             android:onClick="@{(view) -> viewmodel.onClick(ActionState.Calculator)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/counter_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.2" />
+            android:layout_marginTop="@dimen/menu_margins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/counter_1"/>
 
         <Button
             android:id="@+id/calculator_no_vm"
@@ -87,9 +93,9 @@
             android:layout_height="wrap_content"
             android:text="@string/main_menu_calculator_no_vm"
             android:onClick="@{(view) -> viewmodel.onClick(ActionState.CalculatorNoVM)}"
-            app:layout_constraintTop_toBottomOf="@id/calculator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline"/>
+            app:layout_constraintTop_toTopOf="@id/calculator"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <Button
             android:id="@+id/posts"
@@ -97,23 +103,20 @@
             android:layout_height="wrap_content"
             android:text="@string/main_menu_posts"
             android:onClick="@{(view) -> viewmodel.onClick(ActionState.Posts)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/books"
+            android:layout_marginTop="@dimen/menu_margins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintTop_toBottomOf="@id/calculator"/>
 
         <Button
             android:id="@+id/compose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_menu_posts_compose"
-            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Compose)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calculator"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.PostsCompose)}"
+            app:layout_constraintTop_toTopOf="@id/posts"
             app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

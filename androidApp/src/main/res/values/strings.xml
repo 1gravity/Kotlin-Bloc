@@ -2,6 +2,8 @@
     <string name="app_name">BLoC Framework</string>
 
     <string name="main_menu_title">Take your pick</string>
+    <string name="main_menu">Menu\nTraditional</string>
+    <string name="main_menu_compose">Menu\nCompose</string>
     <string name="main_menu_counter">Counter</string>
     <string name="main_menu_counter_redux">Counter\nRedux</string>
     <string name="main_menu_books">Books</string>

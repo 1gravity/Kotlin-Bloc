@@ -7,13 +7,14 @@ import com.onegravity.bloc.state.blocState
 object MainMenu {
     enum class ActionState {
         MainMenu,
+        MainMenuCompose,
         Counter1,
         Counter2,
         Books,
         Calculator,
         CalculatorNoVM,
         Posts,
-        Compose
+        PostsCompose
     }
 
     fun bloc(context: BlocContext) = bloc<ActionState, ActionState, ActionState>(

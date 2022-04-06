@@ -1,4 +1,4 @@
-package com.onegravity.bloc.compose
+package com.onegravity.bloc.util
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

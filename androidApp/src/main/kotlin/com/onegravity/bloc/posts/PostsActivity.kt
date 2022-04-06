@@ -25,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.onegravity.bloc.R
 
-class PostActivity : AppCompatActivity() {
+class PostsActivity : AppCompatActivity() {
 
     private val navController by lazy { findNavController(R.id.nav_host_fragment) }
 

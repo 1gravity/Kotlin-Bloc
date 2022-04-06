@@ -1,12 +1,13 @@
-package com.onegravity.bloc.compose
+package com.onegravity.bloc.posts_compose
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.getOrCreate
+import com.onegravity.bloc.util.ComposeAppTheme
 import com.onegravity.bloc.sample.posts.compose.PostsComponentImpl
 
-class ComposeActivity : AppCompatActivity() {
+class PostsActivity : AppCompatActivity() {
 
     // Using getOrCreate we can create any "component" that takes the ActivityBlocContext as
     // parameter, e.g a simple Bloc:

@@ -43,9 +43,7 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
 ): Bloc<State, Action, SideEffect, Proposal> =
     BlocBuilder<State, Action, SideEffect, Proposal>()
         .also(block)
-        .build(context, blocState<State, Proposal>{
-            initialState = initialValue
-        })
+        .build(context, blocState { initialValue })
 
 /**
  * Creates a [Bloc] instance using a [BlocBuilder].
@@ -76,6 +74,34 @@ fun <State, Action: Any, SideEffect> bloc(
         .build(context, blocState)
 
 /**
+ * Creates a [Bloc] instance using a [BlocBuilder].
+ *
+ * ```
+ * bloc<State, Action, SideEffect>(context, initialValue) {
+ *    thunk { getState, action, dispatch ->
+ *       ...
+ *    }
+ *    sideEffect { state, action ->
+ *       ...
+ *    }
+ *    reduce { state, action ->
+ *       ...
+ *    }
+ * }
+ * ```
+ */
+@JvmName("blocSimplified2")
+@BlocDSL
+fun <State, Action: Any, SideEffect> bloc(
+    context: BlocContext,
+    initialValue: State,
+    block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit = {}
+): Bloc<State, Action, SideEffect, State> =
+    BlocBuilder<State, Action, SideEffect, State>()
+        .also(block)
+        .build(context, blocState(initialValue))
+
+/**
  * Creates a [Bloc] instance using a [BlocBuilder] with Proposal being State
  * (the [BlocState] doesn't do any extra mapping from Proposal to State).
  *
@@ -90,7 +116,7 @@ fun <State, Action: Any, SideEffect> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplified2")
+@JvmName("blocSimplified3")
 @BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,
@@ -116,7 +142,7 @@ fun <State, Action: Any> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplified3")
+@JvmName("blocSimplified4")
 @BlocDSL
 fun <State, Action: Any> bloc(
     context: BlocContext,

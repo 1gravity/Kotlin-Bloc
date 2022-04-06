@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Bloc">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".menu_compose.MainActivityCompose"
             android:label="BLoC Framework"
             android:theme="@style/Theme.Bloc"
             android:exported="true">
@@ -20,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".menu.MainActivity"
+            android:label="BLoC Framework"
+            android:theme="@style/Theme.Bloc"
+            android:exported="false"/>
 
         <activity
             android:name=".counter.CounterActivity"
@@ -40,7 +46,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".posts.PostActivity"
+            android:name=".posts.PostsActivity"
             android:label="BLoC Posts"
             android:theme="@style/AppThemePosts"
             android:exported="false"/>
@@ -58,7 +64,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".compose.ComposeActivity"
+            android:name=".posts_compose.PostsActivity"
             android:label="Compose"
             android:theme="@style/AppThemePosts"
             android:exported="false"/>
