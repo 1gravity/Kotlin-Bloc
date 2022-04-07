@@ -16,7 +16,6 @@ import org.reduxkotlin.Store
  *    store.toBlocState(context, initialValue)
  * ```
  */
-@BlocDSL
 fun <State : Any, Proposal : Any> Store<State>.toBlocState(
     context: BlocContext,
     initialState: State,
@@ -31,7 +30,6 @@ fun <State : Any, Proposal : Any> Store<State>.toBlocState(
  *    store.toBlocState(context, initialValue) { /* select function */ }
  * ```
  */
-@BlocDSL
 fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,
@@ -47,7 +45,6 @@ fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocStat
  *    store.toBlocState(context, initialValue, { /* select function */ },  { /* map function */ })
  * ```
  */
-@BlocDSL
 fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,

@@ -3,7 +3,6 @@ package com.onegravity.bloc
 import com.arkivanov.essenty.lifecycle.doOnCreate
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.utils.BlocStateEvent.*
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
@@ -57,8 +56,8 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
      */
     init {
         with(blocContext.lifecycle) {
-            doOnCreate { lifecycle.transition(Started) }
-            doOnDestroy { lifecycle.transition(Destroyed) }
+            doOnCreate { lifecycle.transition(LifecycleEvent.Started) }
+            doOnDestroy { lifecycle.transition(LifecycleEvent.Destroyed) }
         }
     }
 

@@ -5,6 +5,7 @@ import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.sample.counter.CounterStore.reduxStore
 import com.onegravity.bloc.sample.counter.CounterStore.ReduxAction
 import com.onegravity.bloc.redux.toBlocState
+import com.onegravity.bloc.redux.reduxBlocState
 
 object ReduxCounter {
     sealed class Action(val value: Int) {
@@ -21,6 +22,20 @@ object ReduxCounter {
     }
 }
 
+// this would be the implementation using a simple ReduxStore where State == Action
+//object ReduxCounter {
+//    sealed class Action(val value: Int) {
+//        data class Increment(private val _value: Int = 1): Action(_value)
+//        data class Decrement(private val _value: Int = 1): Action(_value)
+//    }
+//    fun bloc(context: BlocContext) = bloc<Int, Action, Nothing, Int>(
+//        context, context.reduxBlocState(1)
+//    ) {
+//        reduce<Action.Increment> { state + action.value }
+//        reduce<Action.Decrement> { state - action.value }
+//    }
+//}
+
 // TODO think about the initial value, who/what provides it? should be have a mechanism to populate
 //      the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
 //      ReduxStore and one in the BlocState)
@@ -28,13 +43,3 @@ object ReduxCounter {
 // TODO think about navigation as well, will side effects be sufficient?
 
 // TODO iOS sample app
-
-// TODO implement a ReduxStore with State = Action along the line of:
-//  ```
-//  inline fun <reified State: Any> BlocContext.reduxBlocState(initialState: State): BlocState<State, State> {
-//        val reducer: Reducer<State> = { state: State, action: Any ->
-//            if (action is State) action else state
-//     }
-//        return createThreadSafeStore(reducer, initialState).toBlocState(this, initialState)
-//  }
-//  ```

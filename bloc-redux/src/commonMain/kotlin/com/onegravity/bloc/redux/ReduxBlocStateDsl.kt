@@ -1,9 +1,12 @@
 package com.onegravity.bloc.redux
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
+import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.BlocDSL
+import org.reduxkotlin.Reducer
 import org.reduxkotlin.Store
+import org.reduxkotlin.createThreadSafeStore
 import kotlin.jvm.JvmName
 
 /**
@@ -38,3 +41,19 @@ internal fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
     ReduxSimpleBlocStateBuilderImpl<State, ReduxModel>()
         .also(block)
         .build(disposableScope, store)
+
+/**
+ * Creates a [ReduxBlocState] instance with State == Action meaning there's no further reduction
+ * happening. Actions become State right away.
+ */
+// todo this isn't useful yet, we want to use the Selector to slice and dice the ReduxStore model
+//      on the way out AND in, so not just select sub state to stream to the ui but also reduce just
+//      the selected part of the full Redux model.
+@BlocDSL
+inline fun <reified State: Any> BlocContext.reduxBlocState(
+    initialState: State
+): BlocState<State, State> =
+    createThreadSafeStore(
+        { state: State, action: Any -> if (action is State) action else state },
+        initialState
+    ).toBlocState(this, initialState)
