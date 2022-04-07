@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -12,13 +14,17 @@ version = "1.0"
 
 kotlin {
     android()
-    ios()
-    // Note: iosSimulatorArm64 target requires that all dependencies have M1 support
-//    iosSimulatorArm64()
+
+    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    if (isMacOsX) {
+        iosX64()
+        iosArm64()
+        iosSimulatorArm64()
+    }
 
     cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
+        summary = "Reactive state management library for KMM"
+        homepage = "https://github.com/1gravity/Kotlin-Bloc"
         ios.deploymentTarget = "14.1"
         framework {
             baseName = "bloc-samples"
@@ -35,9 +41,6 @@ kotlin {
                 // Redux store (https://reduxkotlin.org)
                 implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
                 implementation("org.reduxkotlin:redux-kotlin-thunk:_")
-
-                // Reaktive (https://github.com/badoo/Reaktive)
-                implementation("com.badoo.reaktive:reaktive:_")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 implementation("com.arkivanov.essenty:lifecycle:_")
@@ -83,18 +86,21 @@ kotlin {
             }
         }
         val androidTest by getting
-//        val iosSimulatorArm64Main by getting
-        val iosMain by getting {
-            dependsOn(commonMain)
-//            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("io.ktor:ktor-client-ios:_")
+
+        if (isMacOsX) {
+            val iosSimulatorArm64Main by getting
+            val iosMain by getting {
+                dependsOn(commonMain)
+                iosSimulatorArm64Main.dependsOn(this)
+                dependencies {
+                    implementation("io.ktor:ktor-client-ios:_")
+                }
             }
-        }
-//        val iosSimulatorArm64Test by getting
-        val iosTest by getting {
-            dependsOn(commonTest)
-//            iosSimulatorArm64Test.dependsOn(this)
+            val iosSimulatorArm64Test by getting
+            val iosTest by getting {
+                dependsOn(commonTest)
+                iosSimulatorArm64Test.dependsOn(this)
+            }
         }
     }
 }

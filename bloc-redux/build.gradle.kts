@@ -11,6 +11,7 @@ version = "1.0"
 
 kotlin {
     android()
+
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         iosX64()
@@ -35,6 +36,7 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Reaktive (https://github.com/badoo/Reaktive)
+                // we only use the DisposableScope
                 implementation("com.badoo.reaktive:reaktive:_")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
