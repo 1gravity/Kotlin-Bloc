@@ -43,7 +43,7 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
 ): Bloc<State, Action, SideEffect, Proposal> =
     BlocBuilder<State, Action, SideEffect, Proposal>()
         .also(block)
-        .build(context, blocState { initialValue })
+        .build(context, blocState { initialState = initialValue })
 
 /**
  * Creates a [Bloc] instance using a [BlocBuilder].

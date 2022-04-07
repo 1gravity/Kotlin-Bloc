@@ -17,5 +17,6 @@ plugins {
 }
 
 include(":bloc-core")
+include(":bloc-redux")
 include(":bloc-samples")
 include(":androidApp")
