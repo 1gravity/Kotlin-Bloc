@@ -30,6 +30,7 @@ kotlin {
             dependencies {
                 implementation(KotlinX.coroutines.core)
                 implementation(project(":bloc-core"))
+                implementation(project(":bloc-redux"))
 
                 // Redux store (https://reduxkotlin.org)
                 implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")

@@ -2,7 +2,6 @@ package com.onegravity.bloc.utils
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import org.reduxkotlin.GetState
 
 @DslMarker
 annotation class BlocDSL
@@ -55,6 +54,8 @@ data class ThunkContext<State, Action, A : Action>(
 )
 
 typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
+
+typealias GetState<State> = () -> State
 
 data class ThunkContextNoAction<State, Action>(
     val getState: GetState<State>,

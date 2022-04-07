@@ -1,4 +1,4 @@
-package com.onegravity.bloc.state.redux
+package com.onegravity.bloc.redux
 
 internal class ReduxSimpleBlocStateBuilderImpl<State: Any, ReduxModel: Any> :
     ReduxSimpleBlocStateBuilder<State, ReduxModel>,

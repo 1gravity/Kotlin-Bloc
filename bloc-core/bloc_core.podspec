@@ -1,13 +1,13 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'bloc_core'
     spec.version                  = '1.0'
-    spec.homepage                 = 'https://github.com/1gravity/Knot'
+    spec.homepage                 = 'https://github.com/1gravity/Kotlin-Bloc'
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = 'Reactive state container library for KMM'
+    spec.summary                  = 'Reactive state management library for KMM'
 
-    spec.vendored_frameworks      = "build/cocoapods/framework/bloc-core.framework"
+    spec.vendored_frameworks      = "build/cocoapods/framework/bloc_core.framework"
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
 

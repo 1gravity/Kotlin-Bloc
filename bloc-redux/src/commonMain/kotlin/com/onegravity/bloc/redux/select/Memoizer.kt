@@ -2,7 +2,7 @@
  * Adapted version from: https://github.com/reduxkotlin/Reselect
  */
 
-package com.onegravity.bloc.select
+package com.onegravity.bloc.redux.select
 
 typealias EqualityCheckFn = (a: Any, b: Any) -> Boolean
 

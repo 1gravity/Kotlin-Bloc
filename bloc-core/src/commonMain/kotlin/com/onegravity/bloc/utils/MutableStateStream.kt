@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
  *
  * It's a wrapper around MutableStateFlow with the extra Sink functionality.
  */
-internal class MutableStateStream<Value>(initialValue: Value) :
+class MutableStateStream<Value>(initialValue: Value) :
     StateStream<Value>,
     Sink<Value> {
 

@@ -1,11 +1,10 @@
-package com.onegravity.bloc.state.redux
+package com.onegravity.bloc.redux
 
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
-import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.select.select
+import com.onegravity.bloc.redux.select.select
 import com.onegravity.bloc.utils.BlocDSL
 import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector

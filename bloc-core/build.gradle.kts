@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -13,30 +15,27 @@ version = "1.0"
 
 kotlin {
     android()
-    ios()
-    // Note: iosSimulatorArm64 target requires that all dependencies have M1 support
-//    iosSimulatorArm64()
+
+    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    if (isMacOsX) {
+        iosX64()
+        iosArm64()
+        iosSimulatorArm64()
+    }
 
     cocoapods {
-        summary = "Reactive state container library for KMM"
-        homepage = "https://github.com/1gravity/Knot"
+        summary = "Reactive state management library for KMM"
+        homepage = "https://github.com/1gravity/Kotlin-Bloc"
         ios.deploymentTarget = "14.1"
         framework {
             baseName = "bloc-core"
         }
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(KotlinX.coroutines.core)
-
-                // Redux store (https://reduxkotlin.org)
-                implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
-                implementation("org.reduxkotlin:redux-kotlin-thunk:_")
-
-                // Reaktive (https://github.com/badoo/Reaktive)
-                implementation("com.badoo.reaktive:reaktive:_")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 implementation("com.arkivanov.essenty:lifecycle:_")
@@ -66,14 +65,16 @@ kotlin {
         }
         val androidTest by getting
 
-        val iosMain by getting
-        val iosTest by getting
-//        val iosSimulatorArm64Main by getting {
-//            dependsOn(iosMain)
-//        }
-//        val iosSimulatorArm64Test by getting {
-//            dependsOn(iosTest)
-//        }
+        if (isMacOsX) {
+            val iosMain by getting
+            val iosTest by getting
+            val iosSimulatorArm64Main by getting {
+                dependsOn(iosMain)
+            }
+            val iosSimulatorArm64Test by getting {
+                dependsOn(iosTest)
+            }
+        }
     }
 }
 

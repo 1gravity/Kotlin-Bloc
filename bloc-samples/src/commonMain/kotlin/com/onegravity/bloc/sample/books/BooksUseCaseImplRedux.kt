@@ -4,7 +4,7 @@ import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.sample.books.BookStore.reduxStore
-import com.onegravity.bloc.state.redux.toBlocState
+import com.onegravity.bloc.redux.toBlocState
 import com.onegravity.bloc.toObservable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
