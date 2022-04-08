@@ -6,8 +6,11 @@ plugins {
     kotlin("plugin.serialization")
     id("com.android.library")
     id("kotlin-parcelize")
+
     // todo create a separate module for Jetbrains Compose
     id("org.jetbrains.compose")
+
+    id("android-library-base")
 }
 
 version = "1.0"
@@ -15,7 +18,9 @@ version = "1.0"
 kotlin {
     android()
 
-    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    // todo ...
+    val isMacOsX = false
+//    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         iosX64()
         iosArm64()
@@ -34,9 +39,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(KotlinX.coroutines.core)
                 implementation(project(":bloc-core"))
                 implementation(project(":bloc-redux"))
+                implementation(project(":bloc-compose"))
+
+                implementation(KotlinX.coroutines.core)
 
                 // Redux store (https://reduxkotlin.org)
                 implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
@@ -114,21 +121,12 @@ kotlin {
     }
 }
 
-android {
-    compileSdk = 32
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 32
-    }
-    buildFeatures {
-//        viewBinding = true
-        compose = true
-    }
-    dataBinding {
-//        isEnabled = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
-    }
-}
+//android {
+//    buildFeatures {
+//        compose = true
+//    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.1.1"
+//    }
+//    buildToolsVersion = "32.0.0"
+//}

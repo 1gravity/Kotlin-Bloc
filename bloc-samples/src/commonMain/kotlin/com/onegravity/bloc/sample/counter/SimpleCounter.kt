@@ -4,14 +4,15 @@ import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.asBlocState
 import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.sample.counter.SimpleCounter.Action.*
 
 /**
  * Demo to show how a Bloc can "act" as a BlocState (interceptorBloc).
  */
 object SimpleCounter {
-    sealed class Action(val value: Int) {
-        data class Increment(private val _value: Int = 1) : Action(_value)
-        data class Decrement(private val _value: Int = 1) : Action(_value)
+    sealed class Action {
+        data class Increment(val value: Int = 1) : Action()
+        data class Decrement(val value: Int = 1) : Action()
     }
 
     private fun BlocContext.interceptorBloc() = bloc<Int, Int>(this, 1) {
@@ -26,16 +27,16 @@ object SimpleCounter {
         context,
         context.interceptorBloc().asBlocState()
     ) {
-        reduce<Action.Increment> { state + action.value }
-        reduce<Action.Decrement> { (state - action.value).coerceAtLeast(0) }
+        reduce<Increment> { state + action.value }
+        reduce<Decrement> { (state - action.value).coerceAtLeast(0) }
 
         // does the same as the two reducers above
-//            reduce {
-//                when (action) {
-//                    is Action.Increment -> state + action.value
-//                    is Action.Decrement -> (state - action.value).coerceAtLeast(0)
-//                }
+//        reduce {
+//            when (action) {
+//                is Increment -> state + (action as Increment).value
+//                is Decrement -> (state - (action as Decrement).value).coerceAtLeast(0)
 //            }
+//        }
     }
 
     // short version

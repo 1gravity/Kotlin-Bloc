@@ -7,7 +7,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.onegravity.bloc.previewBlocContext
+import com.onegravity.bloc.compose.previewBlocContext
 import com.onegravity.bloc.sample.MainMenuCompose
 import com.onegravity.bloc.sample.MenuBloc
 

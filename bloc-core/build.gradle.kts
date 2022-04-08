@@ -7,8 +7,7 @@ plugins {
     id("kotlin-parcelize")
     id("org.jetbrains.dokka")
 
-    // todo create a separate module for Jetbrains Compose
-    id("org.jetbrains.compose")
+    id("android-library-base")
 }
 
 version = "1.0"
@@ -16,11 +15,19 @@ version = "1.0"
 kotlin {
     android()
 
-    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    jvm()
+    js().browser()
+
+    // todo ...
+    val isMacOsX = false
+//    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         iosX64()
         iosArm64()
         iosSimulatorArm64()
+
+        macosX64()
+        macosArm64()
     }
 
     cocoapods {
@@ -57,10 +64,15 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+
         val androidMain by getting {
             dependencies {
                 implementation(AndroidX.appCompat)
                 implementation(AndroidX.activity.compose)
+                implementation(AndroidX.fragment)
+//                implementation(AndroidX.compose.runtime)
+//                implementation(AndroidX.compose.compiler)
+//                implementation(AndroidX.compose.foundation)
             }
         }
         val androidTest by getting
@@ -89,35 +101,21 @@ kotlin {
 }
 
 android {
-    compileSdk = 32
-    buildToolsVersion = "32.0.0"
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 32
-        multiDexEnabled = true
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
     buildFeatures {
         viewBinding = true
-        compose = true
+//        compose = true
     }
 
     dataBinding {
         isEnabled = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
-        useLiveLiterals = true
-    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.1.1"
+//        useLiveLiterals = true
+//    }
+    compileSdk = 32
+    buildToolsVersion = "32.0.0"
 }
 
 tasks.dokkaHtml.configure {

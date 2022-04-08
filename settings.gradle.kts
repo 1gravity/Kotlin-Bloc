@@ -16,7 +16,10 @@ plugins {
     id("de.fayard.refreshVersions") version "0.40.1"
 }
 
+includeBuild("build-logic")
+
 include(":bloc-core")
 include(":bloc-redux")
+include(":bloc-compose")
 include(":bloc-samples")
 include(":androidApp")

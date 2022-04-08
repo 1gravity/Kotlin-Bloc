@@ -15,9 +15,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.onegravity.bloc.observeSideEffects
-import com.onegravity.bloc.observeState
-import com.onegravity.bloc.previewBlocContext
+import com.onegravity.bloc.compose.observeSideEffects
+import com.onegravity.bloc.compose.observeState
+import com.onegravity.bloc.compose.previewBlocContext
 import com.onegravity.bloc.sample.MainMenuCompose
 import com.onegravity.bloc.sample.MenuBloc
 

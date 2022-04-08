@@ -38,11 +38,13 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.1.1"
     }
+    buildToolsVersion = "32.0.0"
 }
 
 dependencies {
     implementation(project(":bloc-core"))
     implementation(project(":bloc-redux"))
+    implementation(project(":bloc-compose"))
     implementation(project(":bloc-samples"))
 
     implementation(Kotlin.stdlib)

@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.R
-import com.onegravity.bloc.observeState
+import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
 
 private val MULTI_PANE_WIDTH_THRESHOLD = 700.dp

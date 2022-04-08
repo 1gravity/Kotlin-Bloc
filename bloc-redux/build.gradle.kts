@@ -5,6 +5,8 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.dokka")
+
+    id("android-library-base")
 }
 
 version = "1.0"
@@ -12,7 +14,12 @@ version = "1.0"
 kotlin {
     android()
 
-    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    jvm()
+    js().browser()
+
+    // todo ...
+    val isMacOsX = false
+//    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         iosX64()
         iosArm64()
@@ -80,23 +87,6 @@ kotlin {
                 iosSimulatorArm64Test.dependsOn(this)
             }
         }
-    }
-}
-
-android {
-    compileSdk = 32
-    buildToolsVersion = "32.0.0"
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 32
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
