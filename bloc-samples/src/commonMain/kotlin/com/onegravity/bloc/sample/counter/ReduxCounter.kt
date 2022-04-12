@@ -43,3 +43,5 @@ object ReduxCounter {
 // TODO think about navigation as well, will side effects be sufficient?
 
 // TODO iOS sample app
+
+// TODO create a minimalistic counter and todo sample app since these seem to be the two standard examples

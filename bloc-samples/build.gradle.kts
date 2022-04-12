@@ -61,9 +61,11 @@ kotlin {
 
                 // Ktor
                 implementation(Ktor.client.core)
-                implementation(Ktor.client.serialization)
-                implementation(Ktor.client.json)
                 implementation(Ktor.client.logging)
+                implementation(Ktor.client.json)
+                implementation(Ktor.client.serialization)
+                implementation("io.ktor:ktor-client-content-negotiation:_")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:_")
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)

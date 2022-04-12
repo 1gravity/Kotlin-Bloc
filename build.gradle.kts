@@ -10,7 +10,7 @@ buildscript {
         classpath(AndroidX.navigation.safeArgsGradlePlugin)
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
         classpath("org.jetbrains.compose:compose-gradle-plugin:_")
-        classpath("com.android.tools.build:gradle:7.1.3")
+        classpath(Android.tools.build.gradlePlugin)
     }
 }
 
