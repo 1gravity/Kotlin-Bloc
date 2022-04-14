@@ -1,9 +1,11 @@
 buildscript {
     repositories {
-        google()
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven("https://jitpack.io")
+        google()
     }
     dependencies {
         classpath(Android.tools.build.gradlePlugin)
@@ -16,10 +18,11 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
+        gradlePluginPortal()
         mavenCentral()
-        maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven("https://jitpack.io")
+        google()
     }
 }
