@@ -1,7 +1,5 @@
 import SwiftUI
-// todo implement the iOS part of the demo apps
-// import bloc-core
-// import bloc-samples
+import blocCore
 
 @main
 struct iOSApp: App {

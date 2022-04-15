@@ -1,16 +1,26 @@
 PODS:
-  - bloc_core (1.0)
+  - blocCore (1.0)
+  - blocRedux (1.0)
+  - blocSamples (1.0)
 
 DEPENDENCIES:
-  - bloc_core (from `../bloc-core`)
+  - blocCore (from `../bloc-core`)
+  - blocRedux (from `../bloc-redux`)
+  - blocSamples (from `../bloc-samples`)
 
 EXTERNAL SOURCES:
-  bloc_core:
+  blocCore:
     :path: "../bloc-core"
+  blocRedux:
+    :path: "../bloc-redux"
+  blocSamples:
+    :path: "../bloc-samples"
 
 SPEC CHECKSUMS:
-  bloc_core: 63d0abc8b7076ff704028de0ab1a5f9ab3df8e3b
+  blocCore: 9f6a7b3db590387bef7d1dc21baf0b509fc87bd5
+  blocRedux: fe3e89f95994c779512d34aa2eac4b71572a6416
+  blocSamples: c6128a8792da8573097c45a9cff37aa5238f056a
 
-PODFILE CHECKSUM: a1545ee59e338add820062da60cfd4c5a2d8ce19
+PODFILE CHECKSUM: 8c4d112aaab23316683e0df127ccf3b9e8f986f9
 
 COCOAPODS: 1.11.2

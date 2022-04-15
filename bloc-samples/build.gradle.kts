@@ -7,9 +7,6 @@ plugins {
     id("com.android.library")
     id("kotlin-parcelize")
 
-    // todo create a separate module for Jetbrains Compose
-    id("org.jetbrains.compose")
-
     id("bloc-android-base")
 }
 
@@ -29,17 +26,17 @@ kotlin {
         summary = "Reactive state management library for KMM"
         homepage = "https://github.com/1gravity/Kotlin-Bloc"
         ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
         framework {
-            baseName = "bloc-samples"
+            baseName = "blocSamples"
         }
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":bloc-core"))
-                implementation(project(":bloc-redux"))
-                implementation(project(":bloc-compose"))
+                implementation(project(":blocCore"))
+                implementation(project(":blocRedux"))
 
                 implementation(KotlinX.coroutines.core)
 

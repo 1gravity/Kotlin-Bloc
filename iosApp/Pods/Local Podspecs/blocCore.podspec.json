@@ -1,0 +1,30 @@
+{
+  "name": "blocCore",
+  "version": "1.0",
+  "homepage": "https://github.com/1gravity/Kotlin-Bloc",
+  "source": {
+    "git": "Not Published",
+    "tag": "Cocoapods/blocCore/1.0"
+  },
+  "authors": "",
+  "license": "",
+  "summary": "Reactive state management library for KMM",
+  "vendored_frameworks": "build/cocoapods/framework/blocCore.framework",
+  "libraries": "c++",
+  "module_name": "blocCore_umbrella",
+  "platforms": {
+    "ios": "14.1"
+  },
+  "pod_target_xcconfig": {
+    "KOTLIN_PROJECT_PATH": ":blocCore",
+    "PRODUCT_MODULE_NAME": "blocCore"
+  },
+  "script_phases": [
+    {
+      "name": "Build blocCore",
+      "execution_position": "before_compile",
+      "shell_path": "/bin/sh",
+      "script": "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n"
+    }
+  ]
+}

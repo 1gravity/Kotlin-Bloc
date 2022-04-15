@@ -17,7 +17,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":bloc-core"))
+                implementation(project(":blocCore"))
 
                 implementation(KotlinX.coroutines.core)
 

@@ -33,8 +33,9 @@ kotlin {
         summary = "Reactive state management library for KMM"
         homepage = "https://github.com/1gravity/Kotlin-Bloc"
         ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
         framework {
-            baseName = "bloc-core"
+            baseName = "blocCore"
         }
     }
 

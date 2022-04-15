@@ -42,10 +42,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":bloc-core"))
-    implementation(project(":bloc-redux"))
-    implementation(project(":bloc-compose"))
-    implementation(project(":bloc-samples"))
+    implementation(project(":blocCore"))
+    implementation(project(":blocRedux"))
+    implementation(project(":blocCompose"))
+    implementation(project(":blocSamples"))
 
     implementation(Kotlin.stdlib)
 

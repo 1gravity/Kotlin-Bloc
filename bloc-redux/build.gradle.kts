@@ -32,15 +32,16 @@ kotlin {
         summary = "Reactive state management library for KMM"
         homepage = "https://github.com/1gravity/Kotlin-Bloc"
         ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
         framework {
-            baseName = "bloc-redux"
+            baseName = "blocRedux"
         }
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":bloc-core"))
+                implementation(project(":blocCore"))
 
                 implementation(KotlinX.coroutines.core)
 

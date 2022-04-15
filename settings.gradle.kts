@@ -18,8 +18,13 @@ plugins {
 
 includeBuild("build-logic")
 
-include(":bloc-core")
-include(":bloc-redux")
-include(":bloc-compose")
-include(":bloc-samples")
+include(":blocCore")
+include(":blocRedux")
+include(":blocCompose")
+include(":blocSamples")
 include(":androidApp")
+
+project(":blocCore").projectDir = file("bloc-core")
+project(":blocRedux").projectDir = file("bloc-redux")
+project(":blocCompose").projectDir = file("bloc-compose")
+project(":blocSamples").projectDir = file("bloc-samples")

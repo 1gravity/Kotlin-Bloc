@@ -1,5 +1,7 @@
 target 'iosApp' do
   use_frameworks!
   platform :ios, '14.1'
-  pod 'bloc_core', :path => '../bloc-core'
+  pod 'blocCore', :path => '../bloc-core'
+  pod 'blocRedux', :path => '../bloc-redux'
+  pod 'blocSamples', :path => '../bloc-samples'
 end
