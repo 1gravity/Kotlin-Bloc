@@ -5,7 +5,8 @@ plugins {
     id("org.jetbrains.dokka")
     id("org.jetbrains.compose")
 
-    id("android-library-base")
+    id("bloc-android-base")
+    id("bloc-publish")
 }
 
 kotlin {

@@ -6,7 +6,8 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.dokka")
 
-    id("android-library-base")
+    id("bloc-android-base")
+    id("bloc-publish")
 }
 
 version = "1.0"
@@ -55,7 +56,7 @@ kotlin {
                 implementation("com.arkivanov.essenty:back-pressed:_")
 
                 // Redux store (https://reduxkotlin.org)
-                api("com.1gravity.redux:redux-kotlin-threadsafe:0.5.7-SNAPSHOT")
+                api("com.1gravity.redux:redux-kotlin-threadsafe:0.5.8-SNAPSHOT")
             }
         }
         val commonTest by getting {

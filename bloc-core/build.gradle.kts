@@ -7,7 +7,8 @@ plugins {
     id("kotlin-parcelize")
     id("org.jetbrains.dokka")
 
-    id("android-library-base")
+    id("bloc-android-base")
+    id("bloc-publish")
 }
 
 version = "1.0"

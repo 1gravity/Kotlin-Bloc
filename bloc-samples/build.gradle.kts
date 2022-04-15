@@ -10,7 +10,7 @@ plugins {
     // todo create a separate module for Jetbrains Compose
     id("org.jetbrains.compose")
 
-    id("android-library-base")
+    id("bloc-android-base")
 }
 
 version = "1.0"
@@ -44,7 +44,7 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Redux store (https://reduxkotlin.org)
-                implementation("com.1gravity.redux:redux-kotlin-threadsafe:0.5.7-SNAPSHOT")
+                implementation("com.1gravity.redux:redux-kotlin-threadsafe:0.5.8-SNAPSHOT")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 implementation("com.arkivanov.essenty:lifecycle:_")
