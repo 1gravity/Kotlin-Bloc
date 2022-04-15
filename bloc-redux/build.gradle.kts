@@ -12,20 +12,19 @@ plugins {
 version = "1.0"
 
 kotlin {
-    android()
+    // todo
+    // explicitApi = ExplicitApiMode.Strict
 
+    android{
+        publishLibraryVariants("release")
+    }
     jvm()
-    js().browser()
 
-    // todo ...
-    val isMacOsX = false
-//    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         iosX64()
         iosArm64()
-        // todo redux-kotlin doesn't compile for iosSimulatorArm64
-        // https://github.com/reduxkotlin/redux-kotlin/issues/96
-//        iosSimulatorArm64()
+        iosSimulatorArm64()
     }
 
     cocoapods {
@@ -56,8 +55,7 @@ kotlin {
                 implementation("com.arkivanov.essenty:back-pressed:_")
 
                 // Redux store (https://reduxkotlin.org)
-                api("org.reduxkotlin:redux-kotlin-threadsafe:_")
-                implementation("org.reduxkotlin:redux-kotlin-thunk:_")
+                api("com.1gravity.redux:redux-kotlin-threadsafe:0.5.7-SNAPSHOT")
             }
         }
         val commonTest by getting {
@@ -72,21 +70,21 @@ kotlin {
         if (isMacOsX) {
             val iosX64Main by getting
             val iosArm64Main by getting
-//            val iosSimulatorArm64Main by getting
+            val iosSimulatorArm64Main by getting
             val iosMain by creating {
                 dependsOn(commonMain)
                 iosX64Main.dependsOn(this)
                 iosArm64Main.dependsOn(this)
-                //iosSimulatorArm64Main.dependsOn(this)
+                iosSimulatorArm64Main.dependsOn(this)
             }
             val iosX64Test by getting
             val iosArm64Test by getting
-//            val iosSimulatorArm64Test by getting
+            val iosSimulatorArm64Test by getting
             val iosTest by creating {
                 dependsOn(commonTest)
                 iosX64Test.dependsOn(this)
                 iosArm64Test.dependsOn(this)
-                //iosSimulatorArm64Test.dependsOn(this)
+                iosSimulatorArm64Test.dependsOn(this)
             }
         }
     }

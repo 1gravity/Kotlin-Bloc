@@ -13,14 +13,15 @@ plugins {
 version = "1.0"
 
 kotlin {
+    // todo
+    // explicitApi = ExplicitApiMode.Strict
+
     android()
 
     jvm()
     js().browser()
 
-    // todo ...
-    val isMacOsX = false
-//    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         iosX64()
         iosArm64()
@@ -96,6 +97,7 @@ kotlin {
         }
     }
 }
+
 
 android {
     buildFeatures {

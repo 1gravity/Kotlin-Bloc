@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
     spec.license                  = ''
     spec.summary                  = 'Reactive state management library for KMM'
 
-    spec.vendored_frameworks      = "build/cocoapods/framework/bloc_redux.framework"
+    spec.vendored_frameworks      = "build/cocoapods/framework/bloc-redux.framework"
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
 

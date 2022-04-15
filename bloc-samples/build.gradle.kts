@@ -18,9 +18,7 @@ version = "1.0"
 kotlin {
     android()
 
-    // todo ...
-    val isMacOsX = false
-//    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
+    val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         iosX64()
         iosArm64()
@@ -46,8 +44,7 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Redux store (https://reduxkotlin.org)
-                implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
-                implementation("org.reduxkotlin:redux-kotlin-thunk:_")
+                implementation("com.1gravity.redux:redux-kotlin-threadsafe:0.5.7-SNAPSHOT")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 implementation("com.arkivanov.essenty:lifecycle:_")
@@ -122,13 +119,3 @@ kotlin {
         }
     }
 }
-
-//android {
-//    buildFeatures {
-//        compose = true
-//    }
-//    composeOptions {
-//        kotlinCompilerExtensionVersion = "1.1.1"
-//    }
-//    buildToolsVersion = "32.0.0"
-//}
