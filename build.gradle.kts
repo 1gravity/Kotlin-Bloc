@@ -20,7 +20,8 @@ allprojects {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-//        mavenLocal()
+        // right now we need this because of the locally published Result library
+        mavenLocal()
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven("https://jitpack.io")
