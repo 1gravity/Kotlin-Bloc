@@ -59,7 +59,7 @@
             android:id="@+id/counter_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter1)}"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter)}"
             android:text="@string/main_menu_counter"
             android:layout_marginTop="@dimen/menu_margins"
             app:layout_constraintEnd_toEndOf="@id/guideline"
@@ -70,11 +70,22 @@
             android:id="@+id/counter_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_menu_counter_redux"
-            android:onClick="@{(view) -> viewmodel.onClick(ActionState.Counter2)}"
+            android:text="@string/main_menu_counter_compose"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.CounterCompose)}"
             app:layout_constraintTop_toTopOf="@id/counter_1"
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/counter_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.CounterRedux)}"
+            android:text="@string/main_menu_counter_redux"
+            android:layout_marginTop="@dimen/menu_margins"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/counter_1" />
 
         <Button
             android:id="@+id/calculator"
@@ -85,7 +96,7 @@
             android:layout_marginTop="@dimen/menu_margins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/counter_1"/>
+            app:layout_constraintTop_toBottomOf="@id/counter_3"/>
 
         <Button
             android:id="@+id/calculator_no_vm"

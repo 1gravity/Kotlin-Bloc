@@ -9,10 +9,9 @@
 /* Begin PBXAggregateTarget section */
 		89F2DE21EA0550FCAB5E7E2067284963 /* blocRedux */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = CAB0FF89FF77BBDAE9E2A553985D8781 /* Build configuration list for PBXAggregateTarget "blocRedux" */;
+			buildConfigurationList = DB6502E9B2E9C648487D560756060A1A /* Build configuration list for PBXAggregateTarget "blocRedux" */;
 			buildPhases = (
-				9555814B3914EAE08391B709750BBF1A /* [CP-User] Build blocRedux */,
-				988239F3948F269D6BEB1AE8AF571021 /* [CP] Copy dSYMs */,
+				8CECB8A2C2C194A3D3A248ED738BBCCC /* [CP-User] Build blocRedux */,
 			);
 			dependencies = (
 			);
@@ -20,10 +19,9 @@
 		};
 		D541B946E9677F64A845A0A29A7874BD /* blocCore */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = DECBBC2E7C79C0C300155E7C92430A5F /* Build configuration list for PBXAggregateTarget "blocCore" */;
+			buildConfigurationList = 353CEBAA3914B541944D3368D1C727C0 /* Build configuration list for PBXAggregateTarget "blocCore" */;
 			buildPhases = (
-				6486CA4E24C5F611BCFF135CF2529DBE /* [CP-User] Build blocCore */,
-				349029799365E97F610F1F3E4C32C19B /* [CP] Copy dSYMs */,
+				F3B6D7575AF82C4BCA6114DD7441EEA5 /* [CP-User] Build blocCore */,
 			);
 			dependencies = (
 			);
@@ -31,10 +29,9 @@
 		};
 		DEED6CF0BA656E66044F22A482A5160E /* blocSamples */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 19B9B635718E8B38C5F0A19112D796CF /* Build configuration list for PBXAggregateTarget "blocSamples" */;
+			buildConfigurationList = 44640DFB7130D3201409729AC408F9FD /* Build configuration list for PBXAggregateTarget "blocSamples" */;
 			buildPhases = (
-				23424A735A78C39836CBFCCC2AA5B3AB /* [CP-User] Build blocSamples */,
-				DFAA9625D976277DD6934FC0ABC87E1F /* [CP] Copy dSYMs */,
+				9F48EA46CC914B03C96255263B3E472E /* [CP-User] Build blocSamples */,
 			);
 			dependencies = (
 			);
@@ -49,14 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		234247CCF11AECB8A963DB2622168A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 89F2DE21EA0550FCAB5E7E2067284963;
-			remoteInfo = blocRedux;
-		};
-		3953CC6E2340EF758B72314F0ADD06B3 /* PBXContainerItemProxy */ = {
+		57053A96D2C673C6D9A9CAD47E8D35D3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -70,35 +60,39 @@
 			remoteGlobalIDString = D541B946E9677F64A845A0A29A7874BD;
 			remoteInfo = blocCore;
 		};
+		C8CD71B47F33E7CD252C87A297CA3BA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89F2DE21EA0550FCAB5E7E2067284963;
+			remoteInfo = blocRedux;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0187F135D5F61750CD24C3E04B6E8B64 /* Pods-iosApp-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iosApp-frameworks.sh"; sourceTree = "<group>"; };
-		1523D44CE318BDFCF0ED1FEC669FE685 /* blocCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocCore.debug.xcconfig; sourceTree = "<group>"; };
-		231407454B551A29B71EB9D4D8567CB4 /* blocSamples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocSamples.debug.xcconfig; sourceTree = "<group>"; };
+		0A0C0A0310CCBBDCDE7DF954D3C6C97B /* blocCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocCore.debug.xcconfig; sourceTree = "<group>"; };
+		224358A14C904C45108642BC3CBE8300 /* blocRedux.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = blocRedux.framework; path = build/cocoapods/framework/blocRedux.framework; sourceTree = "<group>"; };
+		24D58DE9D9EB023B6AB4ECA43E11525B /* blocRedux.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocRedux.release.xcconfig; sourceTree = "<group>"; };
+		3251710335ACC30DE533F664058A210E /* blocRedux.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = blocRedux.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		3F64BADB16C311E9D09DAD0116F684F4 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
+		48BBD6CCE0BB8D13F7D7BD48C06EDFDE /* blocRedux.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocRedux.debug.xcconfig; sourceTree = "<group>"; };
 		54DC7F9924F99FEE67A9AD3BEE09A10C /* Pods-iosApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iosApp-dummy.m"; sourceTree = "<group>"; };
 		5AC974169B09D4545F741E9A2147610E /* Pods-iosApp-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-Info.plist"; sourceTree = "<group>"; };
-		671424EF9E0F5EB51A954D2123B3D693 /* blocRedux.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = blocRedux.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		707A37CA28F500F8BBA6C56D6081E617 /* blocSamples.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = blocSamples.framework; path = build/cocoapods/framework/blocSamples.framework; sourceTree = "<group>"; };
+		617187321770424F1244CF2B0FBDE046 /* blocSamples.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = blocSamples.framework; path = build/cocoapods/framework/blocSamples.framework; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7985F1FDECD32BC0755BCA29B55BC289 /* blocCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = blocCore.framework; path = build/cocoapods/framework/blocCore.framework; sourceTree = "<group>"; };
-		7ABA4CCE19D9697515F7C47E14CCD7E5 /* blocRedux.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = blocRedux.framework; path = build/cocoapods/framework/blocRedux.framework; sourceTree = "<group>"; };
-		86B152FCFD6E6D92FE550BEEEB003512 /* blocRedux-copy-dsyms.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "blocRedux-copy-dsyms.sh"; sourceTree = "<group>"; };
-		86F4A12E1DF9E690F0414DF75A3E127E /* blocRedux.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocRedux.debug.xcconfig; sourceTree = "<group>"; };
+		7C8F8A86E9A55770174CCE1E589E89D4 /* blocCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = blocCore.framework; path = build/cocoapods/framework/blocCore.framework; sourceTree = "<group>"; };
+		844D2C510898DE3C0908B9986835B7A5 /* blocSamples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocSamples.debug.xcconfig; sourceTree = "<group>"; };
 		8B524AABE529FB8A2D151B05321336E0 /* Pods-iosApp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iosApp.modulemap"; sourceTree = "<group>"; };
-		8EB1844144A286FC905E8AA132EA6CDC /* blocCore-copy-dsyms.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "blocCore-copy-dsyms.sh"; sourceTree = "<group>"; };
 		9BB0B8B698D4C35D4F9A07EF70910170 /* Pods-iosApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-acknowledgements.plist"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F1FFC8B10F4D7D4F37606E8959B3F29 /* Pods-iosApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iosApp-acknowledgements.markdown"; sourceTree = "<group>"; };
+		9FAE6BB5DDC8DD4B1FDAEE812EE60EA4 /* blocSamples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocSamples.release.xcconfig; sourceTree = "<group>"; };
 		9FECCB5AFF87D121F15BA01E683C7932 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
-		ACEFE76DE09F4E6AEEFCBEC793A06C4A /* blocRedux.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocRedux.release.xcconfig; sourceTree = "<group>"; };
 		B097DD7534E741D5C41838011D755842 /* Pods-iosApp */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iosApp"; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B52E1B2417B94947745CDFC4D9C9EACC /* blocSamples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocSamples.release.xcconfig; sourceTree = "<group>"; };
-		BA9F4489A244CEE101F6E60F7034FBBB /* blocSamples-copy-dsyms.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "blocSamples-copy-dsyms.sh"; sourceTree = "<group>"; };
-		C661C39AD485AE0A0347CD1980B32F0A /* blocCore.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = blocCore.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		CEAF2198C29C3ADE124980EB8F88BBFE /* blocCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocCore.release.xcconfig; sourceTree = "<group>"; };
-		E471F3378AA611DFF82D576074CC2A98 /* blocSamples.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = blocSamples.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BC822ADCA199BA13372389E19A4C9745 /* blocCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = blocCore.release.xcconfig; sourceTree = "<group>"; };
+		E5BBA0935DF5B79957F761AAD5ACBD41 /* blocCore.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = blocCore.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		E9857E7A403C68009D2BD8919F60D7AF /* blocSamples.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = blocSamples.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F87A626222A8D9B26448A9FEB04FD0DF /* Pods-iosApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iosApp-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,17 +108,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0F40EAE80AE5E9E9A7B38811FC7B1733 /* blocCore */ = {
-			isa = PBXGroup;
-			children = (
-				9B87847DF2D3626858809444188843FA /* Frameworks */,
-				4817153B796CE42AF835E89948211D2D /* Pod */,
-				C2ADDE0EBA39E0A2B3333100FB87CB99 /* Support Files */,
-			);
-			name = blocCore;
-			path = "../../bloc-core";
-			sourceTree = "<group>";
-		};
 		11C970DEAE48C6D0282DFE54684F53F1 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,12 +116,14 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		1254D882153F771935DB70D5166B2FDF /* Pod */ = {
+		16FAC0D5675CC8F77F2C5C40FEFEFC2C /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				E471F3378AA611DFF82D576074CC2A98 /* blocSamples.podspec */,
+				48BBD6CCE0BB8D13F7D7BD48C06EDFDE /* blocRedux.debug.xcconfig */,
+				24D58DE9D9EB023B6AB4ECA43E11525B /* blocRedux.release.xcconfig */,
 			);
-			name = Pod;
+			name = "Support Files";
+			path = "../iosApp/Pods/Target Support Files/blocRedux";
 			sourceTree = "<group>";
 		};
 		1F86AA6785DF34AFD5A71790761717DE /* Products */ = {
@@ -147,38 +132,6 @@
 				B097DD7534E741D5C41838011D755842 /* Pods-iosApp */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		24032CBDEB79768982BFFD61C39B5845 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				707A37CA28F500F8BBA6C56D6081E617 /* blocSamples.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		27B39C068F3B0C5DF509FC700090D266 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7ABA4CCE19D9697515F7C47E14CCD7E5 /* blocRedux.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2AE13229018DD8D9639EA5BC7D61A1E4 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				671424EF9E0F5EB51A954D2123B3D693 /* blocRedux.podspec */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
-		4817153B796CE42AF835E89948211D2D /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				C661C39AD485AE0A0347CD1980B32F0A /* blocCore.podspec */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 		52A898E555C2DBD7D25A7E44754C3FC6 /* Pods-iosApp */ = {
@@ -201,22 +154,29 @@
 		52D50A41E39C0195F54C59B66846BD7D /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0F40EAE80AE5E9E9A7B38811FC7B1733 /* blocCore */,
-				97C255717F2DCC02589C9643706C1CEE /* blocRedux */,
-				83912CEA2D38591C871B1A3C36396503 /* blocSamples */,
+				A2BF4100E2767FC7927647F58ADBD8E9 /* blocCore */,
+				59BF1CA1A060B70BC5B997CF9A862664 /* blocRedux */,
+				B91BE1A54411ED9D3F1D9CA4C15E5047 /* blocSamples */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		553B6EE15F97B8AC10D98AC8804E18AB /* Support Files */ = {
+		539E8FC77B03E8E1D6F34AA089E5BDFA /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				86B152FCFD6E6D92FE550BEEEB003512 /* blocRedux-copy-dsyms.sh */,
-				86F4A12E1DF9E690F0414DF75A3E127E /* blocRedux.debug.xcconfig */,
-				ACEFE76DE09F4E6AEEFCBEC793A06C4A /* blocRedux.release.xcconfig */,
+				E5BBA0935DF5B79957F761AAD5ACBD41 /* blocCore.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		54B48C980552F4363173DBCBDBD6F498 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				0A0C0A0310CCBBDCDE7DF954D3C6C97B /* blocCore.debug.xcconfig */,
+				BC822ADCA199BA13372389E19A4C9745 /* blocCore.release.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../iosApp/Pods/Target Support Files/blocRedux";
+			path = "../iosApp/Pods/Target Support Files/blocCore";
 			sourceTree = "<group>";
 		};
 		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
@@ -227,45 +187,79 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		83912CEA2D38591C871B1A3C36396503 /* blocSamples */ = {
+		59BF1CA1A060B70BC5B997CF9A862664 /* blocRedux */ = {
 			isa = PBXGroup;
 			children = (
-				24032CBDEB79768982BFFD61C39B5845 /* Frameworks */,
-				1254D882153F771935DB70D5166B2FDF /* Pod */,
-				E7621D5BB9078D15EBC3862A2E7C47CB /* Support Files */,
-			);
-			name = blocSamples;
-			path = "../../bloc-samples";
-			sourceTree = "<group>";
-		};
-		97C255717F2DCC02589C9643706C1CEE /* blocRedux */ = {
-			isa = PBXGroup;
-			children = (
-				27B39C068F3B0C5DF509FC700090D266 /* Frameworks */,
-				2AE13229018DD8D9639EA5BC7D61A1E4 /* Pod */,
-				553B6EE15F97B8AC10D98AC8804E18AB /* Support Files */,
+				CB95AFF49EF0BE222F36A39672D13C1F /* Frameworks */,
+				A60526D3C9171056503BDAB8ECE4709A /* Pod */,
+				16FAC0D5675CC8F77F2C5C40FEFEFC2C /* Support Files */,
 			);
 			name = blocRedux;
 			path = "../../bloc-redux";
 			sourceTree = "<group>";
 		};
-		9B87847DF2D3626858809444188843FA /* Frameworks */ = {
+		5F24C9D6366A165C56B31372DD26FA6A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7985F1FDECD32BC0755BCA29B55BC289 /* blocCore.framework */,
+				617187321770424F1244CF2B0FBDE046 /* blocSamples.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C2ADDE0EBA39E0A2B3333100FB87CB99 /* Support Files */ = {
+		77C2526C52A35DAA0BF6142FBF21C2DB /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				8EB1844144A286FC905E8AA132EA6CDC /* blocCore-copy-dsyms.sh */,
-				1523D44CE318BDFCF0ED1FEC669FE685 /* blocCore.debug.xcconfig */,
-				CEAF2198C29C3ADE124980EB8F88BBFE /* blocCore.release.xcconfig */,
+				E9857E7A403C68009D2BD8919F60D7AF /* blocSamples.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		A2BF4100E2767FC7927647F58ADBD8E9 /* blocCore */ = {
+			isa = PBXGroup;
+			children = (
+				DD140F4721207A79FE7985C3592F484F /* Frameworks */,
+				539E8FC77B03E8E1D6F34AA089E5BDFA /* Pod */,
+				54B48C980552F4363173DBCBDBD6F498 /* Support Files */,
+			);
+			name = blocCore;
+			path = "../../bloc-core";
+			sourceTree = "<group>";
+		};
+		A443DADB62DE6D906E61A13B3E36E8EB /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				844D2C510898DE3C0908B9986835B7A5 /* blocSamples.debug.xcconfig */,
+				9FAE6BB5DDC8DD4B1FDAEE812EE60EA4 /* blocSamples.release.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../iosApp/Pods/Target Support Files/blocCore";
+			path = "../iosApp/Pods/Target Support Files/blocSamples";
+			sourceTree = "<group>";
+		};
+		A60526D3C9171056503BDAB8ECE4709A /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				3251710335ACC30DE533F664058A210E /* blocRedux.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		B91BE1A54411ED9D3F1D9CA4C15E5047 /* blocSamples */ = {
+			isa = PBXGroup;
+			children = (
+				5F24C9D6366A165C56B31372DD26FA6A /* Frameworks */,
+				77C2526C52A35DAA0BF6142FBF21C2DB /* Pod */,
+				A443DADB62DE6D906E61A13B3E36E8EB /* Support Files */,
+			);
+			name = blocSamples;
+			path = "../../bloc-samples";
+			sourceTree = "<group>";
+		};
+		CB95AFF49EF0BE222F36A39672D13C1F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				224358A14C904C45108642BC3CBE8300 /* blocRedux.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -287,15 +281,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E7621D5BB9078D15EBC3862A2E7C47CB /* Support Files */ = {
+		DD140F4721207A79FE7985C3592F484F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA9F4489A244CEE101F6E60F7034FBBB /* blocSamples-copy-dsyms.sh */,
-				231407454B551A29B71EB9D4D8567CB4 /* blocSamples.debug.xcconfig */,
-				B52E1B2417B94947745CDFC4D9C9EACC /* blocSamples.release.xcconfig */,
+				7C8F8A86E9A55770174CCE1E589E89D4 /* blocCore.framework */,
 			);
-			name = "Support Files";
-			path = "../iosApp/Pods/Target Support Files/blocSamples";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,8 +316,8 @@
 			);
 			dependencies = (
 				EA244D3458CE5C365623DF454339338B /* PBXTargetDependency */,
-				CC3171ED42FE092E3FD409256C62B6DA /* PBXTargetDependency */,
-				4A3233699C0A8D9E4289871EA0A8179F /* PBXTargetDependency */,
+				E8A99BDF85FAE04D89C9CC4011E392EC /* PBXTargetDependency */,
+				67BF7A7515A9894F51251A61A08969A2 /* PBXTargetDependency */,
 			);
 			name = "Pods-iosApp";
 			productName = Pods_iosApp;
@@ -374,44 +365,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		23424A735A78C39836CBFCCC2AA5B3AB /* [CP-User] Build blocSamples */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "[CP-User] Build blocSamples";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
-		};
-		349029799365E97F610F1F3E4C32C19B /* [CP] Copy dSYMs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/blocCore/blocCore-copy-dsyms-input-files.xcfilelist",
-			);
-			name = "[CP] Copy dSYMs";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/blocCore/blocCore-copy-dsyms-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/blocCore/blocCore-copy-dsyms.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6486CA4E24C5F611BCFF135CF2529DBE /* [CP-User] Build blocCore */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "[CP-User] Build blocCore";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
-		};
-		9555814B3914EAE08391B709750BBF1A /* [CP-User] Build blocRedux */ = {
+		8CECB8A2C2C194A3D3A248ED738BBCCC /* [CP-User] Build blocRedux */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -421,39 +375,25 @@
 			shellPath = /bin/sh;
 			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
 		};
-		988239F3948F269D6BEB1AE8AF571021 /* [CP] Copy dSYMs */ = {
+		9F48EA46CC914B03C96255263B3E472E /* [CP-User] Build blocSamples */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/blocRedux/blocRedux-copy-dsyms-input-files.xcfilelist",
-			);
-			name = "[CP] Copy dSYMs";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/blocRedux/blocRedux-copy-dsyms-output-files.xcfilelist",
-			);
+			name = "[CP-User] Build blocSamples";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/blocRedux/blocRedux-copy-dsyms.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
 		};
-		DFAA9625D976277DD6934FC0ABC87E1F /* [CP] Copy dSYMs */ = {
+		F3B6D7575AF82C4BCA6114DD7441EEA5 /* [CP-User] Build blocCore */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/blocSamples/blocSamples-copy-dsyms-input-files.xcfilelist",
-			);
-			name = "[CP] Copy dSYMs";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/blocSamples/blocSamples-copy-dsyms-output-files.xcfilelist",
-			);
+			name = "[CP-User] Build blocCore";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/blocSamples/blocSamples-copy-dsyms.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -469,17 +409,17 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4A3233699C0A8D9E4289871EA0A8179F /* PBXTargetDependency */ = {
+		67BF7A7515A9894F51251A61A08969A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = blocSamples;
 			target = DEED6CF0BA656E66044F22A482A5160E /* blocSamples */;
-			targetProxy = 3953CC6E2340EF758B72314F0ADD06B3 /* PBXContainerItemProxy */;
+			targetProxy = 57053A96D2C673C6D9A9CAD47E8D35D3 /* PBXContainerItemProxy */;
 		};
-		CC3171ED42FE092E3FD409256C62B6DA /* PBXTargetDependency */ = {
+		E8A99BDF85FAE04D89C9CC4011E392EC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = blocRedux;
 			target = 89F2DE21EA0550FCAB5E7E2067284963 /* blocRedux */;
-			targetProxy = 234247CCF11AECB8A963DB2622168A70 /* PBXContainerItemProxy */;
+			targetProxy = C8CD71B47F33E7CD252C87A297CA3BA2 /* PBXContainerItemProxy */;
 		};
 		EA244D3458CE5C365623DF454339338B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -490,9 +430,9 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2AD98CAF45BCB426FEFC2DFB00D0DBFB /* Release */ = {
+		1380C26BA0D700F5976BDB900F654B6A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEAF2198C29C3ADE124980EB8F88BBFE /* blocCore.release.xcconfig */;
+			baseConfigurationReference = 24D58DE9D9EB023B6AB4ECA43E11525B /* blocRedux.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -507,6 +447,58 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
+		};
+		1890967BB3D55B7E705E88B55FF4F9C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A0C0A0310CCBBDCDE7DF954D3C6C97B /* blocCore.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4261FF5A9E739B3EE7D1CD052B3CD5D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FAE6BB5DDC8DD4B1FDAEE812EE60EA4 /* blocSamples.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4B1EE78ABA3895B3229C139D46D50A2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48BBD6CCE0BB8D13F7D7BD48C06EDFDE /* blocRedux.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
 		};
 		593F10BFFA94DAC7D6E17FB8A7F32D72 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -607,26 +599,9 @@
 			};
 			name = Debug;
 		};
-		6D8EA4FEE6CFEECD56A8179FE4788BBE /* Debug */ = {
+		5BE9D27CBF9FF0E3F0C682BFDF49E044 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1523D44CE318BDFCF0ED1FEC669FE685 /* blocCore.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		9A71C18A01712D15F365B9C0FC4AE69C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B52E1B2417B94947745CDFC4D9C9EACC /* blocSamples.release.xcconfig */;
+			baseConfigurationReference = BC822ADCA199BA13372389E19A4C9745 /* blocCore.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -708,44 +683,9 @@
 			};
 			name = Debug;
 		};
-		B1B88AB76E80E07DFDC41D1334BFF431 /* Debug */ = {
+		AA48D671FF7E6F7ED9A60E5D15BF2437 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 231407454B551A29B71EB9D4D8567CB4 /* blocSamples.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		BDA7E272772B59DF172946FEF36286B5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACEFE76DE09F4E6AEEFCBEC793A06C4A /* blocRedux.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		D05B12EB81823F0149B4773A8B7230D0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 86F4A12E1DF9E690F0414DF75A3E127E /* blocRedux.debug.xcconfig */;
+			baseConfigurationReference = 844D2C510898DE3C0908B9986835B7A5 /* blocSamples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -801,11 +741,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		19B9B635718E8B38C5F0A19112D796CF /* Build configuration list for PBXAggregateTarget "blocSamples" */ = {
+		353CEBAA3914B541944D3368D1C727C0 /* Build configuration list for PBXAggregateTarget "blocCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B1B88AB76E80E07DFDC41D1334BFF431 /* Debug */,
-				9A71C18A01712D15F365B9C0FC4AE69C /* Release */,
+				1890967BB3D55B7E705E88B55FF4F9C5 /* Debug */,
+				5BE9D27CBF9FF0E3F0C682BFDF49E044 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -819,6 +759,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		44640DFB7130D3201409729AC408F9FD /* Build configuration list for PBXAggregateTarget "blocSamples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA48D671FF7E6F7ED9A60E5D15BF2437 /* Debug */,
+				4261FF5A9E739B3EE7D1CD052B3CD5D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -828,20 +777,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CAB0FF89FF77BBDAE9E2A553985D8781 /* Build configuration list for PBXAggregateTarget "blocRedux" */ = {
+		DB6502E9B2E9C648487D560756060A1A /* Build configuration list for PBXAggregateTarget "blocRedux" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D05B12EB81823F0149B4773A8B7230D0 /* Debug */,
-				BDA7E272772B59DF172946FEF36286B5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DECBBC2E7C79C0C300155E7C92430A5F /* Build configuration list for PBXAggregateTarget "blocCore" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6D8EA4FEE6CFEECD56A8179FE4788BBE /* Debug */,
-				2AD98CAF45BCB426FEFC2DFB00D0DBFB /* Release */,
+				4B1EE78ABA3895B3229C139D46D50A2C /* Debug */,
+				1380C26BA0D700F5976BDB900F654B6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

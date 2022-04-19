@@ -7,12 +7,14 @@ import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.menu.MainActivity
 import com.onegravity.bloc.R
+import com.onegravity.bloc.counter.CounterActivityCompose
 import com.onegravity.bloc.posts.PostsActivity
 import com.onegravity.bloc.sample.MainMenuCompose.MenuEntry.*
 
 val menuItem2Text = mapOf(
     MainMenu to R.string.main_menu,
     Counter to R.string.main_menu_counter,
+    CounterCompose to R.string.main_menu_counter_compose,
     CounterRedux to R.string.main_menu_counter_redux,
     Books to R.string.main_menu_books,
     Calculator to R.string.main_menu_calculator,
@@ -24,6 +26,7 @@ val menuItem2Text = mapOf(
 val menuItem2Activity = mapOf(
     MainMenu to MainActivity::class.java,
     Counter to CounterActivity::class.java,
+    CounterCompose to  CounterActivityCompose::class.java,
     CounterRedux to CounterReduxActivity::class.java,
     Books to BooksActivity::class.java,
     Calculator to CalculatorActivity::class.java,

@@ -44,4 +44,4 @@ object ReduxCounter {
 
 // TODO iOS sample app
 
-// TODO create a minimalistic counter and todo sample app since these seem to be the two standard examples
+// TODO create a minimalistic todo sample app since that's one of two standard examples

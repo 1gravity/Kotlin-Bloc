@@ -13,6 +13,7 @@ object MainMenuCompose {
     enum class MenuEntry {
         MainMenu,
         Counter,
+        CounterCompose,
         CounterRedux,
         Books,
         Calculator,

@@ -34,6 +34,12 @@
             android:exported="false"/>
 
         <activity
+            android:name=".counter.CounterActivityCompose"
+            android:label="Counter Compose"
+            android:theme="@style/Theme.Bloc"
+            android:exported="false"/>
+
+        <activity
             android:name=".counter.CounterReduxActivity"
             android:label="Counter Redux"
             android:theme="@style/Theme.Bloc"

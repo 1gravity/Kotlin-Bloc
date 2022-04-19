@@ -1,9 +1,8 @@
 import SwiftUI
 import blocCore
+import blocSamples
 
 struct ContentView: View {
-//	let greet = Greeting().greeting()
-
 	var body: some View {
 		Text("Hello World")
 	}

@@ -9,6 +9,7 @@ import com.onegravity.bloc.books.BooksActivity
 import com.onegravity.bloc.calculator.CalculatorActivity
 import com.onegravity.bloc.calculator.CalculatorActivityNoVM
 import com.onegravity.bloc.counter.CounterActivity
+import com.onegravity.bloc.counter.CounterActivityCompose
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.menu_compose.MainActivityCompose
@@ -32,8 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     private val mapping = mapOf(
         MainMenuCompose to MainActivityCompose::class.java,
-        Counter1 to CounterActivity::class.java,
-        Counter2 to CounterReduxActivity::class.java,
+        Counter to CounterActivity::class.java,
+        CounterCompose to CounterActivityCompose::class.java,
+        CounterRedux to CounterReduxActivity::class.java,
         Books to BooksActivity::class.java,
         Calculator to CalculatorActivity::class.java,
         CalculatorNoVM to CalculatorActivityNoVM::class.java,
