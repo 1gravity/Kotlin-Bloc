@@ -13,15 +13,12 @@ class Application: MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin {
+        initKoin {
             androidLogger(Level.ERROR)
             androidContext(this@Application)
-
             module {
-                // here go the app specific dependencies
-            }
 
-            initKoin()
+            }
         }
     }
 

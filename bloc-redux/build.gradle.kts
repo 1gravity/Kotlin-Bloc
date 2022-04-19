@@ -35,6 +35,7 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "blocRedux"
+            isStatic = false
         }
     }
     

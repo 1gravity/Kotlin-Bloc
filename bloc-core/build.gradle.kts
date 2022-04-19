@@ -36,6 +36,7 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "blocCore"
+            isStatic = false
         }
     }
 

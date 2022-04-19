@@ -1,11 +1,16 @@
 import SwiftUI
 import blocCore
+import blocRedux
+import blocSamples
 
 @main
 struct iOSApp: App {
-//     let logger:Logger = Logger(config: StaticConfig(minSeverity: .verbose, logWriterList: [NSLogWriter(), OSLogWriter()]), tag: "bloc")
-//         KoinKt.doInitKoin(appDeclaration:{ _ in })
-
+    init() {
+		UtilsKt.logger.i(msg: "iOS App started")
+		KoinKt.doInitKoin(koinAppDeclaration: { _ in })
+		UtilsKt.logger.i(msg: "iOS App injected")
+    }
+    
 	var body: some Scene {
 		WindowGroup {
 			ContentView()

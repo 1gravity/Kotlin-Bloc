@@ -13,6 +13,7 @@ Pod::Spec.new do |spec|
 
     spec.ios.deployment_target = '14.1'
 
+                
 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':blocSamples',

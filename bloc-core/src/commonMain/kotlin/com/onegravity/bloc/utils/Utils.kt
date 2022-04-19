@@ -3,10 +3,11 @@ package com.onegravity.bloc.utils
 import co.touchlab.kermit.LogWriter
 import co.touchlab.kermit.Logger as KermitLogger
 
-// we can either use this or the logger() function below, the result is identical
+// use this and not logger(), logger() is only required to retrieve the platform specific logger
 val logger: Logger by lazy {
     KermitLogger.setTag("bloc")
     KermitLogger.setLogWriters(logger())
+    LoggerImpl.i("Logger initialized")
     LoggerImpl
 }
 

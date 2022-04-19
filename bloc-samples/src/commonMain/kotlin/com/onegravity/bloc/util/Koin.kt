@@ -12,15 +12,18 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import org.koin.core.KoinApplication
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.context.startKoin
+import org.koin.dsl.KoinAppDeclaration
+import org.koin.core.component.KoinComponent
 import org.koin.dsl.module
-import co.touchlab.kermit.Logger as KermitLogger
 
 // called by Android and iOS
-fun KoinApplication.initKoin() {
-    modules(commonModule)
+fun initKoin(koinAppDeclaration: KoinAppDeclaration = {}) {
+    startKoin {
+        koinAppDeclaration()
+        modules(commonModule)
+    }
 }
 
 inline fun <reified T> getKoinInstance() =
@@ -30,11 +33,7 @@ inline fun <reified T> getKoinInstance() =
 
 private val commonModule = module {
     // we can either inject a Logger or just use the static Logger.x(msg)
-    single<Logger> {
-        KermitLogger.setTag("bloc")
-        KermitLogger.setLogWriters(logger())
-        LoggerImpl
-    }
+    single<Logger> { logger as LoggerImpl }
 
     single {
         HttpClient {

@@ -29,6 +29,7 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "blocSamples"
+            isStatic = false
         }
     }
     
