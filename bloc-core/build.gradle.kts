@@ -95,6 +95,13 @@ kotlin {
                 dependsOn(commonTest)
                 iosSimulatorArm64Test.dependsOn(this)
             }
+            targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>().all {
+                val mainSourceSet = compilations.getByName("main").defaultSourceSet
+                val testSourceSet = compilations.getByName("test").defaultSourceSet
+
+                mainSourceSet.dependsOn(iosMain)
+                testSourceSet.dependsOn(iosTest)
+            }
         }
     }
 }
