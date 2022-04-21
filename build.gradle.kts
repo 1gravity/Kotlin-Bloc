@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        gradlePluginPortal()
         mavenCentral()
+        gradlePluginPortal()
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven("https://jitpack.io")
@@ -18,10 +18,7 @@ buildscript {
 
 allprojects {
     repositories {
-        gradlePluginPortal()
         mavenCentral()
-        // right now we need this because of the locally published Result library
-        mavenLocal()
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven("https://jitpack.io")
