@@ -110,17 +110,12 @@ kotlin {
 android {
     buildFeatures {
         viewBinding = true
-//        compose = true
     }
 
     dataBinding {
         isEnabled = true
     }
 
-//    composeOptions {
-//        kotlinCompilerExtensionVersion = "1.1.1"
-//        useLiveLiterals = true
-//    }
     compileSdk = 32
     buildToolsVersion = "32.0.0"
 }

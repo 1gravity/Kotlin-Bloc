@@ -15,12 +15,7 @@ import com.onegravity.bloc.sample.MenuBloc
 fun RootUi(bloc: MenuBloc) {
     BoxWithConstraints(
         Modifier.fillMaxWidth().fillMaxHeight()) {
-        Scaffold(
-//            topBar = { TopAppBar(
-//                title = { Text(text = stringResource(R.string.posts_compose_title)) }
-//            ) }
-        ) {
-            MenuEntries(bloc, Modifier.fillMaxWidth().fillMaxHeight()) }
+        MenuEntries(bloc, Modifier.fillMaxWidth().fillMaxHeight())
     }
 }
 
