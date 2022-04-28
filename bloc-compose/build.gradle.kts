@@ -1,11 +1,9 @@
 plugins {
-    id("kotlin-multiplatform")
-    id("com.android.library")
+    id("bloc-android-base")
 
     id("org.jetbrains.dokka")
     id("org.jetbrains.compose")
 
-    id("bloc-android-base")
     id("bloc-publish")
 }
 
@@ -24,21 +22,20 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(project(":blocCore"))
+                api(project(":blocCore"))
 
                 implementation(KotlinX.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                implementation("com.arkivanov.essenty:lifecycle:_")
-                implementation("com.arkivanov.essenty:parcelable:_")
-                implementation("com.arkivanov.essenty:state-keeper:_")
-                implementation("com.arkivanov.essenty:instance-keeper:_")
-                implementation("com.arkivanov.essenty:back-pressed:_")
+                api("com.arkivanov.essenty:lifecycle:_")
+                api("com.arkivanov.essenty:parcelable:_")
+                api("com.arkivanov.essenty:state-keeper:_")
+                api("com.arkivanov.essenty:instance-keeper:_")
+                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
 
-                implementation(AndroidX.Compose.compiler)
                 implementation(AndroidX.Compose.compiler)
             }
         }
@@ -64,11 +61,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = "1.2.0-alpha08"
         useLiveLiterals = true
     }
-    compileSdk = 32
-    buildToolsVersion = "32.0.0"
 }
 
 tasks.dokkaHtml.configure {

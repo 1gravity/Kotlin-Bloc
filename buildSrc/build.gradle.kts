@@ -3,10 +3,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
-    mavenLocal()
     google()
-
+    mavenCentral()
     gradlePluginPortal()
 }
 

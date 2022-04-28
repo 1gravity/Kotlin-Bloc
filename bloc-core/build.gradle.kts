@@ -1,13 +1,15 @@
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {
-    kotlin("multiplatform")
+    id("bloc-android-base")
     kotlin("native.cocoapods")
-    id("com.android.library")
+
     id("kotlin-parcelize")
     id("org.jetbrains.dokka")
 
-    id("bloc-android-base")
+    // run "./gradlew tiTree assemble" to get the task tree for the "assemble" task
+    id("org.barfuin.gradle.taskinfo") version "1.4.0"
+
     id("bloc-publish")
 }
 
@@ -24,7 +26,8 @@ kotlin {
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
-        ios()
+        iosX64()
+        iosArm64()
         iosSimulatorArm64()
     }
 
@@ -52,11 +55,11 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                implementation("com.arkivanov.essenty:lifecycle:_")
-                implementation("com.arkivanov.essenty:parcelable:_")
-                implementation("com.arkivanov.essenty:state-keeper:_")
-                implementation("com.arkivanov.essenty:instance-keeper:_")
-                implementation("com.arkivanov.essenty:back-pressed:_")
+                api("com.arkivanov.essenty:lifecycle:_")
+                api("com.arkivanov.essenty:parcelable:_")
+                api("com.arkivanov.essenty:state-keeper:_")
+                api("com.arkivanov.essenty:instance-keeper:_")
+                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
@@ -85,22 +88,23 @@ kotlin {
         val androidTest by getting
 
         if (isMacOsX) {
+            val iosX64Main by getting
+            val iosArm64Main by getting
             val iosSimulatorArm64Main by getting
-            val iosMain by getting {
+            val iosMain by creating {
                 dependsOn(commonMain)
+                iosX64Main.dependsOn(this)
+                iosArm64Main.dependsOn(this)
                 iosSimulatorArm64Main.dependsOn(this)
             }
+            val iosX64Test by getting
+            val iosArm64Test by getting
             val iosSimulatorArm64Test by getting
-            val iosTest by getting {
+            val iosTest by creating {
                 dependsOn(commonTest)
+                iosX64Test.dependsOn(this)
+                iosArm64Test.dependsOn(this)
                 iosSimulatorArm64Test.dependsOn(this)
-            }
-            targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>().all {
-                val mainSourceSet = compilations.getByName("main").defaultSourceSet
-                val testSourceSet = compilations.getByName("test").defaultSourceSet
-
-                mainSourceSet.dependsOn(iosMain)
-                testSourceSet.dependsOn(iosTest)
             }
         }
     }

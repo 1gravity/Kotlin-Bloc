@@ -4,9 +4,7 @@ import com.onegravity.bloc.sample.posts.data.PostDataRepository
 import com.onegravity.bloc.sample.posts.data.posts.network.AvatarUrlGenerator
 import com.onegravity.bloc.sample.posts.data.posts.network.PostNetworkDataSource
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
-import com.onegravity.bloc.utils.Logger
-import com.onegravity.bloc.utils.LoggerImpl
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger as blocLogger
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
@@ -33,7 +31,7 @@ inline fun <reified T> getKoinInstance() =
 
 private val commonModule = module {
     // we can either inject a Logger or just use the static Logger.x(msg)
-    single<Logger> { logger as LoggerImpl }
+    single { blocLogger }
 
     single {
         HttpClient {

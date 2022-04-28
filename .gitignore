@@ -10,3 +10,10 @@
 .cxx
 local.properties
 lint.xml
+
+## User settings
+xcuserdata/
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
