@@ -2,7 +2,6 @@ import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {
     id("bloc-android-base")
-    kotlin("native.cocoapods")
 
     id("org.jetbrains.dokka")
 
@@ -22,22 +21,20 @@ kotlin {
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-    }
-
-    cocoapods {
-        summary = "Reactive state management library for KMM"
-        homepage = "https://github.com/1gravity/Kotlin-Bloc"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "blocRedux"
-            isStatic = false
+        listOf(
+            iosX64(),
+            iosArm64(),
+            iosSimulatorArm64()
+        ).forEach {
+            it.binaries.framework {
+                baseName = "blocRedux"
+                isStatic = false
+                transitiveExport = true
+                export(project(":blocCore"))
+            }
         }
     }
-    
+
     sourceSets {
         all {
             languageSettings.apply {

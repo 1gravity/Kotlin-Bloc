@@ -1,6 +1,4 @@
 import SwiftUI
-import blocCore
-import blocRedux
 import blocSamples
 
 @main

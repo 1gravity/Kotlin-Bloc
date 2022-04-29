@@ -1,4 +1,0 @@
-${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks.sh
-${PODS_ROOT}/../../bloc-core/build/cocoapods/framework/blocCore.framework
-${PODS_ROOT}/../../bloc-redux/build/cocoapods/framework/blocRedux.framework
-${PODS_ROOT}/../../bloc-samples/build/cocoapods/framework/blocSamples.framework

@@ -1,12 +1,12 @@
 import UIKit
 import SwiftUI
-import blocCore
-import blocRedux
 import blocSamples
 
 struct ContentView: View {
 //	@State
 //	private var componentHolder = ComponentHolder(factory: CounterRootComponent.init)
+
+	let lifecycle: LifecycleRegistryKt? = nil
 
 	init() {
 		MainMenuCompose()
@@ -24,7 +24,7 @@ struct ContentView: View {
 }
 
 //class ComponentHolder<T> {
-//	let lifecycle: LifecycleRegistry
+//	let lifecycle: LifecycleRegistryKt
 //	let bloc: T
 //
 //	init(factory: (ComponentContext) -> T) {
