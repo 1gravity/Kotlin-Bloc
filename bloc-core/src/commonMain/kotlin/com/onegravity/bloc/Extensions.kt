@@ -26,7 +26,7 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
-    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     lifecycle.doOnStart {
         logger.d("onStart -> start subscription")
@@ -238,7 +238,7 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
 
 /**
  * Adapts a Bloc to BlocState provided the Action type is the same as the Proposal type (what goes
- * in, goes out).
+ * in, must come out).
  */
 fun <State, SideEffect, Proposal> Bloc<State, Proposal, SideEffect, Proposal>.asBlocState(): BlocState<State, Proposal> =
     object : BlocState<State, Proposal> {

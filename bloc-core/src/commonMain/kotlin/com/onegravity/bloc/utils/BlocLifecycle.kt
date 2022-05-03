@@ -3,19 +3,19 @@ package com.onegravity.bloc.utils
 import com.onegravity.bloc.fsm.StateMachine
 import com.onegravity.bloc.fsm.Transition
 
-sealed class LifecycleStatus {
+internal sealed class LifecycleStatus {
     object NotStarted : LifecycleStatus()
     object Started : LifecycleStatus()
     object Destroyed : LifecycleStatus()
 }
 
-sealed class LifecycleEvent {
+internal sealed class LifecycleEvent {
     object Started : LifecycleEvent()
     object Destroyed : LifecycleEvent()
 }
 
 @Suppress("FunctionName")
-fun BlocLifecycle(onStart: () -> Unit, onDestroy: () -> Unit) =
+internal fun BlocLifecycle(onStart: () -> Unit, onDestroy: () -> Unit) =
     StateMachine.create<LifecycleStatus, LifecycleEvent, () -> Unit> {
         initialState(LifecycleStatus.NotStarted)
         state<LifecycleStatus.NotStarted> {

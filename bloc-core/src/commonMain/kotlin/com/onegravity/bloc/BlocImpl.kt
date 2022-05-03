@@ -29,9 +29,12 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
 
     // we use this scope internally, it's tied to the lifecycle of the BlocInstance and will be
     // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
-    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
-    private val lifecycle = BlocLifecycle({ coroutineScope.start() }, { coroutineScope.cancel() })
+    private val lifecycle = BlocLifecycle(
+        { coroutineScope.start() },
+        { coroutineScope.cancel() }
+    )
 
     override val value get() = blocState.value
 

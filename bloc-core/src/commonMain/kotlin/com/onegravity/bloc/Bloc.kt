@@ -10,9 +10,8 @@ import com.onegravity.bloc.state.BlocState
  * - a Sink<Action> accepting actions that might trigger state changes
  * - a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation
  *
- * A Bloc is also a BlocState since BlocState is an subset of BlocFacade (StateStream and
- * Sink but no SideEffectStream). This allows us to use a Bloc as BlocState and thus create a chain
- * of composable Blocs.
+ * A Bloc is also a BlocState since BlocState is a subset of BlocFacade (StateStream and Sink).
+ * This allows us to use a Bloc as BlocState and thus create a chain of composable Blocs.
  */
 interface Bloc<out State, in Action, SideEffect, Proposal> :
     BlocFacade<State, Action, SideEffect>,
