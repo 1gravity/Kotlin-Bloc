@@ -29,7 +29,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, Proposal>,
     block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit = {}
-): Bloc<State, Action, SideEffect, Proposal> =
+): Bloc<State, Action, SideEffect> =
     BlocBuilder<State, Action, SideEffect, Proposal>()
         .also(block)
         .build(context, blocState)
@@ -40,7 +40,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> bloc(
     context: BlocContext,
     initialValue: State,
     block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit = {}
-): Bloc<State, Action, SideEffect, Proposal> =
+): Bloc<State, Action, SideEffect> =
     BlocBuilder<State, Action, SideEffect, Proposal>()
         .also(block)
         .build(context, blocState { initialState = initialValue })
@@ -68,7 +68,7 @@ fun <State: Any, Action: Any, SideEffect: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
     block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit = {}
-): Bloc<State, Action, SideEffect, State> =
+): Bloc<State, Action, SideEffect> =
     BlocBuilder<State, Action, SideEffect, State>()
         .also(block)
         .build(context, blocState)
@@ -96,7 +96,7 @@ fun <State: Any, Action: Any, SideEffect: Any> bloc(
     context: BlocContext,
     initialValue: State,
     block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit = {}
-): Bloc<State, Action, SideEffect, State> =
+): Bloc<State, Action, SideEffect> =
     BlocBuilder<State, Action, SideEffect, State>()
         .also(block)
         .build(context, blocState(initialValue))
@@ -122,7 +122,7 @@ fun <State: Any, Action: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
     block: BlocBuilder<State, Action, Unit, State>.() -> Unit = {}
-): Bloc<State, Action, Unit, State> =
+): Bloc<State, Action, Unit> =
     BlocBuilder<State, Action, Unit, State>()
         .also(block)
         .build(context, blocState)
@@ -148,7 +148,7 @@ fun <State: Any, Action: Any> bloc(
     context: BlocContext,
     initialValue: State,
     block: BlocBuilder<State, Action, Unit, State>.() -> Unit = {}
-): Bloc<State, Action, Unit, State> =
+): Bloc<State, Action, Unit> =
     BlocBuilder<State, Action, Unit, State>()
         .also(block)
         .build(context, blocState(initialValue))

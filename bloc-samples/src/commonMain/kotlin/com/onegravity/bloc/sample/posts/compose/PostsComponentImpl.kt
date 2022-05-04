@@ -22,7 +22,7 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
 
     private val repository = getKoinInstance<PostRepository>()
 
-    override val bloc: Bloc<PostsRootState, Any, Unit, PostsRootState> by lazy {
+    override val bloc: Bloc<PostsRootState, Any, Unit> by lazy {
         bloc<PostsRootState, Any>(context, blocState) {
             onCreate {
                 if (!state.postsAreLoaded()) loadPosts()

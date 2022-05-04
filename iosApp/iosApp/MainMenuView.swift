@@ -10,13 +10,17 @@ import SwiftUI
 import blocSamples
 
 struct MainMenuView: View {
-    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
     
 //    @ObservedObject
 //    private var routerState: ObservableValue<RouterState<AnyObject, CounterRootChild>>
 
-    init(_ holder: BlocHolder<Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>>) {
+    init(_ holder: BlocHolder<Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>>) {
         self.bloc = holder.bloc
+
+        bloc.send(value: MainMenu.ActionState.books)
+//        let tmp: MainMenu.ActionState = bloc.value
+
         holder.bloc.observe(lifecycle: holder.lifecycle, state: { state in
             print("state: \(state)")
         }, sideEffect: { sideEffect in

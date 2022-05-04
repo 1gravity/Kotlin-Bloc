@@ -1,6 +1,6 @@
 package com.onegravity.bloc.utils
 
-data class Effect<Proposal, SideEffect>(
+data class Effect<Proposal: Any, SideEffect: Any>(
     val proposal: Proposal?,
     val sideEffects: List<SideEffect>
 ) {

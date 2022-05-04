@@ -6,7 +6,7 @@ import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.sample.MainMenuCompose.State
 import com.onegravity.bloc.sample.MainMenuCompose.MenuEntry
 
-typealias MenuBloc = Bloc<State, MenuEntry, MenuEntry, State>
+typealias MenuBloc = Bloc<State, MenuEntry, MenuEntry>
 
 object MainMenuCompose {
 

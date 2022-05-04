@@ -47,13 +47,13 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, A
 }
 
 /**
- * Adapter(s) for Android to use [Stream]s as LiveData to be used with Data Binding.
+ * Adapter(s) for Android to use Bloc as LiveData to be used with Data Binding.
  * ```
  *   val state = bloc.toLiveData(viewModelScope)
  * ```
  */
 @BlocDSL
-fun <State: Any> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State> =
+fun <State: Any, Action: Any, SideEffect: Any> Bloc<State, Action, SideEffect>.toLiveData(scope: CoroutineScope): LiveData<State> =
     MutableLiveData<State>().apply {
         scope.launch {
             collect { value = it }
@@ -65,19 +65,18 @@ fun <State: Any> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<
  */
 
 /**
- * Expose a StateStream<State> as LiveData<State> so it can be used with Android data binding, e.g.:
+ * Expose a Bloc as LiveData<State> so it can be used with Android data binding, e.g.:
  * ```
  *   val state = toLiveData(bloc)
  * ```
  */
 @BlocDSL
-fun <State: Any> ViewModel.toLiveData(stream: StateStream<State>) =
-    stream.toLiveData(viewModelScope)
+fun <State: Any, Action: Any, SideEffect: Any> ViewModel.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
+    bloc.toLiveData(viewModelScope)
 
 /**
  * The same for Activities / Fragments
  */
 @BlocDSL
-fun <State: Any> LifecycleOwner.toLiveData(stream: StateStream<State>) =
-    stream.toLiveData(lifecycleScope)
-
+fun <State: Any, Action: Any, SideEffect: Any> LifecycleOwner.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
+    bloc.toLiveData(lifecycleScope)

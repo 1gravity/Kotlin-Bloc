@@ -16,9 +16,19 @@ struct ContentView: View {
     }
 }
 
-class BlocHolder<T : Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>> {
+class Collector: ObservableObject, FlowCollector {
+    @Published var currentValue = ""
+
+    func emit(value: Any?, completionHandler: @escaping (KotlinUnit?, Error?) -> Void) {
+        print("ios received " + (value as! String))
+        currentValue = value as! String
+        completionHandler(KotlinUnit(), nil)
+    }
+}
+
+class BlocHolder<T : Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>> {
 	let lifecycle: LifecycleRegistry
-    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
     private var observer: ((AnyObject) -> Void)?
 
@@ -27,9 +37,21 @@ class BlocHolder<T : Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.A
         let context = DefaultBlocContext.init(lifecycle: lifecycle, stateKeeper: nil, instanceKeeper: nil, backPressedHandler: nil)
         bloc = MainMenu.shared.bloc(context: context)
 
-        bloc.send(value: MainMenu.ActionState.books)
+        bloc.send(value: MainMenu.ActionState.calculator)
 
         lifecycle.onCreate()
+        
+        
+        let test: Test<NSString, NSString> = TestImpl(initialValue: "Emanuel")
+        test.flow().collect(collector: Collector()) { (result: KotlinUnit?, error: Error?) in
+            if (error != nil) {
+                print("error \(error)")
+            } else {
+                print("Completion")
+            }
+        }
+        test.send(action: "Hello")
+        test.send(action: "World")
 	}
 
 	deinit {

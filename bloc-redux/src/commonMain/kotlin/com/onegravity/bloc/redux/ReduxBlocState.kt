@@ -14,7 +14,7 @@ internal class ReduxBlocState<State: Any, Proposal: Any, Model: Any, ReduxModel:
     private val store: Store<ReduxModel>,
     selector: Selector<ReduxModel, Model>,
     mapper: Mapper<Model, State>
-) : BlocState<State, Proposal>,
+) : BlocState<State, Proposal>(),
     DisposableScope by disposableScope {
 
     private val state = MutableStateStream(initialState)

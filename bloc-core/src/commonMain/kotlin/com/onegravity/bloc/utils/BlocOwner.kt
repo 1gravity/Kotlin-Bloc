@@ -28,7 +28,7 @@ import com.onegravity.bloc.Bloc
  */
 interface BlocOwner<out State: Any, in Action: Any, SideEffect: Any, Proposal: Any> {
 
-    val bloc: Bloc<State, Action, SideEffect, Proposal>
+    val bloc: Bloc<State, Action, SideEffect>
 
     /* Extension functions */
 

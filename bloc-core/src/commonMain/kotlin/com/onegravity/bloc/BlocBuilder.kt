@@ -18,7 +18,7 @@ class BlocBuilder<State: Any, Action: Any, SE: Any, Proposal: Any> {
     fun build(
         context: BlocContext,
         blocState: BlocState<State, Proposal>
-    ): Bloc<State, Action, SE, Proposal> = BlocImpl(
+    ): Bloc<State, Action, SE> = BlocImpl(
         blocContext = context,
         blocState = blocState,
         initializer = _initializer,
