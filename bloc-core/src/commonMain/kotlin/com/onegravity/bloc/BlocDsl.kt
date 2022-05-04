@@ -25,7 +25,7 @@ import kotlin.jvm.JvmName
  */
 @JvmName("bloc")
 @BlocDSL
-fun <State, Action: Any, SideEffect, Proposal> bloc(
+fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, Proposal>,
     block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit = {}
@@ -36,7 +36,7 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
 
 @JvmName("blocInitialValue")
 @BlocDSL
-fun <State, Action: Any, SideEffect, Proposal> bloc(
+fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> bloc(
     context: BlocContext,
     initialValue: State,
     block: BlocBuilder<State, Action, SideEffect, Proposal>.() -> Unit = {}
@@ -64,7 +64,7 @@ fun <State, Action: Any, SideEffect, Proposal> bloc(
  */
 @JvmName("blocSimplified1")
 @BlocDSL
-fun <State, Action: Any, SideEffect> bloc(
+fun <State: Any, Action: Any, SideEffect: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
     block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit = {}
@@ -92,7 +92,7 @@ fun <State, Action: Any, SideEffect> bloc(
  */
 @JvmName("blocSimplified2")
 @BlocDSL
-fun <State, Action: Any, SideEffect> bloc(
+fun <State: Any, Action: Any, SideEffect: Any> bloc(
     context: BlocContext,
     initialValue: State,
     block: BlocBuilder<State, Action, SideEffect, State>.() -> Unit = {}
@@ -118,7 +118,7 @@ fun <State, Action: Any, SideEffect> bloc(
  */
 @JvmName("blocSimplified3")
 @BlocDSL
-fun <State, Action: Any> bloc(
+fun <State: Any, Action: Any> bloc(
     context: BlocContext,
     blocState: BlocState<State, State>,
     block: BlocBuilder<State, Action, Unit, State>.() -> Unit = {}
@@ -144,7 +144,7 @@ fun <State, Action: Any> bloc(
  */
 @JvmName("blocSimplified4")
 @BlocDSL
-fun <State, Action: Any> bloc(
+fun <State: Any, Action: Any> bloc(
     context: BlocContext,
     initialValue: State,
     block: BlocBuilder<State, Action, Unit, State>.() -> Unit = {}

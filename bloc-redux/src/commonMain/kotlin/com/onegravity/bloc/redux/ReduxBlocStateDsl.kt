@@ -16,7 +16,7 @@ import kotlin.jvm.JvmName
  */
 @JvmName("reduxBlocState")
 @BlocDSL
-internal fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
+internal fun <State: Any, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxBlocStateBuilder<State, Model, ReduxModel>.() -> Unit

@@ -14,6 +14,6 @@ import com.onegravity.bloc.state.BlocState
  * A Bloc is also a BlocState since BlocState is a subset of BlocFacade (StateStream and Sink).
  * This allows us to use a Bloc as BlocState and thus create a chain of composable Blocs.
  */
-abstract class Bloc<out State, in Action, SideEffect, Proposal> :
+abstract class Bloc<out State: Any, in Action: Any, SideEffect: Any, Proposal: Any> :
     BlocFacade<State, Action, SideEffect>,
     BlocState<State, Action>

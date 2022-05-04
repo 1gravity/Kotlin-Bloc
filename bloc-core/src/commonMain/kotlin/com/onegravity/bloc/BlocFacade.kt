@@ -11,7 +11,7 @@ import com.onegravity.bloc.utils.StateStream
  * - a Sink<Action> accepting actions that might trigger state changes
  * - a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation
  */
-interface BlocFacade<out State, in Action, out SideEffect> : StateStream<State>, Sink<Action> {
+interface BlocFacade<out State: Any, in Action: Any, out SideEffect: Any> : StateStream<State>, Sink<Action> {
 
     val sideEffects: SideEffectStream<SideEffect>
 

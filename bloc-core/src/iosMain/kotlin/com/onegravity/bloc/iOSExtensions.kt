@@ -16,7 +16,7 @@ import kotlinx.coroutines.*
  * functions in Swift.
  */
 @BlocDSL
-fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.observe(
+fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action, SideEffect, Proposal>.observe(
     lifecycle: Lifecycle,
     state: ((state: State) -> Unit)? = null,
     sideEffect: ((sideEffect: SideEffect) -> Unit)? = null

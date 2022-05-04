@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.JvmName
 
-class BlocBuilder<State, Action : Any, SE, Proposal> {
+class BlocBuilder<State: Any, Action: Any, SE: Any, Proposal: Any> {
 
     private var _initializer: Initializer<State, Action> = { }
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()

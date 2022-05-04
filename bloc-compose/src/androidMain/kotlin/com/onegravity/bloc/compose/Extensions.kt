@@ -16,7 +16,7 @@ import com.onegravity.bloc.utils.BlocOwner
  *   val state = bloc.observeState()
  */
 @Composable
-fun <S, Action, SideEffect> BlocFacade<S, Action, SideEffect>.observeState(): State<S> {
+fun <S: Any, Action: Any, SideEffect: Any> BlocFacade<S, Action, SideEffect>.observeState(): State<S> {
     val state = remember(this) { mutableStateOf(value) }
     DisposableEffect(this) {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -34,11 +34,11 @@ fun <S, Action, SideEffect> BlocFacade<S, Action, SideEffect>.observeState(): St
 }
 
 @Composable
-fun <S, Action, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>.observeState() =
+fun <S: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<S, Action, SideEffect, Proposal>.observeState() =
     bloc.observeState()
 
 @Composable
-fun <S, Action, SideEffect> BlocFacade<S, Action, SideEffect>.observeSideEffects(): State<SideEffect?> {
+fun <S: Any, Action: Any, SideEffect: Any> BlocFacade<S, Action, SideEffect>.observeSideEffects(): State<SideEffect?> {
     val state: MutableState<SideEffect?> = remember(this) { mutableStateOf(null) }
     DisposableEffect(this) {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -70,5 +70,5 @@ fun <S, Action, SideEffect> BlocFacade<S, Action, SideEffect>.observeSideEffects
 fun previewBlocContext(): BlocContext = DefaultBlocContext(composableLifecycle())
 
 @Composable
-fun <S, Action, SideEffect, Proposal> BlocOwner<S, Action, SideEffect, Proposal>.observeSideEffects() =
+fun <S: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<S, Action, SideEffect, Proposal>.observeSideEffects() =
     bloc.observeSideEffects()

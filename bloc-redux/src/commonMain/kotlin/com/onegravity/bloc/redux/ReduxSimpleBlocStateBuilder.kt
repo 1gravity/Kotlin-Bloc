@@ -7,7 +7,7 @@ import com.onegravity.bloc.utils.Selector
  * Builder for a [ReduxBlocState].
  * Unlike [ReduxBlocStateBuilder] this builder assumes the map function is { it } (no mapping).
  */
-interface ReduxSimpleBlocStateBuilder<State, ReduxModel> {
+interface ReduxSimpleBlocStateBuilder<State: Any, ReduxModel: Any> {
 
     @BlocDSL
     var initialState: State

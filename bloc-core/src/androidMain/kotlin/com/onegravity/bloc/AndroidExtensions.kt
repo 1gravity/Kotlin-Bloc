@@ -29,7 +29,7 @@ fun <T : ViewDataBinding> ComponentActivity.bind(
  * The subscription is tied to the lifecycle of a LifecycleOwner (typically an Activity or a Fragment).
  */
 @BlocDSL
-fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
+fun <State: Any, SideEffect: Any> BlocObservableOwner<State, SideEffect>.subscribe(
     lifecycleOwner: LifecycleOwner,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -38,7 +38,7 @@ fun <State, SideEffect> BlocObservableOwner<State, SideEffect>.subscribe(
 }
 
 @BlocDSL
-fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     lifecycleOwner: LifecycleOwner,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -53,7 +53,7 @@ fun <State, Action, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, P
  * ```
  */
 @BlocDSL
-fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State> =
+fun <State: Any> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State> =
     MutableLiveData<State>().apply {
         scope.launch {
             collect { value = it }
@@ -71,12 +71,13 @@ fun <State> StateStream<State>.toLiveData(scope: CoroutineScope): LiveData<State
  * ```
  */
 @BlocDSL
-fun <State> ViewModel.toLiveData(stream: StateStream<State>) = stream.toLiveData(viewModelScope)
+fun <State: Any> ViewModel.toLiveData(stream: StateStream<State>) =
+    stream.toLiveData(viewModelScope)
 
 /**
  * The same for Activities / Fragments
  */
 @BlocDSL
-fun <State> LifecycleOwner.toLiveData(stream: StateStream<State>) =
+fun <State: Any> LifecycleOwner.toLiveData(stream: StateStream<State>) =
     stream.toLiveData(lifecycleScope)
 

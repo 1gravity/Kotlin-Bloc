@@ -7,7 +7,7 @@ import com.onegravity.bloc.utils.Mapper
 /**
  * Builder for a [ReduxBlocState].
  */
-interface ReduxBlocStateBuilder<State, Model, ReduxModel> {
+interface ReduxBlocStateBuilder<State: Any, Model: Any, ReduxModel: Any> {
 
     @BlocDSL
     var initialState: State
