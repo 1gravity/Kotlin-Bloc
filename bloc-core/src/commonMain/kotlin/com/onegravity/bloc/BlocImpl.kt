@@ -19,7 +19,7 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Bloc<State, Action, SideEffect, Proposal> {
+) : Bloc<State, Action, SideEffect, Proposal>() {
 
     private val thunkChannel = Channel<Action>(UNLIMITED)
 

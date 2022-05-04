@@ -10,37 +10,24 @@ struct ContentView: View {
     }
     
 	var body: some View {
-        MainMenuView(mainMenu: holder.mainMenu)
+        MainMenuView(holder)
             .onAppear { LifecycleRegistryExtKt.resume(holder.lifecycle) }
             .onDisappear { LifecycleRegistryExtKt.stop(holder.lifecycle) }
     }
 }
 
-class BlocHolder<T : Bloc> {
+class BlocHolder<T : Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>> {
 	let lifecycle: LifecycleRegistry
-    let mainMenu: MainMenu4iOS
+    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+
+    private var observer: ((AnyObject) -> Void)?
 
 	init(factory: (BlocContext) -> T) {
         lifecycle = LifecycleRegistryKt.LifecycleRegistry()
         let context = DefaultBlocContext.init(lifecycle: lifecycle, stateKeeper: nil, instanceKeeper: nil, backPressedHandler: nil)
-        let bloc = MainMenu.shared.bloc(context: context)
+        bloc = MainMenu.shared.bloc(context: context)
 
-        IOSExtensionsKt.subscribeIOS(bloc, lifecycle: lifecycle, state: { state in
-            print("state: \(state)")
-        }, sideEffect: { sideEffect in
-            print("sideEffect: \(sideEffect)")
-        })
-        
         bloc.send(value: MainMenu.ActionState.books)
-
-        mainMenu = MainMenu4iOS.init(context: context)
-        IOSExtensionsKt.subscribeIOS(mainMenu, lifecycle: lifecycle, state: { state in
-            print("mainMenu.state: \(state)")
-        }, sideEffect: { sideEffect in
-            print("mainMenu.sideEffect: \(sideEffect)")
-        })
-        mainMenu.send(value: MainMenu.ActionState.calculator)
-
 
         lifecycle.onCreate()
 	}

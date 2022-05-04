@@ -9,18 +9,14 @@ import kotlinx.coroutines.*
 /**
  * Subscribes to the state and side effects streams of a Bloc.
  *
- * The subscription is tied to the lifecycle of the caller. The subscription starts with onStart()
- * and is cancelled with onStop().
+ * The subscription is tied to the lifecycle of the caller.
+ * The subscription starts with onStart() and is cancelled with onStop().
+ *
+ * The state and sideEffect functions are not suspended for iOS since we can't define suspend
+ * functions in Swift.
  */
 @BlocDSL
-fun <State, Action : Any, SideEffect, Proposal> BlocOwner<State, Action, SideEffect, Proposal>.subscribeIOS(
-    lifecycle: Lifecycle,
-    state: ((state: State) -> Unit)? = null,
-    sideEffect: ((sideEffect: SideEffect) -> Unit)? = null
-) = bloc.subscribeIOS(lifecycle, state, sideEffect)
-
-@BlocDSL
-fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.subscribeIOS(
+fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.observe(
     lifecycle: Lifecycle,
     state: ((state: State) -> Unit)? = null,
     sideEffect: ((sideEffect: SideEffect) -> Unit)? = null

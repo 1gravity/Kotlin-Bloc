@@ -3,7 +3,8 @@ package com.onegravity.bloc
 import com.onegravity.bloc.state.BlocState
 
 /**
- * The core interface of the BLoC framework.
+ * The core class of the BLoC framework.
+ * (can't be an interface or we won't have the generics in Swift)
  *
  * A Bloc is (as a BlocFacade)
  * - a StateStream<State> emitting state
@@ -13,6 +14,6 @@ import com.onegravity.bloc.state.BlocState
  * A Bloc is also a BlocState since BlocState is a subset of BlocFacade (StateStream and Sink).
  * This allows us to use a Bloc as BlocState and thus create a chain of composable Blocs.
  */
-interface Bloc<out State, in Action, SideEffect, Proposal> :
+abstract class Bloc<out State, in Action, SideEffect, Proposal> :
     BlocFacade<State, Action, SideEffect>,
     BlocState<State, Action>

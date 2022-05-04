@@ -10,9 +10,9 @@ import com.arkivanov.essenty.lifecycle.Lifecycle
  * implementations of the BlocObservable which transitions of the lifecycle are relevant (typically
  * onStart() and onStop()).
  */
-interface BlocObservable<out State, out SideEffect> {
+abstract class BlocObservable<out State, out SideEffect> {
 
-    fun subscribe(
+    abstract fun subscribe(
         lifecycle: Lifecycle,
         state: (suspend (state: State) -> Unit)? = null,
         sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null

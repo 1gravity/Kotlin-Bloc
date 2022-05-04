@@ -60,7 +60,7 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
  */
 @BlocDSL
 fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, Proposal>.toObservable() =
-    object : BlocObservable<State, SideEffect> {
+    object : BlocObservable<State, SideEffect>() {
         override fun subscribe(
             lifecycle: Lifecycle,
             state: (suspend (state: State) -> Unit)?,
@@ -81,7 +81,7 @@ fun <State, Action : Any, SideEffect, Proposal> Bloc<State, Action, SideEffect, 
  */
 @BlocDSL
 fun <State, Action : Any, SideEffect, Proposal> List<Bloc<State, Action, SideEffect, Proposal>>.toObservable() =
-    object : BlocObservable<State, SideEffect> {
+    object : BlocObservable<State, SideEffect>() {
         override fun subscribe(
             lifecycle: Lifecycle,
             state: (suspend (state: State) -> Unit)?,

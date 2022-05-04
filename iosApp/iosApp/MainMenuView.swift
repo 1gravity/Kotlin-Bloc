@@ -10,15 +10,19 @@ import SwiftUI
 import blocSamples
 
 struct MainMenuView: View {
-    let mainMenu: MainMenu4iOS
+    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
     
 //    @ObservedObject
 //    private var routerState: ObservableValue<RouterState<AnyObject, CounterRootChild>>
 
-//    init(_ holder: BlocHolder<MainMenu.ActionState>) {
-//        self.bloc = holder.bloc
-//        self.routerState = ObservableValue(counterRoot.routerState)
-//    }
+    init(_ holder: BlocHolder<Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>>) {
+        self.bloc = holder.bloc
+        holder.bloc.observe(lifecycle: holder.lifecycle, state: { state in
+            print("state: \(state)")
+        }, sideEffect: { sideEffect in
+            print("sideEffect: \(sideEffect)")
+        })
+    }
 
     var body: some View {
 //        let activeChild = self.routerState.value.activeChild.instance
@@ -34,7 +38,7 @@ struct MainMenuView: View {
 //        })
 
     return List {
-        Text("Hello World \(mainMenu.value)")
+        Text("Hello World \(bloc.value as! NSObject)")
         Text("Hello World 2")
         Text("Hello World 3")
     }
