@@ -16,6 +16,11 @@ annotation class BlocProtected
 annotation class BlocInternal
 
 /**
+ * This is an Observer specifically for Swift
+ */
+typealias BlocObserver<State> = (State) -> Unit
+
+/**
  * A SideEffectStream is a source of asynchronous (side effect) data.
  * It's a hot stream meant to deal with SideEffect data (compared to StateStream for State).
  *

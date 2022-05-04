@@ -9,25 +9,38 @@
 import SwiftUI
 import blocSamples
 
-public class ObservableValue<T : AnyObject, S : AnyObject> : ObservableObject {
-//    private let blocObservable: BlocObservable<T, S>
-//    
-//    @Published
-//    var value: T
-//    
-//    private var observer: ((T) -> Void)?
-//    
-//    init(_ bloc: Bloc<T>) {
-//        self.observableValue = bloc
-//        self.value = observableValue.value
-//        
-//        self.observer = { value in
-//            self.value = value
-//        }
-//        observableValue.subscribe(observer: observer!)
-//    }
-//    
-//    deinit {
-//        self.observableValue.unsubscribe(observer: self.observer!)
-//    }
+class Collector<T : Any>: ObservableObject, FlowCollector {
+    @Published var currentValue = ""
+
+    func emit(value: Any?, completionHandler: @escaping (KotlinUnit?, Error?) -> Void) {
+        print("ios received " + (value as! String))
+        currentValue = value as! String
+        completionHandler(KotlinUnit(), nil)
+    }
+}
+
+
+public class ObservableValue<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> : ObservableObject {
+
+    @Published
+    var value: State
+
+    init(_ holder: BlocHolder<State, Action, SideEffect>) {
+        self.value = holder.bloc.value
+
+        let observer: ((State) -> Void) = { value in
+            self.value = value
+            print("state: \(value)")
+        }
+        
+        holder.bloc.observe(
+            lifecycle: holder.lifecycle,
+            state: observer,
+            sideEffect: { sideEffect in
+                print("sideEffect: \(sideEffect)")
+            }
+        )
+
+    }
+
 }

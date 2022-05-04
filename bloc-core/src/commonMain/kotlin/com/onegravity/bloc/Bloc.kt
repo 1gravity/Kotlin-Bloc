@@ -1,10 +1,9 @@
 package com.onegravity.bloc
 
+import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.utils.BlocObserver
 import com.onegravity.bloc.utils.SideEffectStream
-import com.onegravity.bloc.utils.logger
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * The core class of the BLoC framework.
@@ -22,4 +21,12 @@ abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
 
     abstract val sideEffects: SideEffectStream<SideEffect>
 
+    /**
+     * This is specifically for iOS to make sure generic types aren't erased.
+     */
+    abstract fun observe(
+        lifecycle: Lifecycle,
+        state: BlocObserver<State>?,
+        sideEffect: BlocObserver<SideEffect>?
+    )
 }

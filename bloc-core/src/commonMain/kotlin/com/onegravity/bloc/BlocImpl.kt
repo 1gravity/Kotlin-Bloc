@@ -1,7 +1,6 @@
 package com.onegravity.bloc
 
-import com.arkivanov.essenty.lifecycle.doOnCreate
-import com.arkivanov.essenty.lifecycle.doOnDestroy
+import com.arkivanov.essenty.lifecycle.*
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
@@ -51,6 +50,36 @@ internal class BlocImpl<State: Any, Action : Any, SideEffect: Any, Proposal: Any
 
     override suspend fun collect(collector: FlowCollector<State>) {
         blocState.collect(collector)
+    }
+
+    /**
+     * Use this in iOS/Swift only
+     */
+    override fun observe(
+        lifecycle: Lifecycle, state:
+        BlocObserver<State>?, sideEffect:
+        BlocObserver<SideEffect>?
+    ) {
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+        lifecycle.doOnStart {
+            logger.d("onStart -> start subscription")
+            state?.let {
+                coroutineScope.launch {
+                    collect { state(it) }
+                }
+            }
+            sideEffect?.let {
+                coroutineScope.launch {
+                    sideEffects.collect { sideEffect(it) }
+                }
+            }
+        }
+
+        lifecycle.doOnStop {
+            logger.d("onStop -> stop subscription")
+            coroutineScope.cancel("Stop Subscription")
+        }
     }
 
     /**

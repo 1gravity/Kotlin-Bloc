@@ -5,9 +5,7 @@ import blocSamples
 struct ContentView: View {
 
     @SwiftUI.State
-    private var holder = BlocHolder { context in
-		MainMenu.shared.bloc(context: context)
-    }
+    private var holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
     
 	var body: some View {
         MainMenuView(holder)
@@ -16,42 +14,17 @@ struct ContentView: View {
     }
 }
 
-class Collector: ObservableObject, FlowCollector {
-    @Published var currentValue = ""
-
-    func emit(value: Any?, completionHandler: @escaping (KotlinUnit?, Error?) -> Void) {
-        print("ios received " + (value as! String))
-        currentValue = value as! String
-        completionHandler(KotlinUnit(), nil)
-    }
-}
-
-class BlocHolder<T : Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>> {
+class BlocHolder<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> {
 	let lifecycle: LifecycleRegistry
-    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    let bloc: Bloc<State, Action, SideEffect>
 
     private var observer: ((AnyObject) -> Void)?
 
-	init(factory: (BlocContext) -> T) {
+	init(factory: (BlocContext) -> Bloc<State, Action, SideEffect>) {
         lifecycle = LifecycleRegistryKt.LifecycleRegistry()
         let context = DefaultBlocContext.init(lifecycle: lifecycle, stateKeeper: nil, instanceKeeper: nil, backPressedHandler: nil)
-        bloc = MainMenu.shared.bloc(context: context)
-
-        bloc.send(value: MainMenu.ActionState.calculator)
-
+        bloc = factory(context)
         lifecycle.onCreate()
-        
-        
-        let test: Test<NSString, NSString> = TestImpl(initialValue: "Emanuel")
-        test.flow().collect(collector: Collector()) { (result: KotlinUnit?, error: Error?) in
-            if (error != nil) {
-                print("error \(error)")
-            } else {
-                print("Completion")
-            }
-        }
-        test.send(action: "Hello")
-        test.send(action: "World")
 	}
 
 	deinit {

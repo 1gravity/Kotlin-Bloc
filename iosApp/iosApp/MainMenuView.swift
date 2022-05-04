@@ -12,14 +12,14 @@ import blocSamples
 struct MainMenuView: View {
     let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
     
-//    @ObservedObject
-//    private var routerState: ObservableValue<RouterState<AnyObject, CounterRootChild>>
+    @ObservedObject
+    private var model: ObservableValue<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
-    init(_ holder: BlocHolder<Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>>) {
+    init(_ holder: BlocHolder<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>) {
         self.bloc = holder.bloc
-
+        self.model = ObservableValue(holder)
+        
         bloc.send(value: MainMenu.ActionState.books)
-//        let tmp: MainMenu.ActionState = bloc.value
 
         holder.bloc.observe(lifecycle: holder.lifecycle, state: { state in
             print("state: \(state)")
@@ -29,56 +29,18 @@ struct MainMenuView: View {
     }
 
     var body: some View {
-//        let activeChild = self.routerState.value.activeChild.instance
+        func send(_ state: MainMenu.ActionState) -> () -> () {
+            return { self.bloc.send(value: state) }
+        }
         
-//        let observer: FlowObserver<Int> = { value in
-//            print(value)
-//        }
+        return VStack(spacing: 8) {
+            Text("\(model.value)")
+                .padding()
+                .border(Color.black, width: 2)
 
-//        let v: MainMenu.ActionState = mainMenu.value
-//        mainMenu.collect(collector: observer,
-//                         completionHandler: { (value, error) in
-//            
-//        })
-
-    return List {
-        Text("Hello World \(bloc.value as! NSObject)")
-        Text("Hello World 2")
-        Text("Hello World 3")
+            Button(action: send(MainMenu.ActionState.calculator), label: { Text("Calculator") })
+            Button(action: send(MainMenu.ActionState.books), label: { Text("Books") })
+        }
     }
     
-//        return VStack(spacing: 8) {
-//            CounterView(self.counterRoot.counter)
-//
-//            Button(action: self.counterRoot.onNextChild, label: { Text("Next Child") })
-//
-//            Button(action: self.counterRoot.onPrevChild, label: { Text("Prev Child") })
-//                .disabled(!activeChild.isBackEnabled)
-//
-//            CounterInnerView(activeChild.inner)
-//        }
-    }
 }
-
-//struct CounterRootView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CounterRootView(CoutnerRootPreview())
-//    }
-//
-//    class CoutnerRootPreview : CounterRoot {
-//        let counter: Counter = CounterView_Previews.CounterPreview()
-//
-//        let routerState: Value<RouterState<AnyObject, CounterRootChild>> = simpleRouterState(
-//            CounterRootChild(
-//                inner: CounterInnerView_Previews.CounterInnerPreview(),
-//                isBackEnabled: true
-//            )
-//        )
-//
-//        func onNextChild() {
-//        }
-//
-//        func onPrevChild() {
-//        }
-//    }
-//}
