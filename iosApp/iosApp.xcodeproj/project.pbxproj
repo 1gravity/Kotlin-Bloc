@@ -12,6 +12,11 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		88890E5F2821DAC800E2BAEA /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E5E2821DAC800E2BAEA /* ObservableValue.swift */; };
+		88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E60282565B600E2BAEA /* BlocHolder.swift */; };
+		88890E6728257F9300E2BAEA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88890E6628257F9300E2BAEA /* Localizable.strings */; };
+		88890E692825866D00E2BAEA /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E682825866D00E2BAEA /* CounterView.swift */; };
+		88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6A2825973700E2BAEA /* CalculatorView.swift */; };
+		88890E6D282597E200E2BAEA /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6C282597E200E2BAEA /* PostsView.swift */; };
 		889261B9282037D200C9B473 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889261B8282037D200C9B473 /* MainMenuView.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +28,11 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88890E5E2821DAC800E2BAEA /* ObservableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		88890E60282565B600E2BAEA /* BlocHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocHolder.swift; sourceTree = "<group>"; };
+		88890E6628257F9300E2BAEA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		88890E682825866D00E2BAEA /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
+		88890E6A2825973700E2BAEA /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		88890E6C282597E200E2BAEA /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
 		889261B8282037D200C9B473 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,12 +76,17 @@
 			isa = PBXGroup;
 			children = (
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+				88890E6628257F9300E2BAEA /* Localizable.strings */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				889261B8282037D200C9B473 /* MainMenuView.swift */,
 				88890E5E2821DAC800E2BAEA /* ObservableValue.swift */,
+				88890E60282565B600E2BAEA /* BlocHolder.swift */,
+				88890E682825866D00E2BAEA /* CounterView.swift */,
+				88890E6A2825973700E2BAEA /* CalculatorView.swift */,
+				88890E6C282597E200E2BAEA /* PostsView.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -143,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
+				88890E6728257F9300E2BAEA /* Localizable.strings in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,9 +191,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				889261B9282037D200C9B473 /* MainMenuView.swift in Sources */,
+				88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				88890E5F2821DAC800E2BAEA /* ObservableValue.swift in Sources */,
+				88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				88890E6D282597E200E2BAEA /* PostsView.swift in Sources */,
+				88890E692825866D00E2BAEA /* CounterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

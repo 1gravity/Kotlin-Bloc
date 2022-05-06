@@ -19,13 +19,11 @@ struct MainMenuView: View {
         self.bloc = holder.bloc
         self.model = ObservableValue(holder)
         
-        bloc.send(value: MainMenu.ActionState.books)
-
-        holder.bloc.observe(lifecycle: holder.lifecycle, state: { state in
-            print("state: \(state)")
-        }, sideEffect: { sideEffect in
-            print("sideEffect: \(sideEffect)")
-        })
+//        holder.bloc.observe(lifecycle: holder.lifecycle, state: { state in
+//            print("state: \(state)")
+//        }, sideEffect: { sideEffect in
+//            print("sideEffect: \(sideEffect)")
+//        })
     }
 
     var body: some View {
@@ -34,12 +32,23 @@ struct MainMenuView: View {
         }
         
         return VStack(spacing: 8) {
-            Text("\(model.value)")
+            Text("\(NSLocalizedString("main_menu_title", comment: "Main Menu"))").padding()
+
+            Button(action: send(MainMenu.ActionState.counter), label: { Text("\(NSLocalizedString("main_menu_counter", comment: "Counter"))") })
                 .padding()
+                .fixedSize()
                 .border(Color.black, width: 2)
 
-            Button(action: send(MainMenu.ActionState.calculator), label: { Text("Calculator") })
-            Button(action: send(MainMenu.ActionState.books), label: { Text("Books") })
+            Button(action: send(MainMenu.ActionState.calculator), label: { Text("\(NSLocalizedString("main_menu_calculator", comment: "Calculator"))") })
+                .padding()
+                .fixedSize()
+                .border(Color.black, width: 2)
+
+            Button(action: send(MainMenu.ActionState.posts), label: { Text("\(NSLocalizedString("main_menu_posts", comment: "Posts"))") })
+                .padding()
+                .fixedSize()
+                .border(Color.black, width: 2)
+
         }
     }
     
