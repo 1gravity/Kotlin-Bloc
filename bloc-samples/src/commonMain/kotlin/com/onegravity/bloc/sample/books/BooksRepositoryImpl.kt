@@ -2,9 +2,9 @@ package com.onegravity.bloc.sample.books
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import kotlin.random.Random
-import com.onegravity.bloc.sample.books.BooksRepository.*
+import com.onegravity.bloc.sample.books.BooksRepository.Failure
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 class BooksRepositoryImpl : BooksRepository {
 

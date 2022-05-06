@@ -3,8 +3,8 @@ package com.onegravity.bloc.sample
 import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.sample.MainMenuCompose.State
 import com.onegravity.bloc.sample.MainMenuCompose.MenuEntry
+import com.onegravity.bloc.sample.MainMenuCompose.State
 
 typealias MenuBloc = Bloc<State, MenuEntry, MenuEntry>
 

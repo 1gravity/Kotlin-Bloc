@@ -37,11 +37,13 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.github.michaelbull.result.mapBoth
 import com.google.android.material.snackbar.Snackbar
-import com.onegravity.bloc.*
+import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostDetailsFragmentBinding
 import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
+import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.utils.viewBinding
+import com.onegravity.bloc.viewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -87,7 +89,7 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
 
         state.post?.mapBoth(
             { post ->
-                if (! initialised) initialize(post)
+                if (!initialised) initialize(post)
                 binding.postTitle.text = post.title
                 binding.postBody.text = post.body
                 val comments = post.comments.size

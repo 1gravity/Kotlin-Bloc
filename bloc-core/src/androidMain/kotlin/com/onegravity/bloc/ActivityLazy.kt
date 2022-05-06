@@ -9,8 +9,7 @@ class ActivityLazy<A>(private val getOwner: () -> A) : Lazy<A>
         where A : SavedStateRegistryOwner,
               A : OnBackPressedDispatcherOwner,
               A : ViewModelStoreOwner,
-              A : LifecycleOwner
-{
+              A : LifecycleOwner {
 
     private var cached: A? = null
 

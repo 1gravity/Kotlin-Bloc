@@ -1,13 +1,13 @@
 package com.onegravity.bloc.redux
 
 import com.onegravity.bloc.utils.BlocDSL
-import com.onegravity.bloc.utils.Selector
 import com.onegravity.bloc.utils.Mapper
+import com.onegravity.bloc.utils.Selector
 
 /**
  * Builder for a [ReduxBlocState].
  */
-interface ReduxBlocStateBuilder<State: Any, Model: Any, ReduxModel: Any> {
+interface ReduxBlocStateBuilder<State : Any, Model : Any, ReduxModel : Any> {
 
     @BlocDSL
     var initialState: State

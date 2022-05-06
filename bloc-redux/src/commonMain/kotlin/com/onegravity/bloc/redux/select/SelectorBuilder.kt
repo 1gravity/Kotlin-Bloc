@@ -48,9 +48,11 @@ class SelectorBuilder<S : Any> {
             @Suppress("UNCHECKED_CAST")
             return i[0] as I
         }
+
         override operator fun invoke(state: S): I {
             return memoizer.memoize(state, inputField)
         }
+
         override val equalityCheck: EqualityCheckFn
             get() = byValEqualityCheck
         override val memoizer: Memoizer<I> by lazy {

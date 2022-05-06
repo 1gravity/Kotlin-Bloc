@@ -2,15 +2,14 @@ package com.onegravity.bloc.sample.counter
 
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.sample.counter.CounterStore.reduxStore
-import com.onegravity.bloc.sample.counter.CounterStore.ReduxAction
 import com.onegravity.bloc.redux.toBlocState
-import com.onegravity.bloc.redux.reduxBlocState
+import com.onegravity.bloc.sample.counter.CounterStore.ReduxAction
+import com.onegravity.bloc.sample.counter.CounterStore.reduxStore
 
 object ReduxCounter {
     sealed class Action(val value: Int) {
-        data class Increment(private val _value: Int = 1): Action(_value)
-        data class Decrement(private val _value: Int = 1): Action(_value)
+        data class Increment(private val _value: Int = 1) : Action(_value)
+        data class Decrement(private val _value: Int = 1) : Action(_value)
     }
 
     fun bloc(context: BlocContext) = bloc<Int, Action, Nothing, ReduxAction>(

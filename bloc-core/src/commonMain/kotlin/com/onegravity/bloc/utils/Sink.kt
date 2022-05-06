@@ -7,7 +7,7 @@ package com.onegravity.bloc.utils
  * Flutter EventSink) because we're following a functional approach and use monads to model
  * success/failures (using https://github.com/michaelbull/kotlin-result).
  */
-interface Sink<in Value: Any> {
+interface Sink<in Value : Any> {
 
     /**
      * Send a Value into the sink.

@@ -23,9 +23,8 @@ package com.onegravity.bloc.posts
 import android.view.View
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostCommentListItemBinding
-import com.xwray.groupie.viewbinding.BindableItem
-//import org.orbitmvi.orbit.sample.posts.databinding.PostCommentListItemBinding
 import com.onegravity.bloc.sample.posts.domain.repositories.PostComment
+import com.xwray.groupie.viewbinding.BindableItem
 
 data class PostCommentItem(private val post: PostComment) : BindableItem<PostCommentListItemBinding>() {
 

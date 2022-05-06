@@ -1,10 +1,11 @@
 package com.onegravity.bloc.sample.counter
 
+import com.onegravity.bloc.asBlocState
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.asBlocState
+import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Decrement
+import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Increment
 import com.onegravity.bloc.utils.logger
-import com.onegravity.bloc.sample.counter.SimpleCounter.Action.*
 
 /**
  * Demo to show how a Bloc can "act" as a BlocState (interceptorBloc).

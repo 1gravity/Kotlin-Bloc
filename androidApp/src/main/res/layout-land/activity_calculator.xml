@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2021 Mikołaj Leszczyński & Appmattus Limited
   ~ Copyright 2020 Babylon Partners Limited
   ~
@@ -19,12 +18,15 @@
   ~ See: https://github.com/orbit-mvi/orbit-mvi/compare/c5b8b3f2b83b5972ba2ad98f73f75086a89653d3...main
   -->
 
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewmodel" type="com.onegravity.bloc.calculator.CalculatorViewModel" />
+
+        <variable
+            name="viewmodel"
+            type="com.onegravity.bloc.calculator.CalculatorViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,10 +46,10 @@
             android:text="@{viewmodel.state.toString()}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
             android:textColor="@color/buttonText"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_clear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="4,152" />
 
         <!-- Row 1 -->
@@ -59,10 +61,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_clear"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_plus_minus"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@+id/button_plus_minus"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_plus_minus"
@@ -71,10 +73,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_plus_minus"
-            app:layout_constraintTop_toTopOf="@id/button_clear"
-            app:layout_constraintEnd_toStartOf="@id/button_percentage"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2"/>
+            app:layout_constraintEnd_toStartOf="@id/button_percentage"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_clear" />
 
         <Button
             android:id="@+id/button_percentage"
@@ -83,10 +85,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_percentage"
-            app:layout_constraintTop_toTopOf="@id/button_clear"
-            app:layout_constraintEnd_toStartOf="@id/button_divide"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2"/>
+            app:layout_constraintEnd_toStartOf="@id/button_divide"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_clear" />
 
         <Button
             android:id="@+id/button_divide"
@@ -95,10 +97,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_divide"
-            app:layout_constraintTop_toTopOf="@id/button_clear"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_clear" />
 
         <!-- Row 2 -->
 
@@ -109,11 +111,11 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_7"
-            app:layout_constraintStart_toStartOf="@id/button_clear"
-            app:layout_constraintTop_toBottomOf="@id/button_clear"
-            app:layout_constraintEnd_toStartOf="@+id/button_8"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@+id/button_8"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintStart_toStartOf="@id/button_clear"
+            app:layout_constraintTop_toBottomOf="@id/button_clear" />
 
         <Button
             android:id="@+id/button_8"
@@ -122,10 +124,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_8"
-            app:layout_constraintTop_toTopOf="@id/button_7"
-            app:layout_constraintEnd_toStartOf="@id/button_9"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@id/button_9"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_7" />
 
         <Button
             android:id="@+id/button_9"
@@ -134,10 +136,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_9"
-            app:layout_constraintTop_toTopOf="@id/button_7"
-            app:layout_constraintEnd_toStartOf="@id/button_multiply"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@id/button_multiply"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_7" />
 
         <Button
             android:id="@+id/button_multiply"
@@ -146,10 +148,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_multiply"
-            app:layout_constraintTop_toTopOf="@id/button_7"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_7" />
 
         <!-- Row 3 -->
 
@@ -160,11 +162,11 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_4"
-            app:layout_constraintStart_toStartOf="@id/button_7"
-            app:layout_constraintTop_toBottomOf="@id/button_7"
-            app:layout_constraintEnd_toStartOf="@+id/button_5"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@+id/button_5"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintStart_toStartOf="@id/button_7"
+            app:layout_constraintTop_toBottomOf="@id/button_7" />
 
         <Button
             android:id="@+id/button_5"
@@ -173,10 +175,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_5"
-            app:layout_constraintTop_toTopOf="@id/button_4"
-            app:layout_constraintEnd_toStartOf="@id/button_6"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@id/button_6"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_4" />
 
         <Button
             android:id="@+id/button_6"
@@ -185,10 +187,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_6"
-            app:layout_constraintTop_toTopOf="@id/button_4"
-            app:layout_constraintEnd_toStartOf="@id/button_subtract"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@id/button_subtract"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_4" />
 
         <Button
             android:id="@+id/button_subtract"
@@ -197,10 +199,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_subtract"
-            app:layout_constraintTop_toTopOf="@id/button_4"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_4" />
 
         <!-- Row 4 -->
 
@@ -211,11 +213,11 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_1"
-            app:layout_constraintStart_toStartOf="@id/button_4"
-            app:layout_constraintTop_toBottomOf="@id/button_4"
-            app:layout_constraintEnd_toStartOf="@+id/button_2"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@+id/button_2"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintStart_toStartOf="@id/button_4"
+            app:layout_constraintTop_toBottomOf="@id/button_4" />
 
         <Button
             android:id="@+id/button_2"
@@ -224,10 +226,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_2"
-            app:layout_constraintTop_toTopOf="@id/button_1"
-            app:layout_constraintEnd_toStartOf="@id/button_3"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@id/button_3"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_1" />
 
         <Button
             android:id="@+id/button_3"
@@ -236,10 +238,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_3"
-            app:layout_constraintTop_toTopOf="@id/button_1"
-            app:layout_constraintEnd_toStartOf="@id/button_add"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@id/button_add"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_1" />
 
         <Button
             android:id="@+id/button_add"
@@ -248,10 +250,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_add"
-            app:layout_constraintTop_toTopOf="@id/button_1"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_1" />
 
         <!-- Row 5 - Bottom row -->
 
@@ -262,11 +264,11 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_0"
-            app:layout_constraintStart_toStartOf="@id/button_1"
-            app:layout_constraintTop_toBottomOf="@id/button_1"
-            app:layout_constraintEnd_toStartOf="@+id/button_2"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@+id/button_2"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintStart_toStartOf="@id/button_1"
+            app:layout_constraintTop_toBottomOf="@id/button_1" />
 
         <Button
             android:id="@+id/button_period"
@@ -275,10 +277,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_period"
-            app:layout_constraintTop_toTopOf="@id/button_0"
-            app:layout_constraintEnd_toStartOf="@id/button_equals"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toStartOf="@id/button_equals"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_0" />
 
         <Button
             android:id="@+id/button_equals"
@@ -287,10 +289,10 @@
             android:layout_height="0dp"
             android:onClick="@{(view) -> viewmodel.button(view.id)}"
             android:text="@string/button_equals"
-            app:layout_constraintTop_toTopOf="@id/button_0"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintHeight_percent="0.2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="@id/button_0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

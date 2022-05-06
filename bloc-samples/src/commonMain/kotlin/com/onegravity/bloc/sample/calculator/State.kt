@@ -21,6 +21,7 @@
  */
 
 package com.onegravity.bloc.sample.calculator
+
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapBoth
 

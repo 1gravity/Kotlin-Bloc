@@ -1,7 +1,7 @@
 package com.onegravity.bloc.sample.posts.data.posts.network
 
-import com.github.michaelbull.result.runCatching
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.runCatching
 import com.onegravity.bloc.sample.posts.data.posts.model.CommentData
 import com.onegravity.bloc.sample.posts.data.posts.model.PostData
 import com.onegravity.bloc.sample.posts.data.posts.model.UserData

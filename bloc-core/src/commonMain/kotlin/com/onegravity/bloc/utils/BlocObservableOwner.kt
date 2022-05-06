@@ -13,7 +13,7 @@ package com.onegravity.bloc.utils
  * can also be observed (it has an observable Bloc) and every extension functions for
  * BlocObservableOwner is also implemented for BlocOwner.
  */
-interface BlocObservableOwner<out State: Any, out SideEffect: Any> {
+interface BlocObservableOwner<out State : Any, out SideEffect : Any> {
 
     val observable: BlocObservable<State, SideEffect>
 

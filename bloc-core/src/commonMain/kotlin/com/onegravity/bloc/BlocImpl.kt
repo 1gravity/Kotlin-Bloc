@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
 
-internal class BlocImpl<State: Any, Action : Any, SideEffect: Any, Proposal: Any>(
+internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val initializer: Initializer<State, Action> = { },

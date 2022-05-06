@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.getOrCreate
-import com.onegravity.bloc.util.ComposeAppTheme
 import com.onegravity.bloc.sample.posts.compose.PostsComponentImpl
+import com.onegravity.bloc.util.ComposeAppTheme
 
 class PostsActivity : AppCompatActivity() {
 

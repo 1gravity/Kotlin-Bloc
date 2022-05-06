@@ -7,7 +7,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.*
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.onegravity.bloc.utils.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * ComponentActivity / AppCompatActivity / Fragment
@@ -29,7 +30,7 @@ fun <T : ViewDataBinding> ComponentActivity.bind(
  * The subscription is tied to the lifecycle of a LifecycleOwner (typically an Activity or a Fragment).
  */
 @BlocDSL
-fun <State: Any, SideEffect: Any> BlocObservableOwner<State, SideEffect>.subscribe(
+fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subscribe(
     lifecycleOwner: LifecycleOwner,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -38,7 +39,7 @@ fun <State: Any, SideEffect: Any> BlocObservableOwner<State, SideEffect>.subscri
 }
 
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     lifecycleOwner: LifecycleOwner,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -53,7 +54,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, A
  * ```
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any> Bloc<State, Action, SideEffect>.toLiveData(scope: CoroutineScope): LiveData<State> =
+fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toLiveData(scope: CoroutineScope): LiveData<State> =
     MutableLiveData<State>().apply {
         scope.launch {
             collect { value = it }
@@ -71,12 +72,12 @@ fun <State: Any, Action: Any, SideEffect: Any> Bloc<State, Action, SideEffect>.t
  * ```
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any> ViewModel.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
+fun <State : Any, Action : Any, SideEffect : Any> ViewModel.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
     bloc.toLiveData(viewModelScope)
 
 /**
  * The same for Activities / Fragments
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any> LifecycleOwner.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
+fun <State : Any, Action : Any, SideEffect : Any> LifecycleOwner.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
     bloc.toLiveData(lifecycleScope)

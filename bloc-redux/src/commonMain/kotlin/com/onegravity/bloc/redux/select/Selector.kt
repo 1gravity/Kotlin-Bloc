@@ -4,7 +4,8 @@
 
 package com.onegravity.bloc.redux.select
 
-import org.reduxkotlin.*
+import org.reduxkotlin.Store
+import org.reduxkotlin.StoreSubscriber
 import kotlin.jvm.JvmField
 
 interface SelectorInput<S, I> {
@@ -48,6 +49,7 @@ interface Selector<S, O> : SelectorInput<S, O> {
 abstract class AbstractSelector<S, O> : Selector<S, O> {
     @JvmField
     protected var recomputationsLastChanged = 0L
+
     @JvmField
     protected var _recomputations = 0L
     override val recomputations: Long get() = _recomputations
@@ -122,7 +124,7 @@ fun <State : Any> Store<State>.selectors(
     return this.subscribe(sub)
 }
 
-fun <State: Any, SelectedState: Any> Store<State>.select(
+fun <State : Any, SelectedState : Any> Store<State>.select(
     selector: (State) -> SelectedState,
     onChange: (SelectedState) -> Unit
 ) = selectors { select(selector, onChange) }

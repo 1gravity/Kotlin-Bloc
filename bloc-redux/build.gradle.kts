@@ -14,7 +14,7 @@ kotlin {
     // todo
     // explicitApi = ExplicitApiMode.Strict
 
-    android{
+    android {
         publishLibraryVariants("release")
     }
     jvm()

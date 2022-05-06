@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.FlowCollector
 /**
  * BlocState is the actual keeper of State. a source of asynchronous state data (StateStream) and a
  * Sink for proposals used to potentially alter state.
-*/
-abstract class BlocState<out State: Any, in Proposal: Any> : StateStream<State>, Sink<Proposal> {
+ */
+abstract class BlocState<out State : Any, in Proposal : Any> : StateStream<State>, Sink<Proposal> {
     /**
      * StateStream
      */

@@ -1,11 +1,11 @@
 package com.onegravity.bloc.counter
 
 import android.os.Bundle
-import com.onegravity.bloc.viewModel
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.bind
 import com.onegravity.bloc.databinding.ActivityCounterReduxBinding
+import com.onegravity.bloc.viewModel
 
 class CounterReduxActivity : AppCompatActivity() {
 

@@ -13,11 +13,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.onegravity.bloc.R
 import com.onegravity.bloc.bloc
+import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.getOrCreate
 import com.onegravity.bloc.util.ComposeAppTheme
-import com.onegravity.bloc.R
-import com.onegravity.bloc.compose.observeState
 
 class CounterActivityCompose : AppCompatActivity() {
 

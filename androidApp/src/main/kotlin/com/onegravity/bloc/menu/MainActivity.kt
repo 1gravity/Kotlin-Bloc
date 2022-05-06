@@ -4,7 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.onegravity.bloc.*
+import com.onegravity.bloc.R
+import com.onegravity.bloc.bind
 import com.onegravity.bloc.books.BooksActivity
 import com.onegravity.bloc.calculator.CalculatorActivity
 import com.onegravity.bloc.calculator.CalculatorActivityNoVM
@@ -14,8 +15,10 @@ import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
 import com.onegravity.bloc.menu_compose.MainActivityCompose
 import com.onegravity.bloc.posts.PostsActivity
-import com.onegravity.bloc.posts_compose.PostsActivity as ComposePostsActivity
 import com.onegravity.bloc.sample.MainMenu.ActionState.*
+import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.viewModel
+import com.onegravity.bloc.posts_compose.PostsActivity as ComposePostsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         PostsCompose to ComposePostsActivity::class.java
     )
 
-    private fun <A: Activity, C: Class<A>> C.start() {
+    private fun <A : Activity, C : Class<A>> C.start() {
         val intent = Intent(this@MainActivity, this)
         startActivity(intent)
     }

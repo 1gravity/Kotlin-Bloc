@@ -2,7 +2,9 @@
 
 package com.onegravity.bloc
 
-import com.arkivanov.essenty.lifecycle.*
+import com.arkivanov.essenty.lifecycle.Lifecycle
+import com.arkivanov.essenty.lifecycle.doOnStart
+import com.arkivanov.essenty.lifecycle.doOnStop
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
@@ -16,14 +18,14 @@ import kotlinx.coroutines.flow.FlowCollector
 
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) = bloc.subscribe(lifecycle, state, sideEffect)
 
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any> Bloc<State, Action, SideEffect>.subscribe(
+fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -61,7 +63,7 @@ fun <State: Any, Action: Any, SideEffect: Any> Bloc<State, Action, SideEffect>.s
  * ```
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any> Bloc<State, Action, SideEffect>.toObservable() =
+fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toObservable() =
     object : BlocObservable<State, SideEffect>() {
         override fun subscribe(
             lifecycle: Lifecycle,
@@ -82,7 +84,7 @@ fun <State: Any, Action: Any, SideEffect: Any> Bloc<State, Action, SideEffect>.t
  * that would be over-engineering imo.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> List<Bloc<State, Action, SideEffect>>.toObservable() =
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> List<Bloc<State, Action, SideEffect>>.toObservable() =
     object : BlocObservable<State, SideEffect>() {
         override fun subscribe(
             lifecycle: Lifecycle,
@@ -101,7 +103,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> List<Bloc<State, A
  * Same as above but combine just two Blocs to BlocObservable.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action, SideEffect>.toObservable(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.toObservable(
     bloc: Bloc<State, Action, SideEffect>
 ) = listOf(this, bloc).toObservable<State, Action, SideEffect, Proposal>()
 
@@ -120,7 +122,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action
  * ```
  */
 @BlocDSL
-fun <State: Any, SideEffect: Any> BlocObservableOwner<State, SideEffect>.subscribe(
+fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -134,7 +136,7 @@ fun <State: Any, SideEffect: Any> BlocObservableOwner<State, SideEffect>.subscri
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action, SideEffect>.onCreate(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.onCreate(
     initializer: Initializer<State, Action>
 ) {
     (this as BlocImpl<State, Action, SideEffect, Proposal>).runInitializer(initializer)
@@ -144,7 +146,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
     initializer: Initializer<State, Action>
 ) = bloc.onCreate<State, Action, SideEffect, Proposal>(initializer)
 
@@ -155,7 +157,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, A
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action, SideEffect>.thunk(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.thunk(
     coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
 ) {
@@ -166,7 +168,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
     coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
 ) = bloc.thunk<State, Action, SideEffect, Proposal>(coroutineScope, thunk)
@@ -177,7 +179,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, A
  * sending an action to the Bloc).
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action, SideEffect>.reduce(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduce(
     reducer: ReducerNoAction<State, Proposal>
 ) {
     val reducerNoSideEffect: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
@@ -191,7 +193,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.reduce(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduce(
     reducer: ReducerNoAction<State, Proposal>
 ) = bloc.reduce(reducer)
 
@@ -201,7 +203,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, A
  * sending an action to the Bloc).
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action, SideEffect>.reduceAnd(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) {
     (this as BlocImpl<State, Action, SideEffect, Proposal>).runReducer(reducer)
@@ -211,7 +213,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) = bloc.reduceAnd(reducer)
 
@@ -221,7 +223,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, A
  * sending an action to the Bloc).
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action, SideEffect>.sideEffect(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) {
     val reducerNoState: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
@@ -234,7 +236,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> Bloc<State, Action
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) = bloc.sideEffect<State, Action, SideEffect, Proposal>(sideEffect)
 
@@ -242,7 +244,7 @@ fun <State: Any, Action: Any, SideEffect: Any, Proposal: Any> BlocOwner<State, A
  * Adapts a Bloc to BlocState provided the Action type is the same as the Proposal type
  * (what goes in, must come out).
  */
-fun <State: Any, SideEffect: Any, Proposal: Any> Bloc<State, Proposal, SideEffect>.asBlocState(): BlocState<State, Proposal> =
+fun <State : Any, SideEffect : Any, Proposal : Any> Bloc<State, Proposal, SideEffect>.asBlocState(): BlocState<State, Proposal> =
     object : BlocState<State, Proposal>() {
         override fun send(value: Proposal) {
             this@asBlocState.send(value)

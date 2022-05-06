@@ -12,9 +12,9 @@
 
         <activity
             android:name=".menu_compose.MainActivityCompose"
+            android:exported="true"
             android:label="BLoC Framework"
-            android:theme="@style/Theme.Bloc"
-            android:exported="true">
+            android:theme="@style/Theme.Bloc">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,57 +23,57 @@
 
         <activity
             android:name=".menu.MainActivity"
+            android:exported="false"
             android:label="BLoC Framework"
-            android:theme="@style/Theme.Bloc"
-            android:exported="false"/>
+            android:theme="@style/Theme.Bloc" />
 
         <activity
             android:name=".counter.CounterActivity"
+            android:exported="false"
             android:label="Counter Simple"
-            android:theme="@style/Theme.Bloc"
-            android:exported="false"/>
+            android:theme="@style/Theme.Bloc" />
 
         <activity
             android:name=".counter.CounterActivityCompose"
+            android:exported="false"
             android:label="Counter Compose"
-            android:theme="@style/Theme.Bloc"
-            android:exported="false"/>
+            android:theme="@style/Theme.Bloc" />
 
         <activity
             android:name=".counter.CounterReduxActivity"
+            android:exported="false"
             android:label="Counter Redux"
-            android:theme="@style/Theme.Bloc"
-            android:exported="false"/>
+            android:theme="@style/Theme.Bloc" />
 
         <activity
             android:name=".books.BooksActivity"
+            android:exported="false"
             android:label="Books"
-            android:theme="@style/Theme.Bloc"
-            android:exported="false"/>
+            android:theme="@style/Theme.Bloc" />
 
         <activity
             android:name=".posts.PostsActivity"
+            android:exported="false"
             android:label="BLoC Posts"
-            android:theme="@style/AppThemePosts"
-            android:exported="false"/>
+            android:theme="@style/AppThemePosts" />
 
         <activity
             android:name=".calculator.CalculatorActivity"
+            android:exported="false"
             android:label="Calculator"
-            android:theme="@style/AppThemeCalculator"
-            android:exported="false"/>
+            android:theme="@style/AppThemeCalculator" />
 
         <activity
             android:name=".calculator.CalculatorActivityNoVM"
+            android:exported="false"
             android:label="Calculator no VM"
-            android:theme="@style/AppThemeCalculator"
-            android:exported="false"/>
+            android:theme="@style/AppThemeCalculator" />
 
         <activity
             android:name=".posts_compose.PostsActivity"
+            android:exported="false"
             android:label="Compose"
-            android:theme="@style/AppThemePosts"
-            android:exported="false"/>
+            android:theme="@style/AppThemePosts" />
 
     </application>
 

@@ -1,6 +1,6 @@
 package com.onegravity.bloc.sample.books
 
-import com.onegravity.bloc.*
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.toObservable

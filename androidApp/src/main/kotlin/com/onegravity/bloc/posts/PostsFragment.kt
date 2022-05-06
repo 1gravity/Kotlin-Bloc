@@ -31,12 +31,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
 import com.onegravity.bloc.sample.posts.bloc.Posts
-import com.onegravity.bloc.utils.viewBinding
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
 import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.utils.viewBinding
 import com.onegravity.bloc.viewModel
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 
 class PostsFragment : Fragment(R.layout.post_list_fragment) {
 

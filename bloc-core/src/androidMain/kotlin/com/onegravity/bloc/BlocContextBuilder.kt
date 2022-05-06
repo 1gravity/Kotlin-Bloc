@@ -56,7 +56,7 @@ inline fun <A, reified Component : Any> A.getOrCreate(
 /**
  * The same from a fragment
  */
-inline fun <reified Component: Any> Fragment.getOrCreate(
+inline fun <reified Component : Any> Fragment.getOrCreate(
     noinline createInstance: (context: BlocContext) -> Component
 ): Lazy<Component> = ComponentLazy(ActivityLazy { requireActivity() }, Component::class, createInstance)
 

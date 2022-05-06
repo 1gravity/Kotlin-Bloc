@@ -7,7 +7,7 @@ import com.onegravity.bloc.utils.BlocDSL
  * logic to accept the proposal and map it to a state.
  * Whatever the Bloc's reducer returns will be streamed to its consumers (the ui usually) as is.
  */
-interface SimpleBlocStateBuilder<State: Any> {
+interface SimpleBlocStateBuilder<State : Any> {
 
     @BlocDSL
     fun build(): BlocState<State, State>

@@ -59,7 +59,7 @@ private fun ToolBar(component: PostsComponent, isMultiPane: Boolean) {
     } ?: defaultTitle
 
     if (isMultiPane || !showDetail) {
-        TopAppBar(title = { Text(text = title) },)
+        TopAppBar(title = { Text(text = title) })
     } else {
         BackHandler(onBack = { component.onClosed() })
         TopAppBar(
