@@ -34,7 +34,6 @@ fun blocEnum(context: BlocContext) = bloc<State, ActionEnum>(context, State()) {
 
     reduce(ActionEnum.Clear) { State() }
     reduce(ActionEnum.Equals) { state.resetErrors().equals() }
-    reduce(ActionEnum.Clear) { State() }
     reduce(ActionEnum.Add) { state.resetErrors().apply(Operator.Add) }
     reduce(ActionEnum.Subtract) { state.resetErrors().apply(Operator.Subtract) }
     reduce(ActionEnum.Multiply) { state.resetErrors().apply(Operator.Multiply) }

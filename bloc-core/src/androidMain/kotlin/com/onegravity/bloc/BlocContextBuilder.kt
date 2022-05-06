@@ -19,6 +19,8 @@ import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.arkivanov.essenty.lifecycle.create
+import com.arkivanov.essenty.lifecycle.start
+import com.arkivanov.essenty.lifecycle.stop
 import com.arkivanov.essenty.lifecycle.destroy
 import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.onegravity.bloc.context.BlocContext
@@ -42,7 +44,7 @@ import kotlinx.coroutines.launch
  * Any class that needs a BlocContext to be instantiated is considered a "Component" in the context
  * of this function.
  *
- * The component will be tied to a ViewModel which is created "on the fly" and the component
+ * The component will be tied to a ViewModel which is created transparently.
  */
 inline fun <A, reified Component : Any> A.getOrCreate(
     noinline createInstance: (context: BlocContext) -> Component
@@ -107,9 +109,11 @@ internal class BlocViewModel : ViewModel() {
 
     init {
         lifecycleRegistry.create()
+        lifecycleRegistry.start()
     }
 
     override fun onCleared() {
+        lifecycleRegistry.stop()
         lifecycleRegistry.destroy()
         instanceKeeperDispatcher.destroy()
     }
@@ -148,8 +152,8 @@ fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
  * the cue to move to DESTROYED.
  *
  * Why do we do all this? Because ViewModels don't have an observable lifecycle and we'd have to
- * have a "hook" into the ViewModel's onCleared() call to create that lifecycle. The ViewModel
- * would have to extend some BaseViewModel and we don't want that.
+ * have a "hook" into the ViewModel's onCleared() call to create that lifecycle.
+ * The ViewModel would have to extend some BaseViewModel and we don't want that.
  */
 private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner {
     override fun getLifecycle() = lifecycleRegistry
@@ -158,6 +162,7 @@ private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner 
     init {
         viewModelScope.launch(Dispatchers.Main) {
             lifecycleRegistry.currentState = Lifecycle.State.CREATED
+            lifecycleRegistry.currentState = Lifecycle.State.STARTED
             while (isActive) {
                 delay(Long.MAX_VALUE)
             }

@@ -88,8 +88,8 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      */
     init {
         with(blocContext.lifecycle) {
-            doOnCreate { lifecycle.transition(LifecycleEvent.Started) }
-            doOnDestroy { lifecycle.transition(LifecycleEvent.Destroyed) }
+            doOnStart { lifecycle.transition(LifecycleEvent.Start) }
+            doOnStop { lifecycle.transition(LifecycleEvent.Stop) }
         }
     }
 

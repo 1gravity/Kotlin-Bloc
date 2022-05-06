@@ -6,36 +6,38 @@ import com.onegravity.bloc.fsm.Transition
 internal sealed class LifecycleStatus {
     object NotStarted : LifecycleStatus()
     object Started : LifecycleStatus()
-    object Destroyed : LifecycleStatus()
+    object Stopped : LifecycleStatus()
 }
 
 internal sealed class LifecycleEvent {
-    object Started : LifecycleEvent()
-    object Destroyed : LifecycleEvent()
+    object Start : LifecycleEvent()
+    object Stop : LifecycleEvent()
 }
 
 @Suppress("FunctionName")
-internal fun BlocLifecycle(onStart: () -> Unit, onDestroy: () -> Unit) =
+internal fun BlocLifecycle(onStart: () -> Unit, onStop: () -> Unit) =
     StateMachine.create<LifecycleStatus, LifecycleEvent, () -> Unit> {
         initialState(LifecycleStatus.NotStarted)
         state<LifecycleStatus.NotStarted> {
-            on<LifecycleEvent.Started> {
+            on<LifecycleEvent.Start> {
                 transitionTo(LifecycleStatus.Started, onStart)
             }
         }
         state<LifecycleStatus.Started> {
-            on<LifecycleEvent.Destroyed> {
-                transitionTo(LifecycleStatus.Destroyed, onDestroy)
+            on<LifecycleEvent.Stop> {
+                transitionTo(LifecycleStatus.Stopped, onStop)
             }
         }
-        state<LifecycleStatus.Destroyed> {
+        state<LifecycleStatus.Stopped> {
             // this is the final state -> no transitions
+//            on<LifecycleEvent.Start> {}
+//            on<LifecycleEvent.Stop> {}
         }
         onTransition {
             val validTransition = it as? Transition.Valid ?: return@onTransition
             when (validTransition.sideEffect) {
                 onStart -> logger.i("onStart -> start Bloc")
-                onDestroy -> logger.i("onDestroy -> stop Bloc")
+                onStop -> logger.i("onStop -> stop Bloc")
             }
             validTransition.sideEffect?.invoke()
         }
