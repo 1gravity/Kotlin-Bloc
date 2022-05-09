@@ -19,7 +19,7 @@ import blocSamples
 //    }
 //}
 
-public class ObservableValue<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> : ObservableObject {
+public class BlocObserver<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> : ObservableObject {
 
     @Published
     var value: State
@@ -39,7 +39,6 @@ public class ObservableValue<State: AnyObject, Action: AnyObject, SideEffect: An
                 self.sideEffect = sideEffect
             }
         )
-
     }
 
 }

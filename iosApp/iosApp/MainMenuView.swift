@@ -10,25 +10,19 @@ import SwiftUI
 import blocSamples
 
 struct MainMenuView: View {
-    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    let holder: BlocHolder<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
     
     @ObservedObject
-    private var model: ObservableValue<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    private var model: BlocObserver<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
     init(_ holder: BlocHolder<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>) {
-        self.bloc = holder.bloc
-        self.model = ObservableValue(holder)
-        
-//        holder.bloc.observe(lifecycle: holder.lifecycle, state: { state in
-//            print("state: \(state)")
-//        }, sideEffect: { sideEffect in
-//            print("sideEffect: \(sideEffect)")
-//        })
+        self.holder = holder
+        self.model = BlocObserver(holder)
     }
 
     var body: some View {
         func send(_ state: MainMenu.ActionState) -> () -> () {
-            return { self.bloc.send(value: state) }
+            return { holder.bloc.send(value: state) }
         }
         
         return VStack(spacing: 8) {
@@ -50,6 +44,8 @@ struct MainMenuView: View {
                 .border(Color.black, width: 2)
 
         }
+        .onAppear { holder.lifecycle.onStart() }
+        .onDisappear { holder.lifecycle.onStop() }
     }
     
 }

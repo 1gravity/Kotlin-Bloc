@@ -1,5 +1,6 @@
 package com.onegravity.bloc.sample.counter
 
+import com.onegravity.bloc.BlocBuilder
 import com.onegravity.bloc.asBlocState
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
@@ -16,17 +17,24 @@ object SimpleCounter {
         data class Decrement(val value: Int = 1) : Action()
     }
 
-    private fun BlocContext.interceptorBloc() = bloc<Int, Int>(this, 1) {
+    private fun BlocBuilder<Int, Int, Unit, Int>.counterReduce(addValue: Int) {
         reduce {
-            logger.d("interceptor: $action -> ${action + 1}")
-            action + 1
-            action
+            logger.d("interceptor: $action -> ${action + addValue}")
+            action + addValue
         }
     }
 
-    fun bloc(context: BlocContext) = bloc<Int, Action>(
+    private fun BlocContext.blocState(addValue: Int) = bloc<Int, Int>(this, 1) {
+        counterReduce(addValue)
+    }
+
+    private fun BlocContext.interceptorBloc(addValue: Int) = bloc<Int, Int>(this, blocState(-1).asBlocState()) {
+        counterReduce(addValue)
+    }
+
+    fun bloc(context: BlocContext) = bloc<Int, Action, Unit>(
         context,
-        context.interceptorBloc().asBlocState()
+        context.interceptorBloc(1).asBlocState()
     ) {
         reduce<Increment> { state + action.value }
         reduce<Decrement> { (state - action.value).coerceAtLeast(0) }

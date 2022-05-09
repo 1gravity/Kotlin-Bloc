@@ -10,34 +10,34 @@ import SwiftUI
 import blocSamples
 
 struct CounterView: View {
-    let bloc: Bloc<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    let holder: BlocHolder<KotlinInt, SimpleCounter.Action, KotlinUnit>
     
     @ObservedObject
-    private var model: ObservableValue<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    private var model: BlocObserver<KotlinInt, SimpleCounter.Action, KotlinUnit>
 
-    init(_ holder: BlocHolder<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>) {
-        self.bloc = holder.bloc
-        self.model = ObservableValue(holder)
+    init() {
+        let holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
+        self.holder = holder
+        self.model = BlocObserver(holder)
+        self.holder.bloc.send(value: SimpleCounter.ActionIncrement(value: 1))
     }
 
     var body: some View {
-        func send(_ state: MainMenu.ActionState) -> () -> () {
-            return { self.bloc.send(value: state) }
-        }
-        
         return VStack(spacing: 8) {
-            Text("\(NSLocalizedString("counter_value", comment: "Main Menu"))").padding()
+            Text("\(NSLocalizedString("counter_value", comment: "Counter")) \(model.value)").padding()
+            
+            Button(
+                action: { holder.bloc.send(value: SimpleCounter.ActionIncrement(value: 1)) },
+                label: { Text("\(NSLocalizedString("counter_increment", comment: "Increment"))") }
+            ).padding().fixedSize().border(Color.black, width: 2)
 
-            Button(action: send(MainMenu.ActionState.calculator), label: { Text("\(NSLocalizedString("counter_increment", comment: "Increment"))") })
-                .padding()
-                .fixedSize()
-                .border(Color.black, width: 2)
-
-            Button(action: send(MainMenu.ActionState.posts), label: { Text("\(NSLocalizedString("counter_decrement", comment: "Decrement"))") })
-                .padding()
-                .fixedSize()
-                .border(Color.black, width: 2)
+            Button(action: {
+                holder.bloc.send(value: SimpleCounter.ActionDecrement(value: 1)) },
+                   label: { Text("\(NSLocalizedString("counter_decrement", comment: "Decrement"))") }
+            ).padding().fixedSize().border(Color.black, width: 2)
         }
+        .onAppear { holder.lifecycle.onStart() }
+        .onDisappear { holder.lifecycle.onStop() }
     }
     
 }

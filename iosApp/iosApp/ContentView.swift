@@ -8,39 +8,27 @@ struct ContentView: View {
     private var holder: BlocHolder<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
     @ObservedObject
-    private var model: ObservableValue<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    private var model: BlocObserver<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
     init() {
         let holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
         self.holder = holder
-        self.model = ObservableValue(holder)
+        self.model = BlocObserver(holder)
     }
 
     var body: some View {
-        let view: some View = ({
+        let view: some View = {
             switch model.sideEffect {
             case MainMenu.ActionState.counter:
-                return AnyView(CounterView(holder)
-                    .onAppear { holder.lifecycle.onStart() }
-                    .onDisappear { holder.lifecycle.onStop() }
-                )
+                return AnyView(CounterView())
             case MainMenu.ActionState.calculator:
-                return AnyView(CalculatorView()
-                    .onAppear { holder.lifecycle.onStart() }
-                    .onDisappear { holder.lifecycle.onStop() }
-                )
+                return AnyView(CalculatorView())
             case MainMenu.ActionState.posts:
-                return AnyView(PostsView()
-                    .onAppear { holder.lifecycle.onStart() }
-                    .onDisappear { holder.lifecycle.onStop() }
-                )
+                return AnyView(PostsView())
             default:
-                return AnyView(MainMenuView(holder)
-                    .onAppear { holder.lifecycle.onStart() }
-                    .onDisappear { holder.lifecycle.onStop() }
-                )
+                return AnyView(MainMenuView(holder))
             }
-        }() as AnyView)
+        }() as AnyView
 
         return view
     }
