@@ -25,7 +25,7 @@ package com.onegravity.bloc.sample.calculator
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapBoth
 
-data class State(
+data class CalculatorState(
     val register1: Register = Register(),
     val register2: Register = Register(),
     val operator: Operator? = null
@@ -37,7 +37,11 @@ data class State(
     }.toString()
 
     companion object {
-        fun error(msg: String?) = State(register1 = Register(msg ?: "Error"), register2 = Register(), operator = null)
-        fun Result<State, Throwable>.mapToState() = mapBoth({ it }, { error(it.message) })
+        fun error(msg: String?) = CalculatorState(register1 = Register(msg ?: "Error"), register2 = Register(), operator = null)
     }
 }
+
+internal fun Result<CalculatorState, Throwable>.mapToState(): CalculatorState = mapBoth(
+    { it },
+    { CalculatorState.error(it.message) }
+)

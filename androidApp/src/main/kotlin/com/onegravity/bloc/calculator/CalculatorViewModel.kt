@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.R
 import com.onegravity.bloc.blocContext
-import com.onegravity.bloc.sample.calculator.Action.*
+import com.onegravity.bloc.sample.calculator.CalculatorAction.*
 import com.onegravity.bloc.sample.calculator.bloc
 import com.onegravity.bloc.toLiveData
 
