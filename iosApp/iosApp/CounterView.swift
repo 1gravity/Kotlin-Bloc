@@ -19,7 +19,6 @@ struct CounterView: View {
         let holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
         self.holder = holder
         self.model = BlocObserver(holder)
-        self.holder.bloc.send(value: SimpleCounter.ActionIncrement(value: 1))
     }
 
     var body: some View {
