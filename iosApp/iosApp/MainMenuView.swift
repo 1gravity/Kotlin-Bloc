@@ -49,3 +49,10 @@ struct MainMenuView: View {
     }
     
 }
+
+class MainMenuView_Previews: PreviewProvider {
+    static var previews: some View {
+        let holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
+        MainMenuView(holder)
+    }
+}

@@ -28,15 +28,27 @@ struct CounterView: View {
             Button(
                 action: { holder.bloc.send(value: SimpleCounter.ActionIncrement(value: 1)) },
                 label: { Text("\(NSLocalizedString("counter_increment", comment: "Increment"))") }
-            ).padding().fixedSize().border(Color.black, width: 2)
+            )
+            .padding()
+            .fixedSize()
+            .border(Color.black, width: 2)
 
             Button(action: {
                 holder.bloc.send(value: SimpleCounter.ActionDecrement(value: 1)) },
                    label: { Text("\(NSLocalizedString("counter_decrement", comment: "Decrement"))") }
-            ).padding().fixedSize().border(Color.black, width: 2)
+            )
+            .padding()
+            .fixedSize()
+            .border(Color.black, width: 2)
         }
         .onAppear { holder.lifecycle.onStart() }
         .onDisappear { holder.lifecycle.onStop() }
     }
     
+}
+
+class CounterView_Previews: PreviewProvider {
+    static var previews: some View {
+        CounterView()
+    }
 }
