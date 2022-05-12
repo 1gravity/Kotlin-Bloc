@@ -6,6 +6,8 @@
   Copyright © 2022 1gravity. All rights reserved.
 */
 
+"app_name" = "BLoC Framework";
+
 "main_menu_title" = "Take your pick";
 "main_menu_counter" = "Counter";
 "main_menu_calculator" = "Calculator";

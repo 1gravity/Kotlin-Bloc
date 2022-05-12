@@ -10,7 +10,7 @@
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
-		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		7555FF83242A565900829871 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* MainMenuView.swift */; };
 		88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E5E2821DAC800E2BAEA /* BlocObserver.swift */; };
 		88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E60282565B600E2BAEA /* BlocHolder.swift */; };
 		88890E6728257F9300E2BAEA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88890E6628257F9300E2BAEA /* Localizable.strings */; };
@@ -20,7 +20,6 @@
 		88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDB282D0D4D00E2BAEA /* KeypadView.swift */; };
 		88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */; };
 		88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */; };
-		889261B9282037D200C9B473 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889261B8282037D200C9B473 /* MainMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +27,7 @@
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7555FF82242A565900829871 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88890E5E2821DAC800E2BAEA /* BlocObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocObserver.swift; sourceTree = "<group>"; };
 		88890E60282565B600E2BAEA /* BlocHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocHolder.swift; sourceTree = "<group>"; };
@@ -39,7 +38,6 @@
 		88890EDB282D0D4D00E2BAEA /* KeypadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
-		889261B8282037D200C9B473 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,11 +84,10 @@
 				88890EDA282D0D2C00E2BAEA /* calculator */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				88890E6628257F9300E2BAEA /* Localizable.strings */,
-				7555FF82242A565900829871 /* ContentView.swift */,
+				7555FF82242A565900829871 /* MainMenuView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				889261B8282037D200C9B473 /* MainMenuView.swift */,
 				88890E5E2821DAC800E2BAEA /* BlocObserver.swift */,
 				88890E60282565B600E2BAEA /* BlocHolder.swift */,
 				88890E682825866D00E2BAEA /* CounterView.swift */,
@@ -223,7 +220,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				889261B9282037D200C9B473 /* MainMenuView.swift in Sources */,
 				88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */,
 				88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */,
 				88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */,
@@ -231,7 +227,7 @@
 				88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */,
 				88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */,
 				88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				7555FF83242A565900829871 /* MainMenuView.swift in Sources */,
 				88890E6D282597E200E2BAEA /* PostsView.swift in Sources */,
 				88890E692825866D00E2BAEA /* CounterView.swift in Sources */,
 			);

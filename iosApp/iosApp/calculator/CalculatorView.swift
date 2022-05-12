@@ -35,11 +35,10 @@ struct CalculatorView: View {
                     .background(grayColor)
                     .padding()
 
-                KeypadView(holder)
+                KeypadView(holder, 80.0)
             }
             .onAppear { holder.lifecycle.onStart() }
-            .onDisappear { holder.lifecycle.onStop() }
-                           )
+            .onDisappear { holder.lifecycle.onStop() })
         } else {
             return AnyView(HStack(spacing: 8) {
                 Text("\(model.value)")
