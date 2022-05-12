@@ -16,7 +16,7 @@
 		88890E6728257F9300E2BAEA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88890E6628257F9300E2BAEA /* Localizable.strings */; };
 		88890E692825866D00E2BAEA /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E682825866D00E2BAEA /* CounterView.swift */; };
 		88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6A2825973700E2BAEA /* CalculatorView.swift */; };
-		88890E6D282597E200E2BAEA /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6C282597E200E2BAEA /* PostsView.swift */; };
+		88890E6D282597E200E2BAEA /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6C282597E200E2BAEA /* RootView.swift */; };
 		88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDB282D0D4D00E2BAEA /* KeypadView.swift */; };
 		88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */; };
 		88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */; };
@@ -34,7 +34,7 @@
 		88890E6628257F9300E2BAEA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		88890E682825866D00E2BAEA /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
 		88890E6A2825973700E2BAEA /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
-		88890E6C282597E200E2BAEA /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
+		88890E6C282597E200E2BAEA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		88890EDB282D0D4D00E2BAEA /* KeypadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		88890EDD282D0E8900E2BAEA /* posts */ = {
 			isa = PBXGroup;
 			children = (
-				88890E6C282597E200E2BAEA /* PostsView.swift */,
+				88890E6C282597E200E2BAEA /* RootView.swift */,
 			);
 			path = posts;
 			sourceTree = "<group>";
@@ -228,7 +228,7 @@
 				88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */,
 				88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */,
 				7555FF83242A565900829871 /* MainMenuView.swift in Sources */,
-				88890E6D282597E200E2BAEA /* PostsView.swift in Sources */,
+				88890E6D282597E200E2BAEA /* RootView.swift in Sources */,
 				88890E692825866D00E2BAEA /* CounterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

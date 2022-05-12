@@ -19,35 +19,27 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
     private val blocState =
         blocState(PostsRootState(postsState = PostsState(), postState = PostState()))
 
-    sealed class Action {
-        object LoadingPosts : Action()
-        data class LoadedPosts(val result: Result<List<Post>, Throwable>) : Action()
-
-        class LoadingPost(val postId: Int) : Action()
-        data class LoadedPost(val result: Result<Post, Throwable>) : Action()
-    }
-
     private val repository = getKoinInstance<PostRepository>()
 
-    override val bloc: Bloc<PostsRootState, Any, Unit> by lazy {
-        bloc<PostsRootState, Any>(context, blocState) {
+    override val bloc: Bloc<PostsRootState, PostsAction, Unit> by lazy {
+        bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
                 if (!state.postsAreLoaded()) loadPosts()
             }
 
-            reduce<Action.LoadingPosts> {
+            reduce<PostsAction.LoadingPosts> {
                 state.copy(postsState = state.postsState.copy(loading = true))
             }
 
-            reduce<Action.LoadedPosts> {
+            reduce<PostsAction.LoadedPosts> {
                 state.copy(postsState = state.postsState.copy(loading = false, posts = action.result))
             }
 
-            reduce<Action.LoadingPost> {
+            reduce<PostsAction.LoadingPost> {
                 state.copy(postState = state.postState.copy(loading = action.postId))
             }
 
-            reduce<Action.LoadedPost> {
+            reduce<PostsAction.LoadedPost> {
                 when (action.result is Ok) {
                     true -> state.copy(postState = state.postState.copy(loading = null, post = action.result))
                     else -> state.copy(postState = state.postState.copy(loading = null, post = action.result))
@@ -78,9 +70,9 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
     }
 
     override fun loadPosts() = thunk {
-        dispatch(Action.LoadingPosts)
+        dispatch(PostsAction.LoadingPosts)
         val result = repository.getOverviews()
-        dispatch(Action.LoadedPosts(result))
+        dispatch(PostsAction.LoadedPosts(result))
     }
 
     override fun loadPost() = loadPost(null)
@@ -89,14 +81,14 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
         runCatching {
             val id = getState().selectedPost
             if (id != null) {
-                dispatch(Action.LoadingPost(id))
+                dispatch(PostsAction.LoadingPost(id))
                 val result = repository.getDetail(id)
-                dispatch(Action.LoadedPost(result))
+                dispatch(PostsAction.LoadedPost(result))
             }
         }.onFailure {
             when (it is CancellationException) {
                 true -> reduce { state.copy(postsState = state.postsState.copy(loading = false)) }
-                else -> dispatch(Action.LoadedPost(Err(it)))
+                else -> dispatch(PostsAction.LoadedPost(Err(it)))
             }
         }
     }

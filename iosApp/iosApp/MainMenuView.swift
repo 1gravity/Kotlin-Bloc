@@ -31,7 +31,7 @@ struct MainMenuView: View {
             .navigationTitle(NSLocalizedString("main_menu_calculator", comment: "Calculator"))
             .navigationBarTitleDisplayMode(.inline)
 
-        let postsView = PostsView()
+        let postsView = RootView()
 
         return NavigationView {
             VStack {

@@ -10,28 +10,27 @@ import com.onegravity.bloc.sample.calculator.CalculatorAction.*
  * This way we can use a data class for the digits (less reduce code) but we need to map the view
  * clicks to Action (typically in the ViewModel).
  */
-fun bloc(context: BlocContext) =
-    bloc<CalculatorState, CalculatorAction>(context, CalculatorState()) {
-        fun CalculatorState.resetErrors() =
-            if (register1.isError() || register2.isError()) CalculatorState() else this
+fun bloc(context: BlocContext) = bloc<CalculatorState, CalculatorAction>(context, CalculatorState()) {
+    fun CalculatorState.resetErrors() =
+        if (register1.isError() || register2.isError()) CalculatorState() else this
 
-        /**
-         * We can either define reducers per action...
-         */
-        reduce<Equals> { state.resetErrors().equals() }
-        reduce<Clear> { CalculatorState() }
-        reduce<Add> { state.resetErrors().apply(Operator.Add) }
-        reduce<Subtract> { state.resetErrors().apply(Operator.Subtract) }
-        reduce<Multiply> { state.resetErrors().apply(Operator.Multiply) }
-        reduce<Divide> { state.resetErrors().apply(Operator.Divide) }
-        reduce<PlusMinus> { state.resetErrors().plusMinus() }
-        reduce<Percentage> { state.resetErrors().percentage() }
-        reduce<Period> { state.resetErrors().period() }
-        reduce<Digit> { state.resetErrors().digit(action.digit) }
+    /**
+     * We can either define reducers per action...
+     */
+    reduce<Equals> { state.resetErrors().equals() }
+    reduce<Clear> { CalculatorState() }
+    reduce<Add> { state.resetErrors().apply(Operator.Add) }
+    reduce<Subtract> { state.resetErrors().apply(Operator.Subtract) }
+    reduce<Multiply> { state.resetErrors().apply(Operator.Multiply) }
+    reduce<Divide> { state.resetErrors().apply(Operator.Divide) }
+    reduce<PlusMinus> { state.resetErrors().plusMinus() }
+    reduce<Percentage> { state.resetErrors().percentage() }
+    reduce<Period> { state.resetErrors().period() }
+    reduce<Digit> { state.resetErrors().digit(action.digit) }
 
-        /**
-         * ...or use a single reducer for multiple actions:
-         */
+    /**
+     * ...or use a single reducer for multiple actions:
+     */
 //    reduce {
 //        try {
 //            val newState = state.resetErrors()
@@ -51,7 +50,7 @@ fun bloc(context: BlocContext) =
 //            CalculatorState.error(ex.message)
 //        }
 //    }
-    }
+}
 
 internal fun CalculatorState.apply(op: Operator): CalculatorState = runCatching {
     val state = if (register1.isNotEmpty() && register2.isNotEmpty()) equals() else this
