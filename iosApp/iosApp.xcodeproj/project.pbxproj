@@ -17,6 +17,9 @@
 		88890E692825866D00E2BAEA /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E682825866D00E2BAEA /* CounterView.swift */; };
 		88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6A2825973700E2BAEA /* CalculatorView.swift */; };
 		88890E6D282597E200E2BAEA /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6C282597E200E2BAEA /* PostsView.swift */; };
+		88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDB282D0D4D00E2BAEA /* KeypadView.swift */; };
+		88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */; };
+		88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */; };
 		889261B9282037D200C9B473 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889261B8282037D200C9B473 /* MainMenuView.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +36,9 @@
 		88890E682825866D00E2BAEA /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
 		88890E6A2825973700E2BAEA /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		88890E6C282597E200E2BAEA /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
+		88890EDB282D0D4D00E2BAEA /* KeypadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
+		88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
 		889261B8282037D200C9B473 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +81,9 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				88890EE0282D256900E2BAEA /* utils */,
+				88890EDD282D0E8900E2BAEA /* posts */,
+				88890EDA282D0D2C00E2BAEA /* calculator */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				88890E6628257F9300E2BAEA /* Localizable.strings */,
 				7555FF82242A565900829871 /* ContentView.swift */,
@@ -85,8 +94,6 @@
 				88890E5E2821DAC800E2BAEA /* BlocObserver.swift */,
 				88890E60282565B600E2BAEA /* BlocHolder.swift */,
 				88890E682825866D00E2BAEA /* CounterView.swift */,
-				88890E6A2825973700E2BAEA /* CalculatorView.swift */,
-				88890E6C282597E200E2BAEA /* PostsView.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -96,6 +103,32 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88890EDA282D0D2C00E2BAEA /* calculator */ = {
+			isa = PBXGroup;
+			children = (
+				88890E6A2825973700E2BAEA /* CalculatorView.swift */,
+				88890EDB282D0D4D00E2BAEA /* KeypadView.swift */,
+				88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */,
+			);
+			path = calculator;
+			sourceTree = "<group>";
+		};
+		88890EDD282D0E8900E2BAEA /* posts */ = {
+			isa = PBXGroup;
+			children = (
+				88890E6C282597E200E2BAEA /* PostsView.swift */,
+			);
+			path = posts;
+			sourceTree = "<group>";
+		};
+		88890EE0282D256900E2BAEA /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,8 +225,11 @@
 			files = (
 				889261B9282037D200C9B473 /* MainMenuView.swift in Sources */,
 				88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */,
+				88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */,
+				88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */,
+				88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */,
 				88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				88890E6D282597E200E2BAEA /* PostsView.swift in Sources */,
