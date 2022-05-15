@@ -12,7 +12,7 @@ import blocSamples
 let grayColor = Color(red: 0.95, green: 0.95, blue: 0.95, opacity: 1.0)
 
 struct CalculatorView: View {
-    let holder: BlocHolder<CalculatorState, CalculatorAction, KotlinUnit>
+    private let holder: BlocHolder<CalculatorState, CalculatorAction, KotlinUnit>
     
     @ObservedObject
     private var model: BlocObserver<CalculatorState, CalculatorAction, KotlinUnit>

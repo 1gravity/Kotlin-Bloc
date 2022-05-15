@@ -10,8 +10,7 @@ import SwiftUI
 import blocSamples
 
 struct RootView: View {
-    
-    let holder: BlocHolder<PostsRootState, PostsAction, KotlinUnit>
+    private let holder: BlocHolder<PostsRootState, PostsAction, KotlinUnit>
     
     @ObservedObject
     private var model: BlocObserver<PostsRootState, PostsAction, KotlinUnit>

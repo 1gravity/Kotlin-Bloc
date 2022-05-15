@@ -44,9 +44,12 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 
     override val sideEffects: SideEffectStream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
+    // actions can be complex objects resulting in lots of debug output
+    private fun Action.trim() = toString().take(100)
+
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun send(action: Action) {
-        logger.d("emit action $action")
+        logger.d("emit action ${action.trim()}")
         when (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             true -> thunkChannel.trySend(action)
             else -> reduceChannel.trySend(action)
@@ -122,7 +125,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     }
 
     private suspend fun runThunks(action: Action) {
-        logger.d("run thunks for action $action")
+        logger.d("run thunks for action ${action.trim()}")
         thunks.forEachIndexed { index, (matcher, _) ->
             if (matcher == null || matcher.matches(action)) {
                 runThunk(index, action)
@@ -150,7 +153,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     }
 
     private suspend fun runReducers(action: Action) {
-        logger.d("run reducers for action $action")
+        logger.d("run reducers for action ${action.trim()}")
         getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
             val (_, reducer, expectsProposal) = matcherReducer
             when {

@@ -20,6 +20,7 @@
 		88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDB282D0D4D00E2BAEA /* KeypadView.swift */; };
 		88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */; };
 		88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */; };
+		88E328802831A5C700AADAFE /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		88890EDB282D0D4D00E2BAEA /* KeypadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
+		88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,8 +90,6 @@
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				88890E5E2821DAC800E2BAEA /* BlocObserver.swift */,
-				88890E60282565B600E2BAEA /* BlocHolder.swift */,
 				88890E682825866D00E2BAEA /* CounterView.swift */,
 			);
 			path = iosApp;
@@ -123,7 +123,10 @@
 		88890EE0282D256900E2BAEA /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				88890E5E2821DAC800E2BAEA /* BlocObserver.swift */,
+				88890E60282565B600E2BAEA /* BlocHolder.swift */,
 				88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */,
+				88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */,
+				88E328802831A5C700AADAFE /* NavigationLazyView.swift in Sources */,
 				88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */,
 				88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */,
 				7555FF83242A565900829871 /* MainMenuView.swift in Sources */,
