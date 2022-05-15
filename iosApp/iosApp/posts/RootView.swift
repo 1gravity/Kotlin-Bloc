@@ -23,7 +23,17 @@ struct RootView: View {
     }
 
     var body: some View {
-        return Text("Posts WIP")
+        if model.value.postsState.loading {
+            return Text("Posts Loading")
+                .onAppear { holder.lifecycle.onStart() }
+                .onDisappear { holder.lifecycle.onStop() }
+
+        } else {
+            return Text("Posts Showing")
+                .onAppear { holder.lifecycle.onStart() }
+                .onDisappear { holder.lifecycle.onStop() }
+        }
+
     }
     
 }

@@ -33,7 +33,7 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
     val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     lifecycle.doOnStart {
-        logger.d("onStart -> start subscription")
+        logger.d("start Bloc subscription")
         state?.let {
             coroutineScope.launch {
                 collect { state(it) }
@@ -47,8 +47,8 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
     }
 
     lifecycle.doOnStop {
-        logger.d("onStop -> stop subscription")
-        coroutineScope.cancel("Stop Subscription")
+        logger.d("stop Bloc subscription")
+        coroutineScope.cancel("stop Bloc subscription")
     }
 }
 

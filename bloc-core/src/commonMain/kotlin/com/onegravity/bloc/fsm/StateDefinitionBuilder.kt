@@ -2,6 +2,8 @@
 
 package com.onegravity.bloc.fsm
 
+import com.onegravity.bloc.utils.logger
+
 class StateDefinitionBuilder<STATE : Any, S : STATE, EVENT : Any, SIDE_EFFECT : Any> {
 
     private val stateDefinition = Graph.State<STATE, EVENT, SIDE_EFFECT>()
@@ -52,6 +54,9 @@ class StateDefinitionBuilder<STATE : Any, S : STATE, EVENT : Any, SIDE_EFFECT : 
     @Suppress("UNUSED") // The unused warning is probably a compiler bug.
     fun S.transitionTo(state: STATE, sideEffect: SIDE_EFFECT? = null) =
         Graph.State.TransitionTo(state, sideEffect)
+            .also {
+                logger.d("transition to $state")
+            }
 
     @Suppress("UNUSED") // The unused warning is probably a compiler bug.
     fun S.dontTransition(sideEffect: SIDE_EFFECT? = null) = transitionTo(this, sideEffect)

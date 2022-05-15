@@ -28,11 +28,16 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 
     // we use this scope internally, it's tied to the lifecycle of the BlocInstance and will be
     // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
-    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val lifecycle = BlocLifecycle(
-        { coroutineScope.start() },
-        { coroutineScope.cancel() }
+        onInitialize = {
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+            coroutineScope.initialize()
+        },
+        onStart = { coroutineScope.start() },
+        onStop = { coroutineScope.cancel() },
+        onDestroy = { /* nothing to do */ }
     )
 
     override val value get() = blocState.value
@@ -64,7 +69,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
         lifecycle.doOnStart {
-            logger.d("onStart -> start subscription")
+            logger.d("start Bloc subscription")
             state?.let {
                 coroutineScope.launch {
                     collect { state(it) }
@@ -78,8 +83,8 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         }
 
         lifecycle.doOnStop {
-            logger.d("onStop -> stop subscription")
-            coroutineScope.cancel("Stop Subscription")
+            logger.d("stop Bloc subscription")
+            coroutineScope.cancel("stop Bloc subscription")
         }
     }
 
@@ -89,31 +94,35 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      */
     init {
         with(blocContext.lifecycle) {
+            doOnCreate { lifecycle.transition(LifecycleEvent.Initialize) }
             doOnStart { lifecycle.transition(LifecycleEvent.Start) }
             doOnStop { lifecycle.transition(LifecycleEvent.Stop) }
+            doOnDestroy { lifecycle.transition(LifecycleEvent.Destroy) }
+        }
+    }
+
+    private fun CoroutineScope.initialize() {
+        launch(dispatcher) {
+            val context = InitializerContext<State, Action>(value) { action -> send(action) }
+            context.initializer()
         }
     }
 
     private fun CoroutineScope.start() {
         launch(dispatcher) {
-            val context = InitializerContext<State, Action>(value) { action -> send(action) }
-            context.initializer()
-        }.invokeOnCompletion {
-            launch(dispatcher) {
-                for (action in thunkChannel) {
-                    runThunks(action)
-                }
+            for (action in thunkChannel) {
+                runThunks(action)
             }
-            launch(dispatcher) {
-                for (action in reduceChannel) {
-                    runReducers(action)
-                }
+        }
+        launch(dispatcher) {
+            for (action in reduceChannel) {
+                runReducers(action)
             }
         }
     }
 
     private suspend fun runThunks(action: Action) {
-        logger.d("process action $action")
+        logger.d("run thunks for action $action")
         thunks.forEachIndexed { index, (matcher, _) ->
             if (matcher == null || matcher.matches(action)) {
                 runThunk(index, action)
@@ -141,6 +150,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     }
 
     private suspend fun runReducers(action: Action) {
+        logger.d("run reducers for action $action")
         getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
             val (_, reducer, expectsProposal) = matcherReducer
             when {

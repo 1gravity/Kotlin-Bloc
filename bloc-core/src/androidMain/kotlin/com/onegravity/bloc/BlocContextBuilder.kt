@@ -94,6 +94,7 @@ fun <T> T.createBlocContext(): DefaultBlocContext where
 /**
  * Get or create the ViewModel.
  */
+@Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
 private fun ViewModelStore.blocViewModel(): BlocViewModel =
     ViewModelProvider(
         this,
@@ -147,9 +148,9 @@ fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
     )
 
 /**
- * To create a ViewModel "lifecycle" we create a Coroutine.
- * Upon launch the lifecycle moves to CREATED. When the Coroutine is cancelled we take that as
- * the cue to move to DESTROYED.
+ * To create a ViewModel "lifecycle" we create a Coroutine using the ViewModels own `viewModelScope`.
+ * Upon launch the lifecycle moves to CREATED.
+ * When the Coroutine is cancelled we take that as the cue to move to DESTROYED.
  *
  * Why do we do all this? Because ViewModels don't have an observable lifecycle and we'd have to
  * have a "hook" into the ViewModel's onCleared() call to create that lifecycle.
@@ -167,6 +168,8 @@ private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner 
                 delay(Long.MAX_VALUE)
             }
         }.invokeOnCompletion {
+            // Lifecycle.State.CREATED transitions to the stopped state...
+            lifecycleRegistry.currentState = Lifecycle.State.CREATED
             lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
         }
     }
