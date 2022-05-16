@@ -27,7 +27,7 @@ fun <T : ViewDataBinding> ComponentActivity.bind(
 
 /**
  * Subscribes to a BlocObservableOwner (typically a ViewModel, a Fragment or an Activity).
- * The subscription is tied to the lifecycle of a LifecycleOwner (typically an Activity or a Fragment).
+ * The subscription is tied to the lifecycle of a LifecycleOwner (normally an Activity or a Fragment).
  */
 @BlocDSL
 fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subscribe(
@@ -35,16 +35,31 @@ fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subsc
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
-    observable.subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
+    subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
 }
 
+/**
+ * Same as above for a BlocOwner
+ */
 @BlocDSL
 fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     lifecycleOwner: LifecycleOwner,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
-    bloc.toObservable().subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
+    bloc.subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
+}
+
+/**
+ * Same as above for a Bloc
+ */
+@BlocDSL
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.subscribe(
+    lifecycleOwner: LifecycleOwner,
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) {
+    subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
 }
 
 /**

@@ -54,7 +54,7 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
  * that would be over-engineering imo.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> List<Bloc<State, Action, SideEffect>>.toObservable() =
+fun <State : Any, Action : Any, SideEffect : Any> List<Bloc<State, Action, SideEffect>>.toObservable() =
     object : BlocObservable<State, SideEffect>() {
         override fun subscribe(
             lifecycle: Lifecycle,
@@ -73,6 +73,6 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> List<Bloc<Stat
  * Same as above but combine just two Blocs to BlocObservable.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.toObservable(
+fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toObservable(
     bloc: Bloc<State, Action, SideEffect>
-) = listOf(this, bloc).toObservable<State, Action, SideEffect, Proposal>()
+) = listOf(this, bloc).toObservable()
