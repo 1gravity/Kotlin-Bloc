@@ -3,11 +3,9 @@ package com.onegravity.bloc
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.savedstate.SavedStateRegistryOwner
 
 class ActivityLazy<A>(private val getOwner: () -> A) : Lazy<A>
-        where A : SavedStateRegistryOwner,
-              A : OnBackPressedDispatcherOwner,
+        where A : OnBackPressedDispatcherOwner,
               A : ViewModelStoreOwner,
               A : LifecycleOwner {
 

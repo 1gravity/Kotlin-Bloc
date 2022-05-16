@@ -14,13 +14,10 @@ import androidx.lifecycle.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import androidx.savedstate.SavedStateRegistry
-import androidx.savedstate.SavedStateRegistryOwner
 import com.arkivanov.essenty.backpressed.BackPressedHandler
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.essenty.lifecycle.*
-import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.context.DefaultBlocContext
 import com.onegravity.bloc.utils.BlocDSL
@@ -47,7 +44,6 @@ import kotlinx.coroutines.launch
 inline fun <A, reified Component : Any> A.getOrCreate(
     noinline createInstance: (context: BlocContext) -> Component
 ): Lazy<Component> where
-        A : SavedStateRegistryOwner,
         A : OnBackPressedDispatcherOwner,
         A : ViewModelStoreOwner,
         A : LifecycleOwner =
@@ -76,14 +72,12 @@ class InstanceWrapper<C>(val component: C) : InstanceKeeper.Instance {
  * OnBackPressedDispatcher are "taken" from the Activity.
  */
 fun <T> T.createBlocContext(): DefaultBlocContext where
-        T : SavedStateRegistryOwner,
         T : OnBackPressedDispatcherOwner,
         T : ViewModelStoreOwner,
         T : LifecycleOwner {
     val viewModel = viewModelStore.blocViewModel()
     return DefaultBlocContext(
         lifecycle = viewModel.lifecycleRegistry,
-        stateKeeper = savedStateRegistry.let(::stateKeeper),
         instanceKeeper = viewModel.instanceKeeperDispatcher,
         backPressedHandler = onBackPressedDispatcher.let(::BackPressedHandler)
     )
@@ -128,7 +122,6 @@ internal class BlocViewModel : ViewModel() {
  * Activity, hence we need to pass those to the ViewModel (as ActivityBlocContext).
  */
 data class ActivityBlocContext(
-    val savedStateRegistry: SavedStateRegistry? = null,
     val viewModelStore: ViewModelStore? = null,
     val onBackPressedDispatcher: OnBackPressedDispatcher? = null
 )
@@ -140,7 +133,6 @@ data class ActivityBlocContext(
 fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
     DefaultBlocContext(
         lifecycle = viewModelLifeCycle().asEssentyLifecycle(),
-        stateKeeper = context.savedStateRegistry?.let(::StateKeeper),
         instanceKeeper = context.viewModelStore?.let(::InstanceKeeper),
         backPressedHandler = context.onBackPressedDispatcher?.let(::BackPressedHandler)
     )
@@ -184,7 +176,6 @@ inline fun <reified VM : ViewModel> ComponentActivity.viewModel(
     val factory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             val context = ActivityBlocContext(
-                savedStateRegistry = savedStateRegistry,
                 viewModelStore = viewModelStore,
                 onBackPressedDispatcher = onBackPressedDispatcher
             )
@@ -205,7 +196,6 @@ inline fun <reified VM : ViewModel> Fragment.viewModel(
     val factory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             val context = ActivityBlocContext(
-                savedStateRegistry = savedStateRegistry,
                 viewModelStore = viewModelStore,
                 onBackPressedDispatcher = activity?.onBackPressedDispatcher
             )
