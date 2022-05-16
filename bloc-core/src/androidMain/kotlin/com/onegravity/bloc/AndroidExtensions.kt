@@ -26,7 +26,7 @@ fun <T : ViewDataBinding> ComponentActivity.bind(
 }
 
 /**
- * Subscribes to a BlocObservableOwner (typically a ViewModel).
+ * Subscribes to a BlocObservableOwner (typically a ViewModel, a Fragment or an Activity).
  * The subscription is tied to the lifecycle of a LifecycleOwner (typically an Activity or a Fragment).
  */
 @BlocDSL
