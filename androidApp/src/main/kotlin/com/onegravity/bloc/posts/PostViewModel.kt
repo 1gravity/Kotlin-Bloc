@@ -7,13 +7,11 @@ import com.onegravity.bloc.sample.posts.bloc.Post
 import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.toObservable
 import com.onegravity.bloc.utils.BlocObservableOwner
-import org.koin.core.component.KoinComponent
 import com.onegravity.bloc.sample.posts.domain.repositories.Post as PostData
 
 class PostViewModel(context: ActivityBlocContext, post: PostData) :
     ViewModel(),
-    BlocObservableOwner<PostState, Unit>,
-    KoinComponent {
+    BlocObservableOwner<PostState, Unit> {
 
     private val bloc = Post.bloc(blocContext(context))
         .also { it.send(Post.Action.Load(post.id)) }

@@ -8,12 +8,10 @@ import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sideEffect
 import com.onegravity.bloc.utils.BlocOwner
-import org.koin.core.component.KoinComponent
 
 class PostsViewModel(context: ActivityBlocContext) :
     ViewModel(),
-    BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState>,
-    KoinComponent {
+    BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState> {
 
     override val bloc = Posts.bloc(blocContext(context))
 

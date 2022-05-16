@@ -32,7 +32,6 @@ struct RootView: View {
                 .onAppear { holder.lifecycle.onStart() }
                 .onDisappear { holder.lifecycle.onStop() }
         }
-
     }
     
 }

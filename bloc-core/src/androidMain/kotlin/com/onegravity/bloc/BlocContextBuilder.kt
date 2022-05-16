@@ -11,17 +11,15 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryOwner
 import com.arkivanov.essenty.backpressed.BackPressedHandler
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
-import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
-import com.arkivanov.essenty.lifecycle.create
-import com.arkivanov.essenty.lifecycle.start
-import com.arkivanov.essenty.lifecycle.stop
-import com.arkivanov.essenty.lifecycle.destroy
+import com.arkivanov.essenty.lifecycle.*
 import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.context.DefaultBlocContext
@@ -85,7 +83,7 @@ fun <T> T.createBlocContext(): DefaultBlocContext where
     val viewModel = viewModelStore.blocViewModel()
     return DefaultBlocContext(
         lifecycle = viewModel.lifecycleRegistry,
-        stateKeeper = savedStateRegistry.let(::StateKeeper),
+        stateKeeper = savedStateRegistry.let(::stateKeeper),
         instanceKeeper = viewModel.instanceKeeperDispatcher,
         backPressedHandler = onBackPressedDispatcher.let(::BackPressedHandler)
     )
