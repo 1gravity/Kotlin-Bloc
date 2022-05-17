@@ -36,7 +36,7 @@ android {
         isEnabled = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = "1.2.0-beta01"
     }
     buildToolsVersion = "32.0.0"
 }

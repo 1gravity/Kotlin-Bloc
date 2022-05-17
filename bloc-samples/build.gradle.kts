@@ -21,7 +21,6 @@ kotlin {
         ).forEach { target ->
             target.binaries.framework {
                 baseName = "blocSamples"
-//                isStatic = false
                 transitiveExport = true
                 export(project(":blocCore"))
                 export(project(":blocRedux"))

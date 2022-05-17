@@ -14,9 +14,7 @@ kotlin {
     // todo
     // explicitApi = ExplicitApiMode.Strict
 
-    android {
-        publishLibraryVariants("release")
-    }
+    android()
     jvm()
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
@@ -28,9 +26,7 @@ kotlin {
         ).forEach {
             it.binaries.framework {
                 baseName = "blocRedux"
-                isStatic = false
                 transitiveExport = true
-                export(project(":blocCore"))
             }
         }
     }
@@ -45,7 +41,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(project(":blocCore"))
+                implementation(project(":blocCore"))
 
                 implementation(KotlinX.coroutines.core)
 

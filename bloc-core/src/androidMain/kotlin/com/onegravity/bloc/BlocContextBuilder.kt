@@ -19,7 +19,7 @@ import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.essenty.lifecycle.*
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.context.DefaultBlocContext
+import com.onegravity.bloc.context.BlocContextImpl
 import com.onegravity.bloc.utils.BlocDSL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -86,12 +86,12 @@ inline fun <reified Component : Any> Fragment.getOrCreate(
  * create the Lifecycle and the InstanceKeeper while the SavedStateRegistry and the
  * OnBackPressedDispatcher are "taken" from the Activity.
  */
-fun <T> T.createBlocContext(): DefaultBlocContext where
+fun <T> T.createBlocContext(): BlocContextImpl where
         T : OnBackPressedDispatcherOwner,
         T : ViewModelStoreOwner,
         T : LifecycleOwner {
     val viewModel = viewModelStore.blocViewModel()
-    return DefaultBlocContext(
+    return BlocContextImpl(
         lifecycle = viewModel.lifecycleRegistry,
         instanceKeeper = viewModel.instanceKeeperDispatcher,
         backPressedHandler = onBackPressedDispatcher.let(::BackPressedHandler)
@@ -146,7 +146,7 @@ data class ActivityBlocContext(
  * The lifecycle will be the lifecycle of the ViewModel (onCreate() and onDestroy() only)
  */
 fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
-    DefaultBlocContext(
+    BlocContextImpl(
         lifecycle = viewModelLifeCycle().asEssentyLifecycle(),
         instanceKeeper = context.viewModelStore?.let(::InstanceKeeper),
         backPressedHandler = context.onBackPressedDispatcher?.let(::BackPressedHandler)

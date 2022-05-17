@@ -15,7 +15,7 @@ class BlocHolder<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> {
 
     init(factory: (BlocContext) -> Bloc<State, Action, SideEffect>) {
         lifecycle = LifecycleRegistryKt.LifecycleRegistry()
-        let context = DefaultBlocContext.init(lifecycle: lifecycle, stateKeeper: nil, instanceKeeper: nil, backPressedHandler: nil)
+        let context = BlocContextImpl.init(lifecycle: lifecycle)
         bloc = factory(context)
         lifecycle.onCreate()
     }
