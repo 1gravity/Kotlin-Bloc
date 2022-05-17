@@ -9,7 +9,6 @@ import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.utils.BlocOwner
 
-// todo eliminate these and only use the compose.PostsComponent (duplication of code)
 object Posts {
     // you can either send actions to the Bloc directly or call these functions instead
     fun PostsBloc.load() = send(Action.Load)

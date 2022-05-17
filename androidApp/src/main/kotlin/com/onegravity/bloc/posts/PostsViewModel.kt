@@ -3,12 +3,18 @@ package com.onegravity.bloc.posts
 import androidx.lifecycle.ViewModel
 import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.blocContext
+import com.onegravity.bloc.getOrCreate
+import com.onegravity.bloc.sample.MainMenuCompose
 import com.onegravity.bloc.sample.posts.bloc.Posts
 import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sideEffect
 import com.onegravity.bloc.utils.BlocOwner
+import com.onegravity.bloc.utils.logger
 
+/**
+ * Not used any more but we keep it around for illustration purposes
+ */
 class PostsViewModel(context: ActivityBlocContext) :
     ViewModel(),
     BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState> {

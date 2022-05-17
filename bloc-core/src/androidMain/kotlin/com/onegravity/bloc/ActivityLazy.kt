@@ -14,6 +14,6 @@ class ActivityLazy<A>(private val getOwner: () -> A) : Lazy<A>
     override val value: A
         get() = cached ?: getOwner().also { cached = it }
 
-    override fun isInitialized(): Boolean = cached != null
+    override fun isInitialized() = cached != null
 
 }

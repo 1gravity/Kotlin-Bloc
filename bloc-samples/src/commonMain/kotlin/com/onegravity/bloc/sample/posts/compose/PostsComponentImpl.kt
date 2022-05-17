@@ -1,14 +1,11 @@
 package com.onegravity.bloc.sample.posts.compose
 
 import com.github.michaelbull.result.*
-import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.bloc
+import com.onegravity.bloc.*
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.reduce
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
-import com.onegravity.bloc.state.blocState
-import com.onegravity.bloc.thunk
+import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.util.getKoinInstance
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -16,8 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class PostsComponentImpl(context: BlocContext) : PostsComponent {
-    private val blocState =
-        blocState(PostsRootState(postsState = PostsState(), postState = PostState()))
+    private val blocState = getKoinInstance<BlocState<PostsRootState, PostsRootState>>()
 
     private val repository = getKoinInstance<PostRepository>()
 
@@ -55,7 +51,7 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
                 // the state was already reduced (synchronously so selectedPost == post.id)
                 .also {
                     // we cancel a previous loading job before starting a new one from the Bloc's
-                    // CoroutineScope (so it's cancelled when the Bloc is destroyed)
+                    // CoroutineScope (so it's cancelled when the Bloc is stopped)
                     loadingJob?.cancel()
                     loadingJob = coroutineScope.launch {
                         loadPost(this)

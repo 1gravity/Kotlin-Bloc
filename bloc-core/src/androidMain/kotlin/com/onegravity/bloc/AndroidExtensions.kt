@@ -54,7 +54,7 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<Stat
  * Same as above for a Bloc
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.subscribe(
+fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.subscribe(
     lifecycleOwner: LifecycleOwner,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
