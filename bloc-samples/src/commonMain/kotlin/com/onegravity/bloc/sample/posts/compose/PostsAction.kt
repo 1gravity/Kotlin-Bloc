@@ -7,6 +7,8 @@ sealed class PostsAction {
     object LoadingPosts : PostsAction()
     data class LoadedPosts(val result: Result<List<Post>, Throwable>) : PostsAction()
 
+    class OnClicked(val post: Post) : PostsAction()
+
     class LoadingPost(val postId: Int) : PostsAction()
     data class LoadedPost(val result: Result<Post, Throwable>) : PostsAction()
 }

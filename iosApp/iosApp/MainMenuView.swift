@@ -4,16 +4,14 @@ import blocSamples
 
 struct MainMenuView: View {
 
-    @SwiftUI.State
     private var holder: BlocHolder<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
     @ObservedObject
     private var model: BlocObserver<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
     init() {
-        let holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
-        self.holder = holder
-        self.model = BlocObserver(holder)
+        self.holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
+        self.model = BlocObserver(self.holder)
     }
 
     private let counterView: () -> AnyView = {
@@ -31,7 +29,9 @@ struct MainMenuView: View {
     }
 
     private let postsView: () -> AnyView = {
-        AnyView(RootView())
+        AnyView(PostListView()
+            .navigationTitle(NSLocalizedString("main_menu_posts", comment: "Posts"))
+            .navigationBarTitleDisplayMode(.inline))
     }
 
     var body: some View {
@@ -45,26 +45,28 @@ struct MainMenuView: View {
                 NavigationLink(destination: NavigationLazyView(calculatorView()), tag: MainMenu.ActionState.calculator, selection: $model.sideEffect) { EmptyView() }
                 NavigationLink(destination: NavigationLazyView(postsView()), tag: MainMenu.ActionState.posts, selection: $model.sideEffect) { EmptyView() }
 
-                Button(action: send(MainMenu.ActionState.counter), label: { Text("\(NSLocalizedString("main_menu_counter", comment: "Counter"))") })
-                    .padding()
-                    .fixedSize()
-                    .border(Color.black, width: 2)
+                Button(action: send(MainMenu.ActionState.counter), label: { Text("\(NSLocalizedString("main_menu_counter", comment: "Counter"))") }
+                )
+                .tint(.blue)
+                .controlSize(.large) // .large, .medium or .small
+                .buttonStyle(.borderedProminent)
 
-                Button(action: send(MainMenu.ActionState.calculator), label: { Text("\(NSLocalizedString("main_menu_calculator", comment: "Calculator"))") })
-                    .padding()
-                    .fixedSize()
-                    .border(Color.black, width: 2)
+                Button(action: send(MainMenu.ActionState.calculator), label: { Text("\(NSLocalizedString("main_menu_calculator", comment: "Calculator"))") }
+                )
+                .tint(.blue)
+                .controlSize(.large) // .large, .medium or .small
+                .buttonStyle(.borderedProminent)
 
-                Button(action: send(MainMenu.ActionState.posts), label: { Text("\(NSLocalizedString("main_menu_posts", comment: "Posts"))") })
-                    .padding()
-                    .fixedSize()
-                    .border(Color.black, width: 2)
+
+                Button(action: send(MainMenu.ActionState.posts), label: { Text("\(NSLocalizedString("main_menu_posts", comment: "Posts"))") }
+                )
+                .tint(.blue)
+                .controlSize(.large) // .large, .medium or .small
+                .buttonStyle(.borderedProminent)
 
             }
             .navigationTitle(NSLocalizedString("app_name", comment: "BLoC Framework"))
         }
-        .onAppear { holder.lifecycle.onStart() }
-        .onDisappear { holder.lifecycle.onStop() }
 
     }
 }

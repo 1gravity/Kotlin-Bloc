@@ -23,6 +23,13 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
                 if (!state.postsAreLoaded()) loadPosts()
             }
 
+            // we can use this or call the onClicked function directly
+            // the action way of doing it fits iOS while the function way is good for Android
+            // todo find a common (better) way to do this for both platforms
+            reduce<PostsAction.OnClicked> {
+                onClickedInternal(action.post, state, coroutineScope)
+            }
+
             reduce<PostsAction.LoadingPosts> {
                 state.copy(postsState = state.postsState.copy(loading = true))
             }
@@ -36,16 +43,17 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
             }
 
             reduce<PostsAction.LoadedPost> {
-                when (action.result is Ok) {
-                    true -> state.copy(postState = state.postState.copy(loading = null, post = action.result))
-                    else -> state.copy(postState = state.postState.copy(loading = null, post = action.result))
-                }
+                state.copy(postState = state.postState.copy(loading = null, post = action.result))
             }
         }
     }
 
-    private var loadingJob: Job? = null
     override fun onClicked(post: Post) = reduce {
+        onClickedInternal(post, state, coroutineScope)
+    }
+
+    private var loadingJob: Job? = null
+    private fun onClickedInternal(post: Post, state: PostsRootState, coroutineScope: CoroutineScope) =
         when {
             state.selectedPost == null || state.selectedPost != post.id -> state.copy(selectedPost = post.id)
                 // the state was already reduced (synchronously so selectedPost == post.id)
@@ -59,7 +67,6 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
                 }
             else -> state
         }
-    }
 
     override fun onClosed() = reduce {
         state.copy(selectedPost = null)

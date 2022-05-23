@@ -31,7 +31,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     private var coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val lifecycle = BlocLifecycle(
-        onInitialize = {
+        onCreate = {
             coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
             coroutineScope.initialize()
         },
@@ -97,7 +97,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      */
     init {
         with(blocContext.lifecycle) {
-            doOnCreate { lifecycle.transition(LifecycleEvent.Initialize) }
+            doOnCreate { lifecycle.transition(LifecycleEvent.Create) }
             doOnStart { lifecycle.transition(LifecycleEvent.Start) }
             doOnStop { lifecycle.transition(LifecycleEvent.Stop) }
             doOnDestroy { lifecycle.transition(LifecycleEvent.Destroy) }

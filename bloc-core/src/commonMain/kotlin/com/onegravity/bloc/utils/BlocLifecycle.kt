@@ -5,14 +5,14 @@ import com.onegravity.bloc.fsm.Transition
 
 internal sealed class LifecycleState {
     object InitialState : LifecycleState()
-    object Initialized : LifecycleState()
+    object Created : LifecycleState()
     object Started : LifecycleState()
     object Stopped : LifecycleState()
     object Destroyed : LifecycleState()
 }
 
 internal sealed class LifecycleEvent {
-    object Initialize : LifecycleEvent()
+    object Create : LifecycleEvent()
     object Start : LifecycleEvent()
     object Stop : LifecycleEvent()
     object Destroy : LifecycleEvent()
@@ -22,7 +22,7 @@ typealias LifecycleCSideEffect = () -> Unit
 
 @Suppress("FunctionName")
 internal fun BlocLifecycle(
-    onInitialize: LifecycleCSideEffect,
+    onCreate: LifecycleCSideEffect,
     onStart: LifecycleCSideEffect,
     onStop: LifecycleCSideEffect,
     onDestroy: LifecycleCSideEffect
@@ -30,12 +30,12 @@ internal fun BlocLifecycle(
     initialState(LifecycleState.InitialState)
 
     state<LifecycleState.InitialState> {
-        on<LifecycleEvent.Initialize> {
-            transitionTo(LifecycleState.Initialized, onInitialize)
+        on<LifecycleEvent.Create> {
+            transitionTo(LifecycleState.Created, onCreate)
         }
         on<LifecycleEvent.Start> {
-            transitionTo(LifecycleState.Initialized) {
-                onInitialize()
+            transitionTo(LifecycleState.Created) {
+                onCreate()
                 onStart()
             }
         }
@@ -44,7 +44,7 @@ internal fun BlocLifecycle(
         }
     }
 
-    state<LifecycleState.Initialized> {
+    state<LifecycleState.Created> {
         on<LifecycleEvent.Start> {
             transitionTo(LifecycleState.Started, onStart)
         }
@@ -54,6 +54,10 @@ internal fun BlocLifecycle(
     }
 
     state<LifecycleState.Started> {
+        on<LifecycleEvent.Start> {
+            logger.e("a started Bloc can't be started again")
+            dontTransition()
+        }
         on<LifecycleEvent.Stop> {
             transitionTo(LifecycleState.Stopped, onStop)
         }
@@ -69,6 +73,10 @@ internal fun BlocLifecycle(
         on<LifecycleEvent.Start> {
             transitionTo(LifecycleState.Started, onStart)
         }
+        on<LifecycleEvent.Stop> {
+            logger.e("a stopped Bloc can't be stopped again")
+            dontTransition()
+        }
         on<LifecycleEvent.Destroy> {
             transitionTo(LifecycleState.Destroyed, onDestroy)
         }
@@ -76,7 +84,7 @@ internal fun BlocLifecycle(
 
     state<LifecycleState.Destroyed> {
         // this is the final state -> no transitions
-        on<LifecycleEvent.Initialize> {
+        on<LifecycleEvent.Create> {
             logger.e("a destroyed Bloc can't be initialized")
             dontTransition()
         }
@@ -97,7 +105,7 @@ internal fun BlocLifecycle(
     onTransition {
         val validTransition = it as? Transition.Valid ?: return@onTransition
         when (validTransition.sideEffect) {
-            onInitialize -> logger.d("onInitialize -> initialize Bloc")
+            onCreate -> logger.d("onCreate -> initialize Bloc")
             onStart -> logger.d("onStart -> start Bloc")
             onStop -> logger.d("onStop -> stop Bloc")
             onDestroy -> logger.d("onDestroy -> destroy Bloc")

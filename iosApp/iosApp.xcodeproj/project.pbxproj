@@ -11,14 +11,17 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* MainMenuView.swift */; };
+		8842E3402835A7C800CD25ED /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */; };
+		8842E3422838187E00CD25ED /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E3412838187E00CD25ED /* PostListView.swift */; };
+		8842E3442838245600CD25ED /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E3432838245600CD25ED /* PostView.swift */; };
+		8842E346283ABADE00CD25ED /* PostItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E345283ABADE00CD25ED /* PostItemView.swift */; };
 		88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E5E2821DAC800E2BAEA /* BlocObserver.swift */; };
 		88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E60282565B600E2BAEA /* BlocHolder.swift */; };
 		88890E6728257F9300E2BAEA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88890E6628257F9300E2BAEA /* Localizable.strings */; };
 		88890E692825866D00E2BAEA /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E682825866D00E2BAEA /* CounterView.swift */; };
 		88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6A2825973700E2BAEA /* CalculatorView.swift */; };
-		88890E6D282597E200E2BAEA /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E6C282597E200E2BAEA /* RootView.swift */; };
 		88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDB282D0D4D00E2BAEA /* KeypadView.swift */; };
-		88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */; };
+		88890EDF282D1EF000E2BAEA /* CalculatorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDE282D1EF000E2BAEA /* CalculatorButtonStyle.swift */; };
 		88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */; };
 		88E328802831A5C700AADAFE /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */; };
 /* End PBXBuildFile section */
@@ -30,14 +33,17 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		8842E3412838187E00CD25ED /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
+		8842E3432838245600CD25ED /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		8842E345283ABADE00CD25ED /* PostItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemView.swift; sourceTree = "<group>"; };
 		88890E5E2821DAC800E2BAEA /* BlocObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocObserver.swift; sourceTree = "<group>"; };
 		88890E60282565B600E2BAEA /* BlocHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocHolder.swift; sourceTree = "<group>"; };
 		88890E6628257F9300E2BAEA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		88890E682825866D00E2BAEA /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
 		88890E6A2825973700E2BAEA /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
-		88890E6C282597E200E2BAEA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		88890EDB282D0D4D00E2BAEA /* KeypadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
-		88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		88890EDE282D1EF000E2BAEA /* CalculatorButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorButtonStyle.swift; sourceTree = "<group>"; };
 		88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
 		88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,7 +113,7 @@
 			children = (
 				88890E6A2825973700E2BAEA /* CalculatorView.swift */,
 				88890EDB282D0D4D00E2BAEA /* KeypadView.swift */,
-				88890EDE282D1EF000E2BAEA /* ButtonStyle.swift */,
+				88890EDE282D1EF000E2BAEA /* CalculatorButtonStyle.swift */,
 			);
 			path = calculator;
 			sourceTree = "<group>";
@@ -115,7 +121,9 @@
 		88890EDD282D0E8900E2BAEA /* posts */ = {
 			isa = PBXGroup;
 			children = (
-				88890E6C282597E200E2BAEA /* RootView.swift */,
+				8842E3412838187E00CD25ED /* PostListView.swift */,
+				8842E3432838245600CD25ED /* PostView.swift */,
+				8842E345283ABADE00CD25ED /* PostItemView.swift */,
 			);
 			path = posts;
 			sourceTree = "<group>";
@@ -127,6 +135,7 @@
 				88890E60282565B600E2BAEA /* BlocHolder.swift */,
 				88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */,
 				88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */,
+				8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -223,16 +232,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8842E3442838245600CD25ED /* PostView.swift in Sources */,
+				8842E346283ABADE00CD25ED /* PostItemView.swift in Sources */,
 				88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */,
 				88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */,
-				88890EDF282D1EF000E2BAEA /* ButtonStyle.swift in Sources */,
+				88890EDF282D1EF000E2BAEA /* CalculatorButtonStyle.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				8842E3402835A7C800CD25ED /* ActivityIndicator.swift in Sources */,
 				88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */,
 				88E328802831A5C700AADAFE /* NavigationLazyView.swift in Sources */,
 				88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */,
 				88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */,
+				8842E3422838187E00CD25ED /* PostListView.swift in Sources */,
 				7555FF83242A565900829871 /* MainMenuView.swift in Sources */,
-				88890E6D282597E200E2BAEA /* RootView.swift in Sources */,
 				88890E692825866D00E2BAEA /* CounterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,6 +378,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../bloc-samples/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -392,6 +405,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../bloc-samples/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

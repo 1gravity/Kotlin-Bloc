@@ -21,9 +21,8 @@ struct CalculatorView: View {
     private var orientation = InterfaceOrientation()
 
     init() {
-        let holder = BlocHolder { CalculatorKt.bloc(context: $0) }
-        self.holder = holder
-        self.model = BlocObserver(holder)
+        self.holder = BlocHolder { CalculatorKt.bloc(context: $0) }
+        self.model = BlocObserver(self.holder)
     }
 
     var body: some View {
@@ -36,9 +35,7 @@ struct CalculatorView: View {
                     .padding()
 
                 KeypadView(holder, 80.0)
-            }
-            .onAppear { holder.lifecycle.onStart() }
-            .onDisappear { holder.lifecycle.onStop() })
+            })
         } else {
             return AnyView(HStack(spacing: 8) {
                 Text("\(model.value)")
@@ -48,9 +45,7 @@ struct CalculatorView: View {
                     .padding()
 
                 KeypadView(holder, 55.0)
-            }
-            .onAppear { holder.lifecycle.onStart() }
-            .onDisappear { holder.lifecycle.onStop() })
+            })
         }
     }
     

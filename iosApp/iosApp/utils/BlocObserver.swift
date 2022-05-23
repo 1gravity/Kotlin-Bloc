@@ -9,16 +9,6 @@
 import SwiftUI
 import blocSamples
 
-//class Collector<T : Any>: ObservableObject, FlowCollector {
-//    @Published var currentValue = ""
-//
-//    func emit(value: Any?, completionHandler: @escaping (KotlinUnit?, Error?) -> Void) {
-//        print("ios received " + (value as! String))
-//        currentValue = value as! String
-//        completionHandler(KotlinUnit(), nil)
-//    }
-//}
-
 public class BlocObserver<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> : ObservableObject {
 
     @Published
@@ -26,12 +16,14 @@ public class BlocObserver<State: AnyObject, Action: AnyObject, SideEffect: AnyOb
     
     @Published
     var sideEffect: SideEffect?
+
+    private var lifecycle = LifecycleRegistryKt.LifecycleRegistry()
     
     init(_ holder: BlocHolder<State, Action, SideEffect>) {
         self.value = holder.bloc.value
 
         holder.bloc.observe(
-            lifecycle: holder.lifecycle,
+            lifecycle: self.lifecycle,
             state: { value in
                 self.value = value
             },
@@ -39,6 +31,14 @@ public class BlocObserver<State: AnyObject, Action: AnyObject, SideEffect: AnyOb
                 self.sideEffect = sideEffect
             }
         )
+        
+        lifecycle.onCreate()
+        lifecycle.onStart()
+   }
+
+    deinit {
+        self.lifecycle.onStop()
+        self.lifecycle.onDestroy()
     }
 
 }

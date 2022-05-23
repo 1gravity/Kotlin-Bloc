@@ -39,3 +39,5 @@
 "button_7" = "7";
 "button_8" = "8";
 "button_9" = "9";
+
+"posts_compose_comments" = "%i comments";

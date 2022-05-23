@@ -14,7 +14,7 @@ extension Text {
     }
 }
 
-struct ButtonStyle: ViewModifier {
+struct CalculatorButtonStyle: ViewModifier {
     private var backgroundColor: Color
     private var textColor: Color
     private var buttonSize: CGFloat

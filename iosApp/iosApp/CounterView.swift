@@ -16,9 +16,8 @@ struct CounterView: View {
     private var model: BlocObserver<KotlinInt, SimpleCounter.Action, KotlinUnit>
 
     init() {
-        let holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
-        self.holder = holder
-        self.model = BlocObserver(holder)
+        self.holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
+        self.model = BlocObserver(self.holder)
     }
 
     var body: some View {
@@ -29,20 +28,18 @@ struct CounterView: View {
                 action: { holder.bloc.send(value: SimpleCounter.ActionIncrement(value: 1)) },
                 label: { Text("\(NSLocalizedString("counter_increment", comment: "Increment"))") }
             )
-            .padding()
-            .fixedSize()
-            .border(Color.black, width: 2)
+            .tint(.blue)
+            .controlSize(.large) // .large, .medium or .small
+            .buttonStyle(.borderedProminent)
 
             Button(action: {
                 holder.bloc.send(value: SimpleCounter.ActionDecrement(value: 1)) },
                    label: { Text("\(NSLocalizedString("counter_decrement", comment: "Decrement"))") }
             )
-            .padding()
-            .fixedSize()
-            .border(Color.black, width: 2)
+            .tint(.red)
+            .controlSize(.large) // .large, .medium or .small
+            .buttonStyle(.borderedProminent)
         }
-        .onAppear { holder.lifecycle.onStart() }
-        .onDisappear { holder.lifecycle.onStop() }
     }
     
 }
