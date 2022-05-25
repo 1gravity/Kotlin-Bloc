@@ -5,6 +5,7 @@ import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.redux.select.select
+import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.BlocDSL
 import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
@@ -16,10 +17,10 @@ import org.reduxkotlin.Store
  *    store.toBlocState(context, initialValue)
  * ```
  */
-fun <State : Any, Proposal : Any> Store<State>.toBlocState(
+public fun <State : Any, Proposal : Any> Store<State>.toBlocState(
     context: BlocContext,
     initialState: State,
-) = reduxBlocState<State, Proposal, State>(context.disposableScope(), this) {
+): BlocState<State, Proposal> = reduxBlocState<State, Proposal, State>(context.disposableScope(), this) {
     this.initialState = initialState
     select { it }
 }
@@ -30,11 +31,11 @@ fun <State : Any, Proposal : Any> Store<State>.toBlocState(
  *    store.toBlocState(context, initialValue) { /* select function */ }
  * ```
  */
-fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
+public fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,
     selector: Selector<ReduxModel, State>
-) = reduxBlocState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
+): BlocState<State, Proposal> = reduxBlocState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
     this.initialState = initialState
     select(selector)
 }
@@ -45,12 +46,12 @@ fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocStat
  *    store.toBlocState(context, initialValue, { /* select function */ },  { /* map function */ })
  * ```
  */
-fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
+public fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     initialState: State,
     selector: Selector<ReduxModel, Model>,
     mapper: Mapper<Model, State>
-) = reduxBlocState<State, Proposal, Model, ReduxModel>(context.disposableScope(), this) {
+): BlocState<State, Proposal> = reduxBlocState<State, Proposal, Model, ReduxModel>(context.disposableScope(), this) {
     this.initialState = initialState
     select(selector)
     map(mapper)

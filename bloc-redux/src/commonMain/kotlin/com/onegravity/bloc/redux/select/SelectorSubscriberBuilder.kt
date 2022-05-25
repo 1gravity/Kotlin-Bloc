@@ -14,7 +14,7 @@ import org.reduxkotlin.Store
  * @property store The redux store
  * @constructor creates an empty SelectorSubscriberBuilder
  */
-class SelectorSubscriberBuilder<State : Any>(val store: Store<State>) {
+internal class SelectorSubscriberBuilder<State : Any>(val store: Store<State>) {
 
     val selectorList = mutableMapOf<Selector<State, Any>, (Any) -> Unit>()
     val selectorList2 = mutableMapOf<Selector<State, Any>, (State) -> Any>()

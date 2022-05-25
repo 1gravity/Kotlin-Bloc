@@ -7,7 +7,7 @@ internal class BlocStateBuilderImpl<State: Any, Proposal: Any> : BlocStateBuilde
     private var _initialState: State? = null
     private var _acceptor: Acceptor<Proposal, State>? = null
 
-    fun build() = BlocStateImpl(
+    internal fun build() = BlocStateImpl(
         initialState = checkNotNull(_initialState) { "initialState must be declared" },
         acceptor = checkNotNull(_acceptor) { "accept { } must be declared" },
     )

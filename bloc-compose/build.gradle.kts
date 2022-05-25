@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
+
 plugins {
     id("bloc-android-base")
 
@@ -8,6 +10,8 @@ plugins {
 }
 
 kotlin {
+    explicitApi = Strict
+
     android()
 
     jvm()

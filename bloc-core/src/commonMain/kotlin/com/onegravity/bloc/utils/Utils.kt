@@ -4,11 +4,11 @@ import co.touchlab.kermit.LogWriter
 import co.touchlab.kermit.Logger as KermitLogger
 
 // use this and not logger(), logger() is only required to retrieve the platform specific logger
-val logger: Logger by lazy {
+public val logger: Logger by lazy {
     KermitLogger.setTag("bloc")
     KermitLogger.setLogWriters(logger())
     LoggerImpl.i("Logger initialized")
     LoggerImpl
 }
 
-expect fun logger(): LogWriter
+public expect fun logger(): LogWriter

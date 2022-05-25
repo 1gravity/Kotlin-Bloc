@@ -12,9 +12,9 @@ import com.onegravity.bloc.subscribe
  * It depends on the concrete implementations of the BlocObservable which transitions of the
  * lifecycle are relevant (typically onStart() and onStop()).
  */
-abstract class BlocObservable<out State : Any, out SideEffect : Any> {
+public abstract class BlocObservable<out State : Any, out SideEffect : Any> {
 
-    abstract fun subscribe(
+    public abstract fun subscribe(
         lifecycle: Lifecycle,
         state: (suspend (state: State) -> Unit)? = null,
         sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -33,16 +33,16 @@ abstract class BlocObservable<out State : Any, out SideEffect : Any> {
  * ```
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toObservable() =
-    object : BlocObservable<State, SideEffect>() {
-        override fun subscribe(
-            lifecycle: Lifecycle,
-            state: (suspend (state: State) -> Unit)?,
-            sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
-        ) {
-            this@toObservable.subscribe(lifecycle, state, sideEffect)
-        }
+public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toObservable():
+        BlocObservable<State, SideEffect> = object : BlocObservable<State, SideEffect>() {
+    override fun subscribe(
+        lifecycle: Lifecycle,
+        state: (suspend (state: State) -> Unit)?,
+        sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
+    ) {
+        this@toObservable.subscribe(lifecycle, state, sideEffect)
     }
+}
 
 /**
  * The assumption is that all Blocs use the same BlocState with the same type parameters (enforced
@@ -54,25 +54,25 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
  * that would be over-engineering imo.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any> List<Bloc<State, Action, SideEffect>>.toObservable() =
-    object : BlocObservable<State, SideEffect>() {
-        override fun subscribe(
-            lifecycle: Lifecycle,
-            state: (suspend (state: State) -> Unit)?,
-            sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
-        ) {
-            this@toObservable.forEachIndexed { index, bloc ->
-                // ignore all but the first Bloc's state changes
-                val stateListener = if (index == 0) state else { _ -> }
-                bloc.subscribe(lifecycle, stateListener, sideEffect)
-            }
+public fun <State : Any, Action : Any, SideEffect : Any> List<Bloc<State, Action, SideEffect>>.toObservable():
+        BlocObservable<State, SideEffect> = object : BlocObservable<State, SideEffect>() {
+    override fun subscribe(
+        lifecycle: Lifecycle,
+        state: (suspend (state: State) -> Unit)?,
+        sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
+    ) {
+        this@toObservable.forEachIndexed { index, bloc ->
+            // ignore all but the first Bloc's state changes
+            val stateListener = if (index == 0) state else { _ -> }
+            bloc.subscribe(lifecycle, stateListener, sideEffect)
         }
     }
+}
 
 /**
  * Same as above but combine just two Blocs to BlocObservable.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toObservable(
+public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toObservable(
     bloc: Bloc<State, Action, SideEffect>
-) = listOf(this, bloc).toObservable()
+): BlocObservable<State, SideEffect> = listOf(this, bloc).toObservable()

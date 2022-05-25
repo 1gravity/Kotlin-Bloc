@@ -86,7 +86,7 @@ inline fun <reified Component : Any> Fragment.getOrCreate(
  * create the Lifecycle and the InstanceKeeper while the SavedStateRegistry and the
  * OnBackPressedDispatcher are "taken" from the Activity.
  */
-fun <T> T.createBlocContext(): BlocContextImpl where
+fun <T> T.createBlocContext(): BlocContext where
         T : OnBackPressedDispatcherOwner,
         T : ViewModelStoreOwner,
         T : LifecycleOwner {

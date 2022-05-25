@@ -2,7 +2,7 @@ package com.onegravity.bloc.utils
 
 import co.touchlab.kermit.Logger as KermitLogger
 
-object LoggerImpl : Logger {
+internal object LoggerImpl : Logger {
 
     override fun d(msg: String) {
         KermitLogger.d(msg)

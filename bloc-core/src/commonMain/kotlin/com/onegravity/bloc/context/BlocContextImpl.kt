@@ -11,7 +11,7 @@ import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.essenty.lifecycle.Lifecycle
 
 @Suppress("unused")
-class BlocContextImpl(
+public class BlocContextImpl(
     override val lifecycle: Lifecycle,
     instanceKeeper: InstanceKeeper? = null,
     backPressedHandler: BackPressedHandler? = null,
@@ -20,9 +20,9 @@ class BlocContextImpl(
     /**
      * For iOS
      */
-    constructor(lifecycle: Lifecycle) : this(lifecycle, null, null)
+    public constructor(lifecycle: Lifecycle) : this(lifecycle, null, null)
 
-    override val instanceKeeper = instanceKeeper ?: InstanceKeeperDispatcher().attachTo(lifecycle)
-    override val backPressedHandler = backPressedHandler ?: BackPressedDispatcher()
+    override val instanceKeeper: InstanceKeeper = instanceKeeper ?: InstanceKeeperDispatcher().attachTo(lifecycle)
+    override val backPressedHandler: BackPressedHandler = backPressedHandler ?: BackPressedDispatcher()
 
 }

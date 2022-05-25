@@ -26,19 +26,22 @@ import com.onegravity.bloc.Bloc
  * can also be observed (it has an observable Bloc) and every extension functions for
  * BlocObservableOwner is also implemented for BlocOwner.
  */
-interface BlocOwner<out State : Any, in Action : Any, SideEffect : Any, Proposal : Any> {
+public interface BlocOwner<out State : Any, in Action : Any, SideEffect : Any, Proposal : Any> {
 
-    val bloc: Bloc<State, Action, SideEffect>
+    public val bloc: Bloc<State, Action, SideEffect>
 
     /* Extension functions */
 
     @BlocDSL
-    fun Proposal.noSideEffect() = Effect<Proposal, SideEffect>(this, emptyList())
+    public fun Proposal.noSideEffect(): Effect<Proposal, SideEffect> =
+        Effect(this, emptyList())
 
     @BlocDSL
-    infix fun Proposal.and(sideEffect: SideEffect) = Effect(this, sideEffect)
+    public infix fun Proposal.and(sideEffect: SideEffect): Effect<Proposal, SideEffect> =
+        Effect(this, sideEffect)
 
     @BlocDSL
-    infix fun SideEffect.and(sideEffect: SideEffect): List<SideEffect> = listOf(this, sideEffect)
+    public infix fun SideEffect.and(sideEffect: SideEffect): List<SideEffect> =
+        listOf(this, sideEffect)
 
 }

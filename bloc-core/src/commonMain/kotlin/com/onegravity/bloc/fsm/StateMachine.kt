@@ -5,16 +5,16 @@ package com.onegravity.bloc.fsm
 /**
  * TODO make this thread-safe (again)
  */
-class StateMachine<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> private constructor(
+internal class StateMachine<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> private constructor(
     private val graph: Graph<STATE, EVENT, SIDE_EFFECT>
 ) {
 
     private var stateRef: STATE = graph.initialState
 
-    val state: STATE
+    internal val state: STATE
         get() = stateRef
 
-    fun transition(event: EVENT): Transition<STATE, EVENT, SIDE_EFFECT> {
+    internal fun transition(event: EVENT): Transition<STATE, EVENT, SIDE_EFFECT> {
         val fromState = stateRef
         val transition = fromState.getTransition(event)
         if (transition is Transition.Valid) {
@@ -34,7 +34,7 @@ class StateMachine<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> private construc
         return transition
     }
 
-    fun with(init: GraphBuilder<STATE, EVENT, SIDE_EFFECT>.() -> Unit): StateMachine<STATE, EVENT, SIDE_EFFECT> {
+    internal fun with(init: GraphBuilder<STATE, EVENT, SIDE_EFFECT>.() -> Unit): StateMachine<STATE, EVENT, SIDE_EFFECT> {
         return create(graph.copy(initialState = state), init)
     }
 
@@ -66,7 +66,7 @@ class StateMachine<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> private construc
     }
 
     companion object {
-        fun <STATE : Any, EVENT : Any, SIDE_EFFECT : Any> create(
+        internal fun <STATE : Any, EVENT : Any, SIDE_EFFECT : Any> create(
             init: GraphBuilder<STATE, EVENT, SIDE_EFFECT>.() -> Unit
         ): StateMachine<STATE, EVENT, SIDE_EFFECT> {
             return create(null, init)

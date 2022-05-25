@@ -8,7 +8,7 @@ import org.reduxkotlin.Store
 import org.reduxkotlin.StoreSubscriber
 import kotlin.jvm.JvmField
 
-interface SelectorInput<S, I> {
+internal interface SelectorInput<S, I> {
     operator fun invoke(state: S): I
     val equalityCheck: EqualityCheckFn
 }
@@ -16,7 +16,7 @@ interface SelectorInput<S, I> {
 /**
  * Note: [Selector] inherit from [SelectorInput] because of support for composite selectors
  */
-interface Selector<S, O> : SelectorInput<S, O> {
+internal interface Selector<S, O> : SelectorInput<S, O> {
     val recomputations: Long
 
     fun isChanged(): Boolean
@@ -46,7 +46,7 @@ interface Selector<S, O> : SelectorInput<S, O> {
 /**
  * Abstract base class for all selectors
  */
-abstract class AbstractSelector<S, O> : Selector<S, O> {
+internal abstract class AbstractSelector<S, O> : Selector<S, O> {
     @JvmField
     protected var recomputationsLastChanged = 0L
 
@@ -81,7 +81,7 @@ abstract class AbstractSelector<S, O> : Selector<S, O> {
  * A selector function is a function mapping a field in state object to the input for the selector
  * compute function
  */
-class InputField<S, I>(
+internal class InputField<S, I>(
     val fn: S.() -> I,
     override val equalityCheck: EqualityCheckFn
 ) : SelectorInput<S, I> {
@@ -103,7 +103,7 @@ class InputField<S, I>(
  *          }
  *      }
  */
-fun <State : Any> Store<State>.selectors(
+internal fun <State : Any> Store<State>.selectors(
     subscriberBuilderBlock: SelectorSubscriberBuilder<State>.() -> Unit
 ): StoreSubscriber {
     val subscriberBuilder: SelectorSubscriberBuilder<State> = SelectorSubscriberBuilder(this)
@@ -124,7 +124,7 @@ fun <State : Any> Store<State>.selectors(
     return this.subscribe(sub)
 }
 
-fun <State : Any, SelectedState : Any> Store<State>.select(
+public fun <State : Any, SelectedState : Any> Store<State>.select(
     selector: (State) -> SelectedState,
     onChange: (SelectedState) -> Unit
-) = selectors { select(selector, onChange) }
+): StoreSubscriber = selectors { select(selector, onChange) }

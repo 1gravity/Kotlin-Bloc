@@ -16,15 +16,15 @@ import com.onegravity.bloc.utils.SideEffectStream
  * A Bloc is also
  * - a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation
  */
-abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
+public abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
     BlocState<State, Action>() {
 
-    abstract val sideEffects: SideEffectStream<SideEffect>
+    public abstract val sideEffects: SideEffectStream<SideEffect>
 
     /**
      * This is specifically for iOS to make sure generic types aren't erased.
      */
-    abstract fun observe(
+    public abstract fun observe(
         lifecycle: Lifecycle,
         state: BlocObserver<State>?,
         sideEffect: BlocObserver<SideEffect>?

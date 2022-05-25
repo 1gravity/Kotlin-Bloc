@@ -4,7 +4,7 @@
 
 package com.onegravity.bloc.redux.select
 
-typealias EqualityCheckFn = (a: Any, b: Any) -> Boolean
+internal typealias EqualityCheckFn = (a: Any, b: Any) -> Boolean
 
 /**
  * A rewrite for kotlin of https://github.com/reactjs/reselect library for redux (https://github.com/reactjs/redux)
@@ -15,19 +15,19 @@ typealias EqualityCheckFn = (a: Any, b: Any) -> Boolean
 /**
  * equality check by reference
  */
-val byRefEqualityCheck: EqualityCheckFn = { a: Any, b: Any -> a === b }
+internal val byRefEqualityCheck: EqualityCheckFn = { a: Any, b: Any -> a === b }
 
 /**
  * equality check by value: for primitive type
  */
-val byValEqualityCheck: EqualityCheckFn = { a: Any, b: Any -> a == b }
+internal val byValEqualityCheck: EqualityCheckFn = { a: Any, b: Any -> a == b }
 
-interface Memoizer<T> {
+internal interface Memoizer<T> {
     fun memoize(state: Any, vararg inputs: SelectorInput<Any, Any>): T
 }
 
 // {a:Any,b:Any -> a===b}
-fun <T> computationMemoizer(computeFn: (Array<out Any>) -> T) = object : Memoizer<T> {
+internal fun <T> computationMemoizer(computeFn: (Array<out Any>) -> T) = object : Memoizer<T> {
     var lastArgs: Array<out Any>? = null
     var lastResult: T? = null
     override fun memoize(state: Any, vararg inputs: SelectorInput<Any, Any>): T {
@@ -54,7 +54,7 @@ fun <T> computationMemoizer(computeFn: (Array<out Any>) -> T) = object : Memoize
 /**
  * specialization for the case of single input (a little bit faster)
  */
-fun <T> singleInputMemoizer(func: (Array<out Any>) -> T) = object : Memoizer<T> {
+internal fun <T> singleInputMemoizer(func: (Array<out Any>) -> T) = object : Memoizer<T> {
     var lastArg: Any? = null
     var lastResult: T? = null
     override fun memoize(state: Any, vararg inputs: SelectorInput<Any, Any>): T {

@@ -16,14 +16,16 @@ import kotlinx.coroutines.*
 
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
-) = bloc.subscribe(lifecycle, state, sideEffect)
+) {
+    bloc.subscribe(lifecycle, state, sideEffect)
+}
 
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.subscribe(
+public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -65,7 +67,7 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
  * ```
  */
 @BlocDSL
-fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subscribe(
+public fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null

@@ -8,4 +8,4 @@ import com.arkivanov.essenty.backpressed.BackPressedHandlerOwner
 import com.arkivanov.essenty.instancekeeper.InstanceKeeperOwner
 import com.arkivanov.essenty.lifecycle.LifecycleOwner
 
-interface BlocContext : LifecycleOwner, InstanceKeeperOwner, BackPressedHandlerOwner
+public interface BlocContext : LifecycleOwner, InstanceKeeperOwner, BackPressedHandlerOwner

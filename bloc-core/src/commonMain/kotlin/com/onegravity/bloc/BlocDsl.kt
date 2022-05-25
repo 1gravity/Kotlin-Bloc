@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.onCreate(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.onCreate(
     initializer: Initializer<State, Action>
 ) {
     (this as BlocImpl<State, Action, SideEffect, Proposal>).runInitializer(initializer)
@@ -21,9 +21,11 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Ac
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
     initializer: Initializer<State, Action>
-) = bloc.onCreate<State, Action, SideEffect, Proposal>(initializer)
+) {
+    bloc.onCreate<State, Action, SideEffect, Proposal>(initializer)
+}
 
 /**
  * Submit a Thunk to the Bloc to be run.
@@ -32,7 +34,7 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<Stat
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.thunk(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.thunk(
     coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
 ) {
@@ -43,10 +45,12 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Ac
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
     coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
-) = bloc.thunk<State, Action, SideEffect, Proposal>(coroutineScope, thunk)
+) {
+    bloc.thunk<State, Action, SideEffect, Proposal>(coroutineScope, thunk)
+}
 
 /**
  * Submit a Reducer without side effects to the Bloc to be run.
@@ -54,7 +58,7 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<Stat
  * sending an action to the Bloc).
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduce(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduce(
     reducer: ReducerNoAction<State, Proposal>
 ) {
     val reducerNoSideEffect: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
@@ -68,9 +72,11 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Ac
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduce(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduce(
     reducer: ReducerNoAction<State, Proposal>
-) = bloc.reduce(reducer)
+) {
+    bloc.reduce(reducer)
+}
 
 /**
  * Submit a Reducer with side effects to the Bloc to be run.
@@ -78,7 +84,7 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<Stat
  * sending an action to the Bloc).
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduceAnd(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) {
     (this as BlocImpl<State, Action, SideEffect, Proposal>).runReducer(reducer)
@@ -88,9 +94,11 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Ac
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
-) = bloc.reduceAnd(reducer)
+) {
+    bloc.reduceAnd(reducer)
+}
 
 /**
  * Submit a SideEffect to the Bloc to be emitted.
@@ -98,7 +106,7 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<Stat
  * sending an action to the Bloc).
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.sideEffect(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) {
     val reducerNoState: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
@@ -111,6 +119,8 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Ac
  * Same for a BlocOwner.
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
-) = bloc.sideEffect<State, Action, SideEffect, Proposal>(sideEffect)
+) {
+    bloc.sideEffect<State, Action, SideEffect, Proposal>(sideEffect)
+}

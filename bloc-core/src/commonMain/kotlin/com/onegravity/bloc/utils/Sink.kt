@@ -7,7 +7,7 @@ package com.onegravity.bloc.utils
  * Flutter EventSink) because we're following a functional approach and use monads to model
  * success/failures (using https://github.com/michaelbull/kotlin-result).
  */
-interface Sink<in Value : Any> {
+public interface Sink<in Value : Any> {
 
     /**
      * Send a Value into the sink.
@@ -15,6 +15,6 @@ interface Sink<in Value : Any> {
      * This is a synchronous operation but it depends on the receiver if the emitted value triggers
      * a synchronous or an asynchronous operation (or none at all).
      */
-    fun send(value: Value)
+    public fun send(value: Value)
 
 }

@@ -8,7 +8,7 @@ package com.onegravity.bloc.redux.select
  * Wrapper class for Selector factory methods, that basically is used only to capture type
  * information for the state parameter
  */
-class SelectorBuilder<S : Any> {
+internal class SelectorBuilder<S : Any> {
     /**
      * Special single input selector that should be used when you just want to retrieve a single field:
      * Warning: Don't use this with primitive type fields, use [withSingleFieldByValue] instead!!!

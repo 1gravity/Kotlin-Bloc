@@ -18,7 +18,7 @@ internal sealed class LifecycleEvent {
     object Destroy : LifecycleEvent()
 }
 
-typealias LifecycleCSideEffect = () -> Unit
+internal typealias LifecycleCSideEffect = () -> Unit
 
 @Suppress("FunctionName")
 internal fun BlocLifecycle(

@@ -49,7 +49,7 @@ internal fun <State : Any, Proposal : Any, ReduxModel : Any> reduxBlocState(
 //      on the way out AND in, so not just select sub state to stream to the ui but also reduce just
 //      the selected part of the full Redux model.
 @BlocDSL
-inline fun <reified State : Any> BlocContext.reduxBlocState(
+internal inline fun <reified State : Any> BlocContext.reduxBlocState(
     initialState: State
 ): BlocState<State, State> =
     createThreadSafeStore(

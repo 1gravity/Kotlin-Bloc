@@ -1,4 +1,5 @@
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
 
 plugins {
     id("bloc-android-base")
@@ -11,8 +12,7 @@ plugins {
 version = "1.0"
 
 kotlin {
-    // todo
-    // explicitApi = ExplicitApiMode.Strict
+    explicitApi = Strict
 
     android()
     jvm()
