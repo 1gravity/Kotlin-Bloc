@@ -11,7 +11,7 @@ struct MainMenuView: View {
 
     init() {
         self.holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
-        self.model = BlocObserver(self.holder)
+        self.model = BlocObserver(self.holder.value)
     }
 
     private let counterView: () -> AnyView = {
@@ -36,7 +36,7 @@ struct MainMenuView: View {
 
     var body: some View {
         func send(_ state: MainMenu.ActionState) -> () -> () {
-            return { holder.bloc.send(value: state) }
+            return { holder.value.send(value: state) }
         }
 
         return NavigationView {
@@ -69,6 +69,7 @@ struct MainMenuView: View {
         }
 
     }
+
 }
 
 class ContentView_Previews: PreviewProvider {

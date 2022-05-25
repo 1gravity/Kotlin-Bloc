@@ -10,13 +10,13 @@ import com.onegravity.bloc.sample.posts.domain.repositories.Post
 @Composable
 internal fun Posts(
     posts: List<Post>,
-    selected: Int?,
+    selectedPost: Int?,
     modifier: Modifier = Modifier,
     onClicked: (post: Post) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         items(posts) { post ->
-            PostItem(post, post.id == selected, onClicked)
+            PostItem(post, post.id == selectedPost, onClicked)
             Divider()
         }
     }

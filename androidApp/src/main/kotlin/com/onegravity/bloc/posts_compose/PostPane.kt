@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
+import com.onegravity.bloc.utils.logger
 
 @Composable
 internal fun PostPane(
@@ -19,13 +20,13 @@ internal fun PostPane(
 ) {
     val state by component.observeState()
 
-    when (state.postState.loading != null) {
+    when (state.postState.loadingId != null) {
         true -> Box(modifier = modifier.background(Color.Transparent)) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
         else -> state.postState.post?.mapBoth(
             { post -> Post(post, modifier) },
-            { error -> Error({ component.loadPost() }, error) }
+            { error -> Error({ logger.e("$error") }, error) }
         )
     }
 }

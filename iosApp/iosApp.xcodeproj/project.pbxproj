@@ -12,9 +12,10 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* MainMenuView.swift */; };
 		8842E3402835A7C800CD25ED /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */; };
-		8842E3422838187E00CD25ED /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E3412838187E00CD25ED /* PostListView.swift */; };
-		8842E3442838245600CD25ED /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E3432838245600CD25ED /* PostView.swift */; };
 		8842E346283ABADE00CD25ED /* PostItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E345283ABADE00CD25ED /* PostItemView.swift */; };
+		8842E348283D3C7900CD25ED /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E347283D3C7900CD25ED /* PostListView.swift */; };
+		8842E34A283D44A900CD25ED /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E349283D44A900CD25ED /* PostView.swift */; };
+		8842E34C283D692100CD25ED /* BlocComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E34B283D692100CD25ED /* BlocComponent.swift */; };
 		88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E5E2821DAC800E2BAEA /* BlocObserver.swift */; };
 		88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890E60282565B600E2BAEA /* BlocHolder.swift */; };
 		88890E6728257F9300E2BAEA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88890E6628257F9300E2BAEA /* Localizable.strings */; };
@@ -24,6 +25,9 @@
 		88890EDF282D1EF000E2BAEA /* CalculatorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EDE282D1EF000E2BAEA /* CalculatorButtonStyle.swift */; };
 		88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */; };
 		88E328802831A5C700AADAFE /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */; };
+		88F2DE12283DCF5B007E67BD /* PostObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F2DE11283DCF5B007E67BD /* PostObservable.swift */; };
+		88F2DE14283DCFC1007E67BD /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F2DE13283DCFC1007E67BD /* PostDetailView.swift */; };
+		88F2DE16283DCFF7007E67BD /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F2DE15283DCFF7007E67BD /* CommentsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,9 +38,10 @@
 		7555FF82242A565900829871 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
-		8842E3412838187E00CD25ED /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
-		8842E3432838245600CD25ED /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		8842E345283ABADE00CD25ED /* PostItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemView.swift; sourceTree = "<group>"; };
+		8842E347283D3C7900CD25ED /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
+		8842E349283D44A900CD25ED /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		8842E34B283D692100CD25ED /* BlocComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocComponent.swift; sourceTree = "<group>"; };
 		88890E5E2821DAC800E2BAEA /* BlocObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocObserver.swift; sourceTree = "<group>"; };
 		88890E60282565B600E2BAEA /* BlocHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocHolder.swift; sourceTree = "<group>"; };
 		88890E6628257F9300E2BAEA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -46,6 +51,9 @@
 		88890EDE282D1EF000E2BAEA /* CalculatorButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorButtonStyle.swift; sourceTree = "<group>"; };
 		88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
 		88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
+		88F2DE11283DCF5B007E67BD /* PostObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostObservable.swift; sourceTree = "<group>"; };
+		88F2DE13283DCFC1007E67BD /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		88F2DE15283DCFF7007E67BD /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,9 +129,12 @@
 		88890EDD282D0E8900E2BAEA /* posts */ = {
 			isa = PBXGroup;
 			children = (
-				8842E3412838187E00CD25ED /* PostListView.swift */,
-				8842E3432838245600CD25ED /* PostView.swift */,
 				8842E345283ABADE00CD25ED /* PostItemView.swift */,
+				8842E347283D3C7900CD25ED /* PostListView.swift */,
+				8842E349283D44A900CD25ED /* PostView.swift */,
+				88F2DE11283DCF5B007E67BD /* PostObservable.swift */,
+				88F2DE13283DCFC1007E67BD /* PostDetailView.swift */,
+				88F2DE15283DCFF7007E67BD /* CommentsView.swift */,
 			);
 			path = posts;
 			sourceTree = "<group>";
@@ -133,6 +144,7 @@
 			children = (
 				88890E5E2821DAC800E2BAEA /* BlocObserver.swift */,
 				88890E60282565B600E2BAEA /* BlocHolder.swift */,
+				8842E34B283D692100CD25ED /* BlocComponent.swift */,
 				88890EE1282D257400E2BAEA /* InterfaceOrientation.swift */,
 				88E3287F2831A5C700AADAFE /* NavigationLazyView.swift */,
 				8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */,
@@ -232,20 +244,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8842E3442838245600CD25ED /* PostView.swift in Sources */,
 				8842E346283ABADE00CD25ED /* PostItemView.swift in Sources */,
 				88890E6B2825973700E2BAEA /* CalculatorView.swift in Sources */,
+				88F2DE16283DCFF7007E67BD /* CommentsView.swift in Sources */,
 				88890EDC282D0D4D00E2BAEA /* KeypadView.swift in Sources */,
 				88890EDF282D1EF000E2BAEA /* CalculatorButtonStyle.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				8842E3402835A7C800CD25ED /* ActivityIndicator.swift in Sources */,
+				8842E34C283D692100CD25ED /* BlocComponent.swift in Sources */,
+				8842E34A283D44A900CD25ED /* PostView.swift in Sources */,
 				88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */,
 				88E328802831A5C700AADAFE /* NavigationLazyView.swift in Sources */,
+				88F2DE12283DCF5B007E67BD /* PostObservable.swift in Sources */,
 				88890EE2282D257400E2BAEA /* InterfaceOrientation.swift in Sources */,
 				88890E61282565B600E2BAEA /* BlocHolder.swift in Sources */,
-				8842E3422838187E00CD25ED /* PostListView.swift in Sources */,
 				7555FF83242A565900829871 /* MainMenuView.swift in Sources */,
+				88F2DE14283DCFC1007E67BD /* PostDetailView.swift in Sources */,
 				88890E692825866D00E2BAEA /* CounterView.swift in Sources */,
+				8842E348283D3C7900CD25ED /* PostListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

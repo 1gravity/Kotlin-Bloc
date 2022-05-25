@@ -6,7 +6,6 @@
 //  Copyright © 2022 1gravity. All rights reserved.
 //
 
-import SwiftUI
 import blocSamples
 
 public class BlocObserver<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> : ObservableObject {
@@ -19,10 +18,10 @@ public class BlocObserver<State: AnyObject, Action: AnyObject, SideEffect: AnyOb
 
     private var lifecycle = LifecycleRegistryKt.LifecycleRegistry()
     
-    init(_ holder: BlocHolder<State, Action, SideEffect>) {
-        self.value = holder.bloc.value
+    init(_ bloc: Bloc<State, Action, SideEffect>) {
+        self.value = bloc.value
 
-        holder.bloc.observe(
+        bloc.observe(
             lifecycle: self.lifecycle,
             state: { value in
                 self.value = value

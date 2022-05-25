@@ -17,12 +17,13 @@ import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.R
 import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
+import com.onegravity.bloc.sample.posts.compose.PostsRootState
 
 private val MULTI_PANE_WIDTH_THRESHOLD = 700.dp
 
 @Composable
 fun RootUi(component: PostsComponent) {
-    val state by component.observeState()
+    val state: PostsRootState by component.observeState()
 
     BoxWithConstraints(
         Modifier.fillMaxWidth().fillMaxHeight()) {
@@ -30,7 +31,7 @@ fun RootUi(component: PostsComponent) {
         Scaffold(
             topBar = { ToolBar(component, isMultiPane) }
         ) {
-            val showDetail = state.selectedPost != null
+            val showDetail = state.postIsLoading() || state.postIsLoaded()
 
             when {
                 isMultiPane && showDetail ->
@@ -48,13 +49,13 @@ fun RootUi(component: PostsComponent) {
 @Composable
 private fun ToolBar(component: PostsComponent, isMultiPane: Boolean) {
     val state by component.observeState()
-    val showDetail = state.selectedPost != null
+    val showDetail = state.postIsLoading() || state.postIsLoaded()
 
     val defaultTitle = stringResource(R.string.posts_compose_title)
     val title = when {
         isMultiPane -> defaultTitle
         state.postIsLoaded() -> state.postState.post?.mapBoth({ it.username }, { defaultTitle })
-        state.postState.loading != null -> stringResource(R.string.posts_compose_loading)
+        state.postState.loadingId != null -> stringResource(R.string.posts_compose_loading)
         else -> defaultTitle
     } ?: defaultTitle
 

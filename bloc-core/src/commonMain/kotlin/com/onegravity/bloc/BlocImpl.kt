@@ -138,7 +138,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
             nextThunkDispatcher(index + 1, it).invoke(it)
         }
         val thunk = thunks[index].thunk
-        ThunkContext({ blocState.value }, action, dispatcher).thunk()
+        ThunkContext({ blocState.value }, action, dispatcher, coroutineScope).thunk()
     }
 
     private fun nextThunkDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
@@ -225,7 +225,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
             val dispatcher: Dispatcher<Action> = {
                 nextThunkDispatcher(0, it).invoke(it)
             }
-            ThunkContextNoAction({ blocState.value }, dispatcher).thunk()
+            ThunkContextNoAction({ blocState.value }, dispatcher, scope).thunk()
         }
     }
 

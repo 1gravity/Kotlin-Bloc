@@ -22,7 +22,7 @@ struct CalculatorView: View {
 
     init() {
         self.holder = BlocHolder { CalculatorKt.bloc(context: $0) }
-        self.model = BlocObserver(self.holder)
+        self.model = BlocObserver(self.holder.value)
     }
 
     var body: some View {
