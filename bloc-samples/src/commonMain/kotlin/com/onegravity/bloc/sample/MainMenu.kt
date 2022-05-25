@@ -8,8 +8,9 @@ object MainMenu {
     enum class ActionState {
         MainMenu,
         MainMenuCompose,
-        Counter1,
-        Counter2,
+        Counter,
+        CounterCompose,
+        CounterRedux,
         Books,
         Calculator,
         CalculatorNoVM,

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.FlowCollector
  * - all values even duplicates
  * - no initial value upon subscription (analogous PublishSubject)
  */
-interface StateStream<out Value> {
+interface StateStream<out Value : Any> {
     val value: Value
     suspend fun collect(collector: FlowCollector<Value>)
 }

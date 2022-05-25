@@ -1,19 +1,32 @@
 package com.onegravity.bloc
 
+import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.utils.BlocObserver
+import com.onegravity.bloc.utils.SideEffectStream
 
 /**
- * The core interface of the BLoC framework.
+ * The core class of the BLoC framework.
+ * (can't be an interface or we won't have the generics in Swift)
  *
- * A Bloc is (as a BlocFacade)
+ * A Bloc is also a BlocState (allowing us to use a Bloc as BlocState and create composable Blocs):
  * - a StateStream<State> emitting state
  * - a Sink<Action> accepting actions that might trigger state changes
- * - a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation
  *
- * A Bloc is also a BlocState since BlocState is an subset of BlocFacade (StateStream and
- * Sink but no SideEffectStream). This allows us to use a Bloc as BlocState and thus create a chain
- * of composable Blocs.
+ * A Bloc is also
+ * - a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation
  */
-interface Bloc<out State, in Action, SideEffect, Proposal> :
-    BlocFacade<State, Action, SideEffect>,
-    BlocState<State, Action>
+abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
+    BlocState<State, Action>() {
+
+    abstract val sideEffects: SideEffectStream<SideEffect>
+
+    /**
+     * This is specifically for iOS to make sure generic types aren't erased.
+     */
+    abstract fun observe(
+        lifecycle: Lifecycle,
+        state: BlocObserver<State>?,
+        sideEffect: BlocObserver<SideEffect>?
+    )
+}

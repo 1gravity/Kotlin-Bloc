@@ -16,6 +16,11 @@ annotation class BlocProtected
 annotation class BlocInternal
 
 /**
+ * This is an Observer specifically for Swift
+ */
+typealias BlocObserver<State> = (State) -> Unit
+
+/**
  * A SideEffectStream is a source of asynchronous (side effect) data.
  * It's a hot stream meant to deal with SideEffect data (compared to StateStream for State).
  *
@@ -47,19 +52,39 @@ data class InitializerContext<State, Action>(
 
 typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
 
+/**
+ * ThunkContext is used when defining a thunk like this:
+ * ```
+ *   thunk<A: Action> {
+ *   }
+ * ```
+ */
 data class ThunkContext<State, Action, A : Action>(
     val getState: GetState<State>,
     val action: A,
-    val dispatch: Dispatcher<Action>
+    val dispatch: Dispatcher<Action>,
+    // we need the CoroutineScope so we can launch jobs from a Thunk
+    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
+    val coroutineScope: CoroutineScope
 )
 
 typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
 
 typealias GetState<State> = () -> State
 
+/**
+ * ThunkContextNoAction is used when defining a thunk like this (as part of a function call e.g.):
+ * ```
+ *   fun doSomething() = thunk {
+ *   }
+ * ```
+ */
 data class ThunkContextNoAction<State, Action>(
     val getState: GetState<State>,
-    val dispatch: Dispatcher<Action>
+    val dispatch: Dispatcher<Action>,
+    // we need the CoroutineScope so we can launch jobs from a Thunk
+    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
+    val coroutineScope: CoroutineScope
 )
 
 typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit

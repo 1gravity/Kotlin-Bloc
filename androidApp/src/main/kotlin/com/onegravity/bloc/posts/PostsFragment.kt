@@ -30,17 +30,20 @@ import com.github.michaelbull.result.mapBoth
 import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
+import com.onegravity.bloc.getOrCreate
 import com.onegravity.bloc.sample.posts.bloc.Posts
+import com.onegravity.bloc.sample.posts.bloc.PostsState
+import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.utils.BlocOwner
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.onegravity.bloc.sample.posts.bloc.PostsState
-import com.onegravity.bloc.subscribe
-import com.onegravity.bloc.viewModel
 
-class PostsFragment : Fragment(R.layout.post_list_fragment) {
+class PostsFragment :
+    Fragment(R.layout.post_list_fragment),
+    BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState> {
 
-    private val viewModel by viewModel { PostsViewModel(it) }
+    override val bloc by getOrCreate("posts") { Posts.bloc(it) }
 
     private val binding by viewBinding<PostListFragmentBinding>()
 
@@ -68,7 +71,7 @@ class PostsFragment : Fragment(R.layout.post_list_fragment) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.subscribe(this, ::render, ::sideEffect)
+        subscribe(this, ::render, ::sideEffect)
     }
 
     private fun render(state: PostsState) {
@@ -82,9 +85,10 @@ class PostsFragment : Fragment(R.layout.post_list_fragment) {
 
             state.posts.mapBoth(
                 { posts ->
-                    posts
-                        .map { PostsItem(it, viewModel) }
-                        .also { adapter.update(it) }
+                    val items = posts.map {
+                        PostsItem(it) { post -> bloc.send(Posts.Action.Clicked(post)) }
+                    }
+                    adapter.update(items)
                 },
                 { error ->
                     Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG).show()
@@ -100,4 +104,5 @@ class PostsFragment : Fragment(R.layout.post_list_fragment) {
             )
         )
     }
+
 }

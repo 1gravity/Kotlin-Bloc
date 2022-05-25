@@ -16,7 +16,7 @@ import kotlin.jvm.JvmName
  */
 @JvmName("blocState")
 @BlocDSL
-fun <State, Proposal> blocState(
+fun <State : Any, Proposal : Any> blocState(
     block: BlocStateBuilder<State, Proposal>.() -> Unit
 ): BlocState<State, Proposal> =
     BlocStateBuilderImpl<State, Proposal>()
@@ -32,7 +32,7 @@ fun <State, Proposal> blocState(
  */
 @JvmName("simpleBlocState")
 @BlocDSL
-fun <State> blocState(
+fun <State : Any> blocState(
     initialState: State
 ): BlocState<State, State> =
     SimpleBlocStateBuilderImpl<State>()

@@ -1,6 +1,6 @@
 package com.onegravity.bloc.state
 
-internal class SimpleBlocStateBuilderImpl<State> : SimpleBlocStateBuilder<State> {
+internal class SimpleBlocStateBuilderImpl<State : Any> : SimpleBlocStateBuilder<State> {
 
     private var _initialState: State? = null
 

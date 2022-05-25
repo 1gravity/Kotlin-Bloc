@@ -1,0 +1,43 @@
+/* 
+  Localizable.strings
+  iosApp
+
+  Created by Emanuel Moecklin on 5/6/22.
+  Copyright © 2022 1gravity. All rights reserved.
+*/
+
+"app_name" = "BLoC Framework";
+
+"main_menu_title" = "Take your pick";
+"main_menu_counter" = "Counter";
+"main_menu_calculator" = "Calculator";
+"main_menu_posts" = "Posts";
+
+"counter_value" = "Counter: ";
+"counter_increment" = "Increment";
+"counter_decrement" = "Decrement";
+
+"button_clear" = "C";
+"button_plus_minus" = "±";
+"button_percentage" = "%";
+
+"button_divide" = "÷";
+"button_multiply" = "×";
+"button_subtract" = "-";
+"button_add" = "+";
+
+"button_equals" = "=";
+"button_period" = ".";
+
+"button_0" = "0";
+"button_1" = "1";
+"button_2" = "2";
+"button_3" = "3";
+"button_4" = "4";
+"button_5" = "5";
+"button_6" = "6";
+"button_7" = "7";
+"button_8" = "8";
+"button_9" = "9";
+
+"posts_compose_comments" = "%i comments";

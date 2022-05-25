@@ -37,10 +37,14 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.github.michaelbull.result.mapBoth
 import com.google.android.material.snackbar.Snackbar
-import com.onegravity.bloc.*
+import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostDetailsFragmentBinding
+import com.onegravity.bloc.getOrCreate
 import com.onegravity.bloc.sample.posts.bloc.PostState
-import com.onegravity.bloc.sample.posts.domain.repositories.Post
+import com.onegravity.bloc.sample.posts.bloc.Post
+import com.onegravity.bloc.sample.posts.bloc.PostBloc
+import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.sample.posts.domain.repositories.Post as PostData
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -48,8 +52,11 @@ import com.xwray.groupie.GroupieViewHolder
 class PostFragment : Fragment(R.layout.post_details_fragment) {
 
     private val args: PostFragmentArgs by navArgs()
+    private val post by lazy { args.post }
 
-    private val viewModel by viewModel { PostViewModel(it, args.overview) }
+    private val bloc: PostBloc by getOrCreate("post") {
+        Post.bloc(it).apply { send(Post.Action.Load(post.id)) }
+    }
 
     private var initialised: Boolean = false
     private val adapter = GroupAdapter<GroupieViewHolder>()
@@ -75,7 +82,8 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.subscribe(this, state = ::render)
+        bloc.sideEffects
+        bloc.subscribe<PostState, Post.Action, Unit>(this, ::render)
     }
 
     private fun render(state: PostState) {
@@ -87,7 +95,7 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
 
         state.post?.mapBoth(
             { post ->
-                if (! initialised) initialize(post)
+                if (!initialised) initialize(post)
                 binding.postTitle.text = post.title
                 binding.postBody.text = post.body
                 val comments = post.comments.size
@@ -104,7 +112,7 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
         )
     }
 
-    private fun initialize(post: Post) {
+    private fun initialize(post: PostData) {
         initialised = true
         binding.toolbar.apply {
             title = post.username

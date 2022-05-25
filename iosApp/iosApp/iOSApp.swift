@@ -1,16 +1,27 @@
 import SwiftUI
-// todo implement the iOS part of the demo apps
-// import bloc-core
-// import bloc-samples
+import blocSamples
 
 @main
 struct iOSApp: App {
-//     let logger:Logger = Logger(config: StaticConfig(minSeverity: .verbose, logWriterList: [NSLogWriter(), OSLogWriter()]), tag: "bloc")
-//         KoinKt.doInitKoin(appDeclaration:{ _ in })
+    init() {
+		UtilsKt.logger.i(msg: "iOS App started")
+		KoinKt.doInitKoin(koinAppDeclaration: { _ in })
+		UtilsKt.logger.i(msg: "iOS App injected")
 
+		#if DEBUG
+		var injectionBundlePath = "/Applications/InjectionIII.app/Contents/Resources"
+		#if targetEnvironment(macCatalyst)
+		injectionBundlePath = "\(injectionBundlePath)/macOSInjection.bundle"
+		#elseif os(iOS)
+		injectionBundlePath = "\(injectionBundlePath)/iOSInjection.bundle"
+		#endif
+		Bundle(path: injectionBundlePath)?.load()
+		#endif
+    }
+    
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+			MainMenuView()
 		}
 	}
 }

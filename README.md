@@ -6,10 +6,13 @@ Concise ui framework for Kotlin Multiplatform Mobile.
 
 <img alt="BLoC Architecture - Overview" src="./docs/BLoC Architecture - Overview.svg" width="625" />
 
-[Dokka Documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html).
+[Dokka Documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
+.
 
 # Inspiration
+
 Reduce was inspired by :
+
 * Knot
 * Decompose
 * Orbit
@@ -18,10 +21,11 @@ Reduce was inspired by :
 
 # Concept
 
-
 # Getting Started
 
-The example below declares a Knot capable of loading data, handling *Success* and *Failure* loading results and reloading data automatically when an external *"data changed"* signal gets received. It also logs all `State` mutations as well as all processed `Intents` and `Actions` in console.
+The example below declares a Knot capable of loading data, handling *Success* and *Failure* loading
+results and reloading data automatically when an external *"data changed"* signal gets received. It
+also logs all `State` mutations as well as all processed `Intents` and `Actions` in console.
 
 ```kotlin
 ```
@@ -43,8 +47,9 @@ The example below declares a Knot capable of loading data, handling *Success* an
 
 # Gradle
 
-**Step 1.** Add the JitPack repository to your build file.
-Add it in your root build.gradle at the end of repositories:
+**Step 1.** Add the JitPack repository to your build file. Add it in your root build.gradle at the
+end of repositories:
+
 ```kotlin
 allprojects {
     repositories {
@@ -53,7 +58,9 @@ allprojects {
     }
 }
 ```
+
 **Step 2.** Add the dependency
+
 ```kotlin
 dependencies {
 }
@@ -64,6 +71,7 @@ dependencies {
 * Why not?
 
 # License
+
 ```
 Copyright 2022 Emanuel Moecklin
 

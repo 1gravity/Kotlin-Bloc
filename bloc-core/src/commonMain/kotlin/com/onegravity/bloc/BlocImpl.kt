@@ -1,7 +1,6 @@
 package com.onegravity.bloc
 
-import com.arkivanov.essenty.lifecycle.doOnCreate
-import com.arkivanov.essenty.lifecycle.doOnDestroy
+import com.arkivanov.essenty.lifecycle.*
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
@@ -12,14 +11,14 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.coroutines.CoroutineContext
 
-internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
+internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val initializer: Initializer<State, Action> = { },
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Bloc<State, Action, SideEffect, Proposal> {
+) : Bloc<State, Action, SideEffect>() {
 
     private val thunkChannel = Channel<Action>(UNLIMITED)
 
@@ -29,17 +28,28 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
 
     // we use this scope internally, it's tied to the lifecycle of the BlocInstance and will be
     // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
-    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private var coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
-    private val lifecycle = BlocLifecycle({ coroutineScope.start() }, { coroutineScope.cancel() })
+    private val lifecycle = BlocLifecycle(
+        onCreate = {
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+            coroutineScope.initialize()
+        },
+        onStart = { coroutineScope.start() },
+        onStop = { coroutineScope.cancel() },
+        onDestroy = { /* nothing to do */ }
+    )
 
     override val value get() = blocState.value
 
     override val sideEffects: SideEffectStream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
+    // actions can be complex objects resulting in lots of debug output
+    private fun Action.trim() = toString().take(100)
+
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun send(action: Action) {
-        logger.d("emit action $action")
+        logger.d("emit action ${action.trim()}")
         when (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             true -> thunkChannel.trySend(action)
             else -> reduceChannel.trySend(action)
@@ -51,36 +61,71 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     }
 
     /**
+     * Use this in iOS/Swift only (it's the equivalent of the subscribe extension function (for Android)
+     * todo do we need the extension function at all if we can use this instead?
+     */
+    override fun observe(
+        lifecycle: Lifecycle, state:
+        BlocObserver<State>?, sideEffect:
+        BlocObserver<SideEffect>?
+    ) {
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+        lifecycle.doOnStart {
+            logger.d("start Bloc subscription")
+            state?.let {
+                coroutineScope.launch {
+                    collect { state(it) }
+                }
+            }
+            sideEffect?.let {
+                coroutineScope.launch {
+                    sideEffects.collect { sideEffect(it) }
+                }
+            }
+        }
+
+        lifecycle.doOnStop {
+            logger.d("stop Bloc subscription")
+            coroutineScope.cancel("stop Bloc subscription")
+        }
+    }
+
+    /**
      * This needs to come after all variable declarations to make sure everything is initialized
      * before the Bloc is started
      */
     init {
         with(blocContext.lifecycle) {
-            doOnCreate { lifecycle.transition(LifecycleEvent.Started) }
-            doOnDestroy { lifecycle.transition(LifecycleEvent.Destroyed) }
+            doOnCreate { lifecycle.transition(LifecycleEvent.Create) }
+            doOnStart { lifecycle.transition(LifecycleEvent.Start) }
+            doOnStop { lifecycle.transition(LifecycleEvent.Stop) }
+            doOnDestroy { lifecycle.transition(LifecycleEvent.Destroy) }
+        }
+    }
+
+    private fun CoroutineScope.initialize() {
+        launch(dispatcher) {
+            val context = InitializerContext<State, Action>(value) { action -> send(action) }
+            context.initializer()
         }
     }
 
     private fun CoroutineScope.start() {
         launch(dispatcher) {
-            val context = InitializerContext<State, Action>(value) { action -> send(action) }
-            context.initializer()
-        }.invokeOnCompletion {
-            launch(dispatcher) {
-                for (action in thunkChannel) {
-                    runThunks(action)
-                }
+            for (action in thunkChannel) {
+                runThunks(action)
             }
-            launch(dispatcher) {
-                for (action in reduceChannel) {
-                    runReducers(action)
-                }
+        }
+        launch(dispatcher) {
+            for (action in reduceChannel) {
+                runReducers(action)
             }
         }
     }
 
     private suspend fun runThunks(action: Action) {
-        logger.d("process action $action")
+        logger.d("run thunks for action ${action.trim()}")
         thunks.forEachIndexed { index, (matcher, _) ->
             if (matcher == null || matcher.matches(action)) {
                 runThunk(index, action)
@@ -93,7 +138,7 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
             nextThunkDispatcher(index + 1, it).invoke(it)
         }
         val thunk = thunks[index].thunk
-        ThunkContext({ blocState.value }, action, dispatcher).thunk()
+        ThunkContext({ blocState.value }, action, dispatcher, coroutineScope).thunk()
     }
 
     private fun nextThunkDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
@@ -108,6 +153,7 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
     }
 
     private suspend fun runReducers(action: Action) {
+        logger.d("run reducers for action ${action.trim()}")
         getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
             val (_, reducer, expectsProposal) = matcherReducer
             when {
@@ -179,7 +225,7 @@ internal class BlocImpl<State, Action : Any, SideEffect, Proposal>(
             val dispatcher: Dispatcher<Action> = {
                 nextThunkDispatcher(0, it).invoke(it)
             }
-            ThunkContextNoAction({ blocState.value }, dispatcher).thunk()
+            ThunkContextNoAction({ blocState.value }, dispatcher, scope).thunk()
         }
     }
 

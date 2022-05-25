@@ -1,37 +1,47 @@
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    id("bloc-android-base")
+
     id("org.jetbrains.dokka")
+
+    id("bloc-publish")
 }
 
 version = "1.0"
 
 kotlin {
+    // todo
+    // explicitApi = ExplicitApiMode.Strict
+
     android()
+    jvm()
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-    }
-
-    cocoapods {
-        summary = "Reactive state management library for KMM"
-        homepage = "https://github.com/1gravity/Kotlin-Bloc"
-        ios.deploymentTarget = "14.1"
-        framework {
-            baseName = "bloc-redux"
+        listOf(
+            iosX64(),
+            iosArm64(),
+            iosSimulatorArm64()
+        ).forEach {
+            it.binaries.framework {
+                baseName = "blocRedux"
+                transitiveExport = true
+            }
         }
     }
-    
+
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.RequiresOptIn")
+                optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+            }
+        }
+
         val commonMain by getting {
             dependencies {
-                implementation(project(":bloc-core"))
+                implementation(project(":blocCore"))
 
                 implementation(KotlinX.coroutines.core)
 
@@ -40,15 +50,14 @@ kotlin {
                 implementation("com.badoo.reaktive:reaktive:_")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                implementation("com.arkivanov.essenty:lifecycle:_")
-                implementation("com.arkivanov.essenty:parcelable:_")
-                implementation("com.arkivanov.essenty:state-keeper:_")
-                implementation("com.arkivanov.essenty:instance-keeper:_")
-                implementation("com.arkivanov.essenty:back-pressed:_")
+                api("com.arkivanov.essenty:lifecycle:_")
+                api("com.arkivanov.essenty:parcelable:_")
+                api("com.arkivanov.essenty:state-keeper:_")
+                api("com.arkivanov.essenty:instance-keeper:_")
+                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Redux store (https://reduxkotlin.org)
-                api("org.reduxkotlin:redux-kotlin-threadsafe:_")
-                implementation("org.reduxkotlin:redux-kotlin-thunk:_")
+                api("com.1gravity.redux:redux-kotlin-threadsafe:0.5.8-SNAPSHOT")
             }
         }
         val commonTest by getting {
@@ -56,8 +65,10 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+
         val androidMain by getting
         val androidTest by getting
+
         if (isMacOsX) {
             val iosX64Main by getting
             val iosArm64Main by getting
@@ -78,23 +89,6 @@ kotlin {
                 iosSimulatorArm64Test.dependsOn(this)
             }
         }
-    }
-}
-
-android {
-    compileSdk = 32
-    buildToolsVersion = "32.0.0"
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 32
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 

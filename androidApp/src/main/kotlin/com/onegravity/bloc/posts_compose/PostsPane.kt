@@ -9,8 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.github.michaelbull.result.mapBoth
-import com.onegravity.bloc.observeState
+import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
+import com.onegravity.bloc.utils.logger
 
 @Composable
 internal fun PostsPane(
@@ -25,11 +26,11 @@ internal fun PostsPane(
         }
         else -> state.postsState.posts.mapBoth(
             { posts ->
-                Posts(posts, state.selectedPost, modifier) { post ->
-                    component.onClicked(post)
+                Posts(posts, state.selectedPost(), modifier) { post ->
+                    component.onSelected(post)
                 }
             },
-            { error -> Error({ component.loadPosts() }, error) }
+            { error -> Error({ logger.e("$error") }, error) }
         )
     }
 }

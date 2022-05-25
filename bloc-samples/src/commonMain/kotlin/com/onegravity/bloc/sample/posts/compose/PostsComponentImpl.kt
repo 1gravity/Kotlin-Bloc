@@ -1,97 +1,93 @@
 package com.onegravity.bloc.sample.posts.compose
 
-import com.github.michaelbull.result.*
-import com.onegravity.bloc.*
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.runCatching
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.reduce
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
-import com.onegravity.bloc.state.blocState
+import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.thunk
 import com.onegravity.bloc.util.getKoinInstance
-import kotlinx.coroutines.*
+import com.onegravity.bloc.utils.ThunkContextNoAction
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+
+// no external actions, we use a simple function call
+sealed class PostsAction
 
 class PostsComponentImpl(context: BlocContext) : PostsComponent {
-    private val blocState = blocState(PostsRootState(postsState = PostsState(), postState = PostState()))
-
-    sealed class Action {
-        object LoadingPosts : Action()
-        data class LoadedPosts(val result: Result<List<Post>, Throwable>) : Action()
-
-        class LoadingPost(val postId: Int) : Action()
-        data class LoadedPost(val result: Result<Post, Throwable>) : Action()
-    }
 
     private val repository = getKoinInstance<PostRepository>()
+    private val blocState = getKoinInstance<BlocState<PostsRootState, PostsRootState>>()
 
-    override val bloc: Bloc<PostsRootState, Any, Unit, PostsRootState> by lazy {
-        bloc<PostsRootState, Any>(context, blocState) {
+    // internal actions
+    private object PostsLoading : PostsAction()
+    private data class PostsLoaded(val result: Result<List<Post>, Throwable>) : PostsAction()
+    private class PostLoading(val postId: Int) : PostsAction()
+    private data class PostLoaded(val result: Result<Post, Throwable>) : PostsAction()
+
+    // we need to lazy initialize the Bloc so that the component is fully initialized before
+    // making any calls to e.g. loadPosts()
+    override val bloc by lazy {
+        bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
-                if (!state.postsAreLoaded()) loadPosts()
+                loadPosts()
             }
 
-            reduce<Action.LoadingPosts> {
+            reduce<PostsLoading> {
                 state.copy(postsState = state.postsState.copy(loading = true))
             }
 
-            reduce<Action.LoadedPosts> {
+            reduce<PostsLoaded> {
                 state.copy(postsState = state.postsState.copy(loading = false, posts = action.result))
             }
 
-            reduce<Action.LoadingPost> {
-                state.copy(postState = state.postState.copy(loading = action.postId))
+            reduce<PostLoading> {
+                state.copy(postState = state.postState.copy(loadingId = action.postId))
             }
 
-            reduce<Action.LoadedPost> {
-                when (action.result is Ok) {
-                    true -> state.copy(postState = state.postState.copy(loading = null, post = action.result))
-                    else -> state.copy(postState = state.postState.copy(loading = null, post = action.result))
-                }
+            reduce<PostLoaded> {
+                state.copy(postState = state.postState.copy(loadingId = null, post = action.result))
             }
         }
     }
 
+    private fun loadPosts() = thunk {
+        dispatch(PostsLoading)
+        val result = repository.getOverviews()
+        dispatch(PostsLoaded(result))
+    }
+
     private var loadingJob: Job? = null
-    override fun onClicked(post: Post) = reduce {
-        when  {
-            state.selectedPost == null || state.selectedPost != post.id -> state.copy(selectedPost = post.id)
-                // the state was already reduced (synchronously so selectedPost == post.id)
-                .also {
-                    // we cancel a previous loading job before starting a new one from the Bloc's
-                    // CoroutineScope (so it's cancelled when the Bloc is destroyed)
-                    loadingJob?.cancel()
-                    loadingJob = coroutineScope.launch {
-                        loadPost(this)
-                    }
-                }
-            else -> state
+
+    override fun onSelected(post: Post) = thunk {
+        // only load if it's not already being loaded or is not yet loaded
+        val postState = getState().postState
+        if (postState.loadingId == null || postState.loadingId != post.id || postState.post?.component1()?.id != post.id) {
+            // we cancel a previous loading job before starting a new one from the Bloc's
+            // CoroutineScope (so it's cancelled when the Bloc is stopped)
+            loadingJob?.cancel()
+            loadingJob = coroutineScope.launch {
+                load(post)
+            }
         }
     }
 
     override fun onClosed() = reduce {
-        state.copy(selectedPost = null)
+        state.copy(postState = state.postState.copy(loadingId = null, post = null))
     }
 
-    override fun loadPosts() = thunk {
-        dispatch(Action.LoadingPosts)
-        val result = repository.getOverviews()
-        dispatch(Action.LoadedPosts(result))
-    }
-
-    override fun loadPost() = loadPost(null)
-
-    private fun loadPost(coroutineScope: CoroutineScope?) = thunk(coroutineScope) {
+    private suspend fun ThunkContextNoAction<PostsRootState, PostsAction>.load(post: Post) {
         runCatching {
-            val id = getState().selectedPost
-            if (id != null) {
-                dispatch(Action.LoadingPost(id))
-                val result = repository.getDetail(id)
-                dispatch(Action.LoadedPost(result))
-            }
+            dispatch(PostLoading(post.id))
+            val result = repository.getDetail(post.id)
+            dispatch(PostLoaded(result))
         }.onFailure {
-            when (it is CancellationException) {
-                true -> reduce { state.copy(postsState = state.postsState.copy(loading = false)) }
-                else -> dispatch(Action.LoadedPost(Err(it)))
-            }
+            dispatch(PostLoaded(Err(it)))
         }
     }
-
 }

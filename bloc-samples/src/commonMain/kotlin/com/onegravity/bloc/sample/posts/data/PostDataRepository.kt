@@ -4,8 +4,8 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.coroutines.binding.binding
 import com.onegravity.bloc.sample.posts.data.posts.network.AvatarUrlGenerator
 import com.onegravity.bloc.sample.posts.data.posts.network.PostNetworkDataSource
-import com.onegravity.bloc.sample.posts.domain.repositories.PostComment
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
+import com.onegravity.bloc.sample.posts.domain.repositories.PostComment
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 
 class PostDataRepository(

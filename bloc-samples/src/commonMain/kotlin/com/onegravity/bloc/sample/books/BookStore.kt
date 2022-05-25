@@ -1,7 +1,10 @@
 package com.onegravity.bloc.sample.books
 
 import com.github.michaelbull.result.Ok
-import org.reduxkotlin.*
+import org.reduxkotlin.Store
+import org.reduxkotlin.applyMiddleware
+import org.reduxkotlin.createThreadSafeStore
+import org.reduxkotlin.createThunkMiddleware
 
 object BookStore {
     // Action (BLoC / Thunk -> Redux Store)

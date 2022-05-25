@@ -5,17 +5,17 @@ import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
 import org.reduxkotlin.Store
 
-internal open class ReduxBlocStateBuilderImpl<State, Model: Any, ReduxModel: Any> :
+internal open class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxModel : Any> :
     ReduxBlocStateBuilder<State, Model, ReduxModel> {
 
     private var _initialState: State? = null
     private var _selector: Selector<ReduxModel, Model>? = null
     private var _mapper: Mapper<Model, State>? = null
 
-    fun <Proposal: Any> build(
+    fun <Proposal : Any> build(
         disposableScope: DisposableScope,
         store: Store<ReduxModel>
-    ) : ReduxBlocState<State, Proposal, Model, ReduxModel> =
+    ): ReduxBlocState<State, Proposal, Model, ReduxModel> =
         ReduxBlocState(
             disposableScope = disposableScope,
             initialState = checkNotNull(_initialState) { "initialState must be declared" },

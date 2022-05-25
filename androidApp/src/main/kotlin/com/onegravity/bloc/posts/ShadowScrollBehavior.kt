@@ -35,13 +35,15 @@ import com.onegravity.bloc.R
  * Ensures Toolbar is not elevated when a recyclerview or nestedscrollview is scrolled to the top
  */
 @Suppress("unused")
-class ShadowScrollBehavior(context: Context, attrs: AttributeSet) : AppBarLayout.ScrollingViewBehavior(context, attrs) {
+class ShadowScrollBehavior(context: Context, attrs: AttributeSet) :
+    AppBarLayout.ScrollingViewBehavior(context, attrs) {
 
     @SuppressLint("PrivateResource")
-    private val maxElevation = context.resources.getDimensionPixelSize(R.dimen.design_appbar_elevation).toFloat()
+    private val maxElevation =
+        context.resources.getDimensionPixelSize(R.dimen.design_appbar_elevation).toFloat()
 
     override fun onDependentViewChanged(parent: CoordinatorLayout, child: View, dependency: View):
-        Boolean {
+            Boolean {
         if (dependency is AppBarLayout) {
             when (child) {
                 is NestedScrollView -> {

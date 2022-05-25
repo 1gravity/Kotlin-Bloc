@@ -5,7 +5,6 @@ pluginManagement {
         google()
         gradlePluginPortal()
         mavenCentral()
-        mavenLocal()
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://jitpack.io")
     }
@@ -16,7 +15,13 @@ plugins {
     id("de.fayard.refreshVersions") version "0.40.1"
 }
 
-include(":bloc-core")
-include(":bloc-redux")
-include(":bloc-samples")
+include(":blocCore")
+include(":blocRedux")
+include(":blocCompose")
+include(":blocSamples")
 include(":androidApp")
+
+project(":blocCore").projectDir = file("bloc-core")
+project(":blocRedux").projectDir = file("bloc-redux")
+project(":blocCompose").projectDir = file("bloc-compose")
+project(":blocSamples").projectDir = file("bloc-samples")

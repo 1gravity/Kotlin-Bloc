@@ -4,22 +4,28 @@ import com.onegravity.bloc.sample.posts.data.PostDataRepository
 import com.onegravity.bloc.sample.posts.data.posts.network.AvatarUrlGenerator
 import com.onegravity.bloc.sample.posts.data.posts.network.PostNetworkDataSource
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
-import com.onegravity.bloc.utils.Logger
-import com.onegravity.bloc.utils.LoggerImpl
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.sample.posts.compose.PostState
+import com.onegravity.bloc.sample.posts.compose.PostsRootState
+import com.onegravity.bloc.sample.posts.compose.PostsState
+import com.onegravity.bloc.state.blocState
 import io.ktor.client.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
-import org.koin.core.KoinApplication
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.context.startKoin
+import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import co.touchlab.kermit.Logger as KermitLogger
+import com.onegravity.bloc.utils.logger as blocLogger
 
 // called by Android and iOS
-fun KoinApplication.initKoin() {
-    modules(commonModule)
+fun initKoin(koinAppDeclaration: KoinAppDeclaration = {}) {
+    startKoin {
+        koinAppDeclaration()
+        modules(commonModule)
+    }
 }
 
 inline fun <reified T> getKoinInstance() =
@@ -29,20 +35,16 @@ inline fun <reified T> getKoinInstance() =
 
 private val commonModule = module {
     // we can either inject a Logger or just use the static Logger.x(msg)
-    single<Logger> {
-        KermitLogger.setTag("bloc")
-        KermitLogger.setLogWriters(logger())
-        LoggerImpl
-    }
+    single { blocLogger }
 
     single {
         HttpClient {
+            expectSuccess = true
             install(Logging)
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+            install(ContentNegotiation) {
+                json(Json {
                     prettyPrint = true
                     isLenient = true
-                    ignoreUnknownKeys = true
                 })
             }
         }
@@ -51,6 +53,10 @@ private val commonModule = module {
     single { PostNetworkDataSource() }
 
     single<PostRepository> { PostDataRepository(get(), get()) }
+
+    single {
+        blocState(PostsRootState(postsState = PostsState(), postState = PostState()))
+    }
 
     single { AvatarUrlGenerator() }
 }

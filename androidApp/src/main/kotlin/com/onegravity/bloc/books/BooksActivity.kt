@@ -5,8 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.onegravity.bloc.*
-import com.onegravity.bloc.sample.books.*
+import com.onegravity.bloc.R
+import com.onegravity.bloc.getOrCreate
+import com.onegravity.bloc.sample.books.BookState
+import com.onegravity.bloc.sample.books.BooksRepositoryImpl
+import com.onegravity.bloc.sample.books.BooksUseCase
+import com.onegravity.bloc.sample.books.BooksUseCaseImpl
+import com.onegravity.bloc.subscribe
 
 class BooksActivity : AppCompatActivity() {
 

@@ -4,7 +4,6 @@ import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.BlocDSL
-import org.reduxkotlin.Reducer
 import org.reduxkotlin.Store
 import org.reduxkotlin.createThreadSafeStore
 import kotlin.jvm.JvmName
@@ -16,7 +15,7 @@ import kotlin.jvm.JvmName
  */
 @JvmName("reduxBlocState")
 @BlocDSL
-internal fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
+internal fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxBlocStateBuilder<State, Model, ReduxModel>.() -> Unit
@@ -28,12 +27,12 @@ internal fun <State, Proposal: Any, Model: Any, ReduxModel: Any> reduxBlocState(
 /**
  * Creates a [ReduxBlocState] instance using a [ReduxSimpleBlocStateBuilder]
  * (Model == State -> no mapping function).
- * 
+ *
  * Don't use this directly but use the Store extension functions reduxStore.toBlocState(...)
  */
 @JvmName("simpleReduxBlocState")
 @BlocDSL
-internal fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
+internal fun <State : Any, Proposal : Any, ReduxModel : Any> reduxBlocState(
     disposableScope: DisposableScope,
     store: Store<ReduxModel>,
     block: ReduxSimpleBlocStateBuilder<State, ReduxModel>.() -> Unit
@@ -50,7 +49,7 @@ internal fun <State: Any, Proposal: Any, ReduxModel: Any> reduxBlocState(
 //      on the way out AND in, so not just select sub state to stream to the ui but also reduce just
 //      the selected part of the full Redux model.
 @BlocDSL
-inline fun <reified State: Any> BlocContext.reduxBlocState(
+inline fun <reified State : Any> BlocContext.reduxBlocState(
     initialState: State
 ): BlocState<State, State> =
     createThreadSafeStore(

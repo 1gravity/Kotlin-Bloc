@@ -71,6 +71,7 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
     }
 }
 
-inline fun <reified T : ViewBinding> Fragment.viewBinding() = FragmentViewBindingDelegate(this) { view: View ->
-    T::class.java.getMethod("bind", View::class.java).invoke(null, view) as T
-}
+inline fun <reified T : ViewBinding> Fragment.viewBinding() =
+    FragmentViewBindingDelegate(this) { view: View ->
+        T::class.java.getMethod("bind", View::class.java).invoke(null, view) as T
+    }

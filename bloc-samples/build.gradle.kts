@@ -1,13 +1,10 @@
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    kotlin("plugin.serialization")
-    id("com.android.library")
+    id("bloc-android-base")
+
     id("kotlin-parcelize")
-    // todo create a separate module for Jetbrains Compose
-    id("org.jetbrains.compose")
+    kotlin("plugin.serialization")
 }
 
 version = "1.0"
@@ -17,46 +14,55 @@ kotlin {
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-    }
-
-    cocoapods {
-        summary = "Reactive state management library for KMM"
-        homepage = "https://github.com/1gravity/Kotlin-Bloc"
-        ios.deploymentTarget = "14.1"
-        framework {
-            baseName = "bloc-samples"
+        listOf(
+            iosX64(),
+            iosArm64(),
+            iosSimulatorArm64()
+        ).forEach { target ->
+            target.binaries.framework {
+                baseName = "blocSamples"
+                transitiveExport = true
+                export(project(":blocCore"))
+                export(project(":blocRedux"))
+            }
         }
     }
-    
+
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.RequiresOptIn")
+                optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+            }
+        }
+
         val commonMain by getting {
             dependencies {
+                api(project(":blocCore"))
+                api(project(":blocRedux"))
+
                 implementation(KotlinX.coroutines.core)
-                implementation(project(":bloc-core"))
-                implementation(project(":bloc-redux"))
 
                 // Redux store (https://reduxkotlin.org)
-                implementation("org.reduxkotlin:redux-kotlin-threadsafe:_")
-                implementation("org.reduxkotlin:redux-kotlin-thunk:_")
+                implementation("com.1gravity.redux:redux-kotlin-threadsafe:0.5.8-SNAPSHOT")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                implementation("com.arkivanov.essenty:lifecycle:_")
-                implementation("com.arkivanov.essenty:parcelable:_")
-                implementation("com.arkivanov.essenty:state-keeper:_")
-                implementation("com.arkivanov.essenty:instance-keeper:_")
-                implementation("com.arkivanov.essenty:back-pressed:_")
+                api("com.arkivanov.essenty:lifecycle:_")
+                api("com.arkivanov.essenty:parcelable:_")
+                api("com.arkivanov.essenty:state-keeper:_")
+                api("com.arkivanov.essenty:instance-keeper:_")
+                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Koin
                 implementation(Koin.core)
 
                 // Ktor
                 implementation(Ktor.client.core)
-                implementation(Ktor.client.serialization)
-                implementation(Ktor.client.json)
                 implementation(Ktor.client.logging)
+                implementation(Ktor.client.json)
+                implementation(Ktor.client.serialization)
+                implementation("io.ktor:ktor-client-content-negotiation:_")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:_")
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
@@ -74,6 +80,7 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+
         val androidMain by getting {
             dependencies {
                 implementation(Ktor.client.cio)
@@ -88,38 +95,27 @@ kotlin {
         val androidTest by getting
 
         if (isMacOsX) {
+            val iosX64Main by getting
+            val iosArm64Main by getting
             val iosSimulatorArm64Main by getting
-            val iosMain by getting {
+            val iosMain by creating {
                 dependsOn(commonMain)
-                iosSimulatorArm64Main.dependsOn(this)
                 dependencies {
                     implementation("io.ktor:ktor-client-ios:_")
                 }
+                iosX64Main.dependsOn(this)
+                iosArm64Main.dependsOn(this)
+                iosSimulatorArm64Main.dependsOn(this)
             }
+            val iosX64Test by getting
+            val iosArm64Test by getting
             val iosSimulatorArm64Test by getting
-            val iosTest by getting {
+            val iosTest by creating {
                 dependsOn(commonTest)
+                iosX64Test.dependsOn(this)
+                iosArm64Test.dependsOn(this)
                 iosSimulatorArm64Test.dependsOn(this)
             }
         }
-    }
-}
-
-android {
-    compileSdk = 32
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 32
-    }
-    buildFeatures {
-//        viewBinding = true
-        compose = true
-    }
-    dataBinding {
-//        isEnabled = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
     }
 }

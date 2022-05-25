@@ -8,13 +8,13 @@ import com.onegravity.bloc.utils.Selector
 import kotlinx.coroutines.flow.FlowCollector
 import org.reduxkotlin.Store
 
-internal class ReduxBlocState<State, Proposal : Any, Model : Any, ReduxModel : Any>(
+internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxModel : Any>(
     disposableScope: DisposableScope,
     initialState: State,
     private val store: Store<ReduxModel>,
     selector: Selector<ReduxModel, Model>,
     mapper: Mapper<Model, State>
-) : BlocState<State, Proposal>,
+) : BlocState<State, Proposal>(),
     DisposableScope by disposableScope {
 
     private val state = MutableStateStream(initialState)

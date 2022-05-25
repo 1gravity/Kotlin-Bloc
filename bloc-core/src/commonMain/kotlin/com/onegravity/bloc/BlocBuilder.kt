@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.JvmName
 
-class BlocBuilder<State, Action : Any, SE, Proposal> {
+class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
     private var _initializer: Initializer<State, Action> = { }
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
@@ -18,7 +18,7 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
     fun build(
         context: BlocContext,
         blocState: BlocState<State, Proposal>
-    ): Bloc<State, Action, SE, Proposal> = BlocImpl(
+    ): Bloc<State, Action, SE> = BlocImpl(
         blocContext = context,
         blocState = blocState,
         initializer = _initializer,
@@ -50,7 +50,7 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
     @BlocDSL
     @JvmName("thunkMatchingEnums")
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> thunk(
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A : ActionEnum> thunk(
         childClazz: A,
         noinline thunk: Thunk<State, ActionEnum, A>
     ) {
@@ -93,7 +93,7 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
     @BlocDSL
     @JvmName("reduceMatchingEnums")
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> reduce(
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A : ActionEnum> reduce(
         childClazz: A,
         noinline reducer: Reducer<State, A, Proposal>
     ) {
@@ -134,7 +134,7 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
     @BlocDSL
     @JvmName("sideEffectMatchingEnums")
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> sideEffect(
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A : ActionEnum> sideEffect(
         childClazz: A,
         noinline sideEffect: SideEffect<State, A, SE>
     ) {
@@ -166,7 +166,7 @@ class BlocBuilder<State, Action : Any, SE, Proposal> {
     @BlocDSL
     @JvmName("reduceWithSideEffectMatchingEnums")
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A: ActionEnum> reduceAnd(
+    inline fun <reified ActionEnum : Enum<ActionEnum>, reified A : ActionEnum> reduceAnd(
         childClazz: A,
         noinline reducer: Reducer<State, Action, Effect<Proposal, SE>>
     ) {

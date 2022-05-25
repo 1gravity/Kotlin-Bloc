@@ -29,12 +29,11 @@ enum class ActionEnum(val digit: Int? = null) {
  * In this example we're using an Enum as Action. This allows us to bind the layouts directly to the
  * Enum without extra transformation.
  */
-fun blocEnum(context: BlocContext) = bloc<State, ActionEnum>(context, State()) {
-    fun State.resetErrors() = if (register1.isError() || register2.isError()) State() else this
+fun blocEnum(context: BlocContext) = bloc<CalculatorState, ActionEnum>(context, CalculatorState()) {
+    fun CalculatorState.resetErrors() = if (register1.isError() || register2.isError()) CalculatorState() else this
 
-    reduce(ActionEnum.Clear) { State() }
+    reduce(ActionEnum.Clear) { CalculatorState() }
     reduce(ActionEnum.Equals) { state.resetErrors().equals() }
-    reduce(ActionEnum.Clear) { State() }
     reduce(ActionEnum.Add) { state.resetErrors().apply(Operator.Add) }
     reduce(ActionEnum.Subtract) { state.resetErrors().apply(Operator.Subtract) }
     reduce(ActionEnum.Multiply) { state.resetErrors().apply(Operator.Multiply) }

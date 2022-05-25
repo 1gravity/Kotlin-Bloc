@@ -5,6 +5,7 @@
     <string name="main_menu">Menu\nTraditional</string>
     <string name="main_menu_compose">Menu\nCompose</string>
     <string name="main_menu_counter">Counter</string>
+    <string name="main_menu_counter_compose">Counter\nCompose</string>
     <string name="main_menu_counter_redux">Counter\nRedux</string>
     <string name="main_menu_books">Books</string>
     <string name="main_menu_calculator">Calculator</string>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2021 Mikołaj Leszczyński & Appmattus Limited
   ~ Copyright 2020 Babylon Partners Limited
   ~
@@ -22,8 +21,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="activity" type="com.onegravity.bloc.calculator.CalculatorActivityNoVM" />
-        <import type="com.onegravity.bloc.sample.calculator.ActionEnum"/>
+
+        <variable
+            name="activity"
+            type="com.onegravity.bloc.calculator.CalculatorActivityNoVM" />
+
+        <import type="com.onegravity.bloc.sample.calculator.ActionEnum" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

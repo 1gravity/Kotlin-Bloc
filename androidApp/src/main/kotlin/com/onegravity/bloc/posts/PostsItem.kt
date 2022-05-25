@@ -25,10 +25,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListItemBinding
-import com.xwray.groupie.viewbinding.BindableItem
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
+import com.xwray.groupie.viewbinding.BindableItem
 
-data class PostsItem(private val post: Post, private val viewModel: PostsViewModel) :
+data class PostsItem(private val post: Post, private val onClicked: (post: Post) -> Unit) :
     BindableItem<PostListItemBinding>() {
 
     override fun initializeViewBinding(view: View) = PostListItemBinding.bind(view)
@@ -47,7 +47,7 @@ data class PostsItem(private val post: Post, private val viewModel: PostsViewMod
         viewBinding.postUsername.text = post.username
 
         viewBinding.root.setOnClickListener {
-            viewModel.onPostClicked(post)
+            onClicked(post)
         }
     }
 }
