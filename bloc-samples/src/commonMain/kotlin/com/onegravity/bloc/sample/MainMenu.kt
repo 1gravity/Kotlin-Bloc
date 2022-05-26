@@ -15,7 +15,8 @@ object MainMenu {
         Calculator,
         CalculatorNoVM,
         Posts,
-        PostsCompose
+        PostsCompose,
+        ToDo
     }
 
     fun bloc(context: BlocContext) = bloc<ActionState, ActionState, ActionState>(

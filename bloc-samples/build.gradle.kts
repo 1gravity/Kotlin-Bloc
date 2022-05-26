@@ -44,7 +44,7 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Redux store (https://reduxkotlin.org)
-                implementation("com.1gravity.redux:redux-kotlin-threadsafe:0.5.8-SNAPSHOT")
+                implementation("com.1gravity.redux:redux-kotlin-threadsafe:_")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 api("com.arkivanov.essenty:lifecycle:_")
@@ -69,6 +69,9 @@ kotlin {
 
                 // BigNums (https://github.com/ionspin/kotlin-multiplatform-bignum)
                 implementation("com.ionspin.kotlin:bignum:_")
+
+                // UUIDs (https://github.com/benasher44/uuid)
+                implementation("com.benasher44:uuid:_")
 
                 // Kotlin Result (https://github.com/michaelbull/kotlin-result)
                 implementation("com.michael-bull.kotlin-result:kotlin-result:_")

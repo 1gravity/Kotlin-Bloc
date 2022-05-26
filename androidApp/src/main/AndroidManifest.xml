@@ -75,6 +75,12 @@
             android:label="Compose"
             android:theme="@style/AppThemePosts" />
 
+        <activity
+            android:name=".todo.TodoActivity"
+            android:exported="false"
+            android:label="Compose"
+            android:theme="@style/Theme.Bloc" />
+
     </application>
 
 </manifest>

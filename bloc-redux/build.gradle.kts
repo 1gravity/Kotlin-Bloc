@@ -57,7 +57,7 @@ kotlin {
                 api("com.arkivanov.essenty:back-pressed:_")
 
                 // Redux store (https://reduxkotlin.org)
-                api("com.1gravity.redux:redux-kotlin-threadsafe:0.5.8-SNAPSHOT")
+                api("com.1gravity.redux:redux-kotlin-threadsafe:_")
             }
         }
         val commonTest by getting {

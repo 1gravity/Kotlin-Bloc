@@ -8,7 +8,7 @@ plugins {
     id("org.jetbrains.dokka")
 
     // run "./gradlew tiTree assemble" to get the task tree for the "assemble" task
-    id("org.barfuin.gradle.taskinfo") version "1.4.0"
+    id("org.barfuin.gradle.taskinfo")
 
     id("bloc-publish")
 }

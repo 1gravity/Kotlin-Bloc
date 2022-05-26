@@ -17,6 +17,7 @@ import com.onegravity.bloc.menu_compose.MainActivityCompose
 import com.onegravity.bloc.posts.PostsActivity
 import com.onegravity.bloc.sample.MainMenu.ActionState.*
 import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.todo.TodoActivity
 import com.onegravity.bloc.viewModel
 import com.onegravity.bloc.posts_compose.PostsActivity as ComposePostsActivity
 
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         Calculator to CalculatorActivity::class.java,
         CalculatorNoVM to CalculatorActivityNoVM::class.java,
         Posts to PostsActivity::class.java,
-        PostsCompose to ComposePostsActivity::class.java
+        PostsCompose to ComposePostsActivity::class.java,
+        ToDo to TodoActivity::class.java
     )
 
     private fun <A : Activity, C : Class<A>> C.start() {

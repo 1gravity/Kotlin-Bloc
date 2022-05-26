@@ -19,7 +19,8 @@ object MainMenuCompose {
         Calculator,
         CalculatorNoViewModel,
         Posts,
-        PostsCompose
+        PostsCompose,
+        ToDo
     }
 
     @Suppress("ArrayInDataClass")

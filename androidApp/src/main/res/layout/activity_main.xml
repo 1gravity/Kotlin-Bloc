@@ -132,6 +132,17 @@
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toTopOf="@id/posts" />
 
+        <Button
+            android:id="@+id/todo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/menu_margins"
+            android:onClick="@{(view) -> viewmodel.onClick(ActionState.ToDo)}"
+            android:text="@string/main_menu_todo"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/posts" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
