@@ -14,9 +14,10 @@ import kotlin.coroutines.CoroutineContext
 internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
-    private val initializer: Initializer<State, Action> = { },
+    private val initialize: Initializer<State, Action> = { },
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
+    // todo have separate Dispatchers for initialize, reducers, side effects and thunks
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, SideEffect>(),
     BlocExtension<State, Action, SideEffect, Proposal> {
@@ -29,11 +30,11 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 
     // we use this scope internally, it's tied to the lifecycle of the Bloc and will be
     // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
-    private var coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var coroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 
     private val lifecycle = BlocLifecycle(
         onCreate = {
-            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+            coroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
             coroutineScope.initialize()
         },
         onStart = { coroutineScope.start() },
@@ -108,7 +109,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     private fun CoroutineScope.initialize() {
         launch(dispatcher) {
             val context = InitializerContext<State, Action>(value) { action -> send(action) }
-            context.initializer()
+            context.initialize()
         }
     }
 

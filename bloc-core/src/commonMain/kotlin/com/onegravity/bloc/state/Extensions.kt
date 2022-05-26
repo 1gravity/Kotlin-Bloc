@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.FlowCollector
  */
 public fun <State : Any, SideEffect : Any, Proposal : Any> Bloc<State, Proposal, SideEffect>.asBlocState(): BlocState<State, Proposal> =
     object : BlocState<State, Proposal>() {
-        override fun send(value: Proposal) {
-            this@asBlocState.send(value)
+        override fun send(proposal: Proposal) {
+            this@asBlocState.send(proposal)
         }
 
         override val value: State

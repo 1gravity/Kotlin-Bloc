@@ -8,17 +8,18 @@ import kotlinx.coroutines.flow.FlowCollector
  * Sink for proposals used to potentially alter state.
  */
 public abstract class BlocState<out State : Any, in Proposal : Any> : StateStream<State>, Sink<Proposal> {
+
     /**
      * StateStream
      */
-    public abstract override val value: State
+    abstract override val value: State
 
-    public abstract override suspend fun collect(collector: FlowCollector<State>)
+    abstract override suspend fun collect(collector: FlowCollector<State>)
 
     /**
      * Sink
      */
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    public abstract override fun send(proposal: Proposal)
+    abstract override fun send(proposal: Proposal)
 
 }

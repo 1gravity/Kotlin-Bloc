@@ -10,7 +10,7 @@ import kotlin.jvm.JvmName
 
 public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
-    private var _initializer: Initializer<State, Action> = { }
+    private var _initialize: Initializer<State, Action> = { }
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
     private var _dispatcher: CoroutineContext = Dispatchers.Default
@@ -21,7 +21,7 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     ): Bloc<State, Action, SE> = BlocImpl(
         blocContext = context,
         blocState = blocState,
-        initializer = _initializer,
+        initialize = _initialize,
         thunks = _thunks,
         reducers = _reducers,
         dispatcher = _dispatcher,
@@ -30,8 +30,8 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     /* *** Initialization *** */
 
     @BlocDSL
-    public fun onCreate(initializer: Initializer<State, Action>) {
-        _initializer = initializer
+    public fun onCreate(initialize: Initializer<State, Action>) {
+        _initialize = initialize
     }
 
     /* *** Thunks *** */
