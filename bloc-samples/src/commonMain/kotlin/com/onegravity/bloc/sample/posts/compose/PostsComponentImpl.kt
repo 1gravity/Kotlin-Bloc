@@ -25,17 +25,26 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
     private val blocState = getKoinInstance<BlocState<PostsRootState, PostsRootState>>()
 
     // internal actions
+    private object LoadPosts : PostsAction()
     private object PostsLoading : PostsAction()
     private data class PostsLoaded(val result: Result<List<Post>, Throwable>) : PostsAction()
     private class PostLoading(val postId: Int) : PostsAction()
     private data class PostLoaded(val result: Result<Post, Throwable>) : PostsAction()
 
     // we need to lazy initialize the Bloc so that the component is fully initialized before
-    // making any calls to e.g. loadPosts()
+    // making any calls to load the posts
     override val bloc by lazy {
         bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
-                loadPosts()
+                // we could load the posts here but it's good practice to deal with
+                // asynchronous code in thunks
+                dispatch(LoadPosts)
+            }
+
+            thunk<LoadPosts> {
+                dispatch(PostsLoading)
+                val result = repository.getOverviews()
+                dispatch(PostsLoaded(result))
             }
 
             reduce<PostsLoading> {
@@ -54,12 +63,6 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent {
                 state.copy(postState = state.postState.copy(loadingId = null, post = action.result))
             }
         }
-    }
-
-    private fun loadPosts() = thunk {
-        dispatch(PostsLoading)
-        val result = repository.getOverviews()
-        dispatch(PostsLoaded(result))
     }
 
     private var loadingJob: Job? = null

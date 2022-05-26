@@ -12,8 +12,8 @@ internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxMod
     disposableScope: DisposableScope,
     initialState: State,
     private val store: Store<ReduxModel>,
-    selector: Selector<ReduxModel, Model>,
-    mapper: Mapper<Model, State>
+    select: Selector<ReduxModel, Model>,
+    map: Mapper<Model, State>
 ) : BlocState<State, Proposal>(),
     DisposableScope by disposableScope {
 
@@ -22,8 +22,8 @@ internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxMod
     init {
         // using selectScoped will unsubscribe from the store automatically when the Bloc's
         // lifecycle ends (onDestroy() called)
-        store.selectScoped(this, selector) { model ->
-            state.send(mapper(model))
+        store.selectScoped(this, select) { model ->
+            state.send(map(model))
         }
     }
 
@@ -40,6 +40,7 @@ internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxMod
     /**
      * The Sink<Proposal>.
      */
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun send(value: Proposal) {
         store.dispatch(value)
     }

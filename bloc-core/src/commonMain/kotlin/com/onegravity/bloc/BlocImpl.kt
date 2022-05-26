@@ -18,7 +18,8 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     private val dispatcher: CoroutineContext = Dispatchers.Default
-) : Bloc<State, Action, SideEffect>() {
+) : Bloc<State, Action, SideEffect>(),
+    BlocExtension<State, Action, SideEffect, Proposal> {
 
     private val thunkChannel = Channel<Action>(UNLIMITED)
 
@@ -26,7 +27,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 
     private val sideEffectChannel = Channel<SideEffect>(UNLIMITED)
 
-    // we use this scope internally, it's tied to the lifecycle of the BlocInstance and will be
+    // we use this scope internally, it's tied to the lifecycle of the Bloc and will be
     // cancelled when the InstanceKeeper destroys the Bloc (onDestroy())
     private var coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
@@ -200,23 +201,23 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * Public API to run thunks / reducers "externally" (using extension functions)
      */
 
+    override fun runInitializer(initialize: Initializer<State, Action>) = coroutineScope.launch {
+        val context = InitializerContext<State, Action>(state = value, dispatch = { action -> send(action) })
+        context.initialize()
+    }
+
     /**
      * The reducer runs synchronously!
      */
-    fun runReducer(reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>) = coroutineScope.launch {
-        val (proposal, sideEffects) = ReducerContextNoAction(
-            blocState.value,
-            coroutineScope
-        ).reducer()
-        if (proposal != null) {
-            blocState.send(proposal)
-            postSideEffects(sideEffects)
-        } else {
+    override fun runReducer(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Job =
+        coroutineScope.launch {
+            val context = ReducerContextNoAction(blocState.value, coroutineScope)
+            val (proposal, sideEffects) = context.reduce()
+            proposal?.let { blocState.send(it) }
             postSideEffects(sideEffects)
         }
-    }
 
-    fun runThunk(
+    override fun runThunk(
         coroutineScope: CoroutineScope?,
         thunk: ThunkNoAction<State, Action>
     ) {
@@ -225,13 +226,9 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
             val dispatcher: Dispatcher<Action> = {
                 nextThunkDispatcher(0, it).invoke(it)
             }
-            ThunkContextNoAction({ blocState.value }, dispatcher, scope).thunk()
+            val context = ThunkContextNoAction({ blocState.value }, dispatcher, scope)
+            context.thunk()
         }
-    }
-
-    fun runInitializer(initializer: Initializer<State, Action>) = coroutineScope.launch {
-        val context = InitializerContext<State, Action>(value) { action -> send(action) }
-        context.initializer()
     }
 
 }

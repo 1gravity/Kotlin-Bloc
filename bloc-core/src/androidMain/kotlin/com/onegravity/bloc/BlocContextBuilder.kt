@@ -129,8 +129,6 @@ internal class BlocViewModel : ViewModel() {
 
 /** --------------------------------------------------------------------------------------------- */
 
-// TODO reconsider if we really need the ActivityBlocContext, it adds a lot of complexity
-
 /**
  * If we're using a ViewModel, the BlocContext will be created in that ViewModel but the
  * SavedStateRegistry, ViewModelStore and OnBackPressedDispatcher are still "taken" from the

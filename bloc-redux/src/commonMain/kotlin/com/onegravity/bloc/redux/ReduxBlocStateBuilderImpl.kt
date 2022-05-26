@@ -20,8 +20,8 @@ internal open class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxMod
             disposableScope = disposableScope,
             initialState = checkNotNull(_initialState) { "initialState must be declared" },
             store = store,
-            selector = checkNotNull(_selector) { "select { } must be declared" },
-            mapper = checkNotNull(_mapper) { "map { } must be declared" },
+            select = checkNotNull(_selector) { "select { } must be declared" },
+            map = checkNotNull(_mapper) { "map { } must be declared" },
         )
 
     override var initialState: State

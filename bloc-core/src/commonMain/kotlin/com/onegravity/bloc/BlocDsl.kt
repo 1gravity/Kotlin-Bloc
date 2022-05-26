@@ -14,7 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.onCreate(
     initializer: Initializer<State, Action>
 ) {
-    (this as BlocImpl<State, Action, SideEffect, Proposal>).runInitializer(initializer)
+    // we assume that every class implementing Bloc also implements BlocExtension
+    // since we provide all concrete Bloc implementations, this is guaranteed
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).runInitializer(initializer)
 }
 
 /**
@@ -38,7 +40,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
     coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
 ) {
-    (this as BlocImpl<State, Action, SideEffect, Proposal>).runThunk(coroutineScope, thunk)
+    // we assume that every class implementing Bloc also implements BlocExtension
+    // since we provide all concrete Bloc implementations, this is guaranteed
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).runThunk(coroutineScope, thunk)
 }
 
 /**
@@ -87,7 +91,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) {
-    (this as BlocImpl<State, Action, SideEffect, Proposal>).runReducer(reducer)
+    // we assume that every class implementing Bloc also implements BlocExtension
+    // since we provide all concrete Bloc implementations, this is guaranteed
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).runReducer(reducer)
 }
 
 /**
@@ -112,7 +118,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
     val reducerNoState: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
         Effect(null, sideEffect.invoke(this))
     }
-    (this as BlocImpl<State, Action, SideEffect, Proposal>).runReducer(reducerNoState)
+    // we assume that every class implementing Bloc also implements BlocExtension
+    // since we provide all concrete Bloc implementations, this is guaranteed
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).runReducer(reducerNoState)
 }
 
 /**

@@ -1,7 +1,6 @@
 package com.onegravity.bloc.state
 
-import com.onegravity.bloc.utils.Sink
-import com.onegravity.bloc.utils.StateStream
+import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.flow.FlowCollector
 
 /**
@@ -19,5 +18,7 @@ public abstract class BlocState<out State : Any, in Proposal : Any> : StateStrea
     /**
      * Sink
      */
-    public abstract override fun send(value: Proposal)
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+    public abstract override fun send(proposal: Proposal)
+
 }

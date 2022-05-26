@@ -38,9 +38,6 @@ object ReduxCounter {
 // TODO think about the initial value, who/what provides it? should be have a mechanism to populate
 //      the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
 //      ReduxStore and one in the BlocState)
+//      how about using the redux mechanism using an ActionTypes.INIT to initialize state?
 
 // TODO think about navigation as well, will side effects be sufficient?
-
-// TODO iOS sample app
-
-// TODO create a minimalistic todo sample app since that's one of two standard examples

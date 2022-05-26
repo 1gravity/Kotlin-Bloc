@@ -5,6 +5,8 @@ import com.onegravity.bloc.utils.MutableStateStream
 import kotlinx.coroutines.flow.FlowCollector
 
 internal open class BlocStateImpl<State : Any, Proposal : Any>(
+// todo implement persistent state
+
     initialState: State,
     private val acceptor: Acceptor<Proposal, State>,
 ) : BlocState<State, Proposal>() {
@@ -24,7 +26,6 @@ internal open class BlocStateImpl<State : Any, Proposal : Any>(
     /**
      * The Sink<Proposal>.
      */
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun send(proposal: Proposal) {
         val newState = acceptor(proposal, value)
         state.send(newState)
