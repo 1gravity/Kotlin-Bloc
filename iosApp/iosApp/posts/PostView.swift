@@ -10,12 +10,12 @@ import SwiftUI
 import blocSamples
 
 struct PostView: View {
-    private let component: BlocComponent<PostsComponentImpl>
+    private let component: BlocComponent<PostsComponent>
 
     @ObservedObject
     private var model: BlocObserver<PostsRootState, PostsAction, KotlinUnit>
 
-    init(_ component: BlocComponent<PostsComponentImpl>) {
+    init(_ component: BlocComponent<PostsComponent>) {
         self.component = component
         model = BlocObserver(component.value.bloc)
     }

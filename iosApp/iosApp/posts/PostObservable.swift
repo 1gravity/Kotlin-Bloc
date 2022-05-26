@@ -16,7 +16,7 @@ class PostObservable : ObservableObject {
 
     private var postIdInternal: Int32? = nil
 
-    init(_ component: BlocComponent<PostsComponentImpl>) {
+    init(_ component: BlocComponent<PostsComponent>) {
         component.value.bloc.observe(
             lifecycle: component.lifecycle,
             state: { value in
