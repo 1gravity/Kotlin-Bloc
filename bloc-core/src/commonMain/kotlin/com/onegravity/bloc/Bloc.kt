@@ -25,7 +25,7 @@ public abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
      * This is specifically for iOS to make sure generic types aren't erased.
      */
     public abstract fun observe(
-        lifecycle: Lifecycle,
+        observerLifecycle: Lifecycle,
         state: BlocObserver<State>?,
         sideEffect: BlocObserver<SideEffect>?
     )

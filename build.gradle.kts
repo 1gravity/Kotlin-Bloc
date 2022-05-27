@@ -13,6 +13,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
         classpath("org.jetbrains.compose:compose-gradle-plugin:_")
         classpath(Android.tools.build.gradlePlugin)
+        classpath(Square.sqlDelight.gradlePlugin)
     }
 }
 

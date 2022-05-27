@@ -5,6 +5,9 @@ plugins {
 
     id("kotlin-parcelize")
     kotlin("plugin.serialization")
+
+    // database
+    id("com.squareup.sqldelight")
 }
 
 version = "1.0"
@@ -64,6 +67,11 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:_")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:_")
 
+                // SQLDelight (https://cashapp.github.io/sqldelight/)
+                implementation("com.squareup.sqldelight:runtime:_")
+                implementation(Square.sqlDelight.extensions.coroutines)
+                implementation(KotlinX.datetime)
+
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
 
@@ -88,6 +96,8 @@ kotlin {
             dependencies {
                 implementation(Ktor.client.cio)
 
+                implementation(Square.sqlDelight.drivers.android)
+
                 implementation(AndroidX.appCompat)
                 implementation(AndroidX.activity.compose)
                 implementation(AndroidX.compose.material)
@@ -105,6 +115,7 @@ kotlin {
                 dependsOn(commonMain)
                 dependencies {
                     implementation("io.ktor:ktor-client-ios:_")
+                    implementation(Square.sqlDelight.drivers.native)
                 }
                 iosX64Main.dependsOn(this)
                 iosArm64Main.dependsOn(this)
@@ -120,5 +131,13 @@ kotlin {
                 iosSimulatorArm64Test.dependsOn(this)
             }
         }
+    }
+}
+
+sqldelight {
+    database("TodoDatabase") {
+        packageName = "com.onegravity.bloc"
+        sourceFolders = listOf("sqldelight")
+        dialect = "sqlite:3.25"
     }
 }

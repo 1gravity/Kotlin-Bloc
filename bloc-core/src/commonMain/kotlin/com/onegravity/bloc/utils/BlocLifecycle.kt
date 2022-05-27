@@ -1,6 +1,7 @@
 package com.onegravity.bloc.utils
 
-import com.onegravity.bloc.fsm.StateMachine
+import com.arkivanov.essenty.lifecycle.*
+import com.onegravity.bloc.fsm.StateMachine.Companion.create
 import com.onegravity.bloc.fsm.Transition
 
 internal sealed class LifecycleState {
@@ -20,13 +21,30 @@ internal sealed class LifecycleEvent {
 
 internal typealias LifecycleCSideEffect = () -> Unit
 
-@Suppress("FunctionName")
-internal fun BlocLifecycle(
+/**
+ * Creates a BlocLifecycle and ties it to an Essenty Lifecycle which is the "external" lifecycle
+ * a Bloc follows. The BlocLifecycle is implemented using a finite state machine under the hood.
+ */
+internal fun Lifecycle.toBlocLifecycle(
     onCreate: LifecycleCSideEffect,
     onStart: LifecycleCSideEffect,
     onStop: LifecycleCSideEffect,
     onDestroy: LifecycleCSideEffect
-) = StateMachine.create<LifecycleState, LifecycleEvent, LifecycleCSideEffect> {
+) {
+    val blocLifecycle = BlocLifecycle(onCreate, onStart, onStop, onDestroy)
+    doOnCreate { blocLifecycle.transition(LifecycleEvent.Create) }
+    doOnStart { blocLifecycle.transition(LifecycleEvent.Start) }
+    doOnStop { blocLifecycle.transition(LifecycleEvent.Stop) }
+    doOnDestroy { blocLifecycle.transition(LifecycleEvent.Destroy) }
+}
+
+@Suppress("FunctionName")
+private fun BlocLifecycle(
+    onCreate: LifecycleCSideEffect,
+    onStart: LifecycleCSideEffect,
+    onStop: LifecycleCSideEffect,
+    onDestroy: LifecycleCSideEffect
+) = create<LifecycleState, LifecycleEvent, LifecycleCSideEffect> {
     initialState(LifecycleState.InitialState)
 
     state<LifecycleState.InitialState> {

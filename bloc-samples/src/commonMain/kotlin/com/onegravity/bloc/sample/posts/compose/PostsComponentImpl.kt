@@ -30,7 +30,6 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
     private val blocState = getKoinInstance<BlocState<PostsRootState, PostsRootState>>()
 
     // internal actions
-    private object LoadPosts : PostsAction()
     private object PostsLoading : PostsAction()
     private data class PostsLoaded(val result: Result<List<Post>, Throwable>) : PostsAction()
     private class PostLoading(val postId: Int) : PostsAction()
@@ -41,12 +40,6 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
     override val bloc by lazy {
         bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
-                // we could load the posts here but it's good practice to deal with
-                // asynchronous code in thunks
-                dispatch(LoadPosts)
-            }
-
-            thunk<LoadPosts> {
                 dispatch(PostsLoading)
                 val result = repository.getOverviews()
                 dispatch(PostsLoaded(result))

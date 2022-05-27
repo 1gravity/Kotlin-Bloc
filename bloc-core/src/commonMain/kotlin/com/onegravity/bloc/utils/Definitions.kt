@@ -47,7 +47,10 @@ public typealias Dispatcher<Action> = suspend (Action) -> Unit
 
 public data class InitializerContext<State, Action>(
     val state: State,
-    val dispatch: Dispatcher<Action>
+    val dispatch: Dispatcher<Action>,
+    // we need the CoroutineScope so we can launch jobs from an Initializer
+    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
+    val coroutineScope: CoroutineScope
 )
 
 public typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit

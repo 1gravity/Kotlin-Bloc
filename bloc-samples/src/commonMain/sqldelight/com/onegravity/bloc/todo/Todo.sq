@@ -1,0 +1,49 @@
+import kotlinx.datetime.Instant;
+
+CREATE TABLE todos (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+
+    created_at TEXT AS Instant NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_at TEXT AS Instant NOT NULL,
+
+    uuid TEXT NOT NULL,
+    description TEXT NOT NULL,
+    completed INTEGER AS Boolean NOT NULL,
+
+   UNIQUE (uuid)
+);
+
+CREATE INDEX todos_uuid ON todos(uuid);
+
+selectAll:
+SELECT *
+FROM todos;
+
+selectById:
+SELECT * FROM todos WHERE id = ?;
+
+selectByUuid:
+SELECT * FROM todos WHERE uuid = ?;
+
+selectLastInsertedRowId:
+SELECT last_insert_rowid();
+
+insert:
+INSERT INTO todos(created_at, modified_at, uuid, description, completed)
+VALUES (?, ?, ?,?,?);
+
+updateById:
+UPDATE todos
+SET modified_at=:modified_at, description=:description, completed=:completed
+WHERE id=:id;
+
+updateByUuid:
+UPDATE todos
+SET modified_at=:modified_at, description=:description, completed=:completed
+WHERE uuid=:uuid;
+
+deleteById:
+DELETE FROM todos WHERE id = ?;
+
+deleteByUuid:
+DELETE FROM todos WHERE uuid = ?;

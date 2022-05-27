@@ -5,8 +5,6 @@ import com.onegravity.bloc.utils.MutableStateStream
 import kotlinx.coroutines.flow.FlowCollector
 
 internal open class BlocStateImpl<State : Any, Proposal : Any>(
-// todo implement persistent state
-
     initialState: State,
     private val acceptor: Acceptor<Proposal, State>,
 ) : BlocState<State, Proposal>() {

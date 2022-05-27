@@ -3,7 +3,6 @@
 package com.onegravity.bloc
 
 import com.onegravity.bloc.utils.*
-import kotlinx.coroutines.CoroutineScope
 
 /**
  * Submit an Initializer to the Bloc to be run.
@@ -37,12 +36,11 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
  */
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.thunk(
-    coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
 ) {
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).runThunk(coroutineScope, thunk)
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).runThunk(thunk)
 }
 
 /**
@@ -50,10 +48,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
  */
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
-    coroutineScope: CoroutineScope? = null,
     thunk: ThunkNoAction<State, Action>
 ) {
-    bloc.thunk<State, Action, SideEffect, Proposal>(coroutineScope, thunk)
+    bloc.thunk<State, Action, SideEffect, Proposal>(thunk)
 }
 
 /**

@@ -3,14 +3,11 @@ package com.onegravity.bloc.posts
 import androidx.lifecycle.ViewModel
 import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.blocContext
-import com.onegravity.bloc.getOrCreate
-import com.onegravity.bloc.sample.MainMenuCompose
 import com.onegravity.bloc.sample.posts.bloc.Posts
 import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sideEffect
 import com.onegravity.bloc.utils.BlocOwner
-import com.onegravity.bloc.utils.logger
 
 /**
  * Not used any more but we keep it around for illustration purposes
@@ -49,31 +46,31 @@ class PostsViewModel(context: ActivityBlocContext) :
  * it implements the thunk { }, reduce { } and sideEffect { } functions directly. This is similar to
  * what Orbit MVI does (https://github.com/orbit-mvi/orbit-mvi).
  */
-//class PostListViewModel : ViewModel(),
+//class PostListViewModel(context: ActivityBlocContext) : ViewModel(),
 //    BlocOwner<PostsState, Nothing, Posts.OpenPost, PostsState>,
 //    KoinComponent {
 //
 //    private val repository = getKoinInstance<PostRepository>()
 //
 //    override val bloc = bloc<PostsState, Nothing, Posts.OpenPost, PostsState>(
-//        blocContext(),
+//        blocContext(context),
 //        blocState(PostsState())
 //    )
 //
 //    init {
-//        onCreate { if (state.isEmpty()) load() }
-//    }
-//
-//    private fun load() = thunk {
-//        loading()
-//        loaded(repository.getOverviews())
+//        onCreate {
+//            if (state.isEmpty()) {
+//                loading()
+//                loaded(repository.getOverviews())
+//            }
+//        }
 //    }
 //
 //    private fun loading() = reduce {
 //        state.copy(loading = true)
 //    }
 //
-//    private fun loaded(posts: Result<List<Post>, Exception>) = reduce {
+//    private fun loaded(posts: Result<List<Post>, Throwable>) = reduce {
 //        state.copy(loading = false, posts = posts)
 //    }
 //
