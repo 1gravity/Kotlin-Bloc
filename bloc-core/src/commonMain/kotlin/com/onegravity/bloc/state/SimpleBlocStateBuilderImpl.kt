@@ -4,7 +4,7 @@ internal class SimpleBlocStateBuilderImpl<State : Any> : SimpleBlocStateBuilder<
 
     private var _initialState: State? = null
 
-    override fun build() = BlocStateImpl<State, State>(
+    override fun build() = DefaultBlocState<State, State>(
         initialState = checkNotNull(_initialState) { "initialState must be declared" },
         acceptor = { proposal, _ -> proposal }
     )

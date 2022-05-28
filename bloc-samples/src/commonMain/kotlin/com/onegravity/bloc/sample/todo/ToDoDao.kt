@@ -10,9 +10,9 @@ import kotlinx.datetime.Instant
 class ToDoDao(private val db: TodoDatabase) {
     private val queries = db.todoQueries
 
-    private val mapper = { id: Long,
-                           createdAt: Instant,
-                           modifiedAt: Instant,
+    private val mapper = { _: Long,                   // id
+                           _: Instant,                // createdAt
+                           _: Instant,                // modifiedAt
                            uuid: String,
                            description: String,
                            completed: Boolean ->
