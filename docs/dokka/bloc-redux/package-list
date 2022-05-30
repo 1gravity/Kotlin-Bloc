@@ -1,0 +1,9 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.onegravity.bloc.redux.select////PointingToDeclaration/bloc-redux/com.onegravity.bloc.redux.select/index.html
+$dokka.location:com.onegravity.bloc.redux.select//select/Store<State>[TypeParam(bounds=[kotlin.Any])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]/PointingToDeclaration/bloc-redux/com.onegravity.bloc.redux.select/select.html
+$dokka.location:com.onegravity.bloc.redux////PointingToDeclaration/bloc-redux/com.onegravity.bloc.redux/index.html
+$dokka.location:com.onegravity.bloc.redux//toBlocState/Store<ReduxModel>[TypeParam(bounds=[kotlin.Any])]#BlocContext#Selector<ReduxModel, Model>[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#Mapper<Model, State>[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]/PointingToDeclaration/bloc-redux/com.onegravity.bloc.redux/to-bloc-state.html
+com.onegravity.bloc.redux
+com.onegravity.bloc.redux.select
+

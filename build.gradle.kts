@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -24,5 +26,18 @@ allprojects {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven("https://jitpack.io")
         google()
+    }
+
+    afterEvaluate {
+        // eliminate log pollution until Android support for KMM improves
+        val sets2BeRemoved = setOf(
+            "androidAndroidTestRelease",
+            "androidTestFixtures",
+            "androidTestFixturesDebug",
+            "androidTestFixturesRelease"
+        )
+        project.extensions.findByType<KotlinMultiplatformExtension>()?.let { kmpExt ->
+            kmpExt.sourceSets.removeAll { sets2BeRemoved.contains(it.name) }
+        }
     }
 }

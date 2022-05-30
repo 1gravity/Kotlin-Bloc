@@ -72,4 +72,5 @@ android {
 
 tasks.dokkaHtml.configure {
     outputDirectory.set(buildDir.resolve("../../docs/dokka"))
+    moduleName.set("bloc-compose")
 }
