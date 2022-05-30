@@ -14,26 +14,16 @@ object ReduxCounter {
 
     fun bloc(context: BlocContext) = bloc<Int, Action, Nothing, ReduxAction>(
         context,
-        reduxStore.toBlocState(context = context, initialState = 1)
+        reduxStore.toBlocState(
+            context = context,
+            select = { reduxModel ->  reduxModel.counter },
+            map = { model -> model.count }
+        )
     ) {
-        reduce<Action.Increment> { ReduxAction.Increment(action.value) }
-        reduce<Action.Decrement> { ReduxAction.Decrement(action.value) }
+        reduce<Action.Increment> { ReduxAction.UpdateCount(state + 1) }
+        reduce<Action.Decrement> { ReduxAction.UpdateCount(state - 1) }
     }
 }
-
-// this would be the implementation using a simple ReduxStore where State == Action
-//object ReduxCounter {
-//    sealed class Action(val value: Int) {
-//        data class Increment(private val _value: Int = 1): Action(_value)
-//        data class Decrement(private val _value: Int = 1): Action(_value)
-//    }
-//    fun bloc(context: BlocContext) = bloc<Int, Action, Nothing, Int>(
-//        context, context.reduxBlocState(1)
-//    ) {
-//        reduce<Action.Increment> { state + action.value }
-//        reduce<Action.Decrement> { state - action.value }
-//    }
-//}
 
 // TODO think about the initial value, who/what provides it? should be have a mechanism to populate
 //      the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the

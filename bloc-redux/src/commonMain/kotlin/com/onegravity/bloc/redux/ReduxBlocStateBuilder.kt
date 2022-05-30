@@ -10,9 +10,6 @@ import com.onegravity.bloc.utils.Selector
 internal interface ReduxBlocStateBuilder<State : Any, Model : Any, ReduxModel : Any> {
 
     @BlocDSL
-    var initialState: State
-
-    @BlocDSL
     fun select(selector: Selector<ReduxModel, Model>)
 
     @BlocDSL

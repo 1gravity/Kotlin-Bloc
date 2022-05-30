@@ -22,7 +22,7 @@ public class BlocObserver<State: AnyObject, Action: AnyObject, SideEffect: AnyOb
         self.value = bloc.value
 
         bloc.observe(
-            lifecycle: self.lifecycle,
+            observerLifecycle: self.lifecycle,
             state: { value in
                 self.value = value
             },

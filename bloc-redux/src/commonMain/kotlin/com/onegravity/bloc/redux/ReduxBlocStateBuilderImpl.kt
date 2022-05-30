@@ -8,7 +8,6 @@ import org.reduxkotlin.Store
 internal open class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxModel : Any> :
     ReduxBlocStateBuilder<State, Model, ReduxModel> {
 
-    private var _initialState: State? = null
     private var _selector: Selector<ReduxModel, Model>? = null
     private var _mapper: Mapper<Model, State>? = null
 
@@ -18,18 +17,10 @@ internal open class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxMod
     ): ReduxBlocState<State, Proposal, Model, ReduxModel> =
         ReduxBlocState(
             disposableScope = disposableScope,
-            initialState = checkNotNull(_initialState) { "initialState must be declared" },
             store = store,
             select = checkNotNull(_selector) { "select { } must be declared" },
             map = checkNotNull(_mapper) { "map { } must be declared" },
         )
-
-    override var initialState: State
-        @Deprecated("Write-only.", level = DeprecationLevel.HIDDEN)
-        get() = throw UnsupportedOperationException()
-        set(value) {
-            _initialState = value
-        }
 
     override fun select(selector: Selector<ReduxModel, Model>) {
         _selector = selector

@@ -14,47 +14,16 @@ import org.reduxkotlin.Store
 /**
  * Extension function to convert a Redux store to a ReduxBlocState:
  * ```
- *    store.toBlocState(context, initialValue)
- * ```
- */
-public fun <State : Any, Proposal : Any> Store<State>.toBlocState(
-    context: BlocContext,
-    initialState: State,
-): BlocState<State, Proposal> = reduxBlocState<State, Proposal, State>(context.disposableScope(), this) {
-    this.initialState = initialState
-    select { it }
-}
-
-/**
- * Extension function to convert a Redux store to a ReduxBlocState:
- * ```
- *    store.toBlocState(context, initialValue) { /* select function */ }
- * ```
- */
-public fun <State : Any, Proposal : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
-    context: BlocContext,
-    initialState: State,
-    selector: Selector<ReduxModel, State>
-): BlocState<State, Proposal> = reduxBlocState<State, Proposal, ReduxModel>(context.disposableScope(), this) {
-    this.initialState = initialState
-    select(selector)
-}
-
-/**
- * Extension function to convert a Redux store to a ReduxBlocState:
- * ```
- *    store.toBlocState(context, initialValue, { /* select function */ },  { /* map function */ })
+ *    store.toBlocState(context, { /* select function */ },  { /* map function */ })
  * ```
  */
 public fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
-    initialState: State,
-    selector: Selector<ReduxModel, Model>,
-    mapper: Mapper<Model, State>
+    select: Selector<ReduxModel, Model>,
+    map: Mapper<Model, State>
 ): BlocState<State, Proposal> = reduxBlocState<State, Proposal, Model, ReduxModel>(context.disposableScope(), this) {
-    this.initialState = initialState
-    select(selector)
-    map(mapper)
+    this.select(select)
+    this.map(map)
 }
 
 /**
@@ -76,11 +45,11 @@ internal fun BlocContext.disposableScope() = DisposableScope()
 @BlocDSL
 internal fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
     store: Store<State>,
-    selector: (State) -> SelectedState,
+    select: (State) -> SelectedState,
     block: (selectedState: SelectedState) -> Unit
 ) {
     store
-        .select(selector) { block(it) }
+        .select(select) { block(it) }
         .scope { unsubscribe -> unsubscribe() }
 }
 
@@ -96,9 +65,9 @@ internal fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
 @BlocDSL
 internal fun <State : Any, SelectedState : Any> Store<State>.selectScoped(
     disposableScope: DisposableScope,
-    selector: (State) -> SelectedState,
+    select: (State) -> SelectedState,
     block: (selectedState: SelectedState) -> Unit
 ) {
-    val unsubscribe = select(selector) { block(it) }
+    val unsubscribe = select(select) { block(it) }
     disposableScope.doOnDispose { unsubscribe() }
 }

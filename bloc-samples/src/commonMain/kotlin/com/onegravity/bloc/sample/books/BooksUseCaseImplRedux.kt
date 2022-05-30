@@ -29,17 +29,6 @@ class BooksUseCaseImplRedux(
             }
         )
 
-    private val blocState = reduxStore.toBlocState<BookState, Any, BookStore.ReduxModel>(
-        context = context,
-        initialState = BookState.Empty,
-        selector = { reduxModel ->
-            when {
-                reduxModel.isLoading -> BookState.Loading
-                else -> reduxModel.books.toState()
-            }
-        }
-    )
-
     sealed class BookAction {
         object Load : BookAction()
         object Clear : BookAction()
@@ -56,7 +45,16 @@ class BooksUseCaseImplRedux(
         }
     }
 
-    private val bloc = bloc<BookState, BookAction, Nothing, Any>(context, blocState) {
+    private val bloc = bloc<BookState, BookAction, Nothing, Any>(context, reduxStore.toBlocState(
+        context = context,
+        select = { reduxModel ->
+            when {
+                reduxModel.isLoading -> BookState.Loading
+                else -> reduxModel.books.toState()
+            }
+        },
+        map = { model -> model }
+    )) {
         reduce<BookAction.Load> {
             // our Proposal: a Thunk which is being dispatched to the Redux Store
             loadThunk(coroutineScope, repository)

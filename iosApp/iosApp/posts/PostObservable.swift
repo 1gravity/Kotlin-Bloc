@@ -18,7 +18,7 @@ class PostObservable : ObservableObject {
 
     init(_ component: BlocComponent<PostsComponent>) {
         component.value.bloc.observe(
-            lifecycle: component.lifecycle,
+            observerLifecycle: component.lifecycle,
             state: { value in
                 let selectedId = value.selectedPost()?.int32Value
                 if self.postIdInternal != selectedId {
