@@ -120,7 +120,6 @@ android {
     buildToolsVersion = "32.0.0"
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("../../docs/dokka"))
-    moduleName.set("bloc-core")
+tasks.dokkaHtmlPartial.configure {
+    moduleName.set("BLoC Core")
 }

@@ -70,7 +70,6 @@ android {
     }
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("../../docs/dokka"))
-    moduleName.set("bloc-compose")
+tasks.dokkaHtmlPartial.configure {
+    moduleName.set("BLoC Compose")
 }

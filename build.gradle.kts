@@ -19,6 +19,15 @@ buildscript {
     }
 }
 
+// run ./gradlew dokkaHtmlMultiModule to create the documentation
+plugins {
+    id("org.jetbrains.dokka")
+}
+
+tasks.dokkaHtmlMultiModule.configure {
+    outputDirectory.set(buildDir.resolve("../docs/dokka"))
+}
+
 allprojects {
     repositories {
         mavenCentral()
