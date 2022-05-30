@@ -6,7 +6,7 @@ Kotlin BLoC is a Kotlin Multiplatform UI framework inspired by multiple design p
 
 ## Architecture
 
-Note, this readme offers a quick overview of the framework. For more in-depth information please consult:
+Note, this readme offers a quick overview of the framework. For more in-depth information please visit:
 - [The official website](https://1gravity.github.io/Kotlin-Bloc)
 - [The Dokka documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
 
@@ -22,7 +22,7 @@ Kotlin BLoC's architectural goals are:
 [KMM UI Architecture - Part 2](https://medium.com/p/e52b84aeb94d) elaborates on those goals in more detail.
 
 ### Example
-To demo the framework's simplicity, here's the Hello World example of UI frameworks (counter app) for Android:
+To demo the framework's simplicity, here's the "Hello World" example of UI frameworks (counter app) for Android:
 ```kotlin
 // define the BLoC
 fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
@@ -31,6 +31,7 @@ fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
 ```
 ```kotlin
 class CounterActivity : AppCompatActivity() {
+
     // (lazy) create the lifecycle aware bloc
     private val bloc by getOrCreate { bloc(it) }
 ```
@@ -38,13 +39,14 @@ class CounterActivity : AppCompatActivity() {
 setContent {
     // observe the bloc state
     val state by bloc.observeState()
-    
+
     // updates on state / count changes
     Text("Counter: $state")
-    
+
     // create events / actions to update the state / count
-    Button(onClick = { bloc.send( 1) }, content = { Text("Increment") })            
-    Button(onClick = { bloc.send(-1) }, content = { Text("Decrement") })            
+    Button(onClick = { bloc.send(1) }, content = { Text("Increment") })
+    Button(onClick = { bloc.send(-1) }, content = { Text("Decrement") })
+}
 ```
 This is remarkably little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes
 (it creates an Android ViewModel under-the-hood).
@@ -52,7 +54,7 @@ This is remarkably little code considering the fact that the Bloc is lifecycle a
 **Note:** this is only one way to implement the app. Since one of the goals was to be un-opinionated, we can implement it in many ways, depending on the preferences of the developer / team.  
 
 ### Inspiration
-The architecture was mainly inspired by the following design patterns and UI frameworks:
+The architecture was inspired by the following design patterns and UI frameworks among others:
 
 #### Design patterns
 - MVI (Model-View-Intent)
@@ -81,34 +83,17 @@ The framework has two main components:
 
 The **View** is obviously an important component too but technically not part of the framework itself (although there are extensions that support/simplify the implementation for different target platforms).
 
-### Design Deep(er)-Dive
-
-<img alt="BLoC Architecture - Overview" src="./docs/BLoC Architecture - BLoC Details.svg" width="625" />
-
-#### BLoC
-- tbd
-
-#### BLoC State 
-- tbd
-
-
-- unidirectional data flow
-- state is immutable (with some caveats)
-- reactive
-- coroutine / flow based
-
 ## Getting Started
 
 ### Gradle
 
-**Step 1.** Add the JitPack repository to your build file. Add it in your root build.gradle at the
-end of repositories:
+**Step 1.** Add mavenCentral() as repository to your main build file:
 
 ```kotlin
 allprojects {
     repositories {
         // ...
-        maven("https://jitpack.io")
+        mavenCentral()
     }
 }
 ```

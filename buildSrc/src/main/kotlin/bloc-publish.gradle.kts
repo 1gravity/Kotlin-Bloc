@@ -11,7 +11,7 @@ fun Project.get(name: String, def: String = "$name not found") =
     properties[name]?.toString() ?: System.getenv(name) ?: def
 
 fun Project.getRepositoryUrl(): java.net.URI {
-    val isReleaseBuild = !get("VERSION_NAME").contains("SNAPSHOT")
+    val isReleaseBuild = !get("POM_VERSION_NAME").contains("SNAPSHOT")
     val releaseRepoUrl = get("RELEASE_REPOSITORY_URL", "https://oss.sonatype.org/service/local/staging/deploy/maven2/")
     val snapshotRepoUrl = get("SNAPSHOT_REPOSITORY_URL", "https://oss.sonatype.org/content/repositories/snapshots/")
     return uri(if (isReleaseBuild) releaseRepoUrl else snapshotRepoUrl)
@@ -24,8 +24,8 @@ publishing {
             url = getRepositoryUrl()
             // credentials are stored in ~/.gradle/gradle.properties with ~ being the path of the home directory
             credentials {
-                username = project.get("ossUsername")
-                password = project.get("ossPassword")
+                username = project.get("SONATYPE_NEXUS_USERNAME")
+                password = project.get("SONATYPE_NEXUS_PASSWORD")
             }
         }
     }
@@ -40,6 +40,7 @@ publishing {
     publications.withType<MavenPublication> {
         pom {
             groupId = project.get("POM_GROUP")
+            // the artifactId defaults to the project's/module's name
             version = project.get("POM_VERSION_NAME")
 
             name.set(project.name)
