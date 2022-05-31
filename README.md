@@ -22,48 +22,51 @@ Kotlin BLoC's architectural goals are:
 [KMM UI Architecture - Part 2](https://medium.com/p/e52b84aeb94d) elaborates on those goals in more detail.
 
 ### Example
-To demo the framework's simplicity, here's the "Hello World" example of UI frameworks (counter app):
+To demo the framework's simplicity, here's one way to implement a counter app (the "Hello World" of UI frameworks):
 ```kotlin
 // define the BLoC
 fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
     reduce { state + action }
 }
 ```
+#### Android
 ```kotlin
-// Android
 class CounterActivity : AppCompatActivity() {
 
-    // (lazy) create the lifecycle aware bloc
+    // (lazy) create or retrieve the lifecycle aware Bloc
     private val bloc by getOrCreate { bloc(it) }
 ```
 ```kotlin
 setContent {
-    // observe the bloc state
+    // observe the Bloc state
     val state by bloc.observeState()
 
     // updates on state / count changes
     Text("Counter: $state")
 
-    // create events / actions to update the state / count
+    // emit events / actions to update the state / count
     Button(onClick = { bloc.send(1) }, content = { Text("Increment") })
     Button(onClick = { bloc.send(-1) }, content = { Text("Decrement") })
 }
 ```
 
-This is remarkably little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes
-(it creates an Android ViewModel under-the-hood).
+This is remarkably little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes (it creates an Android ViewModel under-the-hood and ties itself to the VMs lifecycle).
+
+#### iOS
 
 On iOS there's more boilerplate code (`BlocHolder` and `BlocObserver` are omitted here) but it's still pretty "lean":
 
 ```swift
 // iOS
 struct CounterView: View {
+    // create the lifecycle aware Bloc
     private let holder = BlocHolder { CounterKt.bloc(context: $0) }
     
     @ObservedObject
     private var model: BlocObserver<KotlinInt, KotlinInt, KotlinUnit>
 
     init() {
+        // observe the Bloc state
         model = BlocObserver(holder.value)
     }
 ```
@@ -73,7 +76,7 @@ var body: some View {
         // updates on state / count changes
         Text("Counter \(model.value)")
     
-        // create events / actions to update the state / count
+        // emit events / actions to update the state / count
         Button(
             action: { holder.value.send(value:  1) },
             label: { Text("Increment") }
@@ -132,12 +135,15 @@ allprojects {
 }
 ```
 
-**Step 2.** Add the dependency to your app:
+**Step 2.** Add the dependencies to your app:
 
 ```kotlin
 dependencies {
+    // the core library
     implementation("com.1gravity:bloc-core:0.1.2-SNAPSHOT")
+    // add if you want to use BLoCs in combination with a Redux store 
     implementation("com.1gravity:bloc-redux:0.1.2-SNAPSHOT")
+    // contains useful extensions for Android if you use Jetpack/JetBrains Compose
     implementation("com.1gravity:bloc-compose:0.1.2-SNAPSHOT")
 }
 ```
