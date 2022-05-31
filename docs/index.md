@@ -1,6 +1,6 @@
 ## Welcome to GitHub Pages
 
-![Overview](_site/assets/images/BLoC Architecture - Overview.svg)
+![Overview](./assets/images/BLoC Architecture - BLoC Overview.svg)
 
 [Dokka Documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
 
