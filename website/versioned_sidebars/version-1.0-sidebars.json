@@ -1,0 +1,34 @@
+{
+  "introSidebar": [
+    {
+      "type": "doc",
+      "id": "introduction/intro"
+    }
+  ],
+  "architectureSidebar": [
+    {
+      "type": "doc",
+      "id": "architecture/architecture_overview"
+    },
+    {
+      "type": "doc",
+      "id": "architecture/bloc/bloc"
+    },
+    {
+      "type": "doc",
+      "id": "architecture/bloc/bloc_example"
+    }
+  ],
+  "extensionsSidebar": [
+    {
+      "type": "doc",
+      "id": "extensions/extensions"
+    }
+  ],
+  "samplesSidebar": [
+    {
+      "type": "doc",
+      "id": "samples/samples"
+    }
+  ]
+}

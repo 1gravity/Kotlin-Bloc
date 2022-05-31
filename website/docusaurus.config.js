@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Kotlin BLoC',
-  tagline: 'Kotlin BLoC is a Kotlin Multiplatform UI framework inspired by multiple design patterns and frameworks',
+  tagline: 'A lightweight, reactive and composable UI framework for Kotlin Multiplatform',
   url: 'https://1gravity.github.io/',
   baseUrl: '/Kotlin-Bloc/',
   onBrokenLinks: 'throw',
@@ -33,20 +33,6 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -58,21 +44,38 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: 'Kotlin BLoC',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'Kotlin BLoC Logo',
+          src: 'img/logo.png',
         },
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'introduction/intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Getting Started', 
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            type: 'doc',
+            docId: 'architecture/architecture_overview',
+            position: 'left',
+            label: 'Architecture', 
+          },
+          {
+            type: 'doc',
+            docId: 'extensions/extensions',
+            position: 'left',
+            label: 'Extensions', 
+          },
+          {
+            type: 'doc',
+            docId: 'samples/samples',
+            position: 'left',
+            label: 'Samples', 
+          },
+          {
+            href: 'https://github.com/1gravity/Kotlin-Bloc',
             label: 'GitHub',
             position: 'right',
           },
@@ -85,8 +88,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'API Documentation',
+                to: 'http://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html',
               },
             ],
           },
@@ -95,33 +98,21 @@ const config = {
             items: [
               {
                 label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
+                href: 'https://stackoverflow.com/questions/tagged/kotlin-bloc',
+              }
             ],
           },
           {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
+                href: 'https://github.com/1gravity/Kotlin-Bloc',
+              }
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Emanuel Moecklin<br>Built with Docusaurus`,
       },
       prism: {
         theme: lightCodeTheme,
