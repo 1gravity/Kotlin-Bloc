@@ -47,16 +47,21 @@ object SimpleCounter {
 //            }
 //        }
     }
-
-    // short version
-    fun blocSimple(context: BlocContext) = bloc<Int, Boolean>(context, 1) {
-        reduce { state + if (action) 1 else -1 }
-    }
-
-    // counter that just increments
-    fun blocInc(context: BlocContext) = bloc<Int, Unit>(context, 1) {
-        reduce { state + 1 }
-    }
 }
 
+// alternative ways to implement a simple Counter, use `CounterKt.blocXYZ` from iOS
 
+// counter using a Boolean as Action
+fun blocBoolean(context: BlocContext) = bloc<Int, Boolean>(context, 1) {
+    reduce { state + if (action) 1 else -1 }
+}
+
+// counter using an Int as Action
+fun blocInt(context: BlocContext) = bloc<Int, Int>(context, 1) {
+    reduce { state + action }
+}
+
+// counter that just increments
+fun blocInc(context: BlocContext) = bloc<Int, Unit>(context, 1) {
+    reduce { state + 1 }
+}

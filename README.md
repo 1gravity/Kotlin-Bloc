@@ -53,36 +53,33 @@ setContent {
 This is remarkably little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes
 (it creates an Android ViewModel under-the-hood).
 
-On iOS there's more boilerplate code (for multiple reasons) but it's still pretty "lean":
-
-// todo we need to create the full sample app with the minimalistic bloc above
+On iOS there's more boilerplate code (`BlocHolder` and `BlocObserver` are omitted here) but it's still pretty "lean":
 
 ```swift
 // iOS
 struct CounterView: View {
-    private let holder: BlocHolder<KotlinInt, SimpleCounter.Action, KotlinUnit>
+    private let holder = BlocHolder { CounterKt.bloc(context: $0) }
     
     @ObservedObject
-    private var model: BlocObserver<KotlinInt, SimpleCounter.Action, KotlinUnit>
+    private var model: BlocObserver<KotlinInt, KotlinInt, KotlinUnit>
 
     init() {
-        holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
         model = BlocObserver(holder.value)
     }
 ```
 ```swift
 var body: some View {
-    return VStack(spacing: 8) {    
+    return VStack() {    
         // updates on state / count changes
         Text("Counter \(model.value)")
     
         // create events / actions to update the state / count
         Button(
-            action: { holder.value.send(value: SimpleCounter.ActionIncrement(value:  1)) },
+            action: { holder.value.send(value:  1) },
             label: { Text("Increment") }
         )
         Button(
-            action: { holder.value.send(value: SimpleCounter.ActionIncrement(value: -1)) },
+            action: { holder.value.send(value: -1) },
             label: { Text("Decrement") }
         )
 ```

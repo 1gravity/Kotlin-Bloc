@@ -10,13 +10,12 @@ import SwiftUI
 import blocSamples
 
 struct CounterView: View {
-    private let holder: BlocHolder<KotlinInt, SimpleCounter.Action, KotlinUnit>
+    private let holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
     
     @ObservedObject
     private var model: BlocObserver<KotlinInt, SimpleCounter.Action, KotlinUnit>
 
     init() {
-        holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
         model = BlocObserver(holder.value)
     }
 

@@ -41,10 +41,10 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(project(":bloc-core"))
-                implementation(project(":bloc-redux"))
-//                implementation("com.1gravity:bloc-core:_")
-//                implementation("com.1gravity:bloc-redux:_")
+                api(project(":bloc-core"))
+                api(project(":bloc-redux"))
+//                api("com.1gravity:bloc-core:_")
+//                api("com.1gravity:bloc-redux:_")
 
                 implementation(KotlinX.coroutines.core)
 

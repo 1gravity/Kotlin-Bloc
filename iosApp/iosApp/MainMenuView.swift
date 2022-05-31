@@ -4,13 +4,12 @@ import blocSamples
 
 struct MainMenuView: View {
 
-    private var holder: BlocHolder<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
+    private var holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
 
     @ObservedObject
     private var model: BlocObserver<MainMenu.ActionState, MainMenu.ActionState, MainMenu.ActionState>
 
     init() {
-        self.holder = BlocHolder { MainMenu.shared.bloc(context: $0) }
         self.model = BlocObserver(self.holder.value)
     }
 
