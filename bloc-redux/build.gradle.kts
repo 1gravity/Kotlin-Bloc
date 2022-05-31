@@ -41,7 +41,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(project(":blocCore"))
+                implementation(project(":bloc-core"))
 
                 implementation(KotlinX.coroutines.core)
 
@@ -57,7 +57,7 @@ kotlin {
                 api("com.arkivanov.essenty:back-pressed:_")
 
                 // Redux store (https://reduxkotlin.org)
-                api("com.1gravity.redux:redux-kotlin-threadsafe:_")
+                api("com.1gravity:redux-kotlin-threadsafe:_")
             }
         }
         val commonTest by getting {

@@ -26,7 +26,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(project(":blocCore"))
+                api(project(":bloc-core"))
 
                 implementation(KotlinX.coroutines.core)
 

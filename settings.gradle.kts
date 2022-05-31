@@ -15,13 +15,13 @@ plugins {
     id("de.fayard.refreshVersions") version "0.40.1"
 }
 
-include(":blocCore")
-include(":blocRedux")
-include(":blocCompose")
-include(":blocSamples")
+include(":bloc-core")
+include(":bloc-redux")
+include(":bloc-compose")
+include(":bloc-samples")
 include(":androidApp")
 
-project(":blocCore").projectDir = file("bloc-core")
-project(":blocRedux").projectDir = file("bloc-redux")
-project(":blocCompose").projectDir = file("bloc-compose")
-project(":blocSamples").projectDir = file("bloc-samples")
+project(":bloc-core").projectDir = file("bloc-core")
+project(":bloc-redux").projectDir = file("bloc-redux")
+project(":bloc-compose").projectDir = file("bloc-compose")
+project(":bloc-samples").projectDir = file("bloc-samples")

@@ -25,8 +25,8 @@ kotlin {
             target.binaries.framework {
                 baseName = "blocSamples"
                 transitiveExport = true
-                export(project(":blocCore"))
-                export(project(":blocRedux"))
+                export(project(":bloc-core"))
+                export(project(":bloc-redux"))
             }
         }
     }
@@ -41,13 +41,15 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(project(":blocCore"))
-                api(project(":blocRedux"))
+                implementation(project(":bloc-core"))
+                implementation(project(":bloc-redux"))
+//                implementation("com.1gravity:bloc-core:_")
+//                implementation("com.1gravity:bloc-redux:_")
 
                 implementation(KotlinX.coroutines.core)
 
                 // Redux store (https://reduxkotlin.org)
-                implementation("com.1gravity.redux:redux-kotlin-threadsafe:_")
+                implementation("com.1gravity:redux-kotlin-threadsafe:_")
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 api("com.arkivanov.essenty:lifecycle:_")

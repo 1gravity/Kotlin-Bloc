@@ -22,7 +22,7 @@ Kotlin BLoC's architectural goals are:
 [KMM UI Architecture - Part 2](https://medium.com/p/e52b84aeb94d) elaborates on those goals in more detail.
 
 ### Example
-To demo the framework's simplicity, here's the "Hello World" example of UI frameworks (counter app) for Android:
+To demo the framework's simplicity, here's the "Hello World" example of UI frameworks (counter app):
 ```kotlin
 // define the BLoC
 fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
@@ -30,6 +30,7 @@ fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
 }
 ```
 ```kotlin
+// Android
 class CounterActivity : AppCompatActivity() {
 
     // (lazy) create the lifecycle aware bloc
@@ -48,8 +49,44 @@ setContent {
     Button(onClick = { bloc.send(-1) }, content = { Text("Decrement") })
 }
 ```
+
 This is remarkably little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes
 (it creates an Android ViewModel under-the-hood).
+
+On iOS there's more boilerplate code (for multiple reasons) but it's still pretty "lean":
+
+// todo we need to create the full sample app with the minimalistic bloc above
+
+```swift
+// iOS
+struct CounterView: View {
+    private let holder: BlocHolder<KotlinInt, SimpleCounter.Action, KotlinUnit>
+    
+    @ObservedObject
+    private var model: BlocObserver<KotlinInt, SimpleCounter.Action, KotlinUnit>
+
+    init() {
+        holder = BlocHolder { SimpleCounter.shared.bloc(context: $0) }
+        model = BlocObserver(holder.value)
+    }
+```
+```swift
+var body: some View {
+    return VStack(spacing: 8) {    
+        // updates on state / count changes
+        Text("Counter \(model.value)")
+    
+        // create events / actions to update the state / count
+        Button(
+            action: { holder.value.send(value: SimpleCounter.ActionIncrement(value:  1)) },
+            label: { Text("Increment") }
+        )
+        Button(
+            action: { holder.value.send(value: SimpleCounter.ActionIncrement(value: -1)) },
+            label: { Text("Decrement") }
+        )
+```
+
 
 **Note:** this is only one way to implement the app. Since one of the goals was to be un-opinionated, we can implement it in many ways, depending on the preferences of the developer / team.  
 
@@ -87,21 +124,24 @@ The **View** is obviously an important component too but technically not part of
 
 ### Gradle
 
-**Step 1.** Add mavenCentral() as repository to your main build file:
+**Step 1.** Add the mavenCentral() repository to your main build file:
 
 ```kotlin
 allprojects {
     repositories {
-        // ...
         mavenCentral()
+        // ...
     }
 }
 ```
 
-**Step 2.** Add the dependency
+**Step 2.** Add the dependency to your app:
 
 ```kotlin
 dependencies {
+    implementation("com.1gravity:bloc-core:0.1.2-SNAPSHOT")
+    implementation("com.1gravity:bloc-redux:0.1.2-SNAPSHOT")
+    implementation("com.1gravity:bloc-compose:0.1.2-SNAPSHOT")
 }
 ```
 

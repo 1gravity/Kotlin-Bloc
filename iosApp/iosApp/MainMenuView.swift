@@ -65,7 +65,7 @@ struct MainMenuView: View {
                 .buttonStyle(.borderedProminent)
 
             }
-            .navigationTitle(NSLocalizedString("app_name", comment: "BLoC Framework"))
+            .navigationTitle(NSLocalizedString("app_name", comment: "Kotlin BLoC"))
         }
 
     }

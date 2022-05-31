@@ -41,9 +41,9 @@ publishing {
         pom {
             groupId = project.get("POM_GROUP")
             // the artifactId defaults to the project's/module's name
+            artifactId = project.get("POM_ARTIFACT_ID", artifactId)
             version = project.get("POM_VERSION_NAME")
 
-            name.set(project.name)
             description.set(project.get("POM_DESCRIPTION"))
             url.set(project.get("POM_URL"))
 

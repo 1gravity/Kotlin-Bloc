@@ -13,7 +13,7 @@
         <activity
             android:name=".menu_compose.MainActivityCompose"
             android:exported="true"
-            android:label="BLoC Framework"
+            android:label="Kotlin BLoC"
             android:theme="@style/Theme.Bloc">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         <activity
             android:name=".menu.MainActivity"
             android:exported="false"
-            android:label="BLoC Framework"
+            android:label="Kotlin BLoC"
             android:theme="@style/Theme.Bloc" />
 
         <activity
@@ -52,12 +52,6 @@
             android:theme="@style/Theme.Bloc" />
 
         <activity
-            android:name=".posts.PostsActivity"
-            android:exported="false"
-            android:label="BLoC Posts"
-            android:theme="@style/AppThemePosts" />
-
-        <activity
             android:name=".calculator.CalculatorActivity"
             android:exported="false"
             android:label="Calculator"
@@ -70,15 +64,21 @@
             android:theme="@style/AppThemeCalculator" />
 
         <activity
+            android:name=".posts.PostsActivity"
+            android:exported="false"
+            android:label="Posts"
+            android:theme="@style/AppThemePosts" />
+
+        <activity
             android:name=".posts_compose.PostsActivity"
             android:exported="false"
-            android:label="Compose"
+            android:label="Posts Compose"
             android:theme="@style/AppThemePosts" />
 
         <activity
             android:name=".todo.TodoActivity"
             android:exported="false"
-            android:label="Compose"
+            android:label="To Do"
             android:theme="@style/Theme.Bloc" />
 
     </application>
