@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[9787],{1118:function(s){s.exports=JSON.parse('{"label":"docusaurus","permalink":"/Kotlin-Bloc/blog/tags/docusaurus","allTagsPath":"/Kotlin-Bloc/blog/tags","count":4}')}}]);
