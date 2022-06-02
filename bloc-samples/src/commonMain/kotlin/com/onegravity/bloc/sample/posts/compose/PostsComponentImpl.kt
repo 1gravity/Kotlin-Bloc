@@ -19,11 +19,6 @@ import kotlinx.coroutines.launch
 // no external actions, we use a simple function call
 sealed class PostsAction
 
-/**
- * todo if we want to use functions instead of actions then we need some kind of component / class
- *      like the PostsComponentImpl -> think about a better solution that would allow us to combine
- *      the bloc builder style and the extension function style (easy for Android, harder for iOS)
- */
 class PostsComponentImpl(context: BlocContext) : PostsComponent() {
 
     private val repository = getKoinInstance<PostRepository>()

@@ -2,9 +2,6 @@
 
 package com.onegravity.bloc.fsm
 
-/**
- * TODO make this thread-safe (again)
- */
 internal class StateMachine<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> private constructor(
     private val graph: Graph<STATE, EVENT, SIDE_EFFECT>
 ) {

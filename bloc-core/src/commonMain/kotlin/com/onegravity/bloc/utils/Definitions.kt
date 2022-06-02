@@ -35,9 +35,11 @@ public typealias BlocObserver<State> = (State) -> Unit
 public typealias SideEffectStream<Value> = Flow<Value>
 
 /**
- * A function for accepting / rejecting a [Proposal] and updating and emitting resulting [State].
+ * Function for accepting / rejecting a [Proposal].
+ * If the proposal is accepted, returns the new State (which is based on the Proposal).
+ * If the proposal is rejected, returns Null.
  */
-public typealias Acceptor<Proposal, State> = (proposal: Proposal, state: State) -> State
+public typealias Acceptor<Proposal, State> = (proposal: Proposal, state: State) -> State?
 
 public typealias Mapper<Model, State> = (model: Model) -> State
 

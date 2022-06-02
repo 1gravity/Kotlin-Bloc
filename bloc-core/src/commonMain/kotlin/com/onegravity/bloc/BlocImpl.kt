@@ -17,7 +17,6 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     private val initialize: Initializer<State, Action> = { },
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
-    // todo have separate Dispatchers for initialize, reducers, side effects and thunks
     private val dispatcher: CoroutineContext = Dispatchers.Default
 ) : Bloc<State, Action, SideEffect>(),
     BlocExtension<State, Action, SideEffect, Proposal> {

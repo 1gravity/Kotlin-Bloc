@@ -1,0 +1,15 @@
+- TODO make the StateMachine thread safe (again)
+- TODO have separate Dispatchers for initialize, reducers, side effects and thunks in a Bloc
+- TODO think about the initial value, who/what provides it? should be have a mechanism to populate
+       the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
+       ReduxStore and one in the BlocState)
+       how about using the redux mechanism using an ActionTypes.INIT to initialize state?
+- TODO are side effects sufficient for navigation? should the framework include a navigation
+       component like Decompose does?
+- TODO Action / Redux style vs. Function style (extensions to BlocOwner), the latter requires some
+       component / class like the PostsComponent / PostsComponentImpl class so we can use functions
+       in iOS too. Come up with a solution that combines both styles for Android and iOS without
+       the need for a "container" component.
+- TODO implement tests
+- TODO time machine
+
