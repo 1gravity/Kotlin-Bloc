@@ -5,7 +5,9 @@ sidebar_label: Concurrency
 hide_title: true
 ---
 
-![Bloc Architecture - Details](../../../static/img/BLoC%20Architecture%20-%20BLoC%20Details.svg)
+
+### Concurrency
+
+Reducers are asynchronous in nature when they are defined using one of the [BlocBuilders](./bloc/bloc_builder). They can be synchronous when defined using [BlowOwner](./blocowner/bloc_owner) extensions.
 
 
-A **Thunk** 

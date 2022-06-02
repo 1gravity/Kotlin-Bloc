@@ -67,7 +67,7 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'extensions/android',
+            docId: 'extensions/overview',
             position: 'left',
             label: 'Extensions', 
           },

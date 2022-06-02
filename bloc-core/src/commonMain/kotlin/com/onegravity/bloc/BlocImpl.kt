@@ -178,15 +178,21 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
             val (_, reducer, expectsProposal) = matcherReducer
             when {
-                !expectsProposal -> {                  // running sideEffect { }
+                // running sideEffect { } -> always run no matter what
+                ! expectsProposal -> {
                     reducer.runReducer(action)
                     proposalEmitted
                 }
-                !proposalEmitted -> {                  // running reduce { } or reduceAnd { }
+
+                // running reduce { } or reduceAnd { }
+                // -> only run if state wasn't reduced already (proposalEmitted = true)
+                ! proposalEmitted -> {
                     reducer.runReducer(action)
                     true
                 }
-                else -> proposalEmitted                 // skipping reduce { } or reduceAnd { }
+
+                // reduce { } or reduceAnd { } but state was already reduced (proposalEmitted = true)
+                else -> proposalEmitted
             }
         }
     }

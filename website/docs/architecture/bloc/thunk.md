@@ -5,7 +5,10 @@ sidebar_label: Thunk
 hide_title: true
 ---
 
-![Bloc Architecture - Details](../../../static/img/BLoC%20Architecture%20-%20BLoC%20Details.svg)
+**Definition** 
 
+To reiterate:
+>The word "thunk" is a programming term that means "a piece of code that does some delayed work". Rather than execute some logic now, we can write a function body or code that can be used to perform the work later.  
+https://redux.js.org/usage/writing-logic-thunks
 
-A **Thunk** 
+TBD

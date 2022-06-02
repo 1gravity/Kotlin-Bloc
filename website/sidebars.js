@@ -80,11 +80,19 @@ const sidebars = {
   "extensionsSidebar": [
     {
       "type": "doc",
+      "id": "extensions/overview"
+    },
+    {
+      "type": "doc",
       "id": "extensions/android"
     },
     {
       "type": "doc",
       "id": "extensions/ios"
+    },
+    {
+      "type": "doc",
+      "id": "extensions/redux"
     }
   ],
   "exampleSidebar": [
