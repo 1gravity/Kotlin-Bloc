@@ -36,6 +36,9 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+        docs: {
+          sidebarPath: require.resolve('./sidebars.js'),
+        },
       }),
     ],
   ],
@@ -64,15 +67,15 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'extensions/extensions',
+            docId: 'extensions/android',
             position: 'left',
             label: 'Extensions', 
           },
           {
             type: 'doc',
-            docId: 'samples/samples',
+            docId: 'examples/examples',
             position: 'left',
-            label: 'Samples', 
+            label: 'Examples', 
           },
           {
             href: 'https://github.com/1gravity/Kotlin-Bloc',

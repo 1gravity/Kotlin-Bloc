@@ -2,7 +2,7 @@
 
 # Kotlin BLoC Framework
 
-Kotlin BLoC is a Kotlin Multiplatform UI framework inspired by multiple design patterns and frameworks ([KMM UI Architecture - Part 1](https://medium.com/p/6362e14ee52a)).
+`Kotlin BLoC` is a Kotlin Multiplatform UI framework inspired by multiple design patterns and frameworks ([KMM UI Architecture - Part 1](https://medium.com/p/6362e14ee52a)).
 
 ## Architecture
 
@@ -11,7 +11,7 @@ Note, this readme offers a quick overview of the framework. For more in-depth in
 - [The Dokka documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
 
 ### Goals
-Kotlin BLoC's architectural goals are:
+The architectural goals of `Kotlin BLoC` are:
 - be platform-agnostic
 - be minimalistic / lightweight
 - don't be over-engineered
@@ -24,7 +24,7 @@ Kotlin BLoC's architectural goals are:
 ### Example
 To demo the framework's simplicity, here's one way to implement a counter app (the "Hello World" of UI frameworks):
 ```kotlin
-// define the BLoC
+// define the Bloc
 fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
     reduce { state + action }
 }
@@ -98,6 +98,7 @@ The architecture was inspired by the following design patterns and UI frameworks
 - MVVM (Model-View-ViewModel)
 - [SAM](https://sam.js.org)
 - Redux
+- [Flutter BloC (Business Logic Component)](https://medium.com/@artemsidorenko/bloc-architecture-in-flutter-a-modern-architectural-approach-and-how-we-use-it-at-jimdo-bea143b56d01)
 
 #### Frameworks
 - [Orbit](https://orbit-mvi.org)
@@ -108,11 +109,11 @@ The architecture was inspired by the following design patterns and UI frameworks
 
 ### Design Overview
 
-<img alt="BLoC Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" />
+<img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" />
 
 The framework has two main components:
-- The **BLoC** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** (State) and optionally **SideEffect(s)**.
-- The **BLoCState** holds the component's **State**. It's separate from the actual BLoC to support different scenarios like:
+- The **Bloc** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** (State) and optionally **SideEffect(s)**.
+- The **BlocState** holds the component's **State**. It's separate from the actual Bloc to support different scenarios like:
   - share state between business logic components
   - persist state (database, network)
   - use a global state container like Redux
