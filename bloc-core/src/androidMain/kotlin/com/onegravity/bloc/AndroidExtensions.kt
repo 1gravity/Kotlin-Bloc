@@ -35,7 +35,7 @@ fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subsc
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
-    subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
+    observable.subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
 }
 
 /**

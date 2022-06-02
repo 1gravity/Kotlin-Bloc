@@ -70,8 +70,8 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     }
 
     /**
-     * Use this in iOS/Swift only (it's the equivalent of the subscribe extension function (for Android)
-     * todo do we need the extension function at all if we can use this instead?
+     * Use this in iOS/Swift.
+     * It's the equivalent of the subscribe extension function (for Android)
      */
     override fun observe(
         observerLifecycle: Lifecycle, state:

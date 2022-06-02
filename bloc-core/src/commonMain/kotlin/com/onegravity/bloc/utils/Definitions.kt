@@ -16,7 +16,7 @@ public annotation class BlocProtected
 public annotation class BlocInternal
 
 /**
- * This is an Observer specifically for Swift
+ * This is the Observer specifically for Swift
  */
 public typealias BlocObserver<State> = (State) -> Unit
 

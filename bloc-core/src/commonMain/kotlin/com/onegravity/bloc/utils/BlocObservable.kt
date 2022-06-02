@@ -40,7 +40,8 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
         state: (suspend (state: State) -> Unit)?,
         sideEffect: (suspend (sideEffect: SideEffect) -> Unit)?
     ) {
-        this@toObservable.subscribe(lifecycle, state, sideEffect)
+        val bloc = this@toObservable
+        bloc.subscribe(lifecycle, state, sideEffect)
     }
 }
 
