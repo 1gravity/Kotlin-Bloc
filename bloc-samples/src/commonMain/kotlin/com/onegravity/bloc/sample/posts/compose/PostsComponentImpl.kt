@@ -36,6 +36,8 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
                 dispatch(PostsLoading)
+                // we can access the db here because Dispatchers.Default is a Bloc's default dispatcher
+                // also we use Ktor which offloads the networking to another thread
                 val result = repository.getOverviews()
                 dispatch(PostsLoaded(result))
             }

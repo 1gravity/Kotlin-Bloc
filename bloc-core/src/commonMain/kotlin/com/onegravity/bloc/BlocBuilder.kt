@@ -13,7 +13,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     private var _initialize: Initializer<State, Action> = { }
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
-    private var _dispatcher: CoroutineContext = Dispatchers.Default
+    private var _initDispatcher: CoroutineContext = Dispatchers.Default
+    private var _thunkDispatcher: CoroutineContext = Dispatchers.Default
+    private var _reduceDispatcher: CoroutineContext = Dispatchers.Default
 
     internal fun build(
         context: BlocContext,
@@ -24,7 +26,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         initialize = _initialize,
         thunks = _thunks,
         reducers = _reducers,
-        dispatcher = _dispatcher,
+        initDispatcher = _initDispatcher,
+        thunkDispatcher = _thunkDispatcher,
+        reduceDispatcher = _reduceDispatcher,
     )
 
     /* *** Initialization *** */
@@ -192,10 +196,33 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     /* Dispatcher */
 
     @BlocDSL
-    public var dispatcher: CoroutineContext = Dispatchers.Default
+    public var dispatchers: CoroutineContext = Dispatchers.Default
         set(value) {
             field = value
-            _dispatcher = value
+            _initDispatcher = value
+            _thunkDispatcher = value
+            _reduceDispatcher = value
+        }
+
+    @BlocDSL
+    public var initDispatcher: CoroutineContext = Dispatchers.Default
+        set(value) {
+            field = value
+            _initDispatcher = value
+        }
+
+    @BlocDSL
+    public var thunkDispatcher: CoroutineContext = Dispatchers.Default
+        set(value) {
+            field = value
+            _thunkDispatcher = value
+        }
+
+    @BlocDSL
+    public var reduceDispatcher: CoroutineContext = Dispatchers.Default
+        set(value) {
+            field = value
+            _reduceDispatcher = value
         }
 
     /* Extension functions */

@@ -1,5 +1,4 @@
 - TODO make the StateMachine thread safe (again)
-- TODO have separate Dispatchers for initialize, reducers, side effects and thunks in a Bloc
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
        the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
        ReduxStore and one in the BlocState)
