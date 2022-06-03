@@ -113,6 +113,12 @@ https://redux.js.org/usage/writing-logic-thunks
 A `Thunk` in the context of `Kotlin BLoC` is exactly what above definition implies, although its implementation and especially its execution is completely different from a Redux thunk. While the latter is a function, dispatched as an action to a Redux store and processed by the redux-thunk middleware, "our" thunk is not dispatched as an action but triggered the same way a reducer is triggered, by reacting to an `Action` that was sent to the `Bloc`. On top of that it's also:
 1. a suspending function
 2. takes a CoroutineScope as parameter (next to the `GetState`, `Action` and `Dispatcher` parameters)
-3. Actions are dispatched to the "next" thunk or reducer in the execution chain (details see [Concurrency](./bloc/concurrency))
+3. Actions are dispatched to the "next" thunk or reducer in the execution chain
 
 Details can be found in [Thunk](./bloc/thunk).
+
+### Initializer
+
+Initializers are functions executed when the bloc is created. They are similar to thunks since they can execute asynchronous code and dispatch actions to be processed by other thunks and reducers. Unlike thunks, initializers are executed once and once only during the [Lifecycle](./lifecycle.md) of a bloc.
+
+Details can be found in [Initializer](./bloc/initializer).

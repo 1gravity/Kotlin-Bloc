@@ -44,7 +44,7 @@ reduce {
 }
 ```
 
-The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redux).
+The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redux). It's is tied to the lifecycle of the bloc and will be cancelled when the bloc is destroyed.
 
 ### Side Effect
 
@@ -150,7 +150,7 @@ reduce {
 }
 ```
 
-This bevavior also makes sense since state must be reduced only once. Whichever matching reducer is defined first is the one being called. While the order of definition is relevant for reducers (if they match the same action), it's not for thunks and reducers, thunks will always be executed first.
+This bevavior also makes sense since state must be reduced only once. Whichever matching reducer is declared first is the one being called. While the order of declaration is relevant for reducers (if they match the same action), it's not for thunks and reducers, thunks will always be executed first.
 
 What about side effects?
 

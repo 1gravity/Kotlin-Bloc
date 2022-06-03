@@ -48,11 +48,15 @@ const sidebars = {
         },
         {
           "type": "doc",
-          "id": "architecture/bloc/bloc_builder"
+          "id": "architecture/bloc/initializer"
         },
         {
           "type": "doc",
           "id": "architecture/bloc/lifecycle"
+        },
+        {
+          "type": "doc",
+          "id": "architecture/bloc/bloc_builder"
         },
         {
           "type": "doc",

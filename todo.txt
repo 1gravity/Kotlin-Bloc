@@ -14,4 +14,9 @@
        (`sideEffect` allows only a single side effect)
 - TODO implement tests
 - TODO go through all the code and update the documentation -> then create the final Dooka docu
+- TODO synchronize initializers / onCreate execution with the lifecycle of the bloc
+       -> a bloc could not transition to Started while the initializer is still running
+       we would only need to synchronize the initializer code block itself and not wait for
+       dispatched actions to be processed because those actions won't be executed before the bloc is
+       started / transitions to Started
 - TODO define the version for the first release, publish artifacts and update the website

@@ -57,14 +57,26 @@ private fun BlocLifecycle(
                 onStart()
             }
         }
+        on<LifecycleEvent.Stop> {
+            logger.e("a Bloc must be started before it can be stopped")
+            dontTransition()
+        }
         on<LifecycleEvent.Destroy> {
             transitionTo(LifecycleState.Destroyed, onDestroy)
         }
     }
 
     state<LifecycleState.Created> {
+        on<LifecycleEvent.Create> {
+            logger.e("a created Bloc can't be created twice")
+            dontTransition()
+        }
         on<LifecycleEvent.Start> {
             transitionTo(LifecycleState.Started, onStart)
+        }
+        on<LifecycleEvent.Stop> {
+            logger.e("a Bloc must be started before it can be stopped")
+            dontTransition()
         }
         on<LifecycleEvent.Destroy> {
             transitionTo(LifecycleState.Started, onDestroy)
@@ -72,8 +84,12 @@ private fun BlocLifecycle(
     }
 
     state<LifecycleState.Started> {
+        on<LifecycleEvent.Create> {
+            logger.e("Can't create an already started Bloc")
+            dontTransition()
+        }
         on<LifecycleEvent.Start> {
-            logger.e("a started Bloc can't be started again")
+            logger.e("a started Bloc can't be started twice")
             dontTransition()
         }
         on<LifecycleEvent.Stop> {
@@ -88,11 +104,15 @@ private fun BlocLifecycle(
     }
 
     state<LifecycleState.Stopped> {
+        on<LifecycleEvent.Create> {
+            logger.e("Can't create an already stopped Bloc")
+            dontTransition()
+        }
         on<LifecycleEvent.Start> {
             transitionTo(LifecycleState.Started, onStart)
         }
         on<LifecycleEvent.Stop> {
-            logger.e("a stopped Bloc can't be stopped again")
+            logger.e("a stopped Bloc can't be stopped twice")
             dontTransition()
         }
         on<LifecycleEvent.Destroy> {
@@ -103,19 +123,19 @@ private fun BlocLifecycle(
     state<LifecycleState.Destroyed> {
         // this is the final state -> no transitions
         on<LifecycleEvent.Create> {
-            logger.e("a destroyed Bloc can't be initialized")
+            logger.e("Can't create an already destroyed Bloc")
             dontTransition()
         }
         on<LifecycleEvent.Start> {
-            logger.e("a destroyed Bloc can't be started")
+            logger.e("Can't start an already destroyed Bloc")
             dontTransition()
         }
         on<LifecycleEvent.Stop> {
-            logger.e("a destroyed Bloc can't be stopped")
+            logger.e("Can't stop an already destroyed Bloc")
             dontTransition()
         }
         on<LifecycleEvent.Destroy> {
-            logger.e("a destroyed Bloc can't be destroyed again")
+            logger.e("Can't destroy a Bloc twice")
             dontTransition()
         }
     }

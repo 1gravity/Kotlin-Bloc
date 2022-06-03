@@ -41,18 +41,18 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     override val sideEffects: SideEffectStream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
     /**
-     * This needs to come after all variable/property declarations to make sure everything is initialized
-     * before the Bloc is started
+     * This needs to come after all variable/property declarations to make sure everything is
+     * initialized before the Bloc is started
      */
     init {
         blocContext.lifecycle.toBlocLifecycle(
             onCreate = {
                 initScope = CoroutineScope(SupervisorJob() + initDispatcher)
-                thunkScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
-                reduceScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
                 initScope?.initialize()
             },
             onStart = {
+                thunkScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
+                reduceScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
                 thunkScope?.startThunks()
                 reduceScope?.startReducers()
             },
