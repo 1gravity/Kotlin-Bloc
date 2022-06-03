@@ -45,25 +45,29 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * initialized before the Bloc is started
      */
     init {
-        blocContext.lifecycle.toBlocLifecycle(
-            onCreate = {
-                initScope = CoroutineScope(SupervisorJob() + initDispatcher)
-                initScope?.initialize()
-            },
-            onStart = {
-                thunkScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
-                reduceScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
-                thunkScope?.startThunks()
-                reduceScope?.startReducers()
-            },
-            onStop = {
-                thunkScope?.cancel()
-                reduceScope?.cancel()
-            },
-            onDestroy = {
-                initScope?.cancel()
-            }
-        )
+        blocContext.lifecycle.doOnCreate {
+            logger.d("onCreate -> initialize Bloc")
+            initScope = CoroutineScope(SupervisorJob() + initDispatcher)
+            initScope?.initialize()
+        }
+        blocContext.lifecycle.doOnStart {
+            logger.d("onStart -> start Bloc")
+            thunkScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
+            reduceScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
+            thunkScope?.startThunks()
+            reduceScope?.startReducers()
+        }
+
+        blocContext.lifecycle.doOnStop {
+            logger.d("onStop -> stop Bloc")
+            thunkScope?.cancel()
+            reduceScope?.cancel()
+        }
+
+        blocContext.lifecycle.doOnDestroy {
+            logger.d("onDestroy -> destroy Bloc")
+            initScope?.cancel()
+        }
     }
 
     // actions can be complex objects resulting in lots of debug output

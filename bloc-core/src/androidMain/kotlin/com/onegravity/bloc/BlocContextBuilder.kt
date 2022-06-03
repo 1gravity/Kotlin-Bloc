@@ -165,15 +165,15 @@ private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner 
 
     init {
         viewModelScope.launch(Dispatchers.Main) {
-            lifecycleRegistry.currentState = Lifecycle.State.CREATED
-            lifecycleRegistry.currentState = Lifecycle.State.STARTED
+            lifecycleRegistry.currentState = Lifecycle.State.CREATED    // triggers onCreate()
+            lifecycleRegistry.currentState = Lifecycle.State.STARTED    // triggers onStart()
+            lifecycleRegistry.currentState = Lifecycle.State.RESUMED    // triggers onResume()
             while (isActive) {
                 delay(Long.MAX_VALUE)
             }
         }.invokeOnCompletion {
-            // Lifecycle.State.CREATED transitions to the stopped state...
-            lifecycleRegistry.currentState = Lifecycle.State.CREATED
-            lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
+            lifecycleRegistry.currentState = Lifecycle.State.CREATED    // triggers onStop()
+            lifecycleRegistry.currentState = Lifecycle.State.DESTROYED  // triggers onDestroy()
         }
     }
 }.lifecycle

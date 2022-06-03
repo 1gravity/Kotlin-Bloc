@@ -23,11 +23,13 @@ class BlocHolder<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> {
         lifecycle.onCreate()
         if manageFullLifecycle {
             lifecycle.onStart()
+            lifecycle.onResume()
         }
     }
 
     deinit {
         if manageFullLifecycle {
+            lifecycle.onPause()
             lifecycle.onStop()
         }
         lifecycle.onDestroy()
