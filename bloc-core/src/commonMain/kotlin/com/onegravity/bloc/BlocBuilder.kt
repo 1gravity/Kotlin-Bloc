@@ -1,7 +1,6 @@
 package com.onegravity.bloc
 
 import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.fsm.Matcher
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.Dispatchers

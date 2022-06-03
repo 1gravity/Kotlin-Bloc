@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ToDoState(
+class PersistingToDoState(
     coroutineScope: CoroutineScope,
     initialState: List<ToDo> = emptyList()
 ) : BlocStateBase<List<ToDo>, List<ToDo>>(initialState) {

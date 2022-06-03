@@ -7,7 +7,8 @@ import kotlinx.coroutines.SupervisorJob
 
 fun toDoBloc(context: BlocContext) = bloc<List<ToDo>, ToDoAction>(
     context = context,
-    blocState = ToDoState(CoroutineScope(SupervisorJob()))
+//    blocState = blocState(emptyList())                                    // non persisting BlocState
+    blocState = PersistingToDoState(CoroutineScope(SupervisorJob()))        // persisting BlocState
 ) {
     reduce<AddToDo> {
         val todo = ToDo(description = action.description)
