@@ -62,7 +62,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplified1")
+@JvmName("blocProposalEqualsState")
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any> bloc(
     context: BlocContext,
@@ -90,7 +90,7 @@ public fun <State : Any, Action : Any, SideEffect : Any> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplified2")
+@JvmName("blocProposalEqualsStateInitialValue")
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any> bloc(
     context: BlocContext,
@@ -116,7 +116,7 @@ public fun <State : Any, Action : Any, SideEffect : Any> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplified3")
+@JvmName("blocNoSideEffects")
 @BlocDSL
 public fun <State : Any, Action : Any> bloc(
     context: BlocContext,
@@ -142,7 +142,7 @@ public fun <State : Any, Action : Any> bloc(
  * }
  * ```
  */
-@JvmName("blocSimplified4")
+@JvmName("blocNoSideEffectsInitialValue")
 @BlocDSL
 public fun <State : Any, Action : Any> bloc(
     context: BlocContext,
