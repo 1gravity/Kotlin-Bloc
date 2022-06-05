@@ -1,4 +1,3 @@
-- TODO make the StateMachine thread safe (again)
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
        the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
        ReduxStore and one in the BlocState)
@@ -9,7 +8,7 @@
        component / class like the PostsComponent / PostsComponentImpl class so we can use functions
        in iOS too. Come up with a solution that combines both styles for Android and iOS without
        the need for a "container" component.
-- TODO time machine
+- TODO time travel + debugger
 - TODO implement `sideEffects` in the Bloc DSL to allow emission of multiple side effects
        (`sideEffect` allows only a single side effect)
 - TODO implement tests

@@ -60,6 +60,10 @@ const sidebars = {
         },
         {
           "type": "doc",
+          "id": "architecture/bloc/bloc_context"
+        },
+        {
+          "type": "doc",
           "id": "architecture/bloc/concurrency"
         },
       ]
@@ -69,6 +73,10 @@ const sidebars = {
         {
           "type": "doc",
           "id": "architecture/blocstate/bloc_state"
+        },
+        {
+          "type": "doc",
+          "id": "architecture/blocstate/bloc_state_builder"
         }
       ]
     },

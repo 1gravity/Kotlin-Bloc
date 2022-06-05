@@ -9,7 +9,7 @@ hide_title: true
 
 
 A **Bloc** implements the app's business logic. It processes event data (called `Action`) from the view / ui component and:
-1. updates `State` according to its busines rules and emits the updated `State` to be consumed by the view / ui component.
+1. updates `State` according to its business rules and emits the updated `State` to be consumed by the view / ui component.
 2. optionally creates `SideEffect(s)` which can be consumed by the view / ui component (e.g. for navigation) or by other consumers (analytics events, logging etc.).
 
 ## Public Interface
