@@ -17,39 +17,38 @@ object SimpleCounter {
         data class Decrement(val value: Int = 1) : Action()
     }
 
-    private fun BlocContext.interceptorBloc3() = bloc<Int, Int>(
-        this,
-        1
+    private fun <State: Any> auditTrailBloc(context: BlocContext, initialValue: State) = bloc<State, State>(
+        context,
+        initialValue
     ) {
         thunk {
-            logger.d("interceptor 3 writing an audit trail asynchronously to a db")
-            logger.d("Counter changing from ${getState()} to $action")
+            logger.d("auditTrailBloc: changing state from ${getState()} to $action")
             dispatch(action)
         }
         reduce { action }
     }
 
-    private fun BlocContext.interceptorBloc2(addValue: Int) = bloc<Int, Int>(
+    private fun BlocContext.interceptorBloc2(initialValue: Int) = bloc<Int, Int>(
         this,
-        interceptorBloc3().asBlocState()
+        auditTrailBloc(this, initialValue).asBlocState()
     ) {
         reduce {
-            logger.d("interceptor 2: $action -> ${action + addValue}")
-            action + addValue
+            logger.d("interceptor 2: $action -> ${action - 1}")
+            action - 1
         }
     }
 
-    private fun BlocContext.interceptorBloc1(addValue: Int) = bloc<Int, Int>(
+    private fun BlocContext.interceptorBloc1(initialValue: Int) = bloc<Int, Int>(
         this,
-        interceptorBloc2(-1).asBlocState()
+        interceptorBloc2(initialValue).asBlocState()
     ) {
         reduce {
-            logger.d("interceptor 1: $action -> ${action + addValue}")
-            action + addValue
+            logger.d("interceptor 1: $action -> ${action + 1}")
+            action + 1
         }
     }
 
-    fun bloc(context: BlocContext) = bloc<Int, Action, Unit>(
+    fun bloc(context: BlocContext) = bloc<Int, Action>(
         context,
         context.interceptorBloc1(1).asBlocState()
     ) {
