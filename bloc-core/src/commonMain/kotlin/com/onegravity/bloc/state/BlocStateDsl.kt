@@ -30,7 +30,7 @@ public fun <State : Any, Proposal : Any> blocState(
  *    blocState<State>(SomeState)
  * ```
  */
-@JvmName("simpleBlocState")
+@JvmName("blocStateInitialValue")
 @BlocDSL
 public fun <State : Any> blocState(
     initialState: State

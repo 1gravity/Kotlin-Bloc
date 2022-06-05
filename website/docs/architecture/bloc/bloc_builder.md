@@ -5,9 +5,9 @@ sidebar_label: Bloc Builder
 hide_title: true
 ---
 
-## BlocBuilder DSL
+## Bloc DSL
 
-There's a `BlocBuilder` / DSL to make the definition of `Blocs` easy. We have encountered some of that DSL already in the chapters about [Reducers](./reducer), [Thunks](./thunk) and [Initializers](./initializer). Here's a (dummy) example to give an overview of all of possible functions :
+There's a DSL to make the definition of `Blocs` easy. We have encountered some of that DSL already in the chapters about [Reducers](./reducer), [Thunks](./thunk) and [Initializers](./initializer). Here's a (dummy) example to give an overview of all of possible functions :
 
 ```kotlin
 data class CountState(val count: Int)
@@ -68,7 +68,9 @@ fun bloc(context: BlocContext) = bloc<CountState, CountAction, SideEffect, Count
 }
 ```
 
-While this is great to define the actual `Bloc`, there's also helper functions that can make the process of declaring `Blocs` even simpler/shorter. In above example the `Bloc` was declared using the full syntax:
+## BlocBuilder
+
+While this is great to define the `Bloc` functions, there are also helper functions that make the process of declaring `Blocs` even simpler/shorter. In above example the `Bloc` was declared using the full syntax:
 
 ```kotlin
 bloc<CountState, CountAction, SideEffect, CountState>(
