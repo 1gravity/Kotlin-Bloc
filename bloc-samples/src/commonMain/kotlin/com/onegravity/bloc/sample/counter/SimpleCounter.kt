@@ -1,6 +1,5 @@
 package com.onegravity.bloc.sample.counter
 
-import com.onegravity.bloc.BlocBuilder
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Decrement
@@ -9,7 +8,8 @@ import com.onegravity.bloc.state.asBlocState
 import com.onegravity.bloc.utils.logger
 
 /**
- * Demo to show how a Bloc can "act" as a BlocState (interceptorBloc).
+ * Demo to show how a Bloc can "act" as a BlocState.
+ * As a matter of fact, we have 3 "intercepting" Blocs in this example.
  */
 object SimpleCounter {
     sealed class Action {
@@ -17,24 +17,41 @@ object SimpleCounter {
         data class Decrement(val value: Int = 1) : Action()
     }
 
-    private fun BlocBuilder<Int, Int, Unit, Int>.counterReduce(addValue: Int) {
+    private fun BlocContext.interceptorBloc3() = bloc<Int, Int>(
+        this,
+        1
+    ) {
+        thunk {
+            logger.d("interceptor 3 writing an audit trail asynchronously to a db")
+            logger.d("Counter changing from ${getState()} to $action")
+            dispatch(action)
+        }
+        reduce { action }
+    }
+
+    private fun BlocContext.interceptorBloc2(addValue: Int) = bloc<Int, Int>(
+        this,
+        interceptorBloc3().asBlocState()
+    ) {
         reduce {
-            logger.d("interceptor: $action -> ${action + addValue}")
+            logger.d("interceptor 2: $action -> ${action + addValue}")
             action + addValue
         }
     }
 
-    private fun BlocContext.blocState(addValue: Int) = bloc<Int, Int>(this, 1) {
-        counterReduce(addValue)
-    }
-
-    private fun BlocContext.interceptorBloc(addValue: Int) = bloc<Int, Int>(this, blocState(-1).asBlocState()) {
-        counterReduce(addValue)
+    private fun BlocContext.interceptorBloc1(addValue: Int) = bloc<Int, Int>(
+        this,
+        interceptorBloc2(-1).asBlocState()
+    ) {
+        reduce {
+            logger.d("interceptor 1: $action -> ${action + addValue}")
+            action + addValue
+        }
     }
 
     fun bloc(context: BlocContext) = bloc<Int, Action, Unit>(
         context,
-        context.interceptorBloc(1).asBlocState()
+        context.interceptorBloc1(1).asBlocState()
     ) {
         reduce<Increment> { state + action.value }
         reduce<Decrement> { (state - action.value).coerceAtLeast(0) }
