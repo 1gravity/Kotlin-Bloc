@@ -184,14 +184,14 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
             val (_, reducer, expectsProposal) = matcherReducer
             when {
                 // running sideEffect { } -> always run no matter what
-                ! expectsProposal -> {
+                !expectsProposal -> {
                     reducer.runReducer(action)
                     proposalEmitted
                 }
 
                 // running reduce { } or reduceAnd { }
                 // -> only run if state wasn't reduced already (proposalEmitted = true)
-                ! proposalEmitted -> {
+                !proposalEmitted -> {
                     reducer.runReducer(action)
                     true
                 }
@@ -204,19 +204,15 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 
     private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(
         action: Action
-    ): Boolean = reduceScope?.run {
+    ) = reduceScope?.run {
         val reduce = this@runReducer
         val context = ReducerContext(blocState.value, action, this)
         val (proposal, sideEffects) = context.reduce()
-        return if (proposal != null) {
+        if (proposal != null) {
             blocState.send(proposal)
-            postSideEffects(sideEffects)
-            true
-        } else {
-            postSideEffects(sideEffects)
-            false
         }
-    } ?: false
+        postSideEffects(sideEffects)
+    }
 
     private fun getMatchingReducers(action: Action) = reducers
         .filter { it.matcher == null || it.matcher.matches(action) }
@@ -244,7 +240,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
             context.initialize()
         }
 
-    override fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Job? =
+    override fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) =
         reduceScope?.launch {
             val context = ReducerContextNoAction(blocState.value, this)
             val (proposal, sideEffects) = context.reduce()
@@ -253,18 +249,16 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         }
 
     override fun thunk(thunk: ThunkNoAction<State, Action>) =
-        thunkScope?.run {
-            launch {
-                val dispatcher: Dispatcher<Action> = {
-                    nextThunkDispatcher(it).invoke(it)
-                }
-                val context = ThunkContextNoAction(
-                    getState = { blocState.value },
-                    dispatch = dispatcher,
-                    coroutineScope = this
-                )
-                context.thunk()
+        thunkScope?.launch {
+            val dispatcher: Dispatcher<Action> = {
+                nextThunkDispatcher(it).invoke(it)
             }
+            val context = ThunkContextNoAction(
+                getState = { blocState.value },
+                dispatch = dispatcher,
+                coroutineScope = this
+            )
+            context.thunk()
         }
 
 }
