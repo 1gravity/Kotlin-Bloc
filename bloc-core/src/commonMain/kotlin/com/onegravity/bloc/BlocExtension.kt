@@ -6,22 +6,22 @@ import kotlinx.coroutines.Job
 /**
  * Bloc API to run thunks / reducers "externally" (using extension functions)
  */
-public interface BlocExtension<State : Any, Action : Any, SideEffect : Any, Proposal : Any> {
+internal interface BlocExtension<State : Any, Action : Any, SideEffect : Any, Proposal : Any> {
 
     /**
      * The Initializer runs synchronously
      */
-    public fun runInitializer(initialize: Initializer<State, Action>): Job?
+    fun initialize(initialize: Initializer<State, Action>): Job?
 
     /**
      * The Reducer runs synchronously
      */
-    public fun runReducer(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Job?
+    fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Job?
 
 
     /**
      * The Thunk runs asynchronously
      */
-    public fun runThunk(thunk: ThunkNoAction<State, Action>)
+    fun thunk(thunk: ThunkNoAction<State, Action>)
 
 }
