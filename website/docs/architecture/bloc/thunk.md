@@ -89,13 +89,16 @@ The `CoroutineScope` is tied to the lifecycle of the bloc and will be cancelled 
 
 ## Execution
 
-A lot of what has been said in the [reducer documentation](reducer#execution) applies here too but there are two major difference:
-1. If there's more than one reducer matching an action, only the first one will be executed (can't reduce the same state twice). With thunks every matching thunk will be executed.
-2. Reducers are executed by matching action, the order of declaration only matters when there's more than one matching reducer. With thunks the order of declaration is crucial in determining which one executes first especially because every matching thunk will be executed (rule 1).
+A lot of what was said in the [reducer documentation](reducer#execution) applies to `thunks` too but there are important differences. Here are the rules:
+1. If there's more than one reducer matching an action, only the first one will be executed (can't reduce the same state twice).  
+**Rule 1**: for thunks, **every matching thunk will be executed**.
+2. Reducers are executed by matching action, the order of declaration only matters when there's more than one matching reducer.  
+**Rule 2**: for thunks, **the order of declaration is crucial** in determining which one executes first especially because every matching thunk will be executed (rule 1).
+3. **Rule 3**: when a thunk dispatches an action, it's dispatched to all matching thunks declared after the dispatching thunk (or we would end up with an endless loop). If no matching thunk is found, the action is dispatched to the first matching reducer.
 
 ### Example 1
 
-An example of rule 1:
+An example of rule 1 and 2:
 
 ```kotlin
 thunk<Increment> {
@@ -125,7 +128,7 @@ The reducer won't be executed as none of the thunks dispatches any action.
 
 ### Example 2
 
-Try to guess what happens when the first thunk dispatches an `Increment` action:
+Try to guess what happens when the first thunk dispatches an `Increment` action (all three rules apply):
 
 ```kotlin
 thunk<Increment> {
@@ -150,19 +153,21 @@ reduce {
 The output will be:
 >thunk 1  
 thunk 2  
+thunk 3  
 thunk 2  
 thunk 3
 
-When a thunk dispatches an action, it's dispatching a new action to the bloc except execution will start with the thunk declared below the one that dispatched the action (or we could end up with an endless loop):
-- the original `Increment` action is dispatched to the first thunk ->  
-  output: `thunk 1`
-- the first thunk dispatches another `Increment` action which will be picked up by the second thunk ->  
-output: `thunk 2`
-- thunk 2 doesn't dispatch anything so nothing else happens with the second `Increment` action
-- the original `Increment` action is dispatched to the second thunk (rule 1) ->  
-  output: `thunk 2`
-- the original `Increment` action is dispatched to the third thunk (rule 1) ->  
-  output: `thunk 3`
+- the original `Increment` action is dispatched to the first thunk  
+  -> outputs: `thunk 1`
+- the first thunk dispatches a second `Increment` action to all matching thunks declared after the dispatching thunk (rule 3)
+- thunk 2 is the first to process the second `Increment` action  
+  -> outputs: `thunk 2`
+- thunk 3 is next in line to process the second `Increment` action  
+  -> outputs: `thunk 3`
+- the original `Increment` action is dispatched to the second thunk  
+  -> outputs: `thunk 2`
+- the original `Increment` action is dispatched to the third thunk    
+  -> outputs: `thunk 3`
 - nothing reaches the reducer
 
 While this sounds complicated, the rules are pretty straight forward. Examples like the one above are also rather academic and have little relevance for real applications. 
@@ -201,4 +206,3 @@ reduce<AccountLoaded> {
     state.copy(loading = false, account = action.result)
 }
 ```
-

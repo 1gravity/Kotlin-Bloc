@@ -52,19 +52,15 @@ const sidebars = {
         },
         {
           "type": "doc",
-          "id": "architecture/bloc/lifecycle"
-        },
-        {
-          "type": "doc",
           "id": "architecture/bloc/bloc_builder"
         },
         {
           "type": "doc",
-          "id": "architecture/bloc/bloc_context"
+          "id": "architecture/bloc/lifecycle"
         },
         {
           "type": "doc",
-          "id": "architecture/bloc/concurrency"
+          "id": "architecture/bloc/bloc_context"
         },
       ]
     },
@@ -81,10 +77,14 @@ const sidebars = {
       ]
     },
     {
-      "Bloc Owner": [
+      "Bloc Owner et al.": [
         {
           "type": "doc",
           "id": "architecture/blocowner/bloc_owner"
+        },
+        {
+          "type": "doc",
+          "id": "architecture/blocowner/bloc_observable"
         }
       ]
     },

@@ -21,9 +21,8 @@ internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxMod
         }
     }
 
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun send(value: Proposal) {
-        store.dispatch(value)
+    override fun send(proposal: Proposal) {
+        store.dispatch(proposal)
     }
 
 }

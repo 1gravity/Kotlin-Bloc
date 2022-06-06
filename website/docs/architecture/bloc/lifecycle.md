@@ -12,6 +12,8 @@ A bloc has two or three relevant lifecycles:
 - The [Essenty](https://github.com/arkivanov/Essenty) lifecycle which thanslates the `View` lifecycle to a platform-agnostic lifecycle.
 - Depending on the `View` implementation, there can be a "component" lifecycle which sits in between the other two lifecycles. On Android that would typically be a `ViewModel` lifecycle. On iOS there's a `BlocHolder` or `BlocComponent` lifecycle. This and how it ties to the other two lifecycles will be discussed in more detail in  [Extensions](../../extensions/overview).
 
+From a `Bloc's` perspective, the `Essenty` lifecycle is the most relevant one.
+
 ## Essenty Lifecycle
 
 ![Bloc Architecture - Details](../../../static/img/BLoC%20Architecture%20-%20External%20Lifecycle.svg)

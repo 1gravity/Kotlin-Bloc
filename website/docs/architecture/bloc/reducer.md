@@ -150,7 +150,7 @@ reduce {
 }
 ```
 
-This bevavior also makes sense since state must be reduced only once. Whichever matching reducer is declared first is the one being called. While the order of declaration is relevant for reducers (if they match the same action), it's not for thunks and reducers, thunks will always be executed first.
+This behavior also makes sense since state must be reduced only once. Whichever matching reducer is declared first is the one being called. While the order of declaration is relevant for reducers (if they match the same action), it's not for thunks and reducers, thunks will always be executed first.
 
 What about side effects?
 
@@ -226,9 +226,9 @@ enum class Action {
 
 ## A Matter of Taste
 
-Reducers can be catch all reducers or they can be single action reducers (we can also use a combination of the two styles).
+Reducers can be catch-all reducers or they can be single-action reducers (we can also use a combination of the two). Catch-all reducers are the traditional/Redux style of writing reducers.
 
-Catch all reducers can make sense to have all the reducer logic in one place like in this calculator example:
+Catch-all reducers make sense if you want the reducer logic in one place like in this (calculator) example:
 
 ```kotlin
 reduce {
@@ -252,7 +252,7 @@ reduce {
 }
 ```
 
-Reducers per action can make sense if the reducer logic is more complex like in this example:
+Using single-action reducers makes sense if the reducer logic is more complex like in this example:
 
 ```kotlin
 reduce<Add> {
@@ -289,4 +289,4 @@ reduce<Equals> {
 
 It's a "matter of taste", which style you prefer. While the traditional/Redux style is to have reducers dealing with different actions, [this article](https://dev.to/feresr/a-case-against-the-mvi-architecture-pattern-1add) advocates for splitting reducers into smaller chunks. 
 
-[Orbit](https://orbit-mvi.org/) is one of the frameworks championing the MVVM+ style (that's what they call it in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27)) serving as inspiration for this part of the `Kotlin BLoC` framework.
+[Orbit](https://orbit-mvi.org/) is one of the frameworks championing the MVVM+ style (that's what they call it in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27)) and it served as inspiration for some of the `Kotlin BLoC` design although they take the idea one step further (see [BlowOwner](../blocowner/bloc_owner)).

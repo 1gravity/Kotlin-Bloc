@@ -79,7 +79,7 @@ bloc<CountState, CountAction, SideEffect, CountState>(
 ) {
 ```
 
-If we only need a standard `BlocState` (see also [BlocStateBuilder](../blocstate/bloc_state_builde)) we can replace the `blocState` parameter by an `initialValue`: 
+If we only need a standard `BlocState` (see also [BlocStateBuilder](../blocstate/bloc_state_builder)) we can replace the `blocState` parameter by an `initialValue`: 
 
 ```kotlin
 bloc<CountState, CountAction, SideEffect, CountState>(

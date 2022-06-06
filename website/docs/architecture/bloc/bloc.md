@@ -56,6 +56,7 @@ There's no need to call above functions directly. There are extension functions 
 ### Sink
 
 A sink to send data / `Actions` to the `Bloc`:
+
 ```kotlin
 public fun send(action: Action)
 ```
@@ -69,9 +70,11 @@ Processing an `Action` usually means invoking a `Reducer`:
 (https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
 
 Above definition is the offical Redux reducer definition and captures its essence, although reducers in the context of `Kotlin BLoC` are a bit more complex: 
+
 ```kotlin
 suspend (State, Action, CoroutineScope) -> Proposal
 ```
+
 Compared to a Redux reducer, this one is:
 1. suspending
 2. takes a CoroutineScope as parameter (on top of the `State` and the `Action`)
@@ -79,20 +82,23 @@ Compared to a Redux reducer, this one is:
 
 More details can be found in [Reducer](./bloc/reducer).
 
-Reducers are asynchronous in nature when they are defined using one of the [BlocBuilders](./bloc/bloc_builder). They can be synchronous when defined using [BlowOwner](./blocowner/bloc_owner) extensions.
+Reducers are asynchronous in nature when they are defined using one of the [BlocBuilders](./bloc/bloc_builder). They can be synchronous when defined using [BlocOwner](./blocowner/bloc_owner) extensions.
 
 ## Side Effect
 
 Side effects are created by "special" reducers that return an `Effect` object. 
 
 `Effects` are simple data classes encapsulating the new proposed state and a list of side effects:
+
 ```kotlin
 public data class Effect<Proposal : Any, SideEffect : Any>(
     val proposal: Proposal?,
     val sideEffects: List<SideEffect>
 )
 ```
+
 The difference between a "regular" reducer and one with side effects is simply the nature of its `Proposal`:
+
 ```kotlin
 // no side effects
 suspend (State, Action, CoroutineScope) -> Proposal
@@ -117,8 +123,8 @@ A `Thunk` in the context of `Kotlin BLoC` is exactly what above definition impli
 
 Details can be found in [Thunk](./bloc/thunk).
 
-### Initializer
+## Initializer
 
-Initializers are functions executed when the bloc is created. They are similar to thunks since they can execute asynchronous code and dispatch actions to be processed by other thunks and reducers. Unlike thunks, initializers are executed once and once only during the [Lifecycle](./lifecycle.md) of a bloc.
+Initializers are functions executed when the bloc is created. They are similar to thunks since they can execute asynchronous code and dispatch actions to be processed by other thunks and reducers. Unlike thunks, initializers are executed once and once only during the [Lifecycle](./bloc/lifecycle) of a bloc.
 
 Details can be found in [Initializer](./bloc/initializer).
