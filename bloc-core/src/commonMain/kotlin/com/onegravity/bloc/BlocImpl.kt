@@ -147,30 +147,31 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         }
     }
 
-    private suspend fun runThunks(action: Action) {
+    private suspend fun runThunks(action: Action, startIndex: Int = 0) {
         logger.d("run thunks for action ${action.trim()}")
-        thunks.forEachIndexed { index, (matcher, _) ->
+        (startIndex..thunks.lastIndex).forEach { index ->
+            val (matcher, _) = thunks[index]
             if (matcher == null || matcher.matches(action)) {
-                runThunk(index, action)
+                runThunk(action, index)
             }
         }
     }
 
-    private suspend fun runThunk(index: Int, action: Action) {
+    private suspend fun runThunk(action: Action, index: Int) {
         thunkScope?.run {
             val dispatcher: Dispatcher<Action> = {
-                nextThunkDispatcher(index + 1, it).invoke(it)
+                nextThunkDispatcher(it, index + 1).invoke(it)
             }
             val thunk = thunks[index].thunk
             ThunkContext({ blocState.value }, action, dispatcher, this).thunk()
         }
     }
 
-    private fun nextThunkDispatcher(startIndex: Int, action: Action): Dispatcher<Action> {
+    private fun nextThunkDispatcher(action: Action, startIndex: Int = 0): Dispatcher<Action> {
         (startIndex..thunks.lastIndex).forEach { index ->
             val matcher = thunks[index].matcher
             if (matcher == null || matcher.matches(action)) {
-                return { runThunk(index, action) }
+                return { runThunks(action, index) }
             }
         }
 
@@ -257,7 +258,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         thunkScope?.run {
             launch {
                 val dispatcher: Dispatcher<Action> = {
-                    nextThunkDispatcher(0, it).invoke(it)
+                    nextThunkDispatcher(it).invoke(it)
                 }
                 val context = ThunkContextNoAction(
                     getState = { blocState.value },
