@@ -22,6 +22,6 @@ internal interface BlocExtension<State : Any, Action : Any, SideEffect : Any, Pr
     /**
      * The Thunk runs asynchronously
      */
-    fun thunk(thunk: ThunkNoAction<State, Action>)
+    fun thunk(thunk: ThunkNoAction<State, Action>): Job?
 
 }

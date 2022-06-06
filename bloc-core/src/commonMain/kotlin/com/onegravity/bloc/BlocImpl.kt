@@ -234,14 +234,15 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * Public API (interface BlocExtension) to run thunks / reducers etc. MVVM+ style
      */
 
-    override fun initialize(initialize: Initializer<State, Action>) = initScope?.launch {
-        val context = InitializerContext(
-            state = value,
-            coroutineScope = this,
-            dispatch = { action: Action -> send(action) }
-        )
-        context.initialize()
-    }
+    override fun initialize(initialize: Initializer<State, Action>) =
+        initScope?.launch {
+            val context = InitializerContext(
+                state = value,
+                coroutineScope = this,
+                dispatch = { action: Action -> send(action) }
+            )
+            context.initialize()
+        }
 
     override fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>): Job? =
         reduceScope?.launch {
@@ -251,7 +252,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
             postSideEffects(sideEffects)
         }
 
-    override fun thunk(thunk: ThunkNoAction<State, Action>) {
+    override fun thunk(thunk: ThunkNoAction<State, Action>) =
         thunkScope?.run {
             launch {
                 val dispatcher: Dispatcher<Action> = {
@@ -265,6 +266,5 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
                 context.thunk()
             }
         }
-    }
 
 }
