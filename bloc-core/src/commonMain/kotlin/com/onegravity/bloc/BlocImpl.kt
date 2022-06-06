@@ -231,7 +231,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     }
 
     /**
-     * Public API to run thunks / reducers "externally" (using extension functions)
+     * Public API (interface BlocExtension) to run thunks / reducers etc. MVVM+ style
      */
 
     override fun runInitializer(initialize: Initializer<State, Action>) = initScope?.launch {
