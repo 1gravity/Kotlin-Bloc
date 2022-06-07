@@ -94,9 +94,13 @@ const sidebars = {
       "type": "doc",
       "id": "extensions/overview"
     },
-    {
-      "type": "doc",
-      "id": "extensions/android"
+    { 
+      "Android": [
+        {
+          "type": "doc",
+          "id": "extensions/android_bloccontext"
+        }
+      ]
     },
     {
       "type": "doc",

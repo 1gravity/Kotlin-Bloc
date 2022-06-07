@@ -15,7 +15,7 @@ public interface BlocContext : LifecycleOwner, InstanceKeeperOwner, BackPressedH
 
 If you read the chapter [Lifecycle](./lifecycle), you'll have realized how crucial the lifecycle is for the bloc. The lifecycle controls all three `CoroutineScopes` and thus  the coroutines / jobs. The `BlocContext` is the object passed into a bloc's constructor holding that very lifecycle object.
 
-As `InstanceKeeperOwner` the `BlocContext` holds a reference to an `InstanceKeeper` which allows  to store objects that are retained across configuration changes (on Android). While [Decompose](https://arkivanov.github.io/Decompose/) promotes the use of the `InstanceKeeper` as part of writing a Decompose component (Decompose's take on a business logic component), the `BlocContext` and as a consequence the `InstanceKeeper` is not accessible to the actual business logic code. The `InstanceKeeper` specifically is nevertheless critical in implementing many of the pretty cool [Android Extensions](../../extensions/android)
+As `InstanceKeeperOwner` the `BlocContext` holds a reference to an `InstanceKeeper` which allows  to store objects that are retained across configuration changes (on Android). While [Decompose](https://arkivanov.github.io/Decompose/) promotes the use of the `InstanceKeeper` as part of writing a Decompose component (Decompose's take on a business logic component), the `BlocContext` and as a consequence the `InstanceKeeper` is not accessible to the actual business logic code. The `InstanceKeeper` specifically is nevertheless critical in implementing many of the pretty cool [Android Extensions](../../extensions/android_bloccontext)
 
 ## Creation
 
