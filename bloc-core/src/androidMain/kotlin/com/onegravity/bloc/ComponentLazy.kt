@@ -23,8 +23,9 @@ class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
 
     /**
      * - the ViewModelStore stores the BlocViewModel
-     * - the BlocViewModel has a reference to the InstanceKeeper and the Lifecycle
-     * - the Component is created using the BlocViewModel's Lifecycle
+     * - the BlocViewModel creates an Essenty lifecycle tied to the view model's lifecycle
+     * - the BlocViewModel also creates an Essenty InstanceKeeper
+     * - the Component is created using the BlocViewModel's Essenty lifecycle
      * - the BlocViewModel's InstanceKeeper stores the Component
      * ViewModelStore -> BlocViewModel -> InstanceKeeper -> Component(BlocViewModel.Lifecycle)
      */

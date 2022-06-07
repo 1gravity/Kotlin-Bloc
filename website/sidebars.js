@@ -98,7 +98,7 @@ const sidebars = {
       "Android": [
         {
           "type": "doc",
-          "id": "extensions/android_bloccontext"
+          "id": "extensions/android/android_bloc_context"
         }
       ]
     },

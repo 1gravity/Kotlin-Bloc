@@ -51,12 +51,11 @@ import kotlinx.coroutines.launch
 inline fun <A: ViewModelStoreOwner, reified Component : Any> A.getOrCreate(
     key: Any = Component::class,
     noinline create: (context: BlocContext) -> Component
-): Lazy<Component> =
-    ComponentLazy(
-        owner = lazy { this },
-        key = key,
-        create = create
-    )
+): Lazy<Component> = ComponentLazy(
+    owner = lazy { this },
+    key = key,
+    create = create
+)
 
 /**
  * The same from a fragment
