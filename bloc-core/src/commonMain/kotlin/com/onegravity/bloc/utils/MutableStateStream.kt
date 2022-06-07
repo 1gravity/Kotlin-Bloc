@@ -2,6 +2,7 @@ package com.onegravity.bloc.utils
 
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 /**
  * A StateStream and a Sink at the same time.
@@ -20,7 +21,7 @@ public class MutableStateStream<Value : Any>(initialValue: Value) : StateStream<
     }
 
     override fun send(value: Value) {
-        state.tryEmit(value)
+        state.update { value }
     }
 
 }
