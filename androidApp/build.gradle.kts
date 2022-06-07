@@ -94,10 +94,6 @@ dependencies {
 
     // Essenty (https://github.com/arkivanov/Essenty)
     implementation("com.arkivanov.essenty:lifecycle:_")
-    implementation("com.arkivanov.essenty:parcelable:_")
-    implementation("com.arkivanov.essenty:state-keeper:_")
-    implementation("com.arkivanov.essenty:instance-keeper:_")
-    implementation("com.arkivanov.essenty:back-pressed:_")
 
     testImplementation(Testing.kotest.runner.junit5)
     testImplementation(KotlinX.coroutines.test)

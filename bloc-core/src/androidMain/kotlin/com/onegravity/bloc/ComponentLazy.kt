@@ -1,20 +1,16 @@
 package com.onegravity.bloc
 
-import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.*
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.context.BlocContextImpl
 
-class ComponentLazy<A, Component : Any>(
+class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
     private val owner: Lazy<A>,
     private val key: Any,
     private val create: (context: BlocContext) -> Component
-) : Lazy<Component>
-        where A : OnBackPressedDispatcherOwner,
-              A : ViewModelStoreOwner,
-              A : LifecycleOwner {
+) : Lazy<Component> {
 
     private var cached: Component? = null
 
@@ -35,6 +31,31 @@ class ComponentLazy<A, Component : Any>(
  * We wrap a component into an InstanceWrapper so that components don't have to implement the
  * InstanceKeeper.Instance interface.
  */
-class InstanceWrapper<C>(val component: C) : InstanceKeeper.Instance {
-    override fun onDestroy() {}
+private class InstanceWrapper<C>(val component: C) : InstanceKeeper.Instance {
+    override fun onDestroy() { }
 }
+
+/**
+ * This creates the actual BlocContext.
+ *
+ * It creates a BlocViewModel and stores it in Android's ViewModelStore.
+ */
+private fun <T: ViewModelStoreOwner> T.createBlocContext(): BlocContext {
+    val viewModel = viewModelStore.blocViewModel()
+    return BlocContextImpl(
+        lifecycle = viewModel.lifecycleRegistry
+    )
+}
+
+/**
+ * Get or create the BlocViewModel.
+ */
+@Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
+private fun ViewModelStore.blocViewModel(): BlocViewModel =
+    ViewModelProvider(
+        this,
+        object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel?> create(modelClass: Class<T>) = BlocViewModel() as T
+        }
+    ).get()

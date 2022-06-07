@@ -6,25 +6,19 @@
 
 package com.onegravity.bloc
 
-import androidx.activity.ComponentActivity
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
-import com.arkivanov.essenty.backpressed.BackPressedHandler
-import com.arkivanov.essenty.instancekeeper.InstanceKeeper
-import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
-import com.arkivanov.essenty.lifecycle.*
+import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.onegravity.bloc.context.BlocContext
 import com.onegravity.bloc.context.BlocContextImpl
-import com.onegravity.bloc.utils.BlocDSL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+
+/** --------------------------------------------------------------------------------------------- */
+/** Activity / Fragment                                                                           */
+/** --------------------------------------------------------------------------------------------- */
 
 /**
  * Use this from an Activity to get or create a "Component" without directly involving a ViewModel,
@@ -54,13 +48,10 @@ import kotlinx.coroutines.launch
  * Alternatively a bloc can be wrapped into a concrete class in which case Component::class would
  * work again as key.
  */
-inline fun <A, reified Component : Any> A.getOrCreate(
+inline fun <A: ViewModelStoreOwner, reified Component : Any> A.getOrCreate(
     key: Any = Component::class,
     noinline create: (context: BlocContext) -> Component
-): Lazy<Component> where
-        A : OnBackPressedDispatcherOwner,
-        A : ViewModelStoreOwner,
-        A : LifecycleOwner =
+): Lazy<Component> =
     ComponentLazy(
         owner = lazy { this },
         key = key,
@@ -79,75 +70,17 @@ inline fun <reified Component : Any> Fragment.getOrCreate(
     create = create
 )
 
-/**
- * This creates the actual BlocContext.
- *
- * It creates a ViewModel and stores it in Android's ViewModelStore. The ViewModel is then used to
- * create the Lifecycle and the InstanceKeeper while the SavedStateRegistry and the
- * OnBackPressedDispatcher are "taken" from the Activity.
- */
-fun <T> T.createBlocContext(): BlocContext where
-        T : OnBackPressedDispatcherOwner,
-        T : ViewModelStoreOwner,
-        T : LifecycleOwner {
-    val viewModel = viewModelStore.blocViewModel()
-    return BlocContextImpl(
-        lifecycle = viewModel.lifecycleRegistry,
-        instanceKeeper = viewModel.instanceKeeperDispatcher,
-        backPressedHandler = onBackPressedDispatcher.let(::BackPressedHandler)
-    )
-}
-
-/**
- * Get or create the ViewModel.
- */
-@Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
-private fun ViewModelStore.blocViewModel(): BlocViewModel =
-    ViewModelProvider(
-        this,
-        object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel?> create(modelClass: Class<T>) = BlocViewModel() as T
-        }
-    ).get()
-
-internal class BlocViewModel : ViewModel() {
-    val lifecycleRegistry = LifecycleRegistry()
-    val instanceKeeperDispatcher = InstanceKeeperDispatcher()
-
-    init {
-        lifecycleRegistry.create()
-        lifecycleRegistry.start()
-    }
-
-    override fun onCleared() {
-        lifecycleRegistry.stop()
-        lifecycleRegistry.destroy()
-        instanceKeeperDispatcher.destroy()
-    }
-}
-
+/** --------------------------------------------------------------------------------------------- */
+/** ViewModel                                                                                     */
 /** --------------------------------------------------------------------------------------------- */
 
 /**
- * If we're using a ViewModel, the BlocContext will be created in that ViewModel but the
- * SavedStateRegistry, ViewModelStore and OnBackPressedDispatcher are still "taken" from the
- * Activity, hence we need to pass those to the ViewModel (as ActivityBlocContext).
+ * Create a BlocContext from a ViewModel.
+ * The lifecycle will be the "lifecycle" of the ViewModel.
  */
-data class ActivityBlocContext(
-    val viewModelStore: ViewModelStore? = null,
-    val onBackPressedDispatcher: OnBackPressedDispatcher? = null
-)
-
-/**
- * Converts an ActivityBlocContext into a BlocContext.
- * The lifecycle will be the lifecycle of the ViewModel (onCreate() and onDestroy() only)
- */
-fun ViewModel.blocContext(context: ActivityBlocContext): BlocContext =
+fun ViewModel.blocContext(): BlocContext =
     BlocContextImpl(
-        lifecycle = viewModelLifeCycle().asEssentyLifecycle(),
-        instanceKeeper = context.viewModelStore?.let(::InstanceKeeper),
-        backPressedHandler = context.onBackPressedDispatcher?.let(::BackPressedHandler)
+        lifecycle = viewModelLifeCycle().asEssentyLifecycle()
     )
 
 /**
@@ -177,43 +110,3 @@ private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner 
         }
     }
 }.lifecycle
-
-/**
- * From an Activity retrieve a ViewModel that takes the ActivityBlocContext as a parameter.
- */
-@Suppress("UNCHECKED_CAST")
-@BlocDSL
-inline fun <reified VM : ViewModel> ComponentActivity.viewModel(
-    crossinline createInstance: (context: ActivityBlocContext) -> VM
-): Lazy<VM> {
-    val factory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            val context = ActivityBlocContext(
-                viewModelStore = viewModelStore,
-                onBackPressedDispatcher = onBackPressedDispatcher
-            )
-            return createInstance(context) as T
-        }
-    }
-    return ViewModelLazy(VM::class, { viewModelStore }, { factory })
-}
-
-/**
- * Same for fragments.
- */
-@Suppress("UNCHECKED_CAST")
-@BlocDSL
-inline fun <reified VM : ViewModel> Fragment.viewModel(
-    crossinline createInstance: (context: ActivityBlocContext) -> VM
-): Lazy<VM> {
-    val factory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            val context = ActivityBlocContext(
-                viewModelStore = viewModelStore,
-                onBackPressedDispatcher = activity?.onBackPressedDispatcher
-            )
-            return createInstance(context) as T
-        }
-    }
-    return ViewModelLazy(VM::class, { viewModelStore }, { factory })
-}

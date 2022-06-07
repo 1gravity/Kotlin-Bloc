@@ -3,6 +3,7 @@ package com.onegravity.bloc.menu
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.R
 import com.onegravity.bloc.bind
@@ -18,12 +19,11 @@ import com.onegravity.bloc.posts.PostsActivity
 import com.onegravity.bloc.sample.MainMenu.ActionState.*
 import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.todo.TodoActivity
-import com.onegravity.bloc.viewModel
 import com.onegravity.bloc.posts_compose.PostsActivity as ComposePostsActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel { MainViewModel(it) }
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

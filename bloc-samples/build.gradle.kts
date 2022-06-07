@@ -54,9 +54,6 @@ kotlin {
                 // Essenty (https://github.com/arkivanov/Essenty)
                 api("com.arkivanov.essenty:lifecycle:_")
                 api("com.arkivanov.essenty:parcelable:_")
-                api("com.arkivanov.essenty:state-keeper:_")
-                api("com.arkivanov.essenty:instance-keeper:_")
-                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Koin
                 implementation(Koin.core)
