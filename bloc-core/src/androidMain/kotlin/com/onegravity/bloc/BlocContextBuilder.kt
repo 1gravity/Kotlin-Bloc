@@ -62,7 +62,7 @@ inline fun <A, reified Component : Any> A.getOrCreate(
         A : ViewModelStoreOwner,
         A : LifecycleOwner =
     ComponentLazy(
-        owner = ActivityLazy { this },
+        owner = lazy { this },
         key = key,
         create = create
     )
@@ -74,7 +74,7 @@ inline fun <reified Component : Any> Fragment.getOrCreate(
     key: Any = Component::class,
     noinline create: (context: BlocContext) -> Component
 ): Lazy<Component> = ComponentLazy(
-    owner = ActivityLazy { requireActivity() },
+    owner = lazy { requireActivity() },
     key = key,
     create = create
 )
