@@ -1,6 +1,7 @@
 package com.onegravity.bloc
 
 import androidx.lifecycle.ViewModel
+import com.arkivanov.essenty.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.essenty.lifecycle.*
 
 /**
@@ -8,6 +9,7 @@ import com.arkivanov.essenty.lifecycle.*
  */
 internal class BlocViewModel : ViewModel() {
     val lifecycleRegistry = LifecycleRegistry()
+    val instanceKeeper = InstanceKeeperDispatcher()
 
     init {
         lifecycleRegistry.create()
@@ -17,5 +19,6 @@ internal class BlocViewModel : ViewModel() {
     override fun onCleared() {
         lifecycleRegistry.stop()
         lifecycleRegistry.destroy()
+        instanceKeeper.destroy()
     }
 }
