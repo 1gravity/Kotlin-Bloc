@@ -13,6 +13,6 @@ public interface BlocStateBuilder<State : Any, Proposal : Any> {
     public var initialState: State
 
     @BlocDSL
-    public fun accept(acceptor: Acceptor<Proposal, State>)
+    public fun accept(accept: Acceptor<Proposal, State>)
 
 }

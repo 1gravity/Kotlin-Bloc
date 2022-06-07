@@ -5,11 +5,11 @@ import com.onegravity.bloc.utils.Acceptor
 internal class BlocStateBuilderImpl<State: Any, Proposal: Any> : BlocStateBuilder<State, Proposal> {
 
     private var _initialState: State? = null
-    private var _acceptor: Acceptor<Proposal, State>? = null
+    private var _accept: Acceptor<Proposal, State>? = null
 
     internal fun build() = DefaultBlocState(
         initialState = checkNotNull(_initialState) { "initialState must be declared" },
-        acceptor = checkNotNull(_acceptor) { "accept { } must be declared" },
+        accept = checkNotNull(_accept) { "accept { } must be declared" },
     )
 
     override var initialState: State
@@ -19,8 +19,8 @@ internal class BlocStateBuilderImpl<State: Any, Proposal: Any> : BlocStateBuilde
             _initialState = value
         }
 
-    override fun accept(acceptor: Acceptor<Proposal, State>) {
-        _acceptor = acceptor
+    override fun accept(accept: Acceptor<Proposal, State>) {
+        _accept = accept
     }
 
 }
