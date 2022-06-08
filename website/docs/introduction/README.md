@@ -94,8 +94,9 @@ var body: some View {
         )
 ```
 
-
-**Note:** this is only one way to implement the app. Since one of the goals was to be un-opinionated, we can implement it in many ways, depending on the preferences of the developer / team.  
+:::tip
+This is only one way to implement the app. Since one of the goals was to be un-opinionated, it can be implemented in many different ways, depending on the developer's / team's preferred tech stack / preferences.
+:::
 
 ### Inspiration
 The architecture was inspired by the following design patterns and UI frameworks among others:

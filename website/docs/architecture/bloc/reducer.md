@@ -44,7 +44,7 @@ reduce {
 }
 ```
 
-The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redux). It's is tied to the lifecycle of the bloc and will be cancelled when the bloc is destroyed.
+The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redux). It's tied to the lifecycle of the bloc and will be cancelled when the bloc is destroyed.
 
 ### Side Effect
 

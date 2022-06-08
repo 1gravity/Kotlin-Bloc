@@ -15,7 +15,6 @@ The architectural goals of the `Kotlin BLoC` framework are:
 
 [KMM UI Architecture - Part 2](https://medium.com/p/e52b84aeb94d) elaborates on those goals in more detail.
 
-
 ## Inspiration
 The architecture was inspired by the following design patterns and UI frameworks (among others):
 
@@ -36,7 +35,6 @@ The architecture was inspired by the following design patterns and UI frameworks
 ## Design Overview
 
 ![Bloc Architecture - Overview](../../static/img/BLoC%20Architecture%20-%20BLoC%20Overview.svg)
-
 
 The framework has two main components:
 - The **Bloc** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** (State) and optionally **SideEffect(s)**.

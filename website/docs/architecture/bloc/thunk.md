@@ -54,7 +54,11 @@ reduce<LoadComplete> {
 }
 ```
 
-Note: the catch-all `thunk { }` needs to call `dispatch(action)` explicitly or the reducers won't be executed (see [Execution](#execution)). In above case using a single action thunk is simpler and doesn't require to call `dispatch(action)` explicitly since it only catches the `Load` action.
+:::tip
+The catch-all `thunk { }` needs to call `dispatch(action)` explicitly or no reducers will be executed (see [Execution](#execution)). 
+:::
+
+In this case using a single action thunk would be simpler though and you'd write:
 
 ```kotlin
 thunk<Load> {
@@ -63,6 +67,9 @@ thunk<Load> {
     dispatch(nextAction)
 }
 ```
+
+This doesn't require to call `dispatch(action)` explicitly since it only catches a single action (`Load`) and then dispatches its own actions.
+
 #### CoroutineScope
 
 The `CoroutineScope` can be used if coroutines / jobs need to be manually controlled, e.g. to launch/cancel asynchronous operations when a thunk is triggered multiple times like in this example (not a thread-safe implementation):

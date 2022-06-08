@@ -44,12 +44,13 @@ A `StateStream` emits:
 - all values, even duplicates
 - no initial value upon subscription (analogous `PublishSubject`)
 
-Note: because `StateStream` and `SideEffectStream` have a function with the same signature -> `collect(FlowCollector)`, the latter is accessible through the bloc's `sideEffects` property while the former is implemented by the bloc directly:
-
+:::tip
+Because `StateStream` and `SideEffectStream` have a function with the same signature -> `collect(FlowCollector)`, the latter is accessible through the bloc's `sideEffects` property while the former is implemented by the bloc directly:
 ```kotlin
 bloc.collect { /* observe State here */ }
 bloc.sideEffects.collect { /* observe side effects here */ }
 ```
+:::
 
 There's no need to call above functions directly. There are extension functions / wrappers that make observing blocs very easy -> [Extensions](../extensions/overview).
 
