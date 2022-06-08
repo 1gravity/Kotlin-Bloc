@@ -14,6 +14,8 @@ import com.onegravity.bloc.subscribe
  */
 public abstract class BlocObservable<out State : Any, out SideEffect : Any> {
 
+    public abstract val value: State
+
     public abstract fun subscribe(
         lifecycle: Lifecycle,
         state: (suspend (state: State) -> Unit)? = null,
@@ -35,6 +37,9 @@ public abstract class BlocObservable<out State : Any, out SideEffect : Any> {
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toObservable():
         BlocObservable<State, SideEffect> = object : BlocObservable<State, SideEffect>() {
+    override val value: State
+        get() = this@toObservable.value
+
     override fun subscribe(
         lifecycle: Lifecycle,
         state: (suspend (state: State) -> Unit)?,
@@ -57,6 +62,10 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any> List<Bloc<State, Action, SideEffect>>.toObservable():
         BlocObservable<State, SideEffect> = object : BlocObservable<State, SideEffect>() {
+
+    override val value: State
+        get() = this@toObservable.first().value
+
     override fun subscribe(
         lifecycle: Lifecycle,
         state: (suspend (state: State) -> Unit)?,
@@ -64,7 +73,7 @@ public fun <State : Any, Action : Any, SideEffect : Any> List<Bloc<State, Action
     ) {
         this@toObservable.forEachIndexed { index, bloc ->
             // ignore all but the first Bloc's state changes
-            val stateListener = if (index == 0) state else { _ -> }
+            val stateListener = if (index == 0) state else null
             bloc.subscribe(lifecycle, stateListener, sideEffect)
         }
     }

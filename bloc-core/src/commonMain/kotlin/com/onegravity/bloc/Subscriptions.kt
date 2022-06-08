@@ -25,11 +25,13 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
 
     lifecycle.doOnStart {
         logger.d("start Bloc subscription")
+
         state?.let {
             coroutineScope.launch {
                 collect { state(it) }
             }
         }
+
         sideEffect?.let {
             coroutineScope.launch {
                 sideEffects.collect { sideEffect(it) }
