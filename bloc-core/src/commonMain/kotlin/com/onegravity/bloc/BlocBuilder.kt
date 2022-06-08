@@ -1,6 +1,7 @@
 package com.onegravity.bloc
 
 import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.internal.BlocImpl
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +10,7 @@ import kotlin.jvm.JvmName
 
 public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
-    private var _initialize: Initializer<State, Action> = { }
+    private var _initialize: Initializer<State, Action>? = null
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
     private var _initDispatcher: CoroutineContext = Dispatchers.Default
