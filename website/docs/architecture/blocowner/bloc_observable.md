@@ -7,20 +7,32 @@ hide_title: true
 
 ## BlocObservable
 
-A `BlocObservable` is an object you can subscribe to state changes and side effects in a single `subscribe` call:
+A `BlocObservable` is an object with a `subscribe()` function to observe state changes and side effects:
 
 ```kotlin
-public abstract fun subscribe(
+public fun subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 )
 ```
+
 :::tip
 The subscription is tied to the (Essenty) lifecycle of the caller (see [Lifecycle](../bloc/lifecycle)) meaning with an `onStop()` event, the subscription ends as well.
 :::
 
+A `BlocObservable` also exposes the bloc's current state as the `subscribe()`'s state function will only be called when the bloc's state changes:
+```kotlin
+public val value: State
+```
+
+:::tip
+You will likely never call this directly but use one of the [extension functions](../../extensions/android/android_subscription).
+:::
+
 ## BlocObservableOwner
+
+Sometimes a component should not expose the `Bloc` as it would when implementing the [BlocOwner](bloc_owner) interface. If a component only requires users to observe the bloc's state and side effects (no actions or actions are encapsulated by the component), `BlocObservableOwner` is the right choice.
 
 While a `BlocOwner` exposes a `Bloc` as property, `BlocObservableOwner` exposes a `BlocObservable` as property:
 
@@ -56,13 +68,14 @@ private fun observeSideEffects(target: Target) {
 As you can see in the [subscribe function's signature](#blocobservable), `state` and `sideEffect` are optional arguments so you can subscribe to both or just one of the them.
 :::
 
-### Extensions
+### Adapter
 
-To make the implementation of a `BlocObservableOwner` easy, you can use `toObservable()` to adapt a `Bloc` to a `BlocOwner`:
+To simplify the implementation of a `BlocObservableOwner`, use `toObservable()` to "convert" a `Bloc`:
 
 ```kotlin
+// we can keep the Bloc private!
 private val bloc = bloc(blocContext(context))
+
+// and only expose the BlocObservable
 override val observable = bloc.toObservable()
 ```
-
-Of course a class could simply implement `BlocOwner` instead of `BlocObservableOwner` but in some cases you don't want to expose the bloc itself but only the ability to subscribe to state changes and side effects.

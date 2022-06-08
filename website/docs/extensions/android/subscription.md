@@ -25,7 +25,6 @@ private fun observeSideEffects(target: Target) {
     // process side effects
     navigateTo(target)
 }
-
 ```
 
 :::tip

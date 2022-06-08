@@ -116,3 +116,7 @@ class CounterActivity : AppCompatActivity(), BlocOwner<Int, Int, Unit, Int> {
         }
     }
 ```
+
+:::tip
+Reducers are always processed sequentially regardless whether they were triggered by an action (Redux style) or by a function (MVVM+ style). See also [Concurrency](../bloc/reducer.md#concurrency).
+:::

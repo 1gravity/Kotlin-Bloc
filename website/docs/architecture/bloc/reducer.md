@@ -174,6 +174,35 @@ reduceAnd<Increment> {
 
 Since "pure" side effects functions (`sideEffect { }` block) aren't reducing state, they will always be executed.
 
+### Concurrency
+
+To ensure a predictable order of execution and to make sure reducers don't reduce "stale" state, they are always executed sequentially. If multiple actions are sent to the bloc, those actions will be processed in the order they were received and they won't run in parallel. Here's an example:
+
+```kotlin
+sealed class Action
+object Increment : Action()
+object Decrement : Action()
+
+private val bloc by getOrCreate { bloc<Int, Action>(it, 1) {
+    reduce<Increment> {
+        delay(10000)
+        state + 1
+    }
+    reduce<Decrement> {
+        delay(5000)
+        state - 1
+    }
+} }
+```
+
+Even if `Increment` and `Decrement` are sent in quick succession, `Increment` will always be processed first and the reducer will finish before the `Decrement` action is processed.
+1. `Increment` reducer starts, waits 10 seconds and sets the counter to 2
+2. `Decrement` reducer starts, waits 5 seconds and sets the counter to 1 
+
+:::tip
+This behavior is true for reducers triggered by an action (Redux style) or triggered by a function (MVVM+ style) (see [BlocOnwer](../blocowner/bloc_owner.md#blocowner)). As a matter of fact, both types of reducers are sent to the same queue to be processed.
+:::
+
 ## Matching
 
 So what's a match?

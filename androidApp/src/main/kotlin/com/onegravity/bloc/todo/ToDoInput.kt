@@ -15,13 +15,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.R
-import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.sample.todo.*
 
 @Composable
 fun ToDoInput(bloc: Bloc<List<ToDo>, ToDoAction, Unit>) {
-    val state: List<ToDo> by bloc.observeState()
-
     var text: String by rememberSaveable { mutableStateOf("") }
 
     TextField(

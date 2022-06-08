@@ -14,6 +14,8 @@ class CalculatorActivity : AppCompatActivity()
     private val viewModel: CalculatorViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        
+        // extension function to eliminate boilerplate code
         bind<ActivityCalculatorBinding>(R.layout.activity_calculator) { it.viewmodel = viewModel }
 ```
 
@@ -24,6 +26,8 @@ class CalculatorActivity : AppCompatActivity()
     val bloc by getOrCreate { calculatorBloc(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        
+        // extension function to eliminate boilerplate code
         bind<ActivityCalculatorBinding>(R.layout.activity_calculator) { it.activity = this }
 ```
 

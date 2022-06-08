@@ -122,9 +122,13 @@ const sidebars = {
       "type": "doc",
       "id": "extensions/ios"
     },
-    {
-      "type": "doc",
-      "id": "extensions/redux"
+    { 
+      "Redux": [
+        {
+          "type": "doc",
+          "id": "extensions/redux/redux_overview"
+        }
+      ]
     }
   ],
   "exampleSidebar": [
