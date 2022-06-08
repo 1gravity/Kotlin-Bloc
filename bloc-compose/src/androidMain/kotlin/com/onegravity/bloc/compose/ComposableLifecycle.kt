@@ -7,12 +7,20 @@ import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.lifecycle.destroy
 import com.arkivanov.essenty.lifecycle.resume
+import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.context.BlocContextImpl
+
+/**
+ * Creates a BlocContext for compose previews with a Composable lifecycle
+ */
+@Composable
+fun previewBlocContext(): BlocContext = BlocContextImpl(composableLifecycle())
 
 /**
  * Right now we're using this to create a lifecycle for Composable previews
  */
 @Composable
-internal fun composableLifecycle(): Lifecycle {
+private fun composableLifecycle(): Lifecycle {
     val registry = remember { LifecycleRegistry() }
 
     DisposableEffect(Unit) {

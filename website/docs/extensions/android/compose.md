@@ -6,3 +6,8 @@ hide_title: true
 ---
 
 ## Compose
+
+
+```kotlin
+implementation("com.1gravity:bloc-compose:<version>")
+```

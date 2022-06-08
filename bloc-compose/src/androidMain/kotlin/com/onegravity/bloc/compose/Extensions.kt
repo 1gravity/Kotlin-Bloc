@@ -2,8 +2,6 @@ package com.onegravity.bloc.compose
 
 import androidx.compose.runtime.*
 import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.context.BlocContextImpl
 import com.onegravity.bloc.utils.BlocOwner
 import kotlinx.coroutines.*
 
@@ -60,13 +58,6 @@ fun <S : Any, Action : Any, SideEffect : Any> Bloc<S, Action, SideEffect>.observ
 
     return state
 }
-
-/**
- * Creates a BlocContext for compose previews with a Composable life cycle but without the
- * other parameters (StateKeeper, InstanceKeeper, BackPressedHandler)
- */
-@Composable
-fun previewBlocContext(): BlocContext = BlocContextImpl(composableLifecycle())
 
 @Composable
 fun <S : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<S, Action, SideEffect, Proposal>.observeSideEffects() =
