@@ -107,6 +107,14 @@ const sidebars = {
         {
           "type": "doc",
           "id": "extensions/android/android_live_data"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/android/android_subscription"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/android/android_compose"
         }
       ]
     },

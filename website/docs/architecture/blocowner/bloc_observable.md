@@ -16,8 +16,9 @@ public abstract fun subscribe(
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 )
 ```
-
+:::tip
 The subscription is tied to the (Essenty) lifecycle of the caller (see [Lifecycle](../bloc/lifecycle)) meaning with an `onStop()` event, the subscription ends as well.
+:::
 
 ## BlocObservableOwner
 
@@ -50,6 +51,10 @@ private fun observeSideEffects(target: Target) {
     navigateTo(target)
 }
 ```
+
+:::tip
+As you can see in the [subscribe function's signature](#blocobservable), `state` and `sideEffect` are optional arguments so you can subscribe to both or just one of the them.
+:::
 
 ### Extensions
 

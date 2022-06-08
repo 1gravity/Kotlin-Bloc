@@ -16,15 +16,6 @@ import kotlinx.coroutines.*
 
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
-    lifecycle: Lifecycle,
-    state: (suspend (state: State) -> Unit)? = null,
-    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
-) {
-    bloc.subscribe(lifecycle, state, sideEffect)
-}
-
-@BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.subscribe(
     lifecycle: Lifecycle,
     state: (suspend (state: State) -> Unit)? = null,
@@ -53,8 +44,8 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
 }
 
 /**
- * Call from a component to observe state and side effect updates in a BlocObservableOwner
- * (BlocObservableOwner in Android is typically a ViewModel, the observing component a Fragment or
+ * Call from a component to observe state and side effect updates in a BlocOwner
+ * (BlocOwner in Android is typically a ViewModel, the observing component a Fragment or
  * an Activity):
  * ```
  *   component.subscribe(lifecycle, state = ::render, sideEffect = ::sideEffect)
@@ -65,6 +56,18 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
  * ```
  *   component.subscribe(this, state = ::render, sideEffect = ::sideEffect)
  * ```
+ */
+@BlocDSL
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+    lifecycle: Lifecycle,
+    state: (suspend (state: State) -> Unit)? = null,
+    sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
+) {
+    bloc.subscribe(lifecycle, state, sideEffect)
+}
+
+/**
+ * Analogous call for BlocObservableOwner
  */
 @BlocDSL
 public fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subscribe(
