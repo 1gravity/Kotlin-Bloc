@@ -17,12 +17,11 @@ import kotlinx.coroutines.launch
 @BlocDSL
 fun <T : ViewDataBinding> ComponentActivity.bind(
     @LayoutRes layoutId: Int,
-    bind2ViewModel: (T) -> Unit
+    bindLayout2Component: (T) -> Unit
 ) {
     val binding = DataBindingUtil.setContentView<T>(this, layoutId)
-    bind2ViewModel(binding)
+    bindLayout2Component(binding)
     binding.lifecycleOwner = this
-    setContentView(binding.root)
 }
 
 /**
@@ -68,14 +67,6 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
  *   val state = bloc.toLiveData(viewModelScope)
  * ```
  */
-@BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toLiveData(scope: CoroutineScope): LiveData<State> =
-    MutableLiveData<State>().apply {
-        scope.launch {
-            collect { value = it }
-        }
-    }
-
 /**
  * ViewModel
  */
@@ -96,3 +87,11 @@ fun <State : Any, Action : Any, SideEffect : Any> ViewModel.toLiveData(bloc: Blo
 @BlocDSL
 fun <State : Any, Action : Any, SideEffect : Any> LifecycleOwner.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
     bloc.toLiveData(lifecycleScope)
+
+@BlocDSL
+private fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toLiveData(scope: CoroutineScope): LiveData<State> =
+    MutableLiveData<State>().apply {
+        scope.launch {
+            collect { value = it }
+        }
+    }

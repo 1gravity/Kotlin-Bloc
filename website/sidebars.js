@@ -99,6 +99,10 @@ const sidebars = {
         {
           "type": "doc",
           "id": "extensions/android/android_bloc_context"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/android/android_subscription"
         }
       ]
     },
