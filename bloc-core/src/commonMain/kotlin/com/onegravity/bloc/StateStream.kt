@@ -1,4 +1,4 @@
-package com.onegravity.bloc.utils
+package com.onegravity.bloc
 
 import kotlinx.coroutines.flow.FlowCollector
 

@@ -2,7 +2,8 @@ package com.onegravity.bloc.internal
 
 import com.arkivanov.essenty.lifecycle.doOnStart
 import com.arkivanov.essenty.lifecycle.doOnStop
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
+import com.onegravity.bloc.internal.builder.MatcherThunk
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*

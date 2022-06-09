@@ -1,6 +1,6 @@
 package com.onegravity.bloc
 
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.internal.builder.BlocBuilder
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.utils.BlocDSL

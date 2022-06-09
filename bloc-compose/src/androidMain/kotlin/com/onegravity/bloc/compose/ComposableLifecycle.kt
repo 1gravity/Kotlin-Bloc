@@ -7,8 +7,8 @@ import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.lifecycle.destroy
 import com.arkivanov.essenty.lifecycle.resume
-import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.context.BlocContextImpl
+import com.onegravity.bloc.BlocContext
+import com.onegravity.bloc.internal.BlocContextImpl
 
 /**
  * Creates a BlocContext for compose previews with a Composable lifecycle

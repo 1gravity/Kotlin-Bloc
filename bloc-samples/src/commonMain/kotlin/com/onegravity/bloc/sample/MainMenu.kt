@@ -1,7 +1,7 @@
 package com.onegravity.bloc.sample
 
 import com.onegravity.bloc.bloc
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.state.blocState
 
 object MainMenu {

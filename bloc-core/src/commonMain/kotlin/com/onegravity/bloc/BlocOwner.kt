@@ -1,6 +1,7 @@
-package com.onegravity.bloc.utils
+package com.onegravity.bloc
 
-import com.onegravity.bloc.Bloc
+import com.onegravity.bloc.utils.BlocDSL
+import com.onegravity.bloc.utils.Effect
 
 /**
  * A class is a BlocOwner if it holds and exposes a Bloc.

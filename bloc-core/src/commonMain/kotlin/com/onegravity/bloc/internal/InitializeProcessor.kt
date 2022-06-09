@@ -1,7 +1,7 @@
 package com.onegravity.bloc.internal
 
 import com.arkivanov.essenty.lifecycle.*
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*

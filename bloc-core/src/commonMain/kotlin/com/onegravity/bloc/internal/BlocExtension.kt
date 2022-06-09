@@ -1,4 +1,4 @@
-package com.onegravity.bloc
+package com.onegravity.bloc.internal
 
 import com.onegravity.bloc.utils.*
 

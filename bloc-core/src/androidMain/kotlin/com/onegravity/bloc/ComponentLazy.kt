@@ -3,8 +3,8 @@ package com.onegravity.bloc
 import androidx.lifecycle.*
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
-import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.context.BlocContextImpl
+import com.onegravity.bloc.BlocContext
+import com.onegravity.bloc.internal.BlocContextImpl
 
 class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
     private val owner: Lazy<A>,

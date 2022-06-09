@@ -1,4 +1,4 @@
-package com.onegravity.bloc.utils
+package com.onegravity.bloc
 
 /**
  * A class is a BlocObservableOwner if it holds and exposes a BlocObservable.

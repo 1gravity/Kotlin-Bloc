@@ -2,6 +2,7 @@
 
 package com.onegravity.bloc
 
+import com.onegravity.bloc.internal.BlocExtension
 import com.onegravity.bloc.utils.*
 
 /**

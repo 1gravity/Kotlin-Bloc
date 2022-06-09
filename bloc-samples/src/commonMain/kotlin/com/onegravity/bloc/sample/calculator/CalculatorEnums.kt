@@ -1,7 +1,7 @@
 package com.onegravity.bloc.sample.calculator
 
 import com.onegravity.bloc.bloc
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
 
 enum class ActionEnum(val digit: Int? = null) {
     Clear,

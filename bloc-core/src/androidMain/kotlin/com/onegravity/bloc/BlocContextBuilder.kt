@@ -9,8 +9,7 @@ package com.onegravity.bloc
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
-import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.context.BlocContextImpl
+import com.onegravity.bloc.internal.BlocContextImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive

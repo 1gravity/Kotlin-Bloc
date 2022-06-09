@@ -1,11 +1,13 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.onegravity.bloc
+package com.onegravity.bloc.utils
 
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.doOnStart
 import com.arkivanov.essenty.lifecycle.doOnStop
-import com.onegravity.bloc.utils.*
+import com.onegravity.bloc.Bloc
+import com.onegravity.bloc.BlocObservableOwner
+import com.onegravity.bloc.BlocOwner
 import kotlinx.coroutines.*
 
 /**

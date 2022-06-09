@@ -1,7 +1,7 @@
 package com.onegravity.bloc.sample.counter
 
 import com.onegravity.bloc.bloc
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Decrement
 import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Increment
 import com.onegravity.bloc.state.asBlocState

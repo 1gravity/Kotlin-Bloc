@@ -2,7 +2,7 @@ package com.onegravity.bloc.compose
 
 import androidx.compose.runtime.*
 import com.arkivanov.essenty.lifecycle.*
-import com.onegravity.bloc.Bloc
+import com.onegravity.bloc.*
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
 

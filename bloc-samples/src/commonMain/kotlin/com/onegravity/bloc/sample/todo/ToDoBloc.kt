@@ -1,7 +1,7 @@
 package com.onegravity.bloc.sample.todo
 
 import com.onegravity.bloc.bloc
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

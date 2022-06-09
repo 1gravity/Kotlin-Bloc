@@ -2,8 +2,9 @@ package com.onegravity.bloc.internal
 
 import com.arkivanov.essenty.lifecycle.*
 import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.BlocExtension
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
+import com.onegravity.bloc.internal.builder.MatcherReducer
+import com.onegravity.bloc.internal.builder.MatcherThunk
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*

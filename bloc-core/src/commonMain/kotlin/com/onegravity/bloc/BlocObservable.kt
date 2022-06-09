@@ -1,8 +1,8 @@
-package com.onegravity.bloc.utils
+package com.onegravity.bloc
 
 import com.arkivanov.essenty.lifecycle.Lifecycle
-import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.utils.BlocDSL
+import com.onegravity.bloc.utils.subscribe
 
 /**
  * A Bloc than can be observed by subscribing to state and side effect updates

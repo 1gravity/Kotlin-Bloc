@@ -1,4 +1,4 @@
-package com.onegravity.bloc.context
+package com.onegravity.bloc
 
 import com.arkivanov.essenty.lifecycle.LifecycleOwner
 
