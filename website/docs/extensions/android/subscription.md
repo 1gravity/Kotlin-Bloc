@@ -5,6 +5,8 @@ sidebar_label: Subscription
 hide_title: true
 ---
 
+## Subscription
+
 Subscribing to the bloc's `StateStream` and `SideEffectStream` can be done in a single function call. 
 
 

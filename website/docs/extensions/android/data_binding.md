@@ -5,7 +5,7 @@ sidebar_label: Data Binding
 hide_title: true
 ---
 
-# Data Binding
+## Data Binding
 
 For [Data Binding](https://developer.android.com/topic/libraries/data-binding) there's an extension function eliminating some boilerplate code:
 

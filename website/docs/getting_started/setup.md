@@ -8,6 +8,7 @@ hide_title: true
 # Setup
 
 [![Download](https://img.shields.io/maven-central/v/org.orbit-mvi/orbit-viewmodel)](https://search.maven.org/artifact/com.1gravity/bloc-core)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ```kotlin
 dependencies {

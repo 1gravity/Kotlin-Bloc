@@ -5,6 +5,8 @@ sidebar_label: Live Data
 hide_title: true
 ---
 
+## Live Data
+
 To observe [Live Data](https://developer.android.com/topic/libraries/architecture/livedata) in general and in combination with [Data Binding](./data_binding) specifically, we can "convert" the bloc's `StateStream` to `LiveData`:
 
 ```kotlin

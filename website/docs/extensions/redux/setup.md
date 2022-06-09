@@ -35,4 +35,4 @@ Memoized "selector" functions are functions that:
 - ignore changes in other parts of the state tree
 - cache the selected state transparently for the caller (that's the memoized part)
 
-[Reselect](https://github.com/reduxkotlin/Reselect) also doesn't seem to be maintained any more. Since it has at least one critical bug, needed some updates and only consists of two files, I decided to include the whole library in the Redux extension.
+[Reselect](https://github.com/reduxkotlin/Reselect) doesn't seem to be maintained any more. Since it has at least one critical bug, needed some updates and only consists of two files, I decided to include the whole library in the Redux extension module.
