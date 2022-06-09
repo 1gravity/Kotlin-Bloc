@@ -7,7 +7,12 @@ hide_title: true
 
 # Overview
 
-`Kotlin BLoC` is a Multiplatform UI framework combining the best of MVI, MVVM and [SAM](https://sam.js.org/). It's **lightweight**, **predictable**, **reactive** and **composable**.
+`Kotlin BLoC` is a Multiplatform UI framework combining the best of MVI, MVVM and [SAM](https://sam.js.org/). It's 
+- **simple**: designed from the ground up for simplicity with a super concise syntax
+- **adaptable**: supports different programming styles
+- **predictable**: write reactive applications that behave consistently and are easy to debug and test
+- **composable**: grows with the complexity of app and the size of the team
+
 
 ![Bloc Architecture - Overview](../../static/img/BLoC%20Architecture%20-%20BLoC%20Overview.svg)
 

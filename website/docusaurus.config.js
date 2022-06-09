@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Kotlin BLoC',
-  tagline: 'A lightweight, reactive and composable UI framework for Kotlin Multiplatform',
+  tagline: 'A simple, adaptable, predictable and composable UI framework for Kotlin Multiplatform',
   url: 'https://1gravity.github.io/',
   baseUrl: '/Kotlin-Bloc/',
   onBrokenLinks: 'throw',

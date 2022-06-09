@@ -32,7 +32,7 @@ The architecture was inspired by the following design patterns and UI frameworks
 - [Reduce](https://github.com/genaku/Reduce)
 - [Decompose](https://arkivanov.github.io/Decompose/)
 
-## Design Overview
+## Design
 
 ![Bloc Architecture - Overview](../../static/img/BLoC%20Architecture%20-%20BLoC%20Overview.svg)
 
