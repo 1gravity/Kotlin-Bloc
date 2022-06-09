@@ -34,6 +34,12 @@ A sink to send data / `Proposals` to the `BlocState`:
 public fun send(proposal: Proposal)
 ```
 
+As mentioned in the [Design Overview](../architecture.md#design-overview), reducers don't return `State` but a `Proposal`, a concept inspired by the [SAM pattern](https://sam.js.org/).  `Proposals` increase the level of decoupling between `Bloc` and `BlocState` to support a number of use cases:
+- a `BlocState]` can enforce domain specific rules like validation or enrichment
+- connect a `Bloc` to a [Redux Store](../../extensions/redux/redux_motivation)
+- use `Blocs` as `BlocsState` (see [Bloc isA BlocState](../blocstate/bloc_state.md#bloc-isa-blocstate))
+
+
 ## Separation of Concerns
 
 A `Bloc` doesn't store the state itself but delegates to a `BlocState` to separate the two concerns:
@@ -63,7 +69,7 @@ Apart from the clear separation of concerns, using `BlocStates` has many advanta
 - we can share state between business logic components
 - we can persist state (database, network)
 - we can add domain rules to the actual state container (validation, enrichment)
-- we can use a global state container like a Redux store instead of individual `BlocState` containers (compare [Redux](../../extensions/redux))
+- we can use a global state container like a Redux store instead of individual `BlocState` containers (compare [Redux](../../extensions/redux/redux_motivation))
 
 
 ## Bloc isA BlocState

@@ -126,7 +126,15 @@ const sidebars = {
       "Redux": [
         {
           "type": "doc",
-          "id": "extensions/redux/redux_overview"
+          "id": "extensions/redux/redux_motivation"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/redux/redux_setup"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/redux/redux_bloc_state"
         }
       ]
     }

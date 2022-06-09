@@ -32,7 +32,7 @@ blocState(CountState(1))
 ```
 
 These are relatively simple / default `BlocState` implementations.
-To create your own `BlocState`, extend the `BlocStateBase` class which implements the `Sink` and the `StateStream` (which is good enough to meet the `BlocState` interface). 
+To create your own `BlocState`, extend the `BlocStateBase` class which implements the `Sink` and the `StateStream` (which is good enough to implement the `BlocState` interface). 
 Typically you'd want to change:
 1. how `Proposals` are accepted/rejected
 2. how/where `State` is stored
@@ -45,9 +45,11 @@ internal open class DefaultBlocState<State : Any, Proposal : Any>(
     initialState: State,
     private val accept: Acceptor<Proposal, State>,
 ) : BlocStateBase<State, Proposal>(initialState) {
+
     override fun send(proposal: Proposal) {
         accept(proposal, value)?.also { state.send(it) }
     }
+    
 }
 ```
 

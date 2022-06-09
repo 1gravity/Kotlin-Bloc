@@ -44,21 +44,23 @@ reduce {
 }
 ```
 
-The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redux). It's tied to the lifecycle of the bloc and will be cancelled when the bloc is destroyed.
+The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redux/redux_motivation). It's tied to the lifecycle of the bloc and will be cancelled when the bloc is destroyed.
 
 ### Side Effect
 
-Reducers can have side effects. This idea and some of the syntax was inspired by the [Reduce](https://github.com/genaku/Reduce) library. Unlike with `Reduce`, the default for reducers with `Kotlin BLoC` is to return the new `State` instead of an `Effect` which is a class wrapping `State` and a list of side effects:
+A side effect is a one-off event like a navigation event, an analytics event or an event to display a toast. The idea of side effects and some of the syntax was inspired by [Reduce](https://github.com/genaku/Reduce). In `Reduce` a reducer always returns an `Effect` which is a class wrapping `State` and a list of side effects. `Kotlin BLoC`'s reducers return `Proposals` by default while `Effects` require a a bit more typing.
+
+Default: reducer returns `Proposal`:
 
 ```kotlin
-// no side effects
+// reducer without side effects
 suspend (State, Action, CoroutineScope) -> Proposal
 ```
 
-instead of:
+Exception: reducer returns `Effect<Proposal, SideEffect>`:
 
 ```kotlin
-// with side effects
+// reducer with side effects
 suspend (State, Action, CoroutineScope) -> Effect<Proposal, SideEffect>
 
 public data class Effect<Proposal : Any, SideEffect : Any>(
@@ -67,7 +69,7 @@ public data class Effect<Proposal : Any, SideEffect : Any>(
 )
 ```
 
-This decision was based on the observation that most reducers have no side effects and thus this case should be the primary one with the simplest syntax. To return side effects, there's a slightly more complex syntax:
+Since most reducers have no side effects, using that case as the default makes sense. If side effects are required, the syntax is slightly more complex:
 
 ```kotlin
 data class State(val loading: Boolean = false, val post: Post? = null)
@@ -103,7 +105,7 @@ fun bloc(context: BlocContext) =
     }
 ```
 
-`reduceAnd` is the builder function to use if a reducer has side effects. The `and` operator can be used to combine state and side effects into an `Effect` instead of instantiating the object directly. The `Reduce` library uses the `+` operator instead of `and` which makes for some neat syntax but also interferres with mathematical operations.
+`reduceAnd` is the builder function to use if a reducer has side effects. The `and` operator can be used to combine state and side effects into an `Effect` instead of instantiating the object directly. [Reduce](https://github.com/genaku/Reduce) uses the `+` operator instead of `and` which makes for some neat syntax but also interferes with mathematical operations.
 
 ## Execution
 
@@ -200,7 +202,7 @@ Even if `Increment` and `Decrement` are sent in quick succession, `Increment` wi
 2. `Decrement` reducer starts, waits 5 seconds and sets the counter to 1 
 
 :::tip
-This behavior is true for reducers triggered by an action (Redux style) or triggered by a function (MVVM+ style) (see [BlocOnwer](../blocowner/bloc_owner.md#blocowner)). As a matter of fact, both types of reducers are sent to the same queue to be processed.
+This behavior is true for reducers triggered by an action (Redux style) or triggered by a function (MVVM+ style) (see [BlocOwner](../blocowner/bloc_owner.md#blocowner)). As a matter of fact, both types of reducers are sent to the same queue to be processed.
 :::
 
 ## Matching

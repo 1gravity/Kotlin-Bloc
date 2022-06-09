@@ -7,7 +7,7 @@ hide_title: true
 
 ## Motivation
 
-In [A Matter of Taste](../bloc/reducer#a-matter-of-taste) we discussed two different styles for defining reducers (catch-all vs single-action reducers). The idea of `Bloc Owners` was inspired by the [Orbit](https://orbit-mvi.org/) framework which takes the idea of single-action reducers one step further than what we have so far, which is:
+In [A Matter of Taste](../bloc/reducer#a-matter-of-taste) we discussed two different styles to define reducers (catch-all vs single-action reducers). In this chapter we take the idea of single-action reducers one step further. To recap, this is what we have so far:
 
 ```kotlin
 bloc<Int, Action>(context, 1) {
@@ -25,7 +25,7 @@ bloc<Int, Action>(context, 1) {
 }
 ```
 
-[Orbit](https://orbit-mvi.org/) has the concept of a `ContainerHost` used for classes that want to launch Orbit `intents` like in this example:
+The idea of `BlocOwners` was inspired by the [Orbit](https://orbit-mvi.org/) framework which has the concept of a `ContainerHost` used for classes that want to launch Orbit `intents`. Here's an example:
 
 ```kotlin
 class CalculatorViewModel: ContainerHost<CalculatorState, CalculatorSideEffect>, ViewModel() {
@@ -42,21 +42,28 @@ class CalculatorViewModel: ContainerHost<CalculatorState, CalculatorSideEffect>,
 }
 ```
 
-The `ContainerHost` concept is an iteration over the MVI model, enabling us to define the intent / business logic wherever we want. The author of the framework compares the Redux style vs. the MVVM+ style (that's what he calls the Orbit approach) of implementing MVI in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27) as depicted in the following diagrams.
+The `ContainerHost` concept is an iteration over the MVI model, enabling us to define the intent / business logic wherever we want. The author of the framework compares the Redux style vs. the MVVM+ style (that's what he calls the Orbit approach) of implementing MVI in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27). The following two diagrams summarize the two styles nicely.
 
 ### Redux Style
 ![Reducer Redux Style](../../../static/img/reducer_redux_style.png)
 
+Intents are represented by objects, piped through a stream into a transformer and reducer, which produces a single state output.
+
+
 ### MVVM+ Style
 ![Reducer MVVM+ Style](../../../static/img/reducer_mvvm_style.png)
 
+Intents here have their own transformer and reducer (a function) before being combined into the single state output.
+
 ## BlocOwner
 
-A `BlocOwner` in `Kotlin BLoC` is the equivalent of an Orbit `ContainerHost`. It's an interface that can be implemented by any class and has a single property:
+A `BlocOwner` in `Kotlin BLoC` is the equivalent of an Orbit `ContainerHost`. It's an interface that can be implemented by any class and has a `Bloc`:
 
 ```kotlin
 public interface BlocOwner<out State : Any, in Action : Any, SideEffect : Any, Proposal : Any> {
+
     public val bloc: Bloc<State, Action, SideEffect>
+
 }
 ```
 
