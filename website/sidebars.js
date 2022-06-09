@@ -126,9 +126,25 @@ const sidebars = {
         }
       ]
     },
-    {
-      "type": "doc",
-      "id": "extensions/ios"
+    { 
+      "iOS": [
+        {
+          "type": "doc",
+          "id": "extensions/ios/ios_overview"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/ios/ios_bloc_holder"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/ios/ios_bloc_component"
+        },
+        {
+          "type": "doc",
+          "id": "extensions/ios/ios_bloc_observer"
+        }
+      ]
     },
     { 
       "Redux": [
