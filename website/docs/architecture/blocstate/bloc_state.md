@@ -5,6 +5,8 @@ sidebar_label: Overview
 hide_title: true
 ---
 
+## Definition
+
 A `BlocState` is the actual keeper of `State`, a source of asynchronous state data (`StateStream`) and a `Sink` for `Proposals` to (potentially) alter its state.
 
 ## Public Interface

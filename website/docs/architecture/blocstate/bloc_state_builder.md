@@ -5,6 +5,8 @@ sidebar_label: Bloc State Builder
 hide_title: true
 ---
 
+## BlocStateBuilder
+
 A `BlocState` can be defined using a `BlocStateBuilder`
 
 ```kotlin

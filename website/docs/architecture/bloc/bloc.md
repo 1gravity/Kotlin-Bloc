@@ -5,6 +5,8 @@ sidebar_label: Overview
 hide_title: true
 ---
 
+## Overview
+
 ![Bloc Architecture - Details](../../../static/img/BLoC%20Architecture%20-%20BLoC%20Details.svg)
 
 

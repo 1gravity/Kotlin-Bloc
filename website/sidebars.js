@@ -21,10 +21,18 @@ const sidebars = {
   //   'Architecture': ['architecture/architecture_overview', 'architecture/bloc/bloc', 'architecture/bloc/bloc_example'],
   // },
 
-  "introSidebar": [
+  "gettingStartedSidebar": [
     {
       "type": "doc",
-      "id": "introduction/intro"
+      "id": "getting_started/overview"
+    },
+    {
+      "type": "doc",
+      "id": "getting_started/setup"
+    },
+    {
+      "type": "doc",
+      "id": "getting_started/examples"
     }
   ],
   "architectureSidebar": [
