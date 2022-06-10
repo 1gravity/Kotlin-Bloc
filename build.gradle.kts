@@ -20,12 +20,13 @@ buildscript {
 }
 
 // run ./gradlew dokkaHtmlMultiModule to create the documentation
+// then deploy the website (cd website, yarn deploy)
 plugins {
     id("org.jetbrains.dokka")
 }
 
 tasks.dokkaHtmlMultiModule.configure {
-    outputDirectory.set(buildDir.resolve("../website/dokka"))
+    outputDirectory.set(buildDir.resolve("../website/static/dokka"))
 }
 
 allprojects {
