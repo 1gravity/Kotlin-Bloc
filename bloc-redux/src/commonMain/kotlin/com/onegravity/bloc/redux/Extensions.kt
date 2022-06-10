@@ -21,28 +21,30 @@ public fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<Re
     context: BlocContext,
     select: Selector<ReduxModel, Model>,
     map: Mapper<Model, State>
-): BlocState<State, Proposal> = reduxBlocState<State, Proposal, Model, ReduxModel>(context.disposableScope(), this) {
-    this.select(select)
-    this.map(map)
+): BlocState<State, Proposal> = reduxBlocState<State, Proposal, Model, ReduxModel>(
+    disposableScope = context.disposableScope(),
+    store = this
+) {
+    select(select)
+    map(map)
 }
 
 /**
  * Create a DisposableScope that is disposed when the Bloc is destroyed (onDestroy called)
  */
-@BlocDSL
-internal fun BlocContext.disposableScope() = DisposableScope()
+private fun BlocContext.disposableScope() = DisposableScope()
     .apply { lifecycle.doOnDestroy(::dispose) }
 
 /**
  * Add a state selection subscription to a DisposableScope so it will be properly disposed when
- * the DisposableScope is disposed. Call this as:
+ * the DisposableScope is disposed.
  * ```
  *    selectScoped(store, selector) { model ->
  *       // do stuff with the selected model
  *    }
  * ```
  */
-@BlocDSL
+@Suppress("unused")
 internal fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
     store: Store<State>,
     select: (State) -> SelectedState,
@@ -55,14 +57,13 @@ internal fun <State : Any, SelectedState : Any> DisposableScope.selectScoped(
 
 /**
  * Add a state selection subscription to a DisposableScope so it will be properly disposed when
- * the DisposableScope is disposed. Call this as:
+ * the DisposableScope is disposed.
  * ```
  *    store.selectScoped(disposableScope, selector) { model ->
  *       // do stuff with the selected model
  *    }
  * ```
  */
-@BlocDSL
 internal fun <State : Any, SelectedState : Any> Store<State>.selectScoped(
     disposableScope: DisposableScope,
     select: (State) -> SelectedState,

@@ -5,7 +5,7 @@ import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
 
 /**
- * Builder for a [ReduxBlocState].
+ * Builder for a ReduxBlocState (for internal use only).
  */
 internal interface ReduxBlocStateBuilder<State : Any, Model : Any, ReduxModel : Any> {
 

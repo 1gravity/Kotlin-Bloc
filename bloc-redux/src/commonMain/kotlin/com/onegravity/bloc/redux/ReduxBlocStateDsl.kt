@@ -7,9 +7,9 @@ import org.reduxkotlin.Store
 import kotlin.jvm.JvmName
 
 /**
- * Creates a [ReduxBlocState] instance using a [ReduxBlocStateBuilder]
+ * Creates a ReduxBlocState instance using a ReduxBlocStateBuilder.
  *
- * Don't call this directly but use the Store extension functions reduxStore.toBlocState(...)
+ * Used internally by the ReduxStore.toBlocState(...) extension function.
  */
 @JvmName("reduxBlocState")
 @BlocDSL

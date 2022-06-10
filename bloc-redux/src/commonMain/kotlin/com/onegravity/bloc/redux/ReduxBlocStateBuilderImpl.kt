@@ -5,7 +5,10 @@ import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
 import org.reduxkotlin.Store
 
-internal open class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxModel : Any> :
+/**
+ * Builder for a ReduxBlocState (for internal use only).
+ */
+internal class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxModel : Any> :
     ReduxBlocStateBuilder<State, Model, ReduxModel> {
 
     private var _selector: Selector<ReduxModel, Model>? = null
