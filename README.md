@@ -24,8 +24,6 @@ Note, this readme offers a quick overview of the framework. For more in-depth in
 
 ## Setup
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-
 ```kotlin
 dependencies {
     // the core library
