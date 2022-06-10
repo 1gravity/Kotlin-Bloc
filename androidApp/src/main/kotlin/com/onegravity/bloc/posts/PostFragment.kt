@@ -44,6 +44,7 @@ import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.sample.posts.bloc.Post
 import com.onegravity.bloc.sample.posts.bloc.PostBloc
 import com.onegravity.bloc.subscribe
+import com.onegravity.bloc.utils.logger
 import com.onegravity.bloc.sample.posts.domain.repositories.Post as PostData
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
@@ -55,16 +56,17 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
     private val post by lazy { args.post }
 
     private val bloc: PostBloc by getOrCreate("post") {
-        Post.bloc(it).apply { send(Post.Action.Load(post.id)) }
+        Post.bloc(it)
     }
 
-    private var initialised: Boolean = false
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private val binding by viewBinding<PostDetailsFragmentBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        bloc.send(Post.Action.Load(post.id))
 
         val appCompatActivity = activity as AppCompatActivity
         appCompatActivity.setSupportActionBar(binding.toolbar)
@@ -82,20 +84,35 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
 
     override fun onResume() {
         super.onResume()
-        bloc.sideEffects
-        bloc.subscribe<PostState, Post.Action, Unit>(this, ::render)
+        bloc.subscribe(this, ::render)
     }
 
     private fun render(state: PostState) {
-        val visibility = when (state.loading) {
-            true -> View.VISIBLE
-            else -> View.GONE
-        }
-        binding.indeterminateBar.visibility = visibility
+        logger.e("RENDERING: ${state.toString().take(100)}")
+
+        if (state.loading) loading() else showPost(state)
+    }
+
+    private fun loading() {
+        binding.indeterminateBar.visibility = View.VISIBLE
+        binding.postTitle.visibility = View.GONE
+        binding.postBody.visibility = View.GONE
+        binding.divider.visibility = View.GONE
+        binding.postCommentCount.visibility = View.GONE
+        binding.postCommentsList.visibility = View.GONE
+    }
+
+    private fun showPost(state: PostState) {
+        binding.indeterminateBar.visibility = View.GONE
+        binding.postTitle.visibility = View.VISIBLE
+        binding.postBody.visibility = View.VISIBLE
+        binding.divider.visibility = View.VISIBLE
+        binding.postCommentCount.visibility = View.VISIBLE
+        binding.postCommentsList.visibility = View.VISIBLE
 
         state.post?.mapBoth(
             { post ->
-                if (!initialised) initialize(post)
+                toolbar(post)
                 binding.postTitle.text = post.title
                 binding.postBody.text = post.body
                 val comments = post.comments.size
@@ -112,8 +129,7 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
         )
     }
 
-    private fun initialize(post: PostData) {
-        initialised = true
+    private fun toolbar(post: PostData) {
         binding.toolbar.apply {
             title = post.username
             Glide.with(requireContext()).load(post.avatarUrl)

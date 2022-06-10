@@ -1,7 +1,4 @@
 //
-//  PostListViewNew.swift
-//  iosApp
-//
 //  Created by Emanuel Moecklin on 5/24/22.
 //  Copyright © 2022 1gravity. All rights reserved.
 //
@@ -10,7 +7,7 @@ import SwiftUI
 import blocSamples
 
 struct PostListView: View {
-    private let component: BlocComponent<PostsComponent>
+    private let component = BlocComponent<PostsComponent> { PostsComponentImpl(context: $0) }
 
     @ObservedObject
     private var model: BlocObserver<PostsRootState, PostsAction, KotlinUnit>
@@ -19,7 +16,6 @@ struct PostListView: View {
     private var postObservable: PostObservable
 
     init() {
-        component = BlocComponent<PostsComponent> { PostsComponentImpl(context: $0) }
         model = BlocObserver(component.value.bloc)
         postObservable = PostObservable(component)
     }

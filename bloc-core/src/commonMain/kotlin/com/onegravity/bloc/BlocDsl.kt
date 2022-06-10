@@ -2,6 +2,7 @@
 
 package com.onegravity.bloc
 
+import com.onegravity.bloc.internal.BlocExtension
 import com.onegravity.bloc.utils.*
 
 /**
@@ -15,7 +16,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 ) {
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).runInitializer(initializer)
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).initialize(initializer)
 }
 
 /**
@@ -40,7 +41,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 ) {
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).runThunk(thunk)
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).thunk(thunk)
 }
 
 /**
@@ -90,7 +91,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 ) {
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).runReducer(reducer)
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).reduce(reducer)
 }
 
 /**
@@ -117,7 +118,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
     }
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).runReducer(reducerNoState)
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).reduce(reducerNoState)
 }
 
 /**

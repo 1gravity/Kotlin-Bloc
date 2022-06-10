@@ -2,7 +2,7 @@ package com.onegravity.bloc.sample.calculator
 
 import com.github.michaelbull.result.runCatching
 import com.onegravity.bloc.bloc
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.sample.calculator.CalculatorAction.*
 
 /**

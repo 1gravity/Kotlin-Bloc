@@ -1,29 +1,29 @@
 package com.onegravity.bloc.compose
 
 import androidx.compose.runtime.*
-import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.context.BlocContext
-import com.onegravity.bloc.context.BlocContextImpl
-import com.onegravity.bloc.utils.BlocOwner
+import com.arkivanov.essenty.lifecycle.*
+import com.onegravity.bloc.*
+import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
 
 /**
- * Adapter for Jetbrains Compose.
+ * Adapter for Jetpack / Jetbrains Compose to observe bloc state as androidx.compose.runtime.State:
  *
- * This allows us to select sub state and subscribe to it as androidx.compose.runtime.State in one
- * line of code:
  *   val state = bloc.observeState()
  */
 @Composable
-fun <S : Any, Action : Any, SideEffect : Any> Bloc<S, Action, SideEffect>.observeState(): State<S> {
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any> Bloc<STATE, ACTION, SIDE_EFFECT>.observeState(): State<STATE> {
     val state = remember(this) { mutableStateOf(value) }
+
     DisposableEffect(this) {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
         coroutineScope.launch {
             this@observeState.collect {
                 state.value = it
             }
         }
+
         onDispose {
             coroutineScope.cancel()
         }
@@ -32,15 +32,59 @@ fun <S : Any, Action : Any, SideEffect : Any> Bloc<S, Action, SideEffect>.observ
     return state
 }
 
+/**
+ * The same for BlocOwner
+ */
 @Composable
-fun <S : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<S, Action, SideEffect, Proposal>.observeState() =
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any> BlocOwner<STATE, ACTION, SIDE_EFFECT, PROPOSAL>.observeState() =
     bloc.observeState()
 
+/**
+ * The same for BlocObservable
+ */
 @Composable
-fun <S : Any, Action : Any, SideEffect : Any> Bloc<S, Action, SideEffect>.observeSideEffects(): State<SideEffect?> {
-    val state: MutableState<SideEffect?> = remember(this) { mutableStateOf(null) }
+fun <STATE : Any, SIDE_EFFECT : Any> BlocObservable<STATE, SIDE_EFFECT>.observeState(): State<STATE> {
+    val state = remember(this) { mutableStateOf(value) }
+
+    val lifecycleRegistry = LifecycleRegistry()
+
+    DisposableEffect(this) {
+        lifecycleRegistry.create()
+        lifecycleRegistry.start()
+
+        this@observeState.subscribe(lifecycle = lifecycleRegistry, state = {
+            state.value = it
+        })
+
+        onDispose {
+            lifecycleRegistry.stop()
+            lifecycleRegistry.destroy()
+        }
+    }
+
+    return state
+}
+
+/**
+ * The same for BlocObservableOwner
+ */
+@Composable
+fun <STATE : Any, SIDE_EFFECT : Any> BlocObservableOwner<STATE, SIDE_EFFECT>.observeState() =
+    observable.observeState()
+
+/**
+ * Adapter for Jetpack / Jetbrains Compose to observe bloc side effects as
+ * androidx.compose.runtime.State:
+ *
+ *   val state = bloc.observeState()
+ */
+@Composable
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any> Bloc<STATE, ACTION, SIDE_EFFECT>.observeSideEffects(): State<SIDE_EFFECT?> {
+    val state: MutableState<SIDE_EFFECT?> = remember(this) { mutableStateOf(null) }
+
     DisposableEffect(this) {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
         coroutineScope.launch {
             this@observeSideEffects.sideEffects.collect {
                 // we need to force the ui to recompose even if we emit the same value twice
@@ -53,6 +97,7 @@ fun <S : Any, Action : Any, SideEffect : Any> Bloc<S, Action, SideEffect>.observ
                 state.value = it
             }
         }
+
         onDispose {
             coroutineScope.cancel()
         }
@@ -62,12 +107,48 @@ fun <S : Any, Action : Any, SideEffect : Any> Bloc<S, Action, SideEffect>.observ
 }
 
 /**
- * Creates a BlocContext for compose previews with a Composable life cycle but without the
- * other parameters (StateKeeper, InstanceKeeper, BackPressedHandler)
+ * The same for BlocOwner
  */
 @Composable
-fun previewBlocContext(): BlocContext = BlocContextImpl(composableLifecycle())
-
-@Composable
-fun <S : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<S, Action, SideEffect, Proposal>.observeSideEffects() =
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any> BlocOwner<STATE, ACTION, SIDE_EFFECT, PROPOSAL>.observeSideEffects() =
     bloc.observeSideEffects()
+
+/**
+ * The same for BlocObservable
+ */
+@Composable
+fun <STATE : Any, SIDE_EFFECT : Any> BlocObservable<STATE, SIDE_EFFECT>.observeSideEffects(): State<SIDE_EFFECT?> {
+    val state: MutableState<SIDE_EFFECT?> = remember(this) { mutableStateOf(null) }
+
+    val lifecycleRegistry = LifecycleRegistry()
+
+    DisposableEffect(this) {
+        lifecycleRegistry.create()
+        lifecycleRegistry.start()
+
+        this@observeSideEffects.subscribe(lifecycle = lifecycleRegistry, sideEffect = {
+            // we need to force the ui to recompose even if we emit the same value twice
+            // and since side effects can have duplicates we use null to "reset" the State
+            // before emitting the new/old value
+            // SideEffectStreams have no initial value and using null values is the recommended
+            // way to use State / StateFlow if there's no initial value
+            // (see: https://github.com/Kotlin/kotlinx.coroutines/issues/2515)
+            state.value = null
+            state.value = it
+        })
+
+        onDispose {
+            lifecycleRegistry.stop()
+            lifecycleRegistry.destroy()
+        }
+    }
+
+    return state
+}
+
+/**
+ * The same for BlocObservableOwner
+ */
+@Composable
+fun <STATE : Any, SIDE_EFFECT : Any> BlocObservableOwner<STATE, SIDE_EFFECT>.observeSideEffects() =
+    observable.observeSideEffects()

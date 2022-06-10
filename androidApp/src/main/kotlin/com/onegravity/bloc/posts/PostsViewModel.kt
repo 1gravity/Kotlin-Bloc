@@ -1,22 +1,21 @@
 package com.onegravity.bloc.posts
 
 import androidx.lifecycle.ViewModel
-import com.onegravity.bloc.ActivityBlocContext
 import com.onegravity.bloc.blocContext
 import com.onegravity.bloc.sample.posts.bloc.Posts
 import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sideEffect
-import com.onegravity.bloc.utils.BlocOwner
+import com.onegravity.bloc.BlocOwner
 
 /**
  * Not used any more but we keep it around for illustration purposes
  */
-class PostsViewModel(context: ActivityBlocContext) :
+class PostsViewModel :
     ViewModel(),
     BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState> {
 
-    override val bloc = Posts.bloc(blocContext(context))
+    override val bloc = Posts.bloc(blocContext())
 
     fun onPostClicked(post: Post) = sideEffect {
         Posts.OpenPost(post)

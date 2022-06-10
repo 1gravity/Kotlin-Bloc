@@ -26,16 +26,12 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(project(":blocCore"))
+                api(project(":bloc-core"))
 
                 implementation(KotlinX.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 api("com.arkivanov.essenty:lifecycle:_")
-                api("com.arkivanov.essenty:parcelable:_")
-                api("com.arkivanov.essenty:state-keeper:_")
-                api("com.arkivanov.essenty:instance-keeper:_")
-                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
@@ -70,6 +66,6 @@ android {
     }
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("../../docs/dokka"))
+tasks.dokkaHtmlPartial.configure {
+    moduleName.set("BLoC Compose")
 }

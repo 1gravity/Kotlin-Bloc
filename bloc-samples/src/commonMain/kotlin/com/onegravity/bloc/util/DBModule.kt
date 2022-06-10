@@ -17,10 +17,11 @@ internal val dbModule = module {
         TodoDatabase(
             driver = driver("todo.db"),
             todosAdapter = Todos.Adapter(
-            created_atAdapter = instantAdapter,
-            modified_atAdapter = instantAdapter
-        ),
-    ) }
+                created_atAdapter = instantAdapter,
+                modified_atAdapter = instantAdapter
+            )
+        )
+    }
 
     single { ToDoDao(get()) }
 }

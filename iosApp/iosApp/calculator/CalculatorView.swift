@@ -1,7 +1,4 @@
 //
-//  CalculatorView.swift
-//  iosApp
-//
 //  Created by Emanuel Moecklin on 5/6/22.
 //  Copyright © 2022 1gravity. All rights reserved.
 //
@@ -12,7 +9,7 @@ import blocSamples
 let grayColor = Color(red: 0.95, green: 0.95, blue: 0.95, opacity: 1.0)
 
 struct CalculatorView: View {
-    private let holder: BlocHolder<CalculatorState, CalculatorAction, KotlinUnit>
+    private let holder = BlocHolder { CalculatorKt.bloc(context: $0) }
     
     @ObservedObject
     private var model: BlocObserver<CalculatorState, CalculatorAction, KotlinUnit>
@@ -21,7 +18,6 @@ struct CalculatorView: View {
     private var orientation = InterfaceOrientation()
 
     init() {
-        self.holder = BlocHolder { CalculatorKt.bloc(context: $0) }
         self.model = BlocObserver(self.holder.value)
     }
 

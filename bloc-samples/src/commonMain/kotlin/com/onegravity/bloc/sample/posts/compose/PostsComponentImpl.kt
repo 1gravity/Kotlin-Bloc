@@ -4,8 +4,9 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.runCatching
-import com.onegravity.bloc.bloc
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.*
+import com.onegravity.bloc.internal.*
+import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.reduce
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
@@ -19,11 +20,6 @@ import kotlinx.coroutines.launch
 // no external actions, we use a simple function call
 sealed class PostsAction
 
-/**
- * todo if we want to use functions instead of actions then we need some kind of component / class
- *      like the PostsComponentImpl -> think about a better solution that would allow us to combine
- *      the bloc builder style and the extension function style (easy for Android, harder for iOS)
- */
 class PostsComponentImpl(context: BlocContext) : PostsComponent() {
 
     private val repository = getKoinInstance<PostRepository>()
@@ -41,6 +37,8 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
                 dispatch(PostsLoading)
+                // we can access the db here because Dispatchers.Default is a Bloc's default dispatcher
+                // also we use Ktor which offloads the networking to another thread
                 val result = repository.getOverviews()
                 dispatch(PostsLoaded(result))
             }

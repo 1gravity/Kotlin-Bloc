@@ -1,11 +1,9 @@
 package com.onegravity.bloc.redux
 
 import com.badoo.reaktive.disposable.scope.DisposableScope
-import com.onegravity.bloc.state.BlocState
+import com.onegravity.bloc.state.BlocStateBase
 import com.onegravity.bloc.utils.Mapper
-import com.onegravity.bloc.utils.MutableStateStream
 import com.onegravity.bloc.utils.Selector
-import kotlinx.coroutines.flow.FlowCollector
 import org.reduxkotlin.Store
 
 internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxModel : Any>(
@@ -13,18 +11,8 @@ internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxMod
     private val store: Store<ReduxModel>,
     select: Selector<ReduxModel, Model>,
     map: Mapper<Model, State>
-) : BlocState<State, Proposal>(),
+) : BlocStateBase<State, Proposal>(map(select(store.getState()))),
     DisposableScope by disposableScope {
-
-    private val initialState = map(select(store.getState()))
-    private val state: MutableStateStream<State> = MutableStateStream(initialState)
-
-    override val value: State
-        get() = state.value
-
-    override suspend fun collect(collector: FlowCollector<State>) {
-        state.collect(collector)
-    }
 
     init {
         // selectScoped will unsubscribe from the store automatically when the Bloc is destroyed
@@ -33,9 +21,8 @@ internal class ReduxBlocState<State : Any, Proposal : Any, Model : Any, ReduxMod
         }
     }
 
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun send(value: Proposal) {
-        store.dispatch(value)
+    override fun send(proposal: Proposal) {
+        store.dispatch(proposal)
     }
 
 }

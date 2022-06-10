@@ -41,7 +41,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(project(":blocCore"))
+                implementation(project(":bloc-core"))
 
                 implementation(KotlinX.coroutines.core)
 
@@ -51,13 +51,9 @@ kotlin {
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 api("com.arkivanov.essenty:lifecycle:_")
-                api("com.arkivanov.essenty:parcelable:_")
-                api("com.arkivanov.essenty:state-keeper:_")
-                api("com.arkivanov.essenty:instance-keeper:_")
-                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Redux store (https://reduxkotlin.org)
-                api("com.1gravity.redux:redux-kotlin-threadsafe:_")
+                api("com.1gravity:redux-kotlin-threadsafe:_")
             }
         }
         val commonTest by getting {
@@ -92,6 +88,6 @@ kotlin {
     }
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("../../docs/dokka"))
+tasks.dokkaHtmlPartial.configure {
+    moduleName.set("BLoC Redux")
 }

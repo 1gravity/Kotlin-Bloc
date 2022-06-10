@@ -1,0 +1,24 @@
+- TODO define the version for the first release, publish artifacts and update the website
+- TODO go through all the code and update the documentation -> then create the final Dooka docu
+
+- TODO implement tests
+- TODO create an FAQ
+
+- TODO think about the initial value, who/what provides it? should be have a mechanism to populate
+       the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
+       ReduxStore and one in the BlocState)
+       how about using the redux mechanism using an ActionTypes.INIT to initialize state?
+- TODO are side effects sufficient for navigation? should the framework include a navigation
+       component like Decompose does?
+- TODO Action / Redux style vs. Function style (extensions to BlocOwner), the latter requires some
+       component / class like the PostsComponent / PostsComponentImpl class so we can use functions
+       in iOS too. Come up with a solution that combines both styles for Android and iOS without
+       the need for a "container" component.
+- TODO time travel + debugger
+- TODO implement `sideEffects` in the Bloc DSL to allow emission of multiple side effects
+       (`sideEffect` allows only a single side effect)
+- TODO synchronize initializers / onCreate execution with the lifecycle of the bloc
+       -> a bloc could not transition to Started while the initializer is still running
+       we would only need to synchronize the initializer code block itself and not wait for
+       dispatched actions to be processed because those actions won't be executed before the bloc is
+       started / transitions to Started

@@ -6,7 +6,7 @@
   Copyright © 2022 1gravity. All rights reserved.
 */
 
-"app_name" = "BLoC Framework";
+"app_name" = "Kotlin BLoC";
 
 "main_menu_title" = "Take your pick";
 "main_menu_counter" = "Counter";

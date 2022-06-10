@@ -3,7 +3,7 @@ package com.onegravity.bloc.redux
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.badoo.reaktive.disposable.scope.DisposableScope
 import com.badoo.reaktive.disposable.scope.doOnDispose
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.redux.select.select
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.BlocDSL

@@ -16,7 +16,7 @@ class TodoActivity : AppCompatActivity() {
 
         setContent {
             ComposeAppTheme {
-                RootUi(bloc)
+                ToDoUi(bloc)
             }
         }
     }

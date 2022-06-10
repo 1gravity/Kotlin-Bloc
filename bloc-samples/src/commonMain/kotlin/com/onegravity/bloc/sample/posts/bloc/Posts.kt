@@ -1,13 +1,13 @@
 package com.onegravity.bloc.sample.posts.bloc
 
 import com.github.michaelbull.result.Result
-import com.onegravity.bloc.bloc
-import com.onegravity.bloc.context.BlocContext
+import com.onegravity.bloc.*
+import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.blocState
 import com.onegravity.bloc.util.getKoinInstance
-import com.onegravity.bloc.utils.BlocOwner
+import com.onegravity.bloc.BlocOwner
 
 object Posts {
     // you can either send actions to the Bloc directly or call these functions instead

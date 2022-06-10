@@ -22,7 +22,10 @@ public abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
     public abstract val sideEffects: SideEffectStream<SideEffect>
 
     /**
-     * This is specifically for iOS to make sure generic types aren't erased.
+     * This observe function is used for iOS to make sure generic types aren't erased.
+     * It's the equivalent of the subscribe extension function for Android.
+     * Note: the state and sideEffect parameters are of type BlocObserver which is different
+     * from the signature used in the Android observe function.
      */
     public abstract fun observe(
         observerLifecycle: Lifecycle,

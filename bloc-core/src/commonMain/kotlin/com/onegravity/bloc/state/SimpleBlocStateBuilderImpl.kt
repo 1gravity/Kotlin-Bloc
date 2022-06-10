@@ -6,7 +6,7 @@ internal class SimpleBlocStateBuilderImpl<State : Any> : SimpleBlocStateBuilder<
 
     override fun build() = DefaultBlocState<State, State>(
         initialState = checkNotNull(_initialState) { "initialState must be declared" },
-        acceptor = { proposal, _ -> proposal }
+        accept = { proposal, _ -> proposal }
     )
 
     override var initialState: State

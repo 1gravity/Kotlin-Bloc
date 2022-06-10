@@ -1,7 +1,4 @@
 //
-//  BlocOwnerHolder.swift
-//  iosApp
-//
 //  Created by Emanuel Moecklin on 5/24/22.
 //  Copyright © 2022 1gravity. All rights reserved.
 //
@@ -23,18 +20,13 @@ class BlocComponent<Component: AnyObject> {
         lifecycle.onCreate()
         if manageFullLifecycle {
             lifecycle.onStart()
+            lifecycle.onResume()
         }
     }
 
     deinit {
-        print("deinit")
-        print("deinit")
-        print("deinit")
-        print("deinit")
-        print("deinit")
-        print("deinit")
-        print("deinit")
         if manageFullLifecycle {
+            lifecycle.onPause()
             lifecycle.onStop()
         }
         lifecycle.onDestroy()

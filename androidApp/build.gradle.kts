@@ -42,10 +42,14 @@ android {
 }
 
 dependencies {
-    implementation(project(":blocCore"))
-    implementation(project(":blocRedux"))
-    implementation(project(":blocCompose"))
-    implementation(project(":blocSamples"))
+    implementation(project(":bloc-core"))
+    implementation(project(":bloc-redux"))
+    implementation(project(":bloc-compose"))
+//    implementation("com.1gravity:bloc-core:_")
+//    implementation("com.1gravity:bloc-redux:_")
+//    implementation("com.1gravity:bloc-compose:_")
+
+    implementation(project(":bloc-samples"))
 
     implementation(Kotlin.stdlib)
 
@@ -90,10 +94,6 @@ dependencies {
 
     // Essenty (https://github.com/arkivanov/Essenty)
     implementation("com.arkivanov.essenty:lifecycle:_")
-    implementation("com.arkivanov.essenty:parcelable:_")
-    implementation("com.arkivanov.essenty:state-keeper:_")
-    implementation("com.arkivanov.essenty:instance-keeper:_")
-    implementation("com.arkivanov.essenty:back-pressed:_")
 
     testImplementation(Testing.kotest.runner.junit5)
     testImplementation(KotlinX.coroutines.test)

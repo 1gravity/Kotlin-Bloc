@@ -52,10 +52,7 @@ kotlin {
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 api("com.arkivanov.essenty:lifecycle:_")
-                api("com.arkivanov.essenty:parcelable:_")
-                api("com.arkivanov.essenty:state-keeper:_")
                 api("com.arkivanov.essenty:instance-keeper:_")
-                api("com.arkivanov.essenty:back-pressed:_")
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
@@ -120,6 +117,6 @@ android {
     buildToolsVersion = "32.0.0"
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("../../docs/dokka"))
+tasks.dokkaHtmlPartial.configure {
+    moduleName.set("BLoC Core")
 }

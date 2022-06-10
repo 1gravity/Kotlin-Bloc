@@ -2,75 +2,154 @@
 
 # Kotlin BLoC Framework
 
-Concise ui framework for Kotlin Multiplatform Mobile.
+`Kotlin BLoC` is a Kotlin Multiplatform UI framework inspired by multiple design patterns and frameworks ([KMM UI Architecture - Part 1](https://medium.com/p/6362e14ee52a)).
 
-<img alt="BLoC Architecture - Overview" src="./docs/BLoC Architecture - Overview.svg" width="625" />
+## Architecture
 
-[Dokka Documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
-.
+Note, this readme offers a quick overview of the framework. For more in-depth information please visit:
+- [The official website](https://1gravity.github.io/Kotlin-Bloc)
+- [The Dokka documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
 
-# Inspiration
+### Goals
+The architectural goals of `Kotlin BLoC` are:
+- be platform-agnostic
+- be minimalistic / lightweight
+- don't be over-engineered
+- requires to write very little code
+- be as un-opinionated as possible -> scales with app complexity / team size
+- be composable
 
-Reduce was inspired by :
+[KMM UI Architecture - Part 2](https://medium.com/p/e52b84aeb94d) elaborates on those goals in more detail.
 
-* Knot
-* Decompose
-* Orbit
-* KotlinMVI
-* React Redux
-
-# Concept
-
-# Getting Started
-
-The example below declares a Knot capable of loading data, handling *Success* and *Failure* loading
-results and reloading data automatically when an external *"data changed"* signal gets received. It
-also logs all `State` mutations as well as all processed `Intents` and `Actions` in console.
-
+### Example
+To demo the framework's simplicity, here's one way to implement a counter app (the "Hello World" of UI frameworks):
 ```kotlin
+// define the Bloc
+fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
+    reduce { state + action }
+}
+```
+#### Android
+```kotlin
+class CounterActivity : AppCompatActivity() {
+
+    // (lazy) create or retrieve the lifecycle aware Bloc
+    private val bloc by getOrCreate { bloc(it) }
+```
+```kotlin
+setContent {
+    // observe the Bloc state
+    val state by bloc.observeState()
+
+    // updates on state / count changes
+    Text("Counter: $state")
+
+    // emit events / actions to update the state / count
+    Button(onClick = { bloc.send(1) }, content = { Text("Increment") })
+    Button(onClick = { bloc.send(-1) }, content = { Text("Decrement") })
+}
 ```
 
-# Composition
+This is remarkably little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes (it creates an Android ViewModel under-the-hood and ties itself to the VMs lifecycle).
 
-```kotlin
+#### iOS
+
+On iOS there's more boilerplate code (`BlocHolder` and `BlocObserver` are omitted here) but it's still pretty "lean":
+
+```swift
+// iOS
+struct CounterView: View {
+    // create the lifecycle aware Bloc
+    private let holder = BlocHolder { CounterKt.bloc(context: $0) }
+    
+    @ObservedObject
+    private var model: BlocObserver<KotlinInt, KotlinInt, KotlinUnit>
+
+    init() {
+        // observe the Bloc state
+        model = BlocObserver(holder.value)
+    }
+```
+```swift
+var body: some View {
+    return VStack() {    
+        // updates on state / count changes
+        Text("Counter \(model.value)")
+    
+        // emit events / actions to update the state / count
+        Button(
+            action: { holder.value.send(value:  1) },
+            label: { Text("Increment") }
+        )
+        Button(
+            action: { holder.value.send(value: -1) },
+            label: { Text("Decrement") }
+        )
 ```
 
-# Scalability
 
-```kotlin
-```
+**Note:** this is only one way to implement the app. Since one of the goals was to be un-opinionated, we can implement it in many ways, depending on the preferences of the developer / team.  
 
-# Simplify
+### Inspiration
+The architecture was inspired by the following design patterns and UI frameworks among others:
 
-```kotlin
-```
+#### Design patterns
+- MVI (Model-View-Intent)
+- MVVM (Model-View-ViewModel)
+- [SAM](https://sam.js.org)
+- Redux
+- [Flutter BloC (Business Logic Component)](https://medium.com/@artemsidorenko/bloc-architecture-in-flutter-a-modern-architectural-approach-and-how-we-use-it-at-jimdo-bea143b56d01)
 
-# Gradle
+#### Frameworks
+- [Orbit](https://orbit-mvi.org)
+- [Kotlin MVI](https://arkivanov.github.io/MVIKotlin)
+- [Redux Kotlin](https://reduxkotlin.org)
+- [Reduce](https://github.com/genaku/Reduce)
+- [Decompose](https://arkivanov.github.io/Decompose/)
 
-**Step 1.** Add the JitPack repository to your build file. Add it in your root build.gradle at the
-end of repositories:
+### Design Overview
+
+<img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" />
+
+The framework has two main components:
+- The **Bloc** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** (State) and optionally **SideEffect(s)**.
+- The **BlocState** holds the component's **State**. It's separate from the actual Bloc to support different scenarios like:
+  - share state between business logic components
+  - persist state (database, network)
+  - use a global state container like Redux
+  - others...
+
+The **View** is obviously an important component too but technically not part of the framework itself (although there are extensions that support/simplify the implementation for different target platforms).
+
+## Getting Started
+
+### Gradle
+
+**Step 1.** Add the mavenCentral() repository to your main build file:
 
 ```kotlin
 allprojects {
     repositories {
-        ...
-        maven("https://jitpack.io")
+        mavenCentral()
+        // ...
     }
 }
 ```
 
-**Step 2.** Add the dependency
+**Step 2.** Add the dependencies to your app:
 
 ```kotlin
 dependencies {
+    // the core library
+    implementation("com.1gravity:bloc-core:0.1.2-SNAPSHOT")
+    // add if you want to use BLoCs in combination with a Redux store 
+    implementation("com.1gravity:bloc-redux:0.1.2-SNAPSHOT")
+    // contains useful extensions for Android if you use Jetpack/JetBrains Compose
+    implementation("com.1gravity:bloc-compose:0.1.2-SNAPSHOT")
 }
 ```
 
-# Why Kotlin BLoC?
-
-* Why not?
-
-# License
+## License
 
 ```
 Copyright 2022 Emanuel Moecklin
