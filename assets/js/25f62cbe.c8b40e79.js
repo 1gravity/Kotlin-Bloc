@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[3363],{1710:function(l){l.exports=JSON.parse('{"label":"hola","permalink":"/Kotlin-Bloc/blog/tags/hola","allTagsPath":"/Kotlin-Bloc/blog/tags","count":1}')}}]);

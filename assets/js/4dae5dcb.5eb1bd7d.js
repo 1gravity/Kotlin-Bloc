@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[1253],{7261:function(e){e.exports=JSON.parse('{"label":"facebook","permalink":"/Kotlin-Bloc/blog/tags/facebook","allTagsPath":"/Kotlin-Bloc/blog/tags","count":1}')}}]);
