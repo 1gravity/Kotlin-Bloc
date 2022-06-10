@@ -63,7 +63,7 @@ const config = {
             type: 'doc',
             docId: 'architecture/architecture_overview',
             position: 'left',
-            label: 'Architecture', 
+            label: 'Concepts', 
           },
           {
             type: 'doc',

@@ -11,18 +11,28 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * The ThunkProcessor is responsible for processing thunk { } blocks.
+ */
 internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     private val thunkDispatcher: CoroutineContext = Dispatchers.Default,
-    private val runReducers: suspend (action: Action) -> Unit
+    private val runReducers: (action: Action) -> Unit
 ) {
 
+    /**
+     * Channel for thunks to be processed (incoming)
+     */
     private val thunkChannel = Channel<Action>(UNLIMITED)
 
     private var scope: CoroutineScope? = null
 
+    /**
+     * This needs to come after all variable/property declarations to make sure everything is
+     * initialized before the Bloc is started
+     */
     init {
         blocContext.lifecycle.doOnStart {
             scope = CoroutineScope(SupervisorJob() + thunkDispatcher)
@@ -43,18 +53,20 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
     }
 
     /**
-     * @return True if the action is being picked up by a thunk, False otherwise
+     * BlocDSL:
+     * thunk { } -> run a thunk Redux style
      */
-    internal fun send(action: Action) : Boolean =
+    internal fun send(action: Action) {
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             thunkChannel.trySend(action)
-            true
         } else {
-            false
+            runReducers(action)
         }
+    }
 
     /**
-     * Public API (interface BlocExtension) to run thunks / reducers etc. MVVM+ style
+     * BlocExtension interface implementation:
+     * thunk { } -> run a thunk MVVM+ style
      */
     internal fun thunk(thunk: ThunkNoAction<State, Action>) =
         scope?.launch {
@@ -69,9 +81,15 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
             context.thunk()
         }
 
-    private suspend fun runThunks(action: Action, startIndex: Int = 0) {
+    /**
+     * Run all matching thunks
+     *
+     * @param action run thunks that match this action
+     * @param thunkIndex start executing thunks from thunkIndex on
+     */
+    private suspend fun runThunks(action: Action, thunkIndex: Int = 0) {
         logger.d("run thunks for action ${action.trimOutput()}")
-        (startIndex..thunks.lastIndex).forEach { index ->
+        (thunkIndex..thunks.lastIndex).forEach { index ->
             val (matcher, _) = thunks[index]
             if (matcher == null || matcher.matches(action)) {
                 runThunk(action, index)
@@ -79,16 +97,28 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
         }
     }
 
+    /**
+     * Run a specific thunk
+     */
     private suspend fun runThunk(action: Action, index: Int) {
         scope?.run {
             val dispatcher: Dispatcher<Action> = {
                 nextThunkDispatcher(it, index + 1).invoke(it)
             }
             val thunk = thunks[index].thunk
-            ThunkContext({ blocState.value }, action, dispatcher, this).thunk()
+            val context = ThunkContext(
+                getState = { blocState.value },
+                action = action,
+                dispatch = dispatcher,
+                coroutineScope = this
+            )
+            context.thunk()
         }
     }
 
+    /**
+     * Find the next thunk to execute (when dispatch is used)
+     */
     private fun nextThunkDispatcher(action: Action, startIndex: Int = 0): Dispatcher<Action> {
         (startIndex..thunks.lastIndex).forEach { index ->
             val matcher = thunks[index].matcher

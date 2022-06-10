@@ -90,4 +90,10 @@ kotlin {
 
 tasks.dokkaHtmlPartial.configure {
     moduleName.set("Bloc Redux")
+    dokkaSourceSets {
+        configureEach {
+            suppress.set(false)
+            includeNonPublic.set(true)  // we want to see some details
+        }
+    }
 }

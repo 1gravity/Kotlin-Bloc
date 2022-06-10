@@ -6,7 +6,7 @@ import com.onegravity.bloc.utils.Effect
 /**
  * A class is a BlocOwner if it holds and exposes a Bloc.
  *
- * Using extension functions this interface allows the use of the short syntax for defining
+ * Using extension functions this interface allows the use of the MVVM+ syntax for defining
  * thunk { }, sideEffect { } and reduce { } / reduceAnd { }, e.g.:
  *
  * ```

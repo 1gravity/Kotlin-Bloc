@@ -9,7 +9,7 @@ import kotlin.jvm.JvmName
  *    blocState<State, Proposal> {
  *       initialState = SomeState
  *       accept { proposal, state ->
- *          // map proposal to State
+ *          // map Proposal to State
  *       }
  *    }
  * ```

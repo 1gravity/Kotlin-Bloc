@@ -6,7 +6,9 @@ import com.onegravity.bloc.Bloc
 import kotlinx.coroutines.flow.FlowCollector
 
 /**
- * Adapts a Bloc to BlocState provided the Action type is the same as the Proposal type
+ * Converts a Bloc to a BlocState.
+ *
+ * This can be used only if the Action type is the same as the Proposal type
  * (what goes in, must come out).
  */
 public fun <State : Any, SideEffect : Any, Proposal : Any> Bloc<State, Proposal, SideEffect>.asBlocState(): BlocState<State, Proposal> =

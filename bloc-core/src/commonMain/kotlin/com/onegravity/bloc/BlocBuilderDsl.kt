@@ -7,7 +7,7 @@ import com.onegravity.bloc.utils.BlocDSL
 import kotlin.jvm.JvmName
 
 /**
- * Creates a [Bloc] instance using a [BlocBuilder].
+ * Creates a Bloc instance using a BlocBuilder.
  *
  * ```
  * bloc<State, Action, SideEffect, Proposal>(context, blocState) {
@@ -34,6 +34,16 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> bloc(
         .also(block)
         .build(context, blocState)
 
+/**
+ * Creates a Bloc instance using a BlocBuilder.
+ * - initialValue instead of BlocState as argument
+ *
+ * ```
+ * bloc<State, Action, SideEffect, Proposal>(context, initialValue) {
+ *    ...
+ * }
+ * ```
+ */
 @JvmName("blocInitialValue")
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> bloc(
@@ -46,19 +56,12 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> bloc(
         .build(context, blocState { initialState = initialValue })
 
 /**
- * Creates a [Bloc] instance using a [BlocBuilder].
+ * Creates a Bloc instance using a BlocBuilder.
+ * - Proposal == State
  *
  * ```
  * bloc<State, Action, SideEffect>(context, blocState) {
- *    thunk { getState, action, dispatch ->
- *       ...
- *    }
- *    sideEffect { state, action ->
- *       ...
- *    }
- *    reduce { state, action ->
- *       ...
- *    }
+ *    ...
  * }
  * ```
  */
@@ -74,19 +77,13 @@ public fun <State : Any, Action : Any, SideEffect : Any> bloc(
         .build(context, blocState)
 
 /**
- * Creates a [Bloc] instance using a [BlocBuilder].
+ * Creates a Bloc instance using a BlocBuilder.
+ * - Proposal == State
+ * - initialValue instead of BlocState as argument
  *
  * ```
  * bloc<State, Action, SideEffect>(context, initialValue) {
- *    thunk { getState, action, dispatch ->
- *       ...
- *    }
- *    sideEffect { state, action ->
- *       ...
- *    }
- *    reduce { state, action ->
- *       ...
- *    }
+ *    ...
  * }
  * ```
  */
@@ -102,17 +99,13 @@ public fun <State : Any, Action : Any, SideEffect : Any> bloc(
         .build(context, blocState(initialValue))
 
 /**
- * Creates a [Bloc] instance using a [BlocBuilder] with Proposal being State
- * (the [BlocState] doesn't do any extra mapping from Proposal to State).
+ * Creates a Bloc instance using a BlocBuilder.
+ * - Proposal == State
+ * - no side effects
  *
  * ```
  * bloc<State, Action>(context, blocState) {
- *    thunk { getState, action, dispatch ->
- *       ...Uni
- *    }
- *    reduce { state, action ->
- *       ...
- *    }
+ *    ...
  * }
  * ```
  */
@@ -128,17 +121,14 @@ public fun <State : Any, Action : Any> bloc(
         .build(context, blocState)
 
 /**
- * Creates a [Bloc] instance using a [BlocBuilder] with Proposal being State and an initial value
- * (no need to create a separate [BlocState].
+ * Creates a Bloc instance using a BlocBuilder.
+ * - initialValue instead of BlocState as argument
+ * - Proposal == State
+ * - no side effects
  *
  * ```
- * bloc<State, Action>(context, initialValue) {
- *    thunk { getState, action, dispatch ->
- *       ...
- *    }
- *    reduce { state, action ->
- *       ...
- *    }
+ * bloc<State, Action>(context, blocState) {
+ *    ...
  * }
  * ```
  */

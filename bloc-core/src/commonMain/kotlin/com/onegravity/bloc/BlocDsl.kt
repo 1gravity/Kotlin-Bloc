@@ -6,7 +6,7 @@ import com.onegravity.bloc.internal.BlocExtension
 import com.onegravity.bloc.utils.*
 
 /**
- * Submit an Initializer to the Bloc to be run.
+ * Submit an Initializer to a Bloc to be run.
  * The initializer will receive the state and a dispatch function.
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
@@ -20,7 +20,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 }
 
 /**
- * Same for a BlocOwner.
+ * Submit an Initializer to a BlocOwner/Bloc to be run.
+ * The initializer will receive the state and a dispatch function.
+ * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
@@ -30,7 +32,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
 }
 
 /**
- * Submit a Thunk to the Bloc to be run.
+ * Submit a Thunk to a Bloc to be run.
  * The thunk will receive the dispatch and the getState function but no action (since it was
  * triggered "manually", not by sending an action to the Bloc).
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
@@ -45,7 +47,10 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 }
 
 /**
- * Same for a BlocOwner.
+ * Submit a Thunk to a BlocOwner/Bloc to be run.
+ * The thunk will receive the dispatch and the getState function but no action (since it was
+ * triggered "manually", not by sending an action to the Bloc).
+ * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
@@ -55,7 +60,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
 }
 
 /**
- * Submit a Reducer without side effects to the Bloc to be run.
+ * Submit a Reducer without side effects to a Bloc to be run.
  * The reducer will receive the state but no action (since it was triggered "manually", not by
  * sending an action to the Bloc).
  */
@@ -71,7 +76,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 }
 
 /**
- * Same for a BlocOwner.
+ * Submit a Reducer without side effects to a BlocOwner/Bloc to be run.
+ * The reducer will receive the state but no action (since it was triggered "manually", not by
+ * sending an action to the Bloc).
  */
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduce(
@@ -81,7 +88,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
 }
 
 /**
- * Submit a Reducer with side effects to the Bloc to be run.
+ * Submit a Reducer with side effects to a Bloc to be run.
  * The reducer will receive the state but no action (since it was triggered "manually", not by
  * sending an action to the Bloc).
  */
@@ -95,7 +102,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 }
 
 /**
- * Same for a BlocOwner.
+ * Submit a Reducer with side effects to a BlocOwner/Bloc to be run.
+ * The reducer will receive the state but no action (since it was triggered "manually", not by
+ * sending an action to the Bloc).
  */
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
@@ -105,7 +114,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
 }
 
 /**
- * Submit a SideEffect to the Bloc to be emitted.
+ * Submit a SideEffect to a Bloc to be emitted.
  * The side effect will receive the state but no action (since it was triggered "manually", not by
  * sending an action to the Bloc).
  */
@@ -122,7 +131,9 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 }
 
 /**
- * Same for a BlocOwner.
+ * Submit a SideEffect to a BlocOwner/Bloc to be emitted.
+ * The side effect will receive the state but no action (since it was triggered "manually", not by
+ * sending an action to the Bloc).
  */
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(

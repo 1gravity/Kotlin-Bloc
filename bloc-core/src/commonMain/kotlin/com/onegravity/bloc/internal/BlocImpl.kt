@@ -11,6 +11,12 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.FlowCollector
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * The probably most important class in the framework.
+ *
+ * Implements Bloc and BlocExtension and is responsible for executing initializers, reducers and
+ * thunks.
+ */
 internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
@@ -23,8 +29,9 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 ) : Bloc<State, Action, SideEffect>(),
     BlocExtension<State, Action, SideEffect, Proposal> {
 
-    // ReduceProcessor, ThunkProcessor and InitializeProcessor need to be defined in that exact
+    // ReduceProcessor, ThunkProcessor and InitializeProcessor need to be defined in this exact
     // order or we risk NullPointerExceptions
+
     private val reduceProcessor = ReduceProcessor(
         blocContext,
         blocState,
@@ -37,7 +44,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         blocState,
         thunks,
         thunkDispatcher,
-        reduceProcessor::runReducers
+        reduceProcessor::send
     )
 
     private val initializeProcessor = InitializeProcessor(
@@ -47,19 +54,32 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         initDispatcher
     ) { send(it) }
 
+    /**
+     * The current state
+     */
     override val value
         get() = blocState.value
 
+    /**
+     * Flow for side effects (outgoing)
+     */
     override val sideEffects: SideEffectStream<SideEffect> = reduceProcessor.sideEffects
 
+    /**
+     * The Sink to dispatch Actions.
+     * All it does is add the Action to a queue to be processed asynchronously.
+     */
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun send(action: Action) {
         logger.d("emit action ${action.trimOutput()}")
-        if (! thunkProcessor.send(action)) {
-            reduceProcessor.send(action)
-        }
+        // thunks are always processed first
+        // ThunkProcessor will send the action to ReduceProcessor if there's no matching thunk
+        thunkProcessor.send(action)
     }
 
+    /**
+     * StateStream.collect(FlowCollector<Value>)
+     */
     override suspend fun collect(collector: FlowCollector<State>) {
         blocState.collect(collector)
     }
@@ -96,17 +116,25 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     }
 
     /**
-     * Public API (interface BlocExtension) to run thunks / reducers etc. MVVM+ style
+     * BlocExtension interface implementation:
+     * onCreate { } -> run an initializer MVVM+ style
      */
-
     override fun initialize(initialize: Initializer<State, Action>) {
         initializeProcessor.initialize(initialize)
     }
 
+    /**
+     * BlocExtension interface implementation:
+     * reduce { } -> run a Reducer MVVM+ style
+     */
     override fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
         reduceProcessor.reduce(reduce)
     }
 
+    /**
+     * BlocExtension interface implementation:
+     * thunk { } -> run a thunk MVVM+ style
+     */
     override fun thunk(thunk: ThunkNoAction<State, Action>) {
         thunkProcessor.thunk(thunk)
     }

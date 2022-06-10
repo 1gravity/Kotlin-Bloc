@@ -9,6 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.JvmName
 
+/**
+ * The BlocBuilder class to build them all.
+ * This is what we use to build blocs using the BlocBuilderDsl.
+ *
+ * It has to be a class because of the reified functions and it has to be public because it's
+ * exposed by the BlocBuilderDsl.
+ */
 public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
     private var _initialize: Initializer<State, Action>? = null
@@ -32,26 +39,34 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         reduceDispatcher = _reduceDispatcher,
     )
 
-    /* *** Initialization *** */
-
+    /**
+     * Create an initializer (onCreate { })
+     */
     @BlocDSL
     public fun onCreate(initialize: Initializer<State, Action>) {
         _initialize = initialize
     }
 
-    /* *** Thunks *** */
-
+    /**
+     * Create a catch-all thunk (thunk { })
+     */
     @BlocDSL
     public fun thunk(thunk: Thunk<State, Action, Action>) {
         _thunks.add(MatcherThunk(null, thunk))
     }
 
+    /**
+     * Create an action specific thunk (thunk(action) { })
+     */
     @BlocDSL
     @JvmName("thunkMatching")
     public inline fun <reified A : Action> thunk(noinline thunk: Thunk<State, Action, A>) {
         addThunk(Matcher.any(), thunk)
     }
 
+    /**
+     * Create an action specific thunk (thunk(action) { })
+     */
     @BlocDSL
     @JvmName("thunkMatchingEnums")
     @Suppress("UNCHECKED_CAST")
@@ -65,14 +80,18 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         )
     }
 
+    /**
+     * Only used internally but needs to be public because of calls from inlined public functions
+     */
     @BlocInternal
     @Suppress("UNCHECKED_CAST")
     public fun <A : Action> addThunk(matcher: Matcher<Action, A>, thunk: Thunk<State, Action, A>) {
         _thunks.add(MatcherThunk(matcher, thunk as Thunk<State, Action, Action>))
     }
 
-    /* Reducer with state but without side effect(s) */
-
+    /**
+     * Create a catch-all reducer (reduce { })
+     */
     @BlocDSL
     public fun reduce(reducer: Reducer<State, Action, Proposal>) {
         val reducerNoSideEffect: Reducer<State, Action, Effect<Proposal, SE>> = {
@@ -81,6 +100,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         _reducers.add(MatcherReducer(null, reducerNoSideEffect, true))
     }
 
+    /**
+     * Create an action specific reducer (reduce<action> { })
+     */
     @BlocDSL
     @JvmName("reduceMatching")
     @Suppress("UNCHECKED_CAST")
@@ -95,6 +117,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         )
     }
 
+    /**
+     * Create an action specific reducer (reduce(action) { })
+     */
     @BlocDSL
     @JvmName("reduceMatchingEnums")
     @Suppress("UNCHECKED_CAST")
@@ -112,8 +137,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         )
     }
 
-    /* Reducer without state but with side effect(s) */
-
+    /**
+     * Create a catch-all side-effect (sideEffect { })
+     */
     @BlocDSL
     public fun sideEffect(sideEffect: SideEffect<State, Action, SE>) {
         val reducerNoState: Reducer<State, Action, Effect<Proposal, SE>> = {
@@ -122,6 +148,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         _reducers.add(MatcherReducer(null, reducerNoState, false))
     }
 
+    /**
+     * Create an action specific side-effect (sideEffect<action> { })
+     */
     @BlocDSL
     @JvmName("sideEffectMatching")
     @Suppress("UNCHECKED_CAST")
@@ -136,6 +165,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         )
     }
 
+    /**
+     * Create an action specific side-effect (sideEffect(action) { })
+     */
     @BlocDSL
     @JvmName("sideEffectMatchingEnums")
     @Suppress("UNCHECKED_CAST")
@@ -153,13 +185,17 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         )
     }
 
-    /* Reducers with state and side effect(s) */
-
+    /**
+     * Create a catch-all reducer with side-effect(s) (reduceAnd { })
+     */
     @BlocDSL
     public fun reduceAnd(reducer: Reducer<State, Action, Effect<Proposal, SE>>) {
         _reducers.add(MatcherReducer(null, reducer, true))
     }
 
+    /**
+     * Create an action specific reducer with side-effect(s) (reduceAnd<action> { })
+     */
     @BlocDSL
     @JvmName("reduceWithSideEffectMatching")
     public inline fun <reified A : Action> reduceAnd(
@@ -168,6 +204,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         addReducer(Matcher.any<Action, A>(), reducer, true)
     }
 
+    /**
+     * Create an action specific reducer with side-effect(s) (reduceAnd(action) { })
+     */
     @BlocDSL
     @JvmName("reduceWithSideEffectMatchingEnums")
     @Suppress("UNCHECKED_CAST")
@@ -182,6 +221,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         )
     }
 
+    /**
+     * Only used internally but needs to be public because of calls from inlined public functions
+     */
     @BlocInternal
     public fun <A : Action> addReducer(
         matcher: Matcher<Action, A>,
@@ -228,19 +270,47 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
     /* Extension functions */
 
+    /**
+     * Used in a reducer with sideEffect to return state without side effect:
+     * ```
+     * reduceAnd {
+     *    state.noSideEffect()
+     * }
+     */
     @BlocDSL
     public fun Proposal.noSideEffect(): Effect<Proposal, SE> = Effect(this, emptyList())
 
+    /**
+     * Used in a reducer with sideEffect to return a side effect:
+     * ```
+     * reduceAnd {
+     *    state and sideEffect
+     * }
+     */
     @BlocDSL
     @JvmName("proposalAnd")
     public infix fun Proposal.and(sideEffect: SE): Effect<Proposal, SE> = Effect(this, sideEffect)
 
-    @BlocDSL
-    @JvmName("sideEffectAnd")
-    public infix fun SE.and(proposal: Proposal): Effect<Proposal, SE> = Effect(proposal, this)
-
+    /**
+     * Used in a reducer with sideEffect to return another side effect:
+     * ```
+     * reduceAnd {
+     *    state and sideEffect1 and sideEffect2
+     * }
+     */
     @BlocDSL
     @JvmName("sideEffectAndSideEffect")
     public infix fun SE.and(sideEffect: SE): List<SE> = listOf(this, sideEffect)
+
+    /**
+     * Used in a side-effect reducer to return more than one side effect:
+     * ```
+     * sideEffect {
+     *    sideEffect1 and sideEffect2
+     * }
+     */
+    @BlocDSL
+    @JvmName("sideEffectAnd")
+    public infix fun SE.and(proposal: Proposal): Effect<Proposal, SE> = Effect(proposal, this)
 
 }

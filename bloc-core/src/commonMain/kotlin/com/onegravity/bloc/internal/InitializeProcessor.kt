@@ -8,6 +8,9 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * The InitializeProcessor is responsible for processing onCreate { } blocks.
+ */
 internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
@@ -16,7 +19,12 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     private val dispatch: (Action) -> Unit
 ) {
 
-    private val initMutex = Mutex()
+    /**
+     * Mutex to ensure that only one initializer can run at a time.
+     * Since we never unlock it, it also ensures that only one initializer runs during the lifetime
+     * of the bloc.
+     */
+    private val mutex = Mutex()
     private var scope: CoroutineScope? = null
 
     /**
@@ -38,11 +46,12 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     }
 
     /**
-     * Public API (interface BlocExtension) to run thunks / reducers etc. MVVM+ style
+     * BlocExtension interface implementation:
+     * onCreate { } -> run an initializer MVVM+ style
      */
     internal fun initialize(initialize: Initializer<State, Action>) =
         scope?.launch {
-            if (initMutex.tryLock(this@InitializeProcessor)) {
+            if (mutex.tryLock(this@InitializeProcessor)) {
                 val context = InitializerContext(
                     state = blocState.value,
                     coroutineScope = this,

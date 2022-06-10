@@ -16,6 +16,13 @@ import kotlinx.coroutines.flow.FlowCollector
  * - no initial value upon subscription (analogous PublishSubject)
  */
 public interface StateStream<out Value : Any> {
+    /**
+     * The current value.
+     */
     public val value: Value
+
+    /**
+     * Accepts the given FlowCollector and emits values into it.
+     */
     public suspend fun collect(collector: FlowCollector<Value>)
 }

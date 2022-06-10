@@ -6,8 +6,15 @@ import com.onegravity.bloc.utils.BlocObserver
 import com.onegravity.bloc.utils.SideEffectStream
 
 /**
- * The core class of the Bloc framework.
- * (can't be an interface or we won't have the generics in Swift)
+ * The core class of the framework.
+ * (can't be an interface or the generic types are erased in Swift)
+ *
+ * A Bloc implements the app's business logic. It processes event data (called Action) from the
+ * view / ui component and:
+ * - updates State according to its business rules and emits the updated State to be consumed by the
+ *   view / ui component.
+ * - optionally creates SideEffect(s) which can be consumed by the view / ui component
+ *   (e.g. for navigation) or by other consumers (analytics events, logging etc.).
  *
  * A Bloc is also a BlocState (allowing us to use a Bloc as BlocState and create composable Blocs):
  * - a StateStream<State> emitting state
@@ -22,7 +29,7 @@ public abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
     public abstract val sideEffects: SideEffectStream<SideEffect>
 
     /**
-     * This observe function is used for iOS to make sure generic types aren't erased.
+     * This observe function is used for iOS to ensure generic types aren't erased.
      * It's the equivalent of the subscribe extension function for Android.
      * Note: the state and sideEffect parameters are of type BlocObserver which is different
      * from the signature used in the Android observe function.
