@@ -92,7 +92,7 @@ const config = {
             items: [
               {
                 label: 'API Documentation',
-                to: 'http://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html',
+                to: 'https://rawcdn.githack.com/1gravity/Kotlin-Bloc/0c4210b061aa6b70be17035cf0e23de260ea7a71/docs/dokka/index.html',
               },
             ],
           },
