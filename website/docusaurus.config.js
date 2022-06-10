@@ -3,10 +3,10 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
+``
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Kotlin BLoC',
+  title: 'Kotlin Bloc',
   tagline: 'A simple, adaptable, predictable and composable UI framework for Kotlin Multiplatform',
   url: 'https://1gravity.github.io/',
   baseUrl: '/Kotlin-Bloc/',
@@ -47,9 +47,9 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Kotlin BLoC',
+        title: 'Kotlin Bloc',
         logo: {
-          alt: 'Kotlin BLoC Logo',
+          alt: 'Kotlin Bloc Logo',
           src: 'img/logo.png',
         },
         items: [

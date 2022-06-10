@@ -8,7 +8,7 @@ hide_title: true
 
 ## Counter
 
-The "Hello World" example of UI frameworks is the counter app. Creating the "business logic" part of such an app is incredibly simple with `Kotlin BLoC`:
+The "Hello World" example of UI frameworks is the counter app. Creating the "business logic" part of such an app is incredibly simple with `Kotlin Bloc`:
 
 ```kotlin
 fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
@@ -80,7 +80,7 @@ var body: some View {
 
 ### Single-Action Reducer
 
-`Kotlin BLoC` supports different MVI/MVVM "styles" and above example shows one of many ways to implement the counter app. Here are some alternative approaches to implementing the bloc:
+`Kotlin Bloc` supports different MVI/MVVM "styles" and above example shows one of many ways to implement the counter app. Here are some alternative approaches to implementing the bloc:
 
 ```kotlin
 sealed class Action
@@ -144,12 +144,12 @@ setContent {
 ```
 
 :::tip
-With `Kotlin BLoC` there's no need for an Android ViewModel which only adds unnecessary boilerplate code (see [BlocOwner](../architecture/blocowner/bloc_owner.md#blocowner)).
+With `Kotlin Bloc` there's no need for an Android ViewModel which only adds unnecessary boilerplate code (see [BlocOwner](../architecture/blocowner/bloc_owner.md#blocowner)).
 :::
 
 ## Post List
 
-The following (artificial) example gives a more comprehensive overview of the different `Kotlin BLoC` functions:
+The following (artificial) example gives a more comprehensive overview of the different `Kotlin Bloc` functions:
 - single-action + catch-all reducer
 - single-action and catch-all side effects
 - reducer with side effects

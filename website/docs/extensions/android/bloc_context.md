@@ -29,13 +29,13 @@ class CounterViewModel : ViewModel() {
     private val bloc = bloc(blocContext())
 ```
 
-Those familiar with the Android ViewModel know that those ViewModels have a really basic [lifecycle](https://developer.android.com/topic/libraries/architecture/viewmodel#lifecycle) and not one that can be retrieved like the Activity's lifecycle. Most frameworks solve that problem by providing a BaseViewModel class that uses the `onCleared()` function to create an artificial ViewModel lifecycle. That solution forces you to extend their BaseViewModel, an annoying solution in a language that doesn't support multiple inheritance. `Kotlin BLoC` offers a better solution using coroutines / [viewModelScope](https://developer.android.com/topic/libraries/architecture/coroutines#viewmodelscope) to tie into the ViewModel lifecycle so there's no need to extend a BaseViewModel.
+Those familiar with the Android ViewModel know that those ViewModels have a really basic [lifecycle](https://developer.android.com/topic/libraries/architecture/viewmodel#lifecycle) and not one that can be retrieved like the Activity's lifecycle. Most frameworks solve that problem by providing a BaseViewModel class that uses the `onCleared()` function to create an artificial ViewModel lifecycle. That solution forces you to extend their BaseViewModel, an annoying solution in a language that doesn't support multiple inheritance. `Kotlin Bloc` offers a better solution using coroutines / [viewModelScope](https://developer.android.com/topic/libraries/architecture/coroutines#viewmodelscope) to tie into the ViewModel lifecycle so there's no need to extend a BaseViewModel.
 
 ### Activity/Fragment
 
 Android ViewModels are great to retain state across configuration changes but if the business logic is implemented with a bloc in a platform agnostic way, they become just proxies between the `View` and the `Bloc`. Their only "added-value" would be to provide the [lifecycle](#lifecycle). Some frameworks solved this by providing a platform independent ViewModel implementation (like [KaMPKit](https://github.com/touchlab/KaMPKit/blob/main/docs/GENERAL_ARCHITECTURE.md)).  
 
-`Kotlin BLoC` has a better solution:
+`Kotlin Bloc` has a better solution:
 
 ```kotlin
 class CounterActivity : AppCompatActivity() {

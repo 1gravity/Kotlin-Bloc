@@ -1,41 +1,66 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-# Kotlin BLoC Framework
+# Kotlin Bloc
 
-`Kotlin BLoC` is a Kotlin Multiplatform UI framework inspired by multiple design patterns and frameworks ([KMM UI Architecture - Part 1](https://medium.com/p/6362e14ee52a)).
+`Kotlin Bloc` is a Multiplatform UI framework combining the best of MVI, MVVM and [SAM](https://sam.js.org/). It's 
+- **simple**: designed from the ground up for simplicity with a super concise syntax
+- **adaptable**: supports different programming styles
+- **predictable**: write reactive applications that behave consistently and are easy to debug and test
+- **composable**: grows with the complexity of app and the size of the team
 
-## Architecture
+![Bloc Architecture - Overview](./docs/Bloc%20Architecture%20-%20Bloc%20Overview.svg)
 
+- The **Bloc** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** and optionally **SideEffect(s)**.
+- The **BlocState** holds the component's **State**. It's separate from the actual Bloc to support different scenarios like:
+  - share state between business logic components
+  - persist state (database, network)
+  - use a global state container like Redux
+
+:::tip
 Note, this readme offers a quick overview of the framework. For more in-depth information please visit:
 - [The official website](https://1gravity.github.io/Kotlin-Bloc)
 - [The Dokka documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
+:::
 
-### Goals
-The architectural goals of `Kotlin BLoC` are:
-- be platform-agnostic
-- be minimalistic / lightweight
-- don't be over-engineered
-- requires to write very little code
-- be as un-opinionated as possible -> scales with app complexity / team size
-- be composable
+## Setup
 
-[KMM UI Architecture - Part 2](https://medium.com/p/e52b84aeb94d) elaborates on those goals in more detail.
+[![Download](https://img.shields.io/maven-central/v/org.orbit-mvi/orbit-viewmodel)](https://search.maven.org/artifact/com.1gravity/bloc-core)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-### Example
-To demo the framework's simplicity, here's one way to implement a counter app (the "Hello World" of UI frameworks):
 ```kotlin
-// define the Bloc
+dependencies {
+    // the core library
+    implementation("com.1gravity:bloc-core:0.1.2-SNAPSHOT")
+
+    // add to use the framework together with Redux
+    implementation("com.1gravity:bloc-redux:0.1.2-SNAPSHOT")
+
+    // useful extensions for Android and Jetpack/JetBrains Compose
+    implementation("com.1gravity:bloc-compose:0.1.2-SNAPSHOT")
+}
+```
+
+## Example
+
+The "Hello World" example of UI frameworks is the counter app. Creating the "business logic" part of such an app is incredibly simple with `Kotlin Bloc`:
+
+```kotlin
 fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
     reduce { state + action }
 }
 ```
-#### Android
+
+The view part is very simple too.
+
+### Android
+
 ```kotlin
 class CounterActivity : AppCompatActivity() {
 
-    // (lazy) create or retrieve the lifecycle aware Bloc
+    // create or retrieve the lifecycle aware Bloc
     private val bloc by getOrCreate { bloc(it) }
 ```
+
 ```kotlin
 setContent {
     // observe the Bloc state
@@ -50,11 +75,11 @@ setContent {
 }
 ```
 
-This is remarkably little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes (it creates an Android ViewModel under-the-hood and ties itself to the VMs lifecycle).
+This is very little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes.
 
-#### iOS
+### iOS
 
-On iOS there's more boilerplate code (`BlocHolder` and `BlocObserver` are omitted here) but it's still pretty "lean":
+On iOS there's a bit more boilerplate code ([BlocHolder](https://github.com/1gravity/Kotlin-Bloc/blob/master/iosApp/iosApp/utils/BlocHolder.swift) and [BlocObserver](https://github.com/1gravity/Kotlin-Bloc/blob/master/iosApp/iosApp/utils/BlocObserver.swift) are omitted here) but it's still pretty "lean":
 
 ```swift
 // iOS
@@ -86,69 +111,6 @@ var body: some View {
             label: { Text("Decrement") }
         )
 ```
-
-
-**Note:** this is only one way to implement the app. Since one of the goals was to be un-opinionated, we can implement it in many ways, depending on the preferences of the developer / team.  
-
-### Inspiration
-The architecture was inspired by the following design patterns and UI frameworks among others:
-
-#### Design patterns
-- MVI (Model-View-Intent)
-- MVVM (Model-View-ViewModel)
-- [SAM](https://sam.js.org)
-- Redux
-- [Flutter BloC (Business Logic Component)](https://medium.com/@artemsidorenko/bloc-architecture-in-flutter-a-modern-architectural-approach-and-how-we-use-it-at-jimdo-bea143b56d01)
-
-#### Frameworks
-- [Orbit](https://orbit-mvi.org)
-- [Kotlin MVI](https://arkivanov.github.io/MVIKotlin)
-- [Redux Kotlin](https://reduxkotlin.org)
-- [Reduce](https://github.com/genaku/Reduce)
-- [Decompose](https://arkivanov.github.io/Decompose/)
-
-### Design Overview
-
-<img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" />
-
-The framework has two main components:
-- The **Bloc** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** (State) and optionally **SideEffect(s)**.
-- The **BlocState** holds the component's **State**. It's separate from the actual Bloc to support different scenarios like:
-  - share state between business logic components
-  - persist state (database, network)
-  - use a global state container like Redux
-  - others...
-
-The **View** is obviously an important component too but technically not part of the framework itself (although there are extensions that support/simplify the implementation for different target platforms).
-
-## Getting Started
-
-### Gradle
-
-**Step 1.** Add the mavenCentral() repository to your main build file:
-
-```kotlin
-allprojects {
-    repositories {
-        mavenCentral()
-        // ...
-    }
-}
-```
-
-**Step 2.** Add the dependencies to your app:
-
-```kotlin
-dependencies {
-    // the core library
-    implementation("com.1gravity:bloc-core:0.1.2-SNAPSHOT")
-    // add if you want to use BLoCs in combination with a Redux store 
-    implementation("com.1gravity:bloc-redux:0.1.2-SNAPSHOT")
-    // contains useful extensions for Android if you use Jetpack/JetBrains Compose
-    implementation("com.1gravity:bloc-compose:0.1.2-SNAPSHOT")
-}
-```
-
 ## License
 
 ```

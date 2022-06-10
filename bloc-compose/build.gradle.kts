@@ -67,5 +67,5 @@ android {
 }
 
 tasks.dokkaHtmlPartial.configure {
-    moduleName.set("BLoC Compose")
+    moduleName.set("Bloc Compose")
 }

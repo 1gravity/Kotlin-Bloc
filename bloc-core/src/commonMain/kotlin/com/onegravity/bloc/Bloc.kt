@@ -6,7 +6,7 @@ import com.onegravity.bloc.utils.BlocObserver
 import com.onegravity.bloc.utils.SideEffectStream
 
 /**
- * The core class of the BLoC framework.
+ * The core class of the Bloc framework.
  * (can't be an interface or we won't have the generics in Swift)
  *
  * A Bloc is also a BlocState (allowing us to use a Bloc as BlocState and create composable Blocs):

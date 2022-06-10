@@ -89,5 +89,5 @@ kotlin {
 }
 
 tasks.dokkaHtmlPartial.configure {
-    moduleName.set("BLoC Redux")
+    moduleName.set("Bloc Redux")
 }

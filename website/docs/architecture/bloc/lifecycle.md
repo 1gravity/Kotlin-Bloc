@@ -16,7 +16,7 @@ From a `Bloc's` perspective, the `Essenty` lifecycle is the most relevant one.
 
 ## Essenty Lifecycle
 
-![Bloc Architecture - Details](../../../static/img/BLoC%20Architecture%20-%20External%20Lifecycle.svg)
+![Bloc Architecture - Details](../../../static/img/Bloc%20Architecture%20-%20External%20Lifecycle.svg)
 
 ### onCreate()
 

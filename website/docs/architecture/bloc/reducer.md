@@ -11,7 +11,7 @@ To reiterate:
 > A reducer is a function that receives the current state and an action object, decides how to update the state if necessary, and returns the new state: (state, action) => newState  
 (https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
 
-While the offical Redux reducer definition captures the essence, reducers in the context of `Kotlin BLoC` are a bit more complex: 
+While the offical Redux reducer definition captures the essence, reducers in the context of `Kotlin Bloc` are a bit more complex: 
 ```kotlin
 suspend (State, Action, CoroutineScope) -> Proposal
 ```
@@ -48,7 +48,7 @@ The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redu
 
 ### Side Effect
 
-A side effect is a one-off event like a navigation event, an analytics event or an event to display a toast. The idea of side effects and some of the syntax was inspired by [Reduce](https://github.com/genaku/Reduce). In `Reduce` a reducer always returns an `Effect` which is a class wrapping `State` and a list of side effects. `Kotlin BLoC`'s reducers return `Proposals` by default while `Effects` require a a bit more typing.
+A side effect is a one-off event like a navigation event, an analytics event or an event to display a toast. The idea of side effects and some of the syntax was inspired by [Reduce](https://github.com/genaku/Reduce). In `Reduce` a reducer always returns an `Effect` which is a class wrapping `State` and a list of side effects. `Kotlin Bloc`'s reducers return `Proposals` by default while `Effects` require a a bit more typing.
 
 Default: reducer returns `Proposal`:
 
@@ -320,4 +320,4 @@ reduce<Equals> {
 
 It's a "matter of taste", which style you prefer. While the traditional/Redux style is to have reducers dealing with different actions, [this article](https://dev.to/feresr/a-case-against-the-mvi-architecture-pattern-1add) advocates for splitting reducers into smaller chunks. 
 
-[Orbit](https://orbit-mvi.org/) is one of the frameworks championing the MVVM+ style (that's what they call it in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27)) and it served as inspiration for some of the `Kotlin BLoC` design although they take the idea one step further (see [BlowOwner](../blocowner/bloc_owner)).
+[Orbit](https://orbit-mvi.org/) is one of the frameworks championing the MVVM+ style (that's what they call it in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27)) and it served as inspiration for some of the `Kotlin Bloc` design although they take the idea one step further (see [BlowOwner](../blocowner/bloc_owner)).

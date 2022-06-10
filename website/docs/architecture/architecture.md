@@ -6,7 +6,7 @@ sidebar_label: Overview
 ---
 
 ## Goals
-The architectural goals of the `Kotlin BLoC` framework are:
+The architectural goals of the `Kotlin Bloc` framework are:
 - be platform-agnostic, reactive and composable
 - be minimalistic / lightweight -> no over-engineering
 - simple concurrency model
@@ -32,7 +32,7 @@ The architecture was inspired by the following design patterns and UI frameworks
 
 ## Design
 
-![Bloc Architecture - Overview](../../static/img/BLoC%20Architecture%20-%20BLoC%20Overview.svg)
+![Bloc Architecture - Overview](../../static/img/Bloc%20Architecture%20-%20Bloc%20Overview.svg)
 
 The framework has two main components:
 - The **Bloc** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** and optionally **SideEffect(s)**.
@@ -42,10 +42,10 @@ The framework has two main components:
   - use a global state container like Redux
   - others...
 
-The **View** is obviously an important component too but technically not part of the framework itself (although there are [extensions](../extensions/README.md) that support/simplify the implementation for different target platforms).
+The **View** is obviously an important component too but technically not part of the framework itself (although there are [extensions](../extensions/overview.md) that support/simplify the implementation for different target platforms).
 
 :::tip
-Reducers in `Kotlin BLoC` return a `Proposal` instead of `State`. While in many cases they have the same type, thanks to `Proposals`:
+Reducers in `Kotlin Bloc` return a `Proposal` instead of `State`. While in many cases they have the same type, thanks to `Proposals`:
 - a `BlocState]` has the "power" to enforce domain specific rules like address validation or enrichment
 - it's easy to connect a Redux store to a `Bloc` (as its `BlocState`), in which case `Proposals` become Redux actions (see [Redux](./extensions/redux/redux_motivation))
 - use `Blocs` as `BlocsState` (see [Bloc isA BlocState](./blocstate/bloc_state.md#bloc-isa-blocstate))

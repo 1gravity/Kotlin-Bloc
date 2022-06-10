@@ -7,7 +7,7 @@ import org.reduxkotlin.createThreadSafeStore
 import org.reduxkotlin.createThunkMiddleware
 
 object BookStore {
-    // Action (BLoC / Thunk -> Redux Store)
+    // Action (Bloc / Thunk -> Redux Store)
     sealed class ReduxAction {
         object Clear : ReduxAction()
         object Loading : ReduxAction()

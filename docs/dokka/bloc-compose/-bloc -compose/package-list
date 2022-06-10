@@ -1,0 +1,14 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.onegravity.bloc.compose////PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/index.html
+$dokka.location:com.onegravity.bloc.compose//observeSideEffects/com.onegravity.bloc.BlocObservableOwner[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-side-effects.html
+$dokka.location:com.onegravity.bloc.compose//observeSideEffects/com.onegravity.bloc.BlocObservable[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-side-effects.html
+$dokka.location:com.onegravity.bloc.compose//observeSideEffects/com.onegravity.bloc.BlocOwner[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-side-effects.html
+$dokka.location:com.onegravity.bloc.compose//observeSideEffects/com.onegravity.bloc.Bloc[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-side-effects.html
+$dokka.location:com.onegravity.bloc.compose//observeState/com.onegravity.bloc.BlocObservableOwner[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-state.html
+$dokka.location:com.onegravity.bloc.compose//observeState/com.onegravity.bloc.BlocObservable[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-state.html
+$dokka.location:com.onegravity.bloc.compose//observeState/com.onegravity.bloc.BlocOwner[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-state.html
+$dokka.location:com.onegravity.bloc.compose//observeState/com.onegravity.bloc.Bloc[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/observe-state.html
+$dokka.location:com.onegravity.bloc.compose//previewBlocContext/#/PointingToDeclaration/-bloc -compose/com.onegravity.bloc.compose/preview-bloc-context.html
+com.onegravity.bloc.compose
+

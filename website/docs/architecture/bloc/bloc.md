@@ -7,7 +7,7 @@ hide_title: true
 
 ## Overview
 
-![Bloc Architecture - Details](../../../static/img/BLoC%20Architecture%20-%20BLoC%20Details.svg)
+![Bloc Architecture - Details](../../../static/img/Bloc%20Architecture%20-%20Bloc%20Details.svg)
 
 
 A **Bloc** implements the app's business logic. It processes event data (called `Action`) from the view / ui component and:
@@ -72,7 +72,7 @@ Processing an `Action` usually means invoking a `Reducer`:
 > A reducer is a function that receives the current state and an action object, decides how to update the state if necessary, and returns the new state: (state, action) => newState  
 (https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
 
-Above definition is the offical Redux reducer definition and captures its essence, although reducers in the context of `Kotlin BLoC` are a bit more complex: 
+Above definition is the offical Redux reducer definition and captures its essence, although reducers in the context of `Kotlin Bloc` are a bit more complex: 
 
 ```kotlin
 suspend (State, Action, CoroutineScope) -> Proposal
@@ -119,7 +119,7 @@ Longer running operations should be executed using a `Thunk`:
 >The word "thunk" is a programming term that means "a piece of code that does some delayed work". Rather than execute some logic now, we can write a function body or code that can be used to perform the work later.  
 https://redux.js.org/usage/writing-logic-thunks
 
-A `Thunk` in the context of `Kotlin BLoC` is exactly what above definition implies, although its implementation and especially its execution is completely different from a Redux thunk. While the latter is a function, dispatched as an action to a Redux store and processed by the redux-thunk middleware, "our" thunk is not dispatched as an action but triggered the same way a reducer is triggered, by reacting to an `Action` that was sent to the `Bloc`. On top of that it's also:
+A `Thunk` in the context of `Kotlin Bloc` is exactly what above definition implies, although its implementation and especially its execution is completely different from a Redux thunk. While the latter is a function, dispatched as an action to a Redux store and processed by the redux-thunk middleware, "our" thunk is not dispatched as an action but triggered the same way a reducer is triggered, by reacting to an `Action` that was sent to the `Bloc`. On top of that it's also:
 1. a suspending function
 2. takes a CoroutineScope as parameter (next to the `GetState`, `Action` and `Dispatcher` parameters)
 3. Actions are dispatched to the "next" thunk or reducer in the execution chain

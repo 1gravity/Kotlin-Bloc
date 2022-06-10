@@ -27,7 +27,7 @@ While `value` is used to retrieve the current `State`, the `collect` function is
 A `StateStream` emits:
 - no duplicate values
 - an initial value upon subscription (analogous `BehaviorSubject`)
-wrappers that make observing blocs very easy -> [Extensions](../extensions/overview).
+wrappers that make observing blocs very easy -> [Extensions](../../extensions/overview.md).
 
 ### Sink
 
@@ -78,7 +78,7 @@ Apart from the clear separation of concerns, using `BlocStates` has many advanta
 
 The attentive reader will have noticed that `Blocs` and `BlocStates` have a very similar public interface:
 
-![Bloc Architecture - Overview](../../../static/img/BLoC%20Architecture%20-%20BLoC%20Overview.svg)
+![Bloc Architecture - Overview](../../../static/img/Bloc%20Architecture%20-%20Bloc%20Overview.svg)
 
 The only difference between a `Bloc` and a `BlocState` is their intended purpose and the `Bloc's` `SideEffectStream`. As a matter of fact a `Bloc` is also a `BlocState`:
 

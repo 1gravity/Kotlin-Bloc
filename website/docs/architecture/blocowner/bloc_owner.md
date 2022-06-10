@@ -57,7 +57,7 @@ Intents here have their own transformer and reducer (a function) before being co
 
 ## BlocOwner
 
-A `BlocOwner` in `Kotlin BLoC` is the equivalent of an Orbit `ContainerHost`. It's an interface that can be implemented by any class and has a `Bloc`:
+A `BlocOwner` in `Kotlin Bloc` is the equivalent of an Orbit `ContainerHost`. It's an interface that can be implemented by any class and has a `Bloc`:
 
 ```kotlin
 public interface BlocOwner<out State : Any, in Action : Any, SideEffect : Any, Proposal : Any> {

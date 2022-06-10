@@ -13,7 +13,7 @@
         <activity
             android:name=".menu_compose.MainActivityCompose"
             android:exported="true"
-            android:label="Kotlin BLoC"
+            android:label="Kotlin Bloc"
             android:theme="@style/Theme.Bloc">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         <activity
             android:name=".menu.MainActivity"
             android:exported="false"
-            android:label="Kotlin BLoC"
+            android:label="Kotlin Bloc"
             android:theme="@style/Theme.Bloc" />
 
         <activity

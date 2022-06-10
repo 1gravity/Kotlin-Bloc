@@ -11,7 +11,7 @@ To reiterate:
 >The word "thunk" is a programming term that means "a piece of code that does some delayed work". Rather than execute some logic now, we can write a function body or code that can be used to perform the work later.  
 https://redux.js.org/usage/writing-logic-thunks
 
-While a Redux thunk is a function, dispatched as an action to a Redux store and processed by the redux-thunk middleware, a `Kotlin BLoC` thunk is not dispatched as an action but triggered the same way a reducer is triggered, by reacting to an `Action` that was sent to the `Bloc`. On top of that it's also:
+While a Redux thunk is a function, dispatched as an action to a Redux store and processed by the redux-thunk middleware, a `Kotlin Bloc` thunk is not dispatched as an action but triggered the same way a reducer is triggered, by reacting to an `Action` that was sent to the `Bloc`. On top of that it's also:
 1. a suspending function
 2. takes a CoroutineScope as parameter (next to the `GetState`, `Action` and `Dispatcher` parameters)
 3. Actions are dispatched to the "next" thunk or reducer in the execution chain 

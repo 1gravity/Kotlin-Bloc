@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kotlin BLoC</string>
+    <string name="app_name">Kotlin Bloc</string>
 
     <string name="main_menu_title">Take your pick</string>
     <string name="main_menu">Menu\nTraditional</string>

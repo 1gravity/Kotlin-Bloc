@@ -118,5 +118,5 @@ android {
 }
 
 tasks.dokkaHtmlPartial.configure {
-    moduleName.set("BLoC Core")
+    moduleName.set("Bloc Core")
 }
