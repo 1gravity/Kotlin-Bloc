@@ -19,7 +19,7 @@ Future releases of the framework might add more functionality to the `BlocContex
 
 ## Creation
 
-Every bloc takes a `BlocContext` in its constructor. There are extensions on both [Android](../../extensions/android/android_bloc_context) and [iOS](../../extensions/ios) to create one.
+Every bloc takes a `BlocContext` in its constructor. There are extensions on both [Android](../../extensions/android/android_bloc_context) and [iOS](../../extensions/ios/ios_overview) to create one.
 
 Creating a `BlocContext` and a `Bloc` on Android can be as easy as:
 

@@ -13,8 +13,6 @@ The architectural goals of the `Kotlin BLoC` framework are:
 - users write very little code
 - be as un-opinionated as possible -> support different `View` technologies, programming styles, app complexities and team sizes
 
-[KMM UI Architecture - Part 2](https://medium.com/p/e52b84aeb94d) elaborates on those goals in more detail.
-
 ## Inspiration
 The architecture was inspired by the following design patterns and UI frameworks (among others):
 
