@@ -10,7 +10,7 @@
 - **predictable**: write reactive applications that behave consistently and are easy to debug and test
 - **composable**: grows with the complexity of app and the size of the team
 
-<img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" />
+<img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" /><br/>
 
 - The `Bloc` (Business Logic Component) encapsulates the application's business logic. It receives `Action(s)` from the view, processes those actions and outputs `Proposals` and optionally `SideEffect(s)`.
 - The `BlocState` holds the component's `State`. It's separate from the actual `Bloc` to support different scenarios like:
@@ -24,7 +24,6 @@ Note, this readme offers a quick overview of the framework. For more in-depth in
 
 ## Setup
 
-[![Download](https://img.shields.io/maven-central/v/org.orbit-mvi/orbit-viewmodel)](https://search.maven.org/artifact/com.1gravity/bloc-core)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ```kotlin
@@ -42,7 +41,7 @@ dependencies {
 
 ## Example
 
-The "Hello World" example of UI frameworks is the counter app. Creating the "business logic" part of such an app is incredibly simple with `Kotlin Bloc`:
+The "Hello World" example of UI frameworks is the counter app. Creating the "business logic" part of such an app is very simple with `Kotlin Bloc`:
 
 ```kotlin
 fun bloc(context: BlocContext) = bloc<Int, Int>(context, 1) {
@@ -75,7 +74,7 @@ setContent {
 }
 ```
 
-This is very little code considering the fact that the Bloc is lifecycle aware and will survive configuration changes.
+Note: the Bloc is lifecycle aware and will survive configuration changes (no ViewModel needed...).
 
 ### iOS
 
