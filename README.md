@@ -2,25 +2,25 @@
 
 # Kotlin Bloc
 
+## Overview
+
 `Kotlin Bloc` is a Multiplatform UI framework combining the best of MVI, MVVM and [SAM](https://sam.js.org/). It's 
 - **simple**: designed from the ground up for simplicity with a super concise syntax
-- **adaptable**: supports different programming styles
+- **adaptable**: supports different programming styles (MVI, MVVM+, Redux...)
 - **predictable**: write reactive applications that behave consistently and are easy to debug and test
 - **composable**: grows with the complexity of app and the size of the team
 
-![Bloc Architecture - Overview](./docs/Bloc%20Architecture%20-%20Bloc%20Overview.svg)
+<img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" />
 
-- The **Bloc** (Business Logic Component) encapsulates your application's business logic. It receives **Action(s)** from the view, processes those actions and outputs **Proposals** and optionally **SideEffect(s)**.
-- The **BlocState** holds the component's **State**. It's separate from the actual Bloc to support different scenarios like:
+- The `Bloc` (Business Logic Component) encapsulates the application's business logic. It receives `Action(s)` from the view, processes those actions and outputs `Proposals` and optionally `SideEffect(s)`.
+- The `BlocState` holds the component's `State`. It's separate from the actual `Bloc` to support different scenarios like:
   - share state between business logic components
   - persist state (database, network)
   - use a global state container like Redux
 
-:::tip
-Note, this readme offers a quick overview of the framework. For more in-depth information please visit:
+Note, this readme offers a quick overview of the framework. For more in-depth information consult:
 - [The official website](https://1gravity.github.io/Kotlin-Bloc)
 - [The Dokka documentation](https://rawcdn.githack.com/1gravity/Kotlin-Bloc/e6798e8e3a6751d126a9357231ad90830e47f6c3/docs/dokka/index.html)
-:::
 
 ## Setup
 
@@ -111,6 +111,15 @@ var body: some View {
             label: { Text("Decrement") }
         )
 ```
+
+`Kotlin Bloc` supports different MVI/MVVM "styles". The example above shows one of many ways to implement the counter app. In [the official documentation](https://1gravity.github.io/Kotlin-Bloc) you'll find more example to demonstrate:
+- single-action + catch-all reducer
+- single-action and catch-all side effects
+- reducer with side effects
+- thunks
+- initializer
+- Redux and MVVM+ style
+
 ## License
 
 ```
