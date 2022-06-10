@@ -25,7 +25,7 @@ plugins {
 }
 
 tasks.dokkaHtmlMultiModule.configure {
-    outputDirectory.set(buildDir.resolve("../docs/dokka"))
+    outputDirectory.set(buildDir.resolve("../website/dokka"))
 }
 
 allprojects {
