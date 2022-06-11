@@ -12,7 +12,9 @@ plugins {
 kotlin {
     explicitApi = Strict
 
-    android()
+    android {
+        publishLibraryVariants("release")
+    }
 
     jvm()
 

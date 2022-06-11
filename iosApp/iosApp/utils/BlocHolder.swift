@@ -11,9 +11,17 @@ class BlocHolder<State: AnyObject, Action: AnyObject, SideEffect: AnyObject> {
     
     private let manageFullLifecycle: Bool
 
+    class BlocContextImpl : BlocContext {
+        let lifecycle: Lifecycle
+        
+        init(lifecycle: Lifecycle) {
+            self.lifecycle = lifecycle
+        }
+    }
+
     init(_ manageFullLifecycle: Bool = true, factory: (BlocContext) -> Bloc<State, Action, SideEffect>) {
         self.lifecycle = LifecycleRegistryKt.LifecycleRegistry()
-        let context = BlocContextImpl.init(lifecycle: lifecycle)
+        let context = BlocContextImpl(lifecycle: lifecycle)
         self.value = factory(context)
         self.manageFullLifecycle = manageFullLifecycle
         

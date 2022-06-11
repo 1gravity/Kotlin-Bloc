@@ -1,5 +1,3 @@
-- TODO define the version for the first release, publish artifacts and update the website
-
 - TODO implement tests
 - TODO create an FAQ
 - TODO create CI/CD pipeline: 1) run tests, 2) create Dokka doc, 3) publish website, 4) publish artifacts to Maven Central

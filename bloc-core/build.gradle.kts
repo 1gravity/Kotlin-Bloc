@@ -18,7 +18,9 @@ version = "1.0"
 kotlin {
     explicitApi = Strict
 
-    android()
+    android {
+        publishLibraryVariants("release")
+    }
 
     jvm()
     js().browser()

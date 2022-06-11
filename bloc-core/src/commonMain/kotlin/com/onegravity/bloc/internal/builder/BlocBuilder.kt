@@ -292,6 +292,17 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     public infix fun Proposal.and(sideEffect: SE): Effect<Proposal, SE> = Effect(this, sideEffect)
 
     /**
+     * Used in a reducer with sideEffect to return a side effect:
+     * ```
+     * sideEffect {
+     *    sideEffect and state
+     * }
+     */
+    @BlocDSL
+    @JvmName("sideEffectAnd")
+    public infix fun SE.and(proposal: Proposal): Effect<Proposal, SE> = Effect(proposal, this)
+
+    /**
      * Used in a reducer with sideEffect to return another side effect:
      * ```
      * reduceAnd {
@@ -301,16 +312,5 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     @BlocDSL
     @JvmName("sideEffectAndSideEffect")
     public infix fun SE.and(sideEffect: SE): List<SE> = listOf(this, sideEffect)
-
-    /**
-     * Used in a side-effect reducer to return more than one side effect:
-     * ```
-     * sideEffect {
-     *    sideEffect1 and sideEffect2
-     * }
-     */
-    @BlocDSL
-    @JvmName("sideEffectAnd")
-    public infix fun SE.and(proposal: Proposal): Effect<Proposal, SE> = Effect(proposal, this)
 
 }
