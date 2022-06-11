@@ -27,6 +27,8 @@ kotlin {
                 transitiveExport = true
                 export(project(":bloc-core"))
                 export(project(":bloc-redux"))
+//                export("com.1gravity:bloc-core:_")
+//                export("com.1gravity:bloc-redux:_")
             }
         }
     }
@@ -93,6 +95,9 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
+//                api(project(":bloc-compose"))
+                api("com.1gravity:bloc-compose:_")
+
                 implementation(Ktor.client.cio)
 
                 implementation(Square.sqlDelight.drivers.android)
