@@ -30,20 +30,16 @@ publishing {
         }
     }
 
-    // 2.
-    publications {
-        create("mavenKotlin", MavenPublication::class.java) {
-            from(components.getByName("kotlin"))
-        }
-    }
-
+    // 2. Configure publications
     publications.withType<MavenPublication> {
+        artifact(javadocJar.get())
+
         pom {
             groupId = project.get("POM_GROUP")
-            // the artifactId defaults to the project's/module's name
             artifactId = project.get("POM_ARTIFACT_ID", artifactId)
             version = project.get("POM_VERSION_NAME")
 
+            name.set(project.name)
             description.set(project.get("POM_DESCRIPTION"))
             url.set(project.get("POM_URL"))
 
@@ -75,8 +71,8 @@ publishing {
 
 // 3. sign the artifacts
 signing {
-    val signingKeyPassword = project.get("GPG_SIGNING_PASSWORD")
-    val signingKey = project.get("GPG_SECRET")
-    useInMemoryPgpKeys(signingKey, signingKeyPassword)
+    val signingKey = project.get("GPG_SIGNING_KEY")
+    val signingPassword = project.get("GPG_SIGNING_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications)
 }
