@@ -28,10 +28,12 @@ jobs:
           cache-dependency-path: website/yarn.lock
 
       - name: Install dependencies
-        run: cd website | yarn install --frozen-lockfile
+        run: cd website |
+             yarn install --frozen-lockfile
 
       - name: Build website
-        run: cd website  | yarn build
+        run: cd website  |
+             yarn build
 
       # Popular action to deploy to GitHub Pages:
       # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
