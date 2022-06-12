@@ -28,7 +28,7 @@ jobs:
           cache-dependency-path: website/yarn.lock
 
       - name: Install dependencies
-        run: cd website
+        run: cd website |
              yarn install --frozen-lockfile
 
       - name: Build website
