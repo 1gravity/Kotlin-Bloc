@@ -15,11 +15,9 @@ jobs:
         os: [macos-latest]
 
     steps:
-      - name Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name Setup Java 11
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '11'
@@ -27,8 +25,7 @@ jobs:
       - name: Create Dokka documentation
         run: ./gradlew dokkaHtmlMultiModule
 
-      - name Setup NodeJS
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: yarn
