@@ -21,13 +21,11 @@ jobs:
 #      - name: Create Dokka documentation
 #        run: ./gradlew dokkaHtmlMultiModule
 
-      - name: Change directory
-        run: cd website
-
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: yarn
+          cache-dependency-path: website/yarn.lock
 
       - name: Install dependencies
         run: cd website
