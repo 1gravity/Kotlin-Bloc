@@ -10,10 +10,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        os: [macos-latest]
-
     steps:
       - uses: actions/checkout@v3
 
@@ -31,7 +27,8 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: cd website
+             yarn install --frozen-lockfile
 
       - name: Build website
         run: yarn build

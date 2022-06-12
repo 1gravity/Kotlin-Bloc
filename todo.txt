@@ -1,6 +1,5 @@
-- TODO implement tests
+- TODO implement tests + add to CI/CD
 - TODO create an FAQ
-- TODO create CI/CD pipeline: 1) run tests, 2) create Dokka doc, 3) publish website, 4) publish artifacts to Maven Central
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
        the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
        ReduxStore and one in the BlocState)
