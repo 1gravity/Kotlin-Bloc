@@ -162,7 +162,27 @@ const sidebars = {
     {
       "type": "doc",
       "id": "examples/examples"
-    }
+    },
+    {
+      "type": "doc",
+      "id": "examples/counter"
+    },
+    {
+      "type": "doc",
+      "id": "examples/books"
+    },
+    {
+      "type": "doc",
+      "id": "examples/calculator"
+    },
+    {
+      "type": "doc",
+      "id": "examples/posts"
+    },
+    {
+      "type": "doc",
+      "id": "examples/todo"
+    },
   ]
 
   // But you can create a sidebar manually

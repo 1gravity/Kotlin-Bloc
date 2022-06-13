@@ -1,14 +1,12 @@
 ---
 id: examples
-title: Bloc Examples
-sidebar_label: Bloc Examples
+title: Introduction
+sidebar_label: Introduction
 hide_title: true
 ---
 
-## Examples
+## Introduction
 
-![Under Construction](https://thumbs.dreamstime.com/b/under-construction-10012274.jpg)
-
-This part is still under construction. In the meantime consult the many [sample apps](https://github.com/1gravity/Kotlin-Bloc/tree/master/bloc-samples/src/commonMain/kotlin/com/onegravity/bloc/sample).
-
-Stay tuned!
+:::tip
+There are numerous examples to demonstrate the different ways to manage state and implement the business logic. Some of the examples are specifically created to demonstrate the framework's features and don't represent best practices. The tip sections will give some guidance about recommended practices.
+:::
