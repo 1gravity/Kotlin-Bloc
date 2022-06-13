@@ -1,3 +1,5 @@
+- TODO finish the documentation (sample apps)
+- TODO outlook, future features
 - TODO implement tests + add to CI/CD
 - TODO create an FAQ
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
