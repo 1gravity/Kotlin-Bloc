@@ -21,7 +21,7 @@ struct CounterView: View {
             Text("\(NSLocalizedString("counter_value", comment: "Counter")) \(model.value)").padding()
             
             Button(
-                action: { holder.value.send(value: SimpleCounter.ActionIncrement(value: 1)) },
+                action: { holder.value.send(value: SimpleCounter.Increment(value: 1)) },
                 label: { Text("\(NSLocalizedString("counter_increment", comment: "Increment"))") }
             )
             .tint(.blue)
@@ -29,7 +29,7 @@ struct CounterView: View {
             .buttonStyle(.borderedProminent)
 
             Button(action: {
-                holder.value.send(value: SimpleCounter.ActionDecrement(value: 1)) },
+                holder.value.send(value: SimpleCounter.Decrement(value: 1)) },
                    label: { Text("\(NSLocalizedString("counter_decrement", comment: "Decrement"))") }
             )
             .tint(.red)

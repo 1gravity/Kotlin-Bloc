@@ -7,10 +7,9 @@ import com.onegravity.bloc.sample.counter.CounterStore.ReduxAction
 import com.onegravity.bloc.sample.counter.CounterStore.reduxStore
 
 object ReduxCounter {
-    sealed class Action(val value: Int) {
-        data class Increment(private val _value: Int = 1) : Action(_value)
-        data class Decrement(private val _value: Int = 1) : Action(_value)
-    }
+    sealed class Action(val value: Int)
+    data class Increment(private val _value: Int = 1) : Action(_value)
+    data class Decrement(private val _value: Int = 1) : Action(_value)
 
     fun bloc(context: BlocContext) = bloc<Int, Action, Nothing, ReduxAction>(
         context,
@@ -20,7 +19,7 @@ object ReduxCounter {
             map = { model -> model.count }
         )
     ) {
-        reduce<Action.Increment> { ReduxAction.UpdateCount(state + 1) }
-        reduce<Action.Decrement> { ReduxAction.UpdateCount(state - 1) }
+        reduce<Increment> { ReduxAction.UpdateCount(state + 1) }
+        reduce<Decrement> { ReduxAction.UpdateCount(state - 1) }
     }
 }

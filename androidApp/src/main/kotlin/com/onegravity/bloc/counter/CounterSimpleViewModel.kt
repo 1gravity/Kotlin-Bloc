@@ -2,8 +2,8 @@ package com.onegravity.bloc.counter
 
 import androidx.lifecycle.ViewModel
 import com.onegravity.bloc.blocContext
-import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Decrement
-import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Increment
+import com.onegravity.bloc.sample.counter.SimpleCounter.Decrement
+import com.onegravity.bloc.sample.counter.SimpleCounter.Increment
 import com.onegravity.bloc.sample.counter.SimpleCounter.bloc
 import com.onegravity.bloc.toLiveData
 import org.koin.core.component.KoinComponent
