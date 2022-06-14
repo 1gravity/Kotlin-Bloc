@@ -1,14 +1,16 @@
 ---
 id: examples
-title: Bloc Examples
-sidebar_label: Bloc Examples
+title: Introduction
+sidebar_label: Introduction
 hide_title: true
 ---
 
-## Examples
+## Introduction
 
-![Under Construction](https://thumbs.dreamstime.com/b/under-construction-10012274.jpg)
+There are numerous examples to demonstrate the different ways to manage state and implement the business logic. 
 
-This part is still under construction. In the meantime consult the many [sample apps](https://github.com/1gravity/Kotlin-Bloc/tree/master/bloc-samples/src/commonMain/kotlin/com/onegravity/bloc/sample).
+The goal is to "quick-start" development of features based on specific needs like Activity with or without ViewModels, data binding vs. Jetpack Compose, Fragments vs. no Fragments, Redux vs. BlocOwner / MVVM+ syntax etc.
 
-Stay tuned!
+:::tip
+Some of the examples are specifically created to demonstrate the framework's features and don't follow best practices. The tip sections will give some guidance on recommended practices.
+:::

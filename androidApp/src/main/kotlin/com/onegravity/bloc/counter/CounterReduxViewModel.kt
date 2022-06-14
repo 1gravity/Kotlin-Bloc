@@ -2,8 +2,8 @@ package com.onegravity.bloc.counter
 
 import androidx.lifecycle.ViewModel
 import com.onegravity.bloc.blocContext
-import com.onegravity.bloc.sample.counter.ReduxCounter.Action.Decrement
-import com.onegravity.bloc.sample.counter.ReduxCounter.Action.Increment
+import com.onegravity.bloc.sample.counter.ReduxCounter.Decrement
+import com.onegravity.bloc.sample.counter.ReduxCounter.Increment
 import com.onegravity.bloc.sample.counter.ReduxCounter.bloc
 import com.onegravity.bloc.toLiveData
 

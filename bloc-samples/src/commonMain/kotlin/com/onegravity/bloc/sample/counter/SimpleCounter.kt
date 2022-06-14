@@ -2,8 +2,6 @@ package com.onegravity.bloc.sample.counter
 
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.BlocContext
-import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Decrement
-import com.onegravity.bloc.sample.counter.SimpleCounter.Action.Increment
 import com.onegravity.bloc.state.asBlocState
 import com.onegravity.bloc.utils.logger
 
@@ -12,10 +10,9 @@ import com.onegravity.bloc.utils.logger
  * As a matter of fact, we have 3 "intercepting" Blocs in this example.
  */
 object SimpleCounter {
-    sealed class Action {
-        data class Increment(val value: Int = 1) : Action()
-        data class Decrement(val value: Int = 1) : Action()
-    }
+    sealed class Action
+    data class Increment(val value: Int = 1) : Action()
+    data class Decrement(val value: Int = 1) : Action()
 
     private fun <State: Any> auditTrailBloc(context: BlocContext, initialValue: State) = bloc<State, State>(
         context,
@@ -28,9 +25,9 @@ object SimpleCounter {
         reduce { action }
     }
 
-    private fun BlocContext.interceptorBloc2(initialValue: Int) = bloc<Int, Int>(
-        this,
-        auditTrailBloc(this, initialValue).asBlocState()
+    private fun interceptorBloc2(context: BlocContext, initialValue: Int) = bloc<Int, Int>(
+        context,
+        auditTrailBloc(context, initialValue).asBlocState()
     ) {
         reduce {
             logger.d("interceptor 2: $action -> ${action - 1}")
@@ -38,9 +35,9 @@ object SimpleCounter {
         }
     }
 
-    private fun BlocContext.interceptorBloc1(initialValue: Int) = bloc<Int, Int>(
-        this,
-        interceptorBloc2(initialValue).asBlocState()
+    private fun interceptorBloc1(context: BlocContext, initialValue: Int) = bloc<Int, Int>(
+        context,
+        interceptorBloc2(context, initialValue).asBlocState()
     ) {
         reduce {
             logger.d("interceptor 1: $action -> ${action + 1}")
@@ -50,7 +47,7 @@ object SimpleCounter {
 
     fun bloc(context: BlocContext) = bloc<Int, Action>(
         context,
-        context.interceptorBloc1(1).asBlocState()
+        interceptorBloc1(context, 1).asBlocState()
     ) {
         reduce<Increment> { state + action.value }
         reduce<Decrement> { (state - action.value).coerceAtLeast(0) }

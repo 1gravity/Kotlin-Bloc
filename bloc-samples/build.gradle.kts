@@ -95,8 +95,8 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-//                api(project(":bloc-compose"))
-                api("com.1gravity:bloc-compose:_")
+                api(project(":bloc-compose"))
+//                api("com.1gravity:bloc-compose:_")
 
                 implementation(Ktor.client.cio)
 
