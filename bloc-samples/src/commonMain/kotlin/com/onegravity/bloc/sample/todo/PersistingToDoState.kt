@@ -7,9 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PersistingToDoState(
-    coroutineScope: CoroutineScope,
-    initialState: List<ToDo> = emptyList()
-) : BlocStateBase<List<ToDo>, List<ToDo>>(initialState) {
+    coroutineScope: CoroutineScope
+) : BlocStateBase<List<ToDo>, List<ToDo>>(
+    initialState = emptyList()
+) {
 
     private val dao = getKoinInstance<ToDoDao>()
 

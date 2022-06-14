@@ -68,9 +68,9 @@ reduxStore.toBlocState(
 )
 ```
 
-## Counter 3
+### Counter 3
 
-The [third implementation](https://github.com/1gravity/Kotlin-Bloc/blob/master/androidApp/src/main/kotlin/com/onegravity/bloc/counter/CounterActivityCompose.kt) is Android only and moves the "business logic" right next to the `View` / `Activity`:
+The [third implementation](https://github.com/1gravity/Kotlin-Bloc/blob/master/androidApp/src/main/kotlin/com/onegravity/bloc/counter/CounterActivityCompose.kt) is Android only and moves the "business logic" right into the `View` / `Activity`:
 
 ```kotlin
 class CounterActivityCompose : AppCompatActivity() {
@@ -102,5 +102,5 @@ class CounterActivityCompose : AppCompatActivity() {
 ```
 
 :::tip
-Typically the business logic is in a shared component so it can be used in iOS as well. 
+Typically the business logic is in a shared component so it can be used in Android and iOS. 
 :::
