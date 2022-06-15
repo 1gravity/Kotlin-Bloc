@@ -280,7 +280,7 @@ $dokka.location:com.onegravity.bloc/ComponentLazy.InstanceWrapper/component/#/Po
 $dokka.location:com.onegravity.bloc/ComponentLazy.InstanceWrapper/onDestroy/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/-instance-wrapper/on-destroy.html
 $dokka.location:com.onegravity.bloc/ComponentLazy///PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/index.html
 $dokka.location:com.onegravity.bloc/ComponentLazy/ComponentLazy/#kotlin.Lazy[TypeParam(bounds=[androidx.lifecycle.ViewModelStoreOwner])]#kotlin.Any#kotlin.Function1[com.onegravity.bloc.BlocContext,TypeParam(bounds=[kotlin.Any])]/PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/-component-lazy.html
-$dokka.location:com.onegravity.bloc/ComponentLazy/blocViewModel/#androidx.lifecycle.ViewModelStore/PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/bloc-view-model.html
+$dokka.location:com.onegravity.bloc/ComponentLazy/blocViewModel/#androidx.lifecycle.ViewModelStoreOwner/PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/bloc-view-model.html
 $dokka.location:com.onegravity.bloc/ComponentLazy/cached/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/cached.html
 $dokka.location:com.onegravity.bloc/ComponentLazy/create/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/create.html
 $dokka.location:com.onegravity.bloc/ComponentLazy/createComponent/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc/-component-lazy/create-component.html
