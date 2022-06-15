@@ -1,4 +1,14 @@
 {
   "jira-plugin.workingProject": "",
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "cSpell.words": [
+    "Essenty",
+    "Essenty's",
+    "Jetpack",
+    "Multiplatform",
+    "MVVM",
+    "onegravity",
+    "upsert",
+    "viewmodel"
+  ]
 }
