@@ -105,7 +105,6 @@ kotlin {
     }
 }
 
-
 android {
     buildFeatures {
         viewBinding = true
