@@ -44,7 +44,10 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
      */
     @BlocDSL
     public fun onCreate(initialize: Initializer<State, Action>) {
-        _initialize = initialize
+        when (_initialize) {
+            null -> _initialize = initialize
+            else -> logger.w("Initializer already defined -> ignoring this one")
+        }
     }
 
     /**

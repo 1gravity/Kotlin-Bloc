@@ -49,3 +49,7 @@ onCreate {
 ```
 
 The order of declaration is irrelevant, the initializer will always be called first (see [Lifecycle](lifecycle)). It could however be that the initializer is still running when the bloc starts processing actions (thunks and reducers). This behavior might change in a future version.
+
+:::tip
+If more than one initializer is defined, the first one (according to their order of declaration) is used, all others are ignored.
+:::

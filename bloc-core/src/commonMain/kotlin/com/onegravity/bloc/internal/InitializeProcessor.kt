@@ -12,9 +12,9 @@ import kotlin.coroutines.CoroutineContext
  * The InitializeProcessor is responsible for processing onCreate { } blocks.
  */
 internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
-    blocContext: BlocContext,
+    private val blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
-    private val initialize: Initializer<State, Action>? = null,
+    private var initialize: Initializer<State, Action>? = null,
     private val initDispatcher: CoroutineContext = Dispatchers.Default,
     private val dispatch: (Action) -> Unit
 ) {
@@ -35,9 +35,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
         blocContext.lifecycle.doOnCreate {
             logger.d("onCreate -> initialize Bloc")
             scope = CoroutineScope(SupervisorJob() + initDispatcher)
-            scope?.launch {
-                initialize?.let { initialize(it) }
-            }
+            initialize?.let { runInitializer(it) }
         }
         blocContext.lifecycle.doOnDestroy {
             logger.d("onDestroy -> destroy Bloc")
@@ -49,7 +47,16 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
      * BlocExtension interface implementation:
      * onCreate { } -> run an initializer MVVM+ style
      */
-    internal fun initialize(initialize: Initializer<State, Action>) =
+    internal fun initialize(initialize: Initializer<State, Action>) {
+        when (blocContext.lifecycle.state) {
+            // if onCreate() hasn't been called yet, we can't run the initializer but we can
+            // set the initializer if there isn't one yet
+            Lifecycle.State.INITIALIZED -> if (this.initialize == null) this.initialize = initialize
+            else -> runInitializer(initialize)
+        }
+    }
+
+    private fun runInitializer(initialize: Initializer<State, Action>) =
         scope?.launch {
             if (mutex.tryLock(this@InitializeProcessor)) {
                 val context = InitializerContext(
@@ -62,5 +69,4 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
                 logger.e("onCreate { } can only be run once!")
             }
         }
-
 }

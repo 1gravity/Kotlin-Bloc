@@ -1,21 +1,19 @@
 package com.onegravity.bloc.internal
 
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import com.onegravity.bloc.bloc
-import com.onegravity.bloc.runTests
-import kotlinx.coroutines.delay
+import com.onegravity.bloc.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
-class BlocExecutionTests {
+class BlocReducerExecutionTests {
 
     sealed class Action
     object Increment : Action()
     object Decrement : Action()
+    object Whatever : Action()
 
     @Test
-    fun lifecycleTransitions() = runTests {
+    fun testReducerExecution() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -34,9 +32,20 @@ class BlocExecutionTests {
         assertEquals(1, bloc.value)
         lifecycleRegistry.onCreate()
         lifecycleRegistry.onStart()
-        bloc.send(Increment)
-        delay(100)
-        assertEquals(2, bloc.value)
+
+        testBloc(bloc, Increment, 2)
+
+        testBloc(bloc, Decrement, 1)
+
+        testBloc(bloc, Whatever, 6)
+
+        bloc.reduce {
+            state -4
+        }
+        testBloc(bloc, null, 2)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
     }
 
 }
