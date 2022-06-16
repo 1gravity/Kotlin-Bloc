@@ -8,7 +8,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-class BlocLifecycleTest {
+class BlocLifecycleTests {
 
     @Test
     fun lifecycleTransitions() = runTests {
