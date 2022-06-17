@@ -1,11 +1,17 @@
-- TODO implement tests + add to CI/CD
+Tests:
+- TODO implements Bloc tests with initializer, reducer, thunk, side effect
+- TODO implements BlocState tests
+- TODO implements all the other tests
+
+- TODO implement search for the documentation
+- TODO document the behavior of the collect function, some states can be dropped
 - TODO create an FAQ
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
        the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the
        ReduxStore and one in the BlocState)
        how about using the redux mechanism using an ActionTypes.INIT to initialize state?
 - TODO are side effects sufficient for navigation? should the framework include a navigation
-       component like Decompose does?
+       component like Decompose does? we can also just use reducers instead of side effects.
 - TODO Action / Redux style vs. Function style (extensions to BlocOwner), the latter requires some
        component / class like the PostsComponent / PostsComponentImpl class so we can use functions
        in iOS too. Come up with a solution that combines both styles for Android and iOS without
@@ -13,6 +19,7 @@
 - TODO time travel + debugger
 - TODO implement `sideEffects` in the Bloc DSL to allow emission of multiple side effects
        (`sideEffect` allows only a single side effect)
+- TODO compiler plugin to have compile-time checks when building Blocs and BlocStates
 - TODO synchronize initializers / onCreate execution with the lifecycle of the bloc
        -> a bloc could not transition to Started while the initializer is still running
        we would only need to synchronize the initializer code block itself and not wait for

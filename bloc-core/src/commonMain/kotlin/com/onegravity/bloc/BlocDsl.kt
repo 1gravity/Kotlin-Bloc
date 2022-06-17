@@ -11,12 +11,13 @@ import com.onegravity.bloc.utils.*
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.onCreate(
+public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.onCreate(
     initializer: Initializer<State, Action>
 ) {
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).initialize(initializer)
+    // the proposal is irrelevant for an initializer so we set it to Unit
+    (this as BlocExtension<State, Action, SideEffect, Unit>).initialize(initializer)
 }
 
 /**
@@ -28,7 +29,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
     initializer: Initializer<State, Action>
 ) {
-    bloc.onCreate<State, Action, SideEffect, Proposal>(initializer)
+    bloc.onCreate(initializer)
 }
 
 /**
@@ -38,12 +39,13 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.thunk(
+public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.thunk(
     thunk: ThunkNoAction<State, Action>
 ) {
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).thunk(thunk)
+    // the proposal is irrelevant for a thunk so we set it to Unit
+    (this as BlocExtension<State, Action, SideEffect, Unit>).thunk(thunk)
 }
 
 /**
@@ -56,7 +58,7 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
     thunk: ThunkNoAction<State, Action>
 ) {
-    bloc.thunk<State, Action, SideEffect, Proposal>(thunk)
+    bloc.thunk(thunk)
 }
 
 /**
@@ -117,17 +119,18 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
  * Submit a SideEffect to a Bloc to be emitted.
  * The side effect will receive the state but no action (since it was triggered "manually", not by
  * sending an action to the Bloc).
+ * Note: the proposal is irrelevant for sideEffect so we set it to Unit
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.sideEffect(
+public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) {
-    val reducerNoState: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
+    val reducerNoState: ReducerNoAction<State, Effect<Unit, SideEffect>> = {
         Effect(null, sideEffect.invoke(this))
     }
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
-    (this as BlocExtension<State, Action, SideEffect, Proposal>).reduce(reducerNoState)
+    (this as BlocExtension<State, Action, SideEffect, Unit>).reduce(reducerNoState)
 }
 
 /**
@@ -139,5 +142,5 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) {
-    bloc.sideEffect<State, Action, SideEffect, Proposal>(sideEffect)
+    bloc.sideEffect(sideEffect)
 }

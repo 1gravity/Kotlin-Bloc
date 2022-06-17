@@ -10,11 +10,18 @@ val javadocJar by tasks.registering(Jar::class) {
 fun Project.get(name: String, def: String = "$name not found") =
     properties[name]?.toString() ?: System.getenv(name) ?: def
 
+val isSnapshot = get("PUBLISH_AS_SNAPSHOT", "true").toBoolean()
+
+fun String.version(snapshot: Boolean): String {
+    val regex = "-SNAPSHOT$".toRegex()
+    val version = toUpperCase().replace(regex, "")
+    return if (snapshot) "$version-SNAPSHOT" else version
+}
+
 fun Project.getRepositoryUrl(): java.net.URI {
-    val isReleaseBuild = !get("POM_VERSION_NAME").contains("SNAPSHOT")
     val releaseRepoUrl = get("RELEASE_REPOSITORY_URL", "https://oss.sonatype.org/service/local/staging/deploy/maven2/")
     val snapshotRepoUrl = get("SNAPSHOT_REPOSITORY_URL", "https://oss.sonatype.org/content/repositories/snapshots/")
-    return uri(if (isReleaseBuild) releaseRepoUrl else snapshotRepoUrl)
+    return uri(if (isSnapshot) snapshotRepoUrl else releaseRepoUrl)
 }
 
 publishing {
@@ -37,7 +44,7 @@ publishing {
         pom {
             groupId = project.get("POM_GROUP")
             artifactId = project.get("POM_ARTIFACT_ID", artifactId)
-            version = project.get("POM_VERSION_NAME")
+            version = project.get("POM_VERSION_NAME").version(isSnapshot)
 
             name.set(project.name)
             description.set(project.get("POM_DESCRIPTION"))

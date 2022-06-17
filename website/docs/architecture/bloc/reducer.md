@@ -11,7 +11,7 @@ To reiterate:
 > A reducer is a function that receives the current state and an action object, decides how to update the state if necessary, and returns the new state: (state, action) => newState  
 (https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
 
-While the offical Redux reducer definition captures the essence, reducers in the context of `Kotlin Bloc` are a bit more complex: 
+While the official Redux reducer definition captures the essence, reducers in the context of `Kotlin Bloc` are a bit more complex: 
 ```kotlin
 suspend (State, Action, CoroutineScope) -> Proposal
 ```

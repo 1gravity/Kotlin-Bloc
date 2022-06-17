@@ -11,6 +11,7 @@ env:
   SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
   GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
   GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
+  PUBLISH_AS_SNAPSHOT: true
 
 jobs:
   publish-snapshot:
@@ -29,21 +30,3 @@ jobs:
 
       - name: Publish Snapshot
         run: ./gradlew publish
-
-      - name: Archive bloc-core publications dir
-        uses: actions/upload-artifact@v1
-        with:
-          name: publications-${{ matrix.os }}
-          path: bloc-core/build/publications
-
-      - name: Archive bloc-redux publications dir
-        uses: actions/upload-artifact@v1
-        with:
-          name: publications-${{ matrix.os }}
-          path: bloc-redux/build/publications
-
-      - name: Archive bloc-compose dir
-        uses: actions/upload-artifact@v1
-        with:
-          name: publications-${{ matrix.os }}
-          path: bloc-compose/build/publications
