@@ -1,4 +1,4 @@
-name: Publish snapshot
+name: Run lint and tests
 
 on:
   push:
