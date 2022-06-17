@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>Kotlin Bloc</ShortName>
+  <Description>Search Kotlin Bloc</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/x-icon">https://1gravity.github.io/Kotlin-Bloc/img/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://1gravity.github.io/Kotlin-Bloc/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://1gravity.github.io/Kotlin-Bloc/opensearch.xml" />
+  <moz:SearchForm>https://1gravity.github.io/Kotlin-Bloc/</moz:SearchForm>
+</OpenSearchDescription>
