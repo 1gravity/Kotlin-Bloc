@@ -3,12 +3,10 @@ name: Run lint and tests
 on:
   push:
     branches:
-      - master
       - feature/**
   pull_request:
     branches:
       - master
-      - feature/**
 
 jobs:
   lint:
