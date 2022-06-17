@@ -17,12 +17,10 @@
     <string name="posts_compose_title">Blocs with Compose</string>
     <string name="posts_compose_error">Error: %s</string>
     <string name="posts_compose_retry">Retry</string>
-    <string name="posts_compose_loading">Loading...</string>
+    <string name="posts_compose_loading">Loading…</string>
     <string name="posts_compose_comments">%s comments</string>
 
-    <string name="todo_title">todos</string>
     <string name="todo_description">What needs to be done?</string>
-    <string name="todo_remove">Remove</string>
 
     <string name="counter_value">Counter: %s</string>
     <string name="counter_increment">Increment</string>

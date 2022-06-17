@@ -1,10 +1,7 @@
 package com.onegravity.bloc.posts_compose
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -30,17 +27,17 @@ fun RootUi(component: PostsComponent) {
         val isMultiPane = this@BoxWithConstraints.maxWidth >= MULTI_PANE_WIDTH_THRESHOLD
         Scaffold(
             topBar = { ToolBar(component, isMultiPane) }
-        ) {
+        ) { padding ->
             val showDetail = state.postIsLoading() || state.postIsLoaded()
-
+            val modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(padding)
             when {
                 isMultiPane && showDetail ->
-                    Row(Modifier.fillMaxWidth().fillMaxHeight()) {
+                    Row(modifier) {
                         PostsPane(component, Modifier.fillMaxWidth(0.33f).fillMaxHeight())
                         PostPane(component, Modifier.fillMaxWidth().fillMaxHeight())
                     }
-                showDetail -> PostPane(component, Modifier.fillMaxWidth().fillMaxHeight())
-                else -> PostsPane(component, Modifier.fillMaxWidth().fillMaxHeight())
+                showDetail -> PostPane(component, modifier)
+                else -> PostsPane(component, modifier)
             }
         }
     }

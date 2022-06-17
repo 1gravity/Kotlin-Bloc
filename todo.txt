@@ -1,7 +1,5 @@
 Tests:
 - TODO implements Bloc tests with initializer, reducer, thunk, side effect
-- TODO tests need to run from the CLI (solve logger issue)
-- TODO add tests to CI/CD
 - TODO implements BlocState tests
 - TODO implements all the other tests
 
