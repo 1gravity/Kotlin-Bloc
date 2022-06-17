@@ -3,8 +3,7 @@ package com.onegravity.bloc.internal
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.runTests
-import com.onegravity.bloc.testBloc
-import kotlinx.coroutines.delay
+import com.onegravity.bloc.testState
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -86,24 +85,24 @@ class BlocLifecycleTests {
 
         assertEquals(1, bloc.value)
 
-        testBloc(bloc, 1, 1)
+        testState(bloc, 1, 1)
 
         lifecycleRegistry.onCreate()
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 2)
+        testState(bloc, null, 2)
 
         lifecycleRegistry.onStop()
-        testBloc(bloc, 1, 2)
+        testState(bloc, 1, 2)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 3)
+        testState(bloc, null, 3)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
 
-        testBloc(bloc, 1, 3)
+        testState(bloc, 1, 3)
     }
 
     @Test
@@ -119,24 +118,24 @@ class BlocLifecycleTests {
 
         assertEquals(1, bloc.value)
 
-        testBloc(bloc, 1, 1)
+        testState(bloc, 1, 1)
 
         lifecycleRegistry.onCreate()
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 3)
+        testState(bloc, null, 3)
 
         lifecycleRegistry.onStop()
-        testBloc(bloc, 1, 3)
+        testState(bloc, 1, 3)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 5)
+        testState(bloc, null, 5)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
 
-        testBloc(bloc, 1, 5)
+        testState(bloc, 1, 5)
     }
 
     @Test
@@ -153,20 +152,20 @@ class BlocLifecycleTests {
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onCreate()
-        testBloc(bloc, null, 1)
+        testState(bloc, null, 1)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 8)
+        testState(bloc, null, 8)
 
         lifecycleRegistry.onStop()
-        testBloc(bloc, 1, 8)
+        testState(bloc, 1, 8)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 9)
+        testState(bloc, null, 9)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
 
-        testBloc(bloc, 1, 9)
+        testState(bloc, 1, 9)
     }
 }

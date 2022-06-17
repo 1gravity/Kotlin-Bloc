@@ -1,4 +1,12 @@
-- TODO implement tests + add to CI/CD
+Tests:
+- TODO implements Bloc tests with initializer, reducer, thunk, side effect
+- TODO tests need to run from the CLI (solve logger issue)
+- TODO add tests to CI/CD
+- TODO implements BlocState tests
+- TODO implements all the other tests
+
+- TODO implement search for the documentation
+- TODO document the behavior of the collect function, some states can be dropped
 - TODO create an FAQ
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
        the BlocState upon start? especially ReduxBlocState has TWO initial values (one for the

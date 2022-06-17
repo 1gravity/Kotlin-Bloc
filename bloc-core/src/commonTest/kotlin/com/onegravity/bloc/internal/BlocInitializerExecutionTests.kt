@@ -18,39 +18,29 @@ class BlocInitializerExecutionTests {
         val context = BlocContextImpl(lifecycleRegistry)
 
         val bloc = bloc<Int, Action, Unit>(context, 1) {
-            reduce<Increment> {
-                state + 1
-            }
-            onCreate {
-                dispatch(Increment)
-            }
-            reduce<Decrement> {
-                state - 1
-            }
-            reduce {
-                state + 5
-            }
-            onCreate {
-                dispatch(Decrement)
-            }
+            reduce<Increment> { state + 1 }
+            onCreate { dispatch(Increment) }
+            reduce<Decrement> { state - 1 }
+            reduce { state + 5 }
+            onCreate { dispatch(Decrement) }
         }
 
         assertEquals(1, bloc.value)
 
         // will be ignored because 1) onCreate() hasn't been called yet and another initializer was
         // already defined
-        bloc.onCreate<Int, Action, Unit, Int> { dispatch(Decrement) }
-        testBloc(bloc, null, 1)
+        bloc.onCreate { dispatch(Decrement) }
+        testState(bloc, null, 1)
 
         lifecycleRegistry.onCreate()
-        testBloc(bloc, null, 1)
+        testState(bloc, null, 1)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 2)
+        testState(bloc, null, 2)
 
         // again ignored, initializer already ran
-        bloc.onCreate<Int, Action, Unit, Int> { dispatch(Decrement) }
-        testBloc(bloc, null, 2)
+        bloc.onCreate { dispatch(Decrement) }
+        testState(bloc, null, 2)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
@@ -62,31 +52,25 @@ class BlocInitializerExecutionTests {
         val context = BlocContextImpl(lifecycleRegistry)
 
         val bloc = bloc<Int, Action, Unit>(context, 1) {
-            reduce<Increment> {
-                state + 1
-            }
-            reduce<Decrement> {
-                state - 1
-            }
-            reduce {
-                state + 5
-            }
+            reduce<Increment> { state + 1 }
+            reduce<Decrement> { state - 1 }
+            reduce { state + 5 }
         }
 
         assertEquals(1, bloc.value)
 
-        bloc.onCreate<Int, Action, Unit, Int> { dispatch(Whatever) }
+        bloc.onCreate { dispatch(Whatever) }
 
         lifecycleRegistry.onCreate()
         // initializer ran but the reducers it triggered (dispatch) are still not running
-        testBloc(bloc, null, 1)
+        testState(bloc, null, 1)
 
         lifecycleRegistry.onStart()
-        testBloc(bloc, null, 6)
+        testState(bloc, null, 6)
 
         // ignored, initializer already ran
-        bloc.onCreate<Int, Action, Unit, Int> { dispatch(Whatever) }
-        testBloc(bloc, null, 6)
+        bloc.onCreate { dispatch(Whatever) }
+        testState(bloc, null, 6)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
