@@ -7,12 +7,12 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BlocReducerExecutionTests {
+class BlocReducerExecutionTests : BaseTestClass() {
 
-    sealed class Action
-    object Increment : Action()
-    object Decrement : Action()
-    object Whatever : Action()
+    private sealed class Action
+    private object Increment : Action()
+    private object Decrement : Action()
+    private object Whatever : Action()
 
     @Test
     fun testReducerExecution() = runTests {

@@ -5,12 +5,12 @@ import com.onegravity.bloc.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BlocInitializerExecutionTests {
+class BlocInitializerExecutionTests : BaseTestClass() {
 
-    sealed class Action
-    object Increment : Action()
-    object Decrement : Action()
-    object Whatever : Action()
+    private sealed class Action
+    private object Increment : Action()
+    private object Decrement : Action()
+    private object Whatever : Action()
 
     @Test
     fun testInitializerExecution1() = runTests {

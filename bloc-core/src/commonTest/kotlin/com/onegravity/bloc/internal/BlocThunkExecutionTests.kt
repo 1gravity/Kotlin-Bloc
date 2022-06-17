@@ -9,12 +9,12 @@ import kotlinx.coroutines.delay
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BlocThunkExecutionTests {
+class BlocThunkExecutionTests : BaseTestClass() {
 
-    sealed class Action
-    object Increment : Action()
-    object Decrement : Action()
-    object Whatever : Action()
+    private sealed class Action
+    private object Increment : Action()
+    private object Decrement : Action()
+    private object Whatever : Action()
 
     @Test
     fun testThunkExecution1() = runTests {

@@ -1,21 +1,23 @@
 package com.onegravity.bloc.internal
 
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import com.onegravity.bloc.*
+import com.onegravity.bloc.bloc
+import com.onegravity.bloc.runTests
+import com.onegravity.bloc.testCollectSideEffects
 import kotlinx.coroutines.delay
 import kotlin.test.Test
 
-class BlocSideEffectTests {
+class BlocSideEffectTests : BaseTestClass() {
 
-    sealed class Action
-    object Increment : Action()
-    object Decrement : Action()
-    object Whatever : Action()
+    private sealed class Action
+    private object Increment : Action()
+    private object Decrement : Action()
+    private object Whatever : Action()
 
-    sealed class SideEffect
-    object Open : SideEffect()
-    object Close : SideEffect()
-    object Something : SideEffect()
+    private sealed class SideEffect
+    private object Open : SideEffect()
+    private object Close : SideEffect()
+    private object Something : SideEffect()
 
     @Test
     fun testSideEffects() = runTests {
