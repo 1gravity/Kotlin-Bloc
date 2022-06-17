@@ -56,6 +56,9 @@ $dokka.location:com.onegravity.bloc.internal.builder/MatcherThunk/matcher/#/Poin
 $dokka.location:com.onegravity.bloc.internal.builder/MatcherThunk/thunk/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal.builder/-matcher-thunk/thunk.html
 $dokka.location:com.onegravity.bloc.internal////PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/index.html
 $dokka.location:com.onegravity.bloc.internal//trimOutput/kotlin.Any#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/trim-output.html
+$dokka.location:com.onegravity.bloc.internal/BaseTestClass///PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/-base-test-class/index.html
+$dokka.location:com.onegravity.bloc.internal/BaseTestClass/BaseTestClass/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/-base-test-class/-base-test-class.html
+$dokka.location:com.onegravity.bloc.internal/BaseTestClass/initialize/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/-base-test-class/initialize.html
 $dokka.location:com.onegravity.bloc.internal/BlocContextImpl///PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/-bloc-context-impl/index.html
 $dokka.location:com.onegravity.bloc.internal/BlocContextImpl/BlocContextImpl/#Lifecycle/PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/-bloc-context-impl/-bloc-context-impl.html
 $dokka.location:com.onegravity.bloc.internal/BlocContextImpl/lifecycle/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.internal/-bloc-context-impl/lifecycle.html
@@ -212,6 +215,7 @@ $dokka.location:com.onegravity.bloc.state/SimpleBlocStateBuilderImpl/build/#/Poi
 $dokka.location:com.onegravity.bloc.state/SimpleBlocStateBuilderImpl/initialState/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.state/-simple-bloc-state-builder-impl/initial-state.html
 $dokka.location:com.onegravity.bloc.utils////PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/index.html
 $dokka.location:com.onegravity.bloc.utils//logger/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/logger.html
+$dokka.location:com.onegravity.bloc.utils//loggerConfig/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/logger-config.html
 $dokka.location:com.onegravity.bloc.utils//subscribe/com.onegravity.bloc.BlocObservableOwner[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#Lifecycle#kotlin.coroutines.SuspendFunction1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]?#kotlin.coroutines.SuspendFunction1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]?/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/subscribe.html
 $dokka.location:com.onegravity.bloc.utils//subscribe/com.onegravity.bloc.BlocOwner[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#Lifecycle#kotlin.coroutines.SuspendFunction1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]?#kotlin.coroutines.SuspendFunction1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]?/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/subscribe.html
 $dokka.location:com.onegravity.bloc.utils//subscribe/com.onegravity.bloc.Bloc[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#Lifecycle#kotlin.coroutines.SuspendFunction1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]?#kotlin.coroutines.SuspendFunction1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]?/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/subscribe.html
@@ -244,6 +248,10 @@ $dokka.location:com.onegravity.bloc.utils/Logger/d/#kotlin.String/PointingToDecl
 $dokka.location:com.onegravity.bloc.utils/Logger/e/#kotlin.String#kotlin.Throwable?/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger/e.html
 $dokka.location:com.onegravity.bloc.utils/Logger/i/#kotlin.String/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger/i.html
 $dokka.location:com.onegravity.bloc.utils/Logger/w/#kotlin.String/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger/w.html
+$dokka.location:com.onegravity.bloc.utils/LoggerConfig///PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger-config/index.html
+$dokka.location:com.onegravity.bloc.utils/LoggerConfig/LoggerConfig/#kotlin.String#kotlin.Boolean/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger-config/-logger-config.html
+$dokka.location:com.onegravity.bloc.utils/LoggerConfig/tag/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger-config/tag.html
+$dokka.location:com.onegravity.bloc.utils/LoggerConfig/useCommonWriter/#/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger-config/use-common-writer.html
 $dokka.location:com.onegravity.bloc.utils/LoggerImpl///PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger-impl/index.html
 $dokka.location:com.onegravity.bloc.utils/LoggerImpl/d/#kotlin.String/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger-impl/d.html
 $dokka.location:com.onegravity.bloc.utils/LoggerImpl/e/#kotlin.String#kotlin.Throwable?/PointingToDeclaration/-bloc -core/com.onegravity.bloc.utils/-logger-impl/e.html
