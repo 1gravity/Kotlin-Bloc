@@ -67,6 +67,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(KotlinX.coroutines.test)
             }
         }
 
@@ -104,7 +105,6 @@ kotlin {
         }
     }
 }
-
 
 android {
     buildFeatures {

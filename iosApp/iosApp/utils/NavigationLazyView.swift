@@ -1,8 +1,3 @@
-//
-//  Created by Emanuel Moecklin on 5/15/22.
-//  Copyright © 2022 1gravity. All rights reserved.
-//
-
 import SwiftUI
 
 struct NavigationLazyView<Content: View>: View {

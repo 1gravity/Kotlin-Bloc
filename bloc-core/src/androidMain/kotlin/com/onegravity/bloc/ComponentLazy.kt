@@ -29,9 +29,8 @@ class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
      * ViewModelStore -> BlocViewModel -> InstanceKeeper -> Component(BlocViewModel.Lifecycle)
      */
     private fun createComponent(): Component {
-        val viewModelStore = owner.value.viewModelStore
-        val viewModel = blocViewModel(viewModelStore)
-        val component: Component = viewModel.instanceKeeper.getOrCreate(key) {
+        val viewModel = blocViewModel(owner.value)
+        val component = viewModel.instanceKeeper.getOrCreate(key) {
             val context = BlocContextImpl(lifecycle = viewModel.lifecycleRegistry)
             val component = create(context)
             InstanceWrapper(component)
@@ -41,9 +40,9 @@ class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
 
     // get or create the BlocViewModel and store it in the ViewModelStore
     @Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
-    private fun blocViewModel(store: ViewModelStore): BlocViewModel =
+    private fun blocViewModel(storeOwner: ViewModelStoreOwner): BlocViewModel =
         ViewModelProvider(
-            store,
+            storeOwner,
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel?> create(modelClass: Class<T>) = BlocViewModel() as T

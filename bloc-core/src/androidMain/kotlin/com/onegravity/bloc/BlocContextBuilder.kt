@@ -6,7 +6,6 @@
 
 package com.onegravity.bloc
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.onegravity.bloc.internal.BlocContextImpl
@@ -20,8 +19,8 @@ import kotlinx.coroutines.launch
 /** --------------------------------------------------------------------------------------------- */
 
 /**
- * Use this from an Activity to get or create a "Component" without directly involving a ViewModel,
- * e.g.:
+ * Use this from an Activity or a Fragment to get or create a "Component" without directly involving
+ * a ViewModel, e.g.:
  * ```
  *   val component by getOrCreate { MyComponent(it) }      // it is the BlocContext
  * ```
@@ -52,18 +51,6 @@ inline fun <A: ViewModelStoreOwner, reified Component : Any> A.getOrCreate(
     noinline create: (context: BlocContext) -> Component
 ): Lazy<Component> = ComponentLazy(
     owner = lazy { this },
-    key = key,
-    create = create
-)
-
-/**
- * The same from a fragment
- */
-inline fun <reified Component : Any> Fragment.getOrCreate(
-    key: Any = Component::class,
-    noinline create: (context: BlocContext) -> Component
-): Lazy<Component> = ComponentLazy(
-    owner = lazy { requireActivity() },
     key = key,
     create = create
 )

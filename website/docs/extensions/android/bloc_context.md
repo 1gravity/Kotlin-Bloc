@@ -21,7 +21,7 @@ On Android side we want a ViewModel "lifecycle" to be the one connecting the `Vi
 
 ### ViewModel
 
-In an Android ViewModel, use the `blocContext()` extension function to create a `BlocContext`. `blocContex()` creates a context that is tied to the ViewModel's "lifecycle":
+In an Android ViewModel, use the `blocContext()` extension function to create a `BlocContext`. `blocContext()` creates a context that is tied to the ViewModel's "lifecycle":
 
 ```kotlin
 class CounterViewModel : ViewModel() {

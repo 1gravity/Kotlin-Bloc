@@ -6,10 +6,11 @@ on:
       - 'v*'
 
 env:
-   SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
-   SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-   GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-   GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
+  SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+  SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+  GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+  GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
+  PUBLISH_AS_SNAPSHOT: false
 
 jobs:
   publish:
@@ -21,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3.3.0
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '11'
