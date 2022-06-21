@@ -3,7 +3,6 @@ Tests:
 - TODO implements BlocState tests
 - TODO implements all the other tests
 
-- TODO implement search for the documentation
 - TODO document the behavior of the collect function, some states can be dropped
 - TODO create an FAQ
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
