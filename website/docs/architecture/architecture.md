@@ -5,14 +5,6 @@ hide_title: true
 sidebar_label: Overview
 ---
 
-## Goals
-The architectural goals of the `Kotlin Bloc` framework are:
-- be platform-agnostic, reactive and composable
-- be minimalistic / lightweight -> no over-engineering
-- simple concurrency model
-- users write very little code
-- be as un-opinionated as possible -> support different `View` technologies, programming styles, app complexities and team sizes
-
 ## Inspiration
 The architecture was inspired by the following design patterns and UI frameworks (among others):
 
@@ -20,7 +12,6 @@ The architecture was inspired by the following design patterns and UI frameworks
 - MVI (Model-View-Intent)
 - MVVM (Model-View-ViewModel)
 - [SAM](https://sam.js.org)
-- Redux
 - [Flutter BloC](https://www.youtube.com/watch?v=RS36gBEp8OI)
 
 #### Frameworks
@@ -29,6 +20,27 @@ The architecture was inspired by the following design patterns and UI frameworks
 - [Redux Kotlin](https://reduxkotlin.org)
 - [Reduce](https://github.com/genaku/Reduce)
 - [Decompose](https://arkivanov.github.io/Decompose/)
+- Redux
+
+#### Learnings
+
+The essential ideas we take from them are:
+
+- data flowing between model and view is immutable
+- data flows unidirectional from the view to the model and back
+- data flows are reactive
+- every concern is mapped to a component or a function to have clear separation
+- functions are first-class citizens
+
+
+## Goals
+The architectural goals of the `Kotlin Bloc` framework are:
+- Be **platform-agnostic**: it’s a KMM framework so this is obvious.
+- Be **reactive**: reactive UIs have become the standard in recent years for good reasons.
+- Be **composable**: ability to decompose the ui into small components and combine them into larger components again.
+- Be as **un-opinionated** as possible: support different technologies, programming styles, app complexities and team sizes.
+- Be **minimalistic** and **lightweight**: some existing frameworks are very comprehensive but are heavyweight and require to write lots of boilerplate code (e.g. [Decompose](https://arkivanov.github.io/Decompose/)). Strict contracts between components (leading to boilerplate code) are crucial in larger teams but they can bog down the team’s productivity when speed is crucial (and in smaller teams). A more strict approach should be supported but not enforced.
+- Be **predictable**: the order of execution (synchronous and asynchronous) and the concurrency model must be clearly specified and lead to predictable and repeatable outcome.
 
 ## Design
 

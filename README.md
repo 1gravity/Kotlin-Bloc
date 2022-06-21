@@ -8,7 +8,7 @@
 - **simple**: designed from the ground up for simplicity with a super concise syntax
 - **adaptable**: supports different programming styles (MVI, MVVM+, Redux...)
 - **predictable**: write reactive applications that behave consistently and are easy to debug and test
-- **composable**: grows with the complexity of app and the size of the team
+- **composable**: grows with the complexity of the app and the size of the team
 
 <img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" /><br/>
 
