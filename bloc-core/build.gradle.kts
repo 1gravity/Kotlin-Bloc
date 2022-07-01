@@ -23,7 +23,6 @@ kotlin {
     }
 
     jvm()
-    js().browser()
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {

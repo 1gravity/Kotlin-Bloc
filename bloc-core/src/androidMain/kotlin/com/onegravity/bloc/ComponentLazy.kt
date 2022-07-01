@@ -45,7 +45,7 @@ class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
             storeOwner,
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel?> create(modelClass: Class<T>) = BlocViewModel() as T
+                override fun <T : ViewModel> create(modelClass: Class<T>) = BlocViewModel() as T
             }
         ).get()
 
