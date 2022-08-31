@@ -3,7 +3,6 @@ Tests:
 - TODO implements BlocState tests
 - TODO implements all the other tests
 
-- TODO fix the Dokka documentation
 - TODO replace the buildSrc with a composite build so we don't need to maintain separate versions
        for dependencies
 - TODO document the behavior of the collect function, some states can be dropped
