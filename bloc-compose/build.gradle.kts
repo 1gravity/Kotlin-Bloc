@@ -63,7 +63,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-beta02"
+        kotlinCompilerExtensionVersion = "1.2.0"
         useLiveLiterals = true
     }
 }

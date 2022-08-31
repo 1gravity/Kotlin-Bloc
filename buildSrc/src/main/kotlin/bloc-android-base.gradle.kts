@@ -78,7 +78,5 @@ java {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
     }
 }
