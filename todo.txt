@@ -3,6 +3,8 @@ Tests:
 - TODO implements BlocState tests
 - TODO implements all the other tests
 
+- TODO replace the buildSrc with a composite build so we don't need to maintain separate versions
+       for dependencies
 - TODO document the behavior of the collect function, some states can be dropped
 - TODO create an FAQ
 - TODO think about the initial value, who/what provides it? should be have a mechanism to populate
