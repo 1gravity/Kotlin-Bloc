@@ -1,3 +1,5 @@
+import Bloc_android_base_gradle.AndroidBuild
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -6,7 +8,7 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = AndroidBuild.compileSdkVersion
     defaultConfig {
         applicationId = "com.onegravity.bloc.sample"
         minSdk = 21
@@ -36,7 +38,7 @@ android {
         isEnabled = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-beta02"
+        kotlinCompilerExtensionVersion = "1.3.0"
     }
     buildToolsVersion = "32.0.0"
 }

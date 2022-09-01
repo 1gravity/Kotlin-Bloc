@@ -8,7 +8,7 @@
 - **simple**: designed from the ground up for simplicity with a super concise syntax
 - **adaptable**: supports different programming styles (MVI, MVVM+, Redux...)
 - **predictable**: write reactive applications that behave consistently and are easy to debug and test
-- **composable**: grows with the complexity of app and the size of the team
+- **composable**: grows with the complexity of the app and the size of the team
 
 <img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" /><br/>
 
@@ -27,13 +27,13 @@ Note, this readme offers a quick overview of the framework. For more in-depth in
 ```kotlin
 dependencies {
     // the core library
-    implementation("com.1gravity:bloc-core:0.5.2")
+    implementation("com.1gravity:bloc-core:0.6.0")
 
     // add to use the framework together with Redux
-    implementation("com.1gravity:bloc-redux:0.5.2")
+    implementation("com.1gravity:bloc-redux:0.6.0")
 
     // useful extensions for Android and Jetpack/JetBrains Compose
-    implementation("com.1gravity:bloc-compose:0.5.2")
+    implementation("com.1gravity:bloc-compose:0.6.0")
 }
 ```
 

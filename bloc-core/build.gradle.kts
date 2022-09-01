@@ -23,7 +23,6 @@ kotlin {
     }
 
     jvm()
-    js().browser()
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
@@ -114,9 +113,6 @@ android {
     dataBinding {
         isEnabled = true
     }
-
-    compileSdk = 32
-    buildToolsVersion = "32.0.0"
 }
 
 tasks.dokkaHtmlPartial.configure {

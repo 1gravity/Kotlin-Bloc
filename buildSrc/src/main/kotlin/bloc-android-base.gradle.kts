@@ -3,8 +3,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 object AndroidBuild {
-    const val buildToolsVersion = "32.0.0"
-    const val compileSdkVersion = 32
+    const val buildToolsVersion = "33.0.0"
+    const val compileSdkVersion = 33
     const val targetSdkVersion = compileSdkVersion
     const val minSdkVersion = 21
 }
@@ -78,7 +78,5 @@ java {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
     }
 }
