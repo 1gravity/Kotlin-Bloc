@@ -9,16 +9,6 @@ import kotlin.test.Test
 
 class BlocSideEffectTests : BaseTestClass() {
 
-    private sealed class Action
-    private object Increment : Action()
-    private object Decrement : Action()
-    private object Whatever : Action()
-
-    private sealed class SideEffect
-    private object Open : SideEffect()
-    private object Close : SideEffect()
-    private object Something : SideEffect()
-
     @Test
     fun testSideEffects() = runTests {
         val lifecycleRegistry = LifecycleRegistry()

@@ -29,12 +29,21 @@ suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
     expected: List<State>,
     block: suspend () -> Unit
 ) {
+    testCollectState(bloc, expected, 100, block)
+}
+
+suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
+    bloc: Bloc<State, Action, SideEffect>,
+    expected: List<State>,
+    delay: Long = 100,
+    block: suspend () -> Unit,
+) {
     val (job, values) = collectState(bloc)
 
     withContext(Dispatchers.Default) {
-        delay(100)
+        delay(delay)
         block()
-        delay(100)
+        delay(delay)
         job.cancel()
     }
 

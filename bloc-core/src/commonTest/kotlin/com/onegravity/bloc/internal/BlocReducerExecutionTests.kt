@@ -9,11 +9,6 @@ import kotlin.test.assertEquals
 
 class BlocReducerExecutionTests : BaseTestClass() {
 
-    private sealed class Action
-    private object Increment : Action()
-    private object Decrement : Action()
-    private object Whatever : Action()
-
     @Test
     fun testReducerExecution() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
@@ -79,6 +74,51 @@ class BlocReducerExecutionTests : BaseTestClass() {
         }
 
         testCollectState(bloc, listOf(51, 52, 57, 56)) {
+            repeat(1) {
+                bloc.send(Increment)
+                delay(10)
+                bloc.send(Whatever)
+                delay(10)
+                bloc.send(Decrement)
+                delay(10)
+            }
+        }
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun testReducerExecutionOrderWithDelay() = runTest {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 1) {
+            reduce<Increment> {
+                delay(1000)
+                state + 1
+            }
+            reduce<Decrement> {
+                delay(100)
+                state - 1
+            }
+            reduce { state + 5 }
+        }
+
+        assertEquals(1, bloc.value)
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        // we wait 4000 ms > 3 x (1000 + 100)
+        testCollectState(bloc, listOf(1, 2, 1, 2, 1, 2, 1), 4000) {
+            repeat(3) {
+                bloc.send(Increment)
+                bloc.send(Decrement)
+            }
+        }
+
+        assertEquals(1, bloc.value)
+        testCollectState(bloc, listOf(1, 2, 7, 6), 1500) {
             repeat(1) {
                 bloc.send(Increment)
                 delay(10)
