@@ -27,7 +27,8 @@ While `value` is used to retrieve the current `State`, the `collect` function is
 A `StateStream` emits:
 - no duplicate values
 - an initial value upon subscription (analogous `BehaviorSubject`)
-wrappers that make observing blocs very easy -> [Extensions](../../extensions/overview.md).
+
+There are wrappers that make observing blocs very easy -> [Extensions](../../extensions/overview.md).
 
 ### Sink
 

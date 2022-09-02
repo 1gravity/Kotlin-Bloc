@@ -42,7 +42,7 @@ A stream to observe `SideEffects` called a `SideEffectStream`. It's identical to
 public suspend fun collect(collector: FlowCollector<SideEffect>)
 ```
 
-A `StateStream` emits:
+A `SideEffectStream` emits:
 - all values, even duplicates
 - no initial value upon subscription (analogous `PublishSubject`)
 
