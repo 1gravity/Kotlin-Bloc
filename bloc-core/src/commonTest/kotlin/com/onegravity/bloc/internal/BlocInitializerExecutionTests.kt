@@ -7,11 +7,6 @@ import kotlin.test.assertEquals
 
 class BlocInitializerExecutionTests : BaseTestClass() {
 
-    private sealed class Action
-    private object Increment : Action()
-    private object Decrement : Action()
-    private object Whatever : Action()
-
     @Test
     fun testInitializerExecution1() = runTests {
         val lifecycleRegistry = LifecycleRegistry()

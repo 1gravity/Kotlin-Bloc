@@ -11,11 +11,6 @@ import kotlin.test.assertEquals
 
 class BlocThunkExecutionTests : BaseTestClass() {
 
-    private sealed class Action
-    private object Increment : Action()
-    private object Decrement : Action()
-    private object Whatever : Action()
-
     @Test
     fun testThunkExecution1() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
