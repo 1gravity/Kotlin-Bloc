@@ -1,8 +1,6 @@
 package com.onegravity.bloc
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.*
 import kotlin.test.assertEquals
 
@@ -15,14 +13,6 @@ fun runTests(block: suspend () -> Unit) =
             block()
         }
     }
-
-suspend fun <Value: Any> StateStream<Value>.toFlow(): Flow<Value> {
-    val flow = MutableStateFlow(value)
-    collect {
-        flow.emit(it)
-    }
-    return flow
-}
 
 suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
     bloc: Bloc<State, Action, SideEffect>,
@@ -41,7 +31,8 @@ suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
     val (job, values) = collectState(bloc)
 
     withContext(Dispatchers.Default) {
-        delay(delay)
+        // we need some time to collect the initial value -> delay
+        delay(100)
         block()
         delay(delay)
         job.cancel()
@@ -53,7 +44,7 @@ suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
 fun <State : Any, Action : Any, SideEffect: Any> collectState(
     bloc: Bloc<State, Action, SideEffect>,
 ): Pair<Job, MutableList<State>> {
-    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    val coroutineScope = CoroutineScope(Dispatchers.Default)
     val values = mutableListOf<State>()
     val job = coroutineScope.launch {
         bloc.collect {

@@ -20,7 +20,7 @@ A `Bloc` implements three public facing functions.
 
 ### State Stream
 
-A stream to observe `State` called a `StateStream`. It's identical to [StateFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/) except it doesn't expose the `replayCache`.
+A stream to observe `State` called a `StateStream`. It's similar to [StateFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/) but doesn't expose the `replayCache` and doesn't [conflate values](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/conflate.html).
 
 ```kotlin
 public val value: State
