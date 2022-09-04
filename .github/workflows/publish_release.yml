@@ -11,6 +11,7 @@ env:
   GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
   GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
   PUBLISH_AS_SNAPSHOT: false
+  org.gradle.parallel: false
 
 jobs:
   publish:
@@ -28,4 +29,4 @@ jobs:
           java-version: '11'
 
       - name: Publish Release
-        run: ./gradlew -Dorg.gradle.parallel=false publish
+        run: ./gradlew publish
