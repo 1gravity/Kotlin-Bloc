@@ -9,7 +9,6 @@ env:
   SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
   GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
   GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
-  PUBLISH_AS_SNAPSHOT: true
 
 jobs:
   publish-snapshot:
@@ -27,4 +26,4 @@ jobs:
           java-version: '11'
 
       - name: Publish Snapshot
-        run: ./gradlew publish
+        run: ./gradlew -Dorg.gradle.parallel=true publish -PPUBLISH_AS_SNAPSHOT=true
