@@ -1,3 +1,6 @@
+// publish release version locally:
+// ./gradlew -Dorg.gradle.parallel=false publish -PPUBLISH_AS_SNAPSHOT=false
+
 plugins {
     `maven-publish`
     signing
