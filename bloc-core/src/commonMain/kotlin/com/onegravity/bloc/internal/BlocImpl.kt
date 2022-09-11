@@ -93,9 +93,9 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         BlocObserver<State>?, sideEffect:
         BlocObserver<SideEffect>?
     ) {
-        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-
         observerLifecycle.doOnStart {
+            val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
             logger.d("start Bloc subscription")
             state?.let {
                 coroutineScope.launch {
@@ -107,11 +107,11 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
                     sideEffects.collect { sideEffect(it) }
                 }
             }
-        }
 
-        observerLifecycle.doOnStop {
-            logger.d("stop Bloc subscription")
-            coroutineScope.cancel("stop Bloc subscription")
+            observerLifecycle.doOnStop {
+                logger.d("stop Bloc subscription")
+                coroutineScope.cancel("stop Bloc subscription")
+            }
         }
     }
 
