@@ -8,11 +8,12 @@ plugins {
 }
 
 android {
+    buildToolsVersion = AndroidBuild.buildToolsVersion
     compileSdk = AndroidBuild.compileSdkVersion
     defaultConfig {
         applicationId = "com.onegravity.bloc.sample"
-        minSdk = 21
-        targetSdk = 32
+        minSdk = AndroidBuild.minSdkVersion
+        targetSdk = AndroidBuild.targetSdkVersion
         versionCode = 1
         versionName = "1.0"
     }
@@ -40,7 +41,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.0"
     }
-    buildToolsVersion = "32.0.0"
 }
 
 dependencies {
@@ -102,4 +102,11 @@ dependencies {
     testImplementation(CashApp.turbine)
     testImplementation(Testing.junit4)
     testImplementation(Testing.mockK)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xcontext-receivers", "-Xskip-prerelease-check")
+    }
 }

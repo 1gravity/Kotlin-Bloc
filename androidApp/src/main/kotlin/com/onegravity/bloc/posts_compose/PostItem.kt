@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
+import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -43,7 +44,10 @@ internal fun PostItem(
         ) {
             GlideImage(
                 imageModel = post.avatarUrl,
-                contentScale = ContentScale.Fit,
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Fit,
+                    alignment = Alignment.Center
+                ),
                 loading = {
                     Box(modifier = Modifier.matchParentSize()) {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
