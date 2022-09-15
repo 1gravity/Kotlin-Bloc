@@ -7,6 +7,7 @@ import com.onegravity.bloc.redux.toBlocState
 import com.onegravity.bloc.sample.books.BookStore.reduxStore
 import com.onegravity.bloc.toObservable
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.reduxkotlin.Thunk
 
@@ -36,14 +37,16 @@ class BooksUseCaseImplRedux(
 
     // The Load Books Thunk
     private fun loadThunk(
-        coroutineScope: CoroutineScope,
-        repository: BooksRepository
-    ): Thunk<BookStore.ReduxModel> = { dispatch, _, _ ->
-        dispatch(BookStore.ReduxAction.Loading)
-        coroutineScope.launch {
-            dispatch(BookStore.ReduxAction.Loaded(repository.loadBooks()))
+        repository: BooksRepository,
+        launch: (block: suspend CoroutineScope.() -> Unit) -> Unit
+    ): Thunk<BookStore.ReduxModel> =
+        { dispatch, _, _ ->
+            dispatch(BookStore.ReduxAction.Loading)
+            launch {
+                val books = repository.loadBooks()
+                dispatch(BookStore.ReduxAction.Loaded(books))
+            }
         }
-    }
 
     private val bloc = bloc<BookState, BookAction, Nothing, Any>(context, reduxStore.toBlocState(
         context = context,
@@ -57,7 +60,7 @@ class BooksUseCaseImplRedux(
     )) {
         reduce<BookAction.Load> {
             // our Proposal: a Thunk which is being dispatched to the Redux Store
-            loadThunk(coroutineScope, repository)
+            loadThunk(repository, { block -> launchIt(block = block) })
         }
         reduce<BookAction.Clear> { BookStore.ReduxAction.Clear }
     }

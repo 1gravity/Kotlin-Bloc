@@ -67,7 +67,7 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         if (postState.loadingId == null || postState.loadingId != post.id || postState.post?.component1()?.id != post.id) {
             // we cancel a previous loading job before starting a new one from the Bloc's
             // CoroutineScope (so it's cancelled when the Bloc is stopped)
-            launch(true) {
+            launchIt(cancelBeforeLaunch = true) {
                 load(post)
             }
         }
