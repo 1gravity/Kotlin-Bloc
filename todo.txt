@@ -1,4 +1,11 @@
 Tests:
+- TODO how to cancel a "request" if the result is obsolete, e.g. a call to the backend if the user
+       navigates away from the screen -> launch a new coroutine and cancel the old one (see PostsComponentImpl for example)
+       --> add this to the FAQ
+- TODO Fix Subscriber extension functions aren't published...
+
+- TODO implement Subscriber tests
+
 - TODO implements Bloc tests with initializer, reducer, thunk, side effect
 - TODO implements BlocState tests
 - TODO implements all the other tests

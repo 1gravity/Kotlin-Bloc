@@ -1,7 +1,12 @@
 package com.onegravity.bloc.utils
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlin.coroutines.CoroutineContext
 
 @DslMarker
 public annotation class BlocDSL
@@ -70,7 +75,10 @@ public data class ThunkContext<State, Action, A : Action>(
     val dispatch: Dispatcher<Action>,
     // we need the CoroutineScope so we can launch jobs from a Thunk
     // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
-    val coroutineScope: CoroutineScope
+    val coroutineScope: CoroutineScope,
+    val launch: ((
+        block: suspend CoroutineScope.() -> Unit
+    ) -> Job) = { block -> coroutineScope.launch(block = block )}
 )
 
 public typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
@@ -89,7 +97,11 @@ public data class ThunkContextNoAction<State, Action>(
     val dispatch: Dispatcher<Action>,
     // we need the CoroutineScope so we can launch jobs from a Thunk
     // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
-    val coroutineScope: CoroutineScope
+    val coroutineScope: CoroutineScope,
+    val launch: (
+        cancelBeforeLaunch: Boolean,
+        block: suspend CoroutineScope.() -> Unit
+    ) -> Job
 )
 
 public typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit

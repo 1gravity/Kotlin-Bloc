@@ -64,6 +64,32 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
         }
     }
 
+    private var job: Job? = null
+
+    private fun thunkContext(
+        getState: GetState<State>,
+        dispatcher: Dispatcher<Action>,
+        coroutineScope: CoroutineScope,
+    ) : ThunkContextNoAction<State, Action> {
+
+        val cancelBeforeLaunch: (
+            cancelBeforeLaunch: Boolean,
+            block: suspend CoroutineScope.() -> Unit
+        ) -> Job = { cancelBeforeLaunch, block ->
+            if (cancelBeforeLaunch) job?.cancel()
+            coroutineScope
+                .launch { block() }
+                .also { job = it }
+        }
+
+        return ThunkContextNoAction(
+            getState = getState,
+            dispatch = dispatcher,
+            coroutineScope = coroutineScope,
+            launch = cancelBeforeLaunch
+        )
+    }
+
     /**
      * BlocExtension interface implementation:
      * thunk { } -> run a thunk MVVM+ style
@@ -73,9 +99,9 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
             val dispatcher: Dispatcher<Action> = {
                 nextThunkDispatcher(it).invoke(it)
             }
-            val context = ThunkContextNoAction(
+            val context = thunkContext(
                 getState = { blocState.value },
-                dispatch = dispatcher,
+                dispatcher = dispatcher,
                 coroutineScope = this
             )
             context.thunk()

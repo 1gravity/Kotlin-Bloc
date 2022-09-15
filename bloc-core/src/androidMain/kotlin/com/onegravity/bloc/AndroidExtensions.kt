@@ -24,6 +24,8 @@ fun <T : ViewDataBinding> ComponentActivity.bind(
     binding.lifecycleOwner = this
 }
 
+// TODO these are for some reason not visible in Android...
+
 /**
  * Subscribes to a BlocObservableOwner (typically a ViewModel, a Fragment or an Activity).
  * The subscription is tied to the lifecycle of a LifecycleOwner (normally an Activity or a Fragment).

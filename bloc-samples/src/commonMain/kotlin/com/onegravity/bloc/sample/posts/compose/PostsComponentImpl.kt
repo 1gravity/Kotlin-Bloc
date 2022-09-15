@@ -61,16 +61,13 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         }
     }
 
-    private var loadingJob: Job? = null
-
     override fun onSelected(post: Post) = thunk {
         // only load if it's not already being loaded or is not yet loaded
         val postState = getState().postState
         if (postState.loadingId == null || postState.loadingId != post.id || postState.post?.component1()?.id != post.id) {
             // we cancel a previous loading job before starting a new one from the Bloc's
             // CoroutineScope (so it's cancelled when the Bloc is stopped)
-            loadingJob?.cancel()
-            loadingJob = coroutineScope.launch {
+            launch(true) {
                 load(post)
             }
         }
