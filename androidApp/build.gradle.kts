@@ -10,6 +10,7 @@ plugins {
 android {
     buildToolsVersion = AndroidBuild.buildToolsVersion
     compileSdk = AndroidBuild.compileSdkVersion
+
     defaultConfig {
         applicationId = "com.onegravity.bloc.sample"
         minSdk = AndroidBuild.minSdkVersion
@@ -17,6 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+
     buildTypes {
         getByName("release") {
             isDebuggable = false
@@ -24,20 +26,31 @@ android {
             isShrinkResources = true
         }
     }
+
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         viewBinding = true
         compose = true
     }
+
     dataBinding {
         isEnabled = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.0"
     }

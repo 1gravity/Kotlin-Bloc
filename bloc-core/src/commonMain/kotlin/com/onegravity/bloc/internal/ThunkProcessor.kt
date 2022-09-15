@@ -64,8 +64,6 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
         }
     }
 
-    private var job: Job? = null
-
     /**
      * BlocExtension interface implementation:
      * thunk { } -> run a thunk MVVM+ style

@@ -2,8 +2,6 @@ package com.onegravity.bloc.utils
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.sync.Mutex
-import kotlin.coroutines.CoroutineContext
 
 @DslMarker
 public annotation class BlocDSL
@@ -37,7 +35,7 @@ public typealias BlocObserver<State> = (State) -> Unit
 public typealias SideEffectStream<Value> = Flow<Value>
 
 /**
- * Function for accepting / rejecting a [Proposal].
+ * Function for accepting / rejecting a Proposal.
  * If the proposal is accepted, returns the new State (which is based on the Proposal).
  * If the proposal is rejected, returns Null.
  */
@@ -54,7 +52,7 @@ public data class InitializerContext<State, Action>(
     val dispatch: Dispatcher<Action>,
     // we need the CoroutineScope so we can launch jobs from an Initializer
     // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
-    val coroutineScope: CoroutineScope
+    internal val coroutineScope: CoroutineScope
 )
 
 public typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
@@ -106,12 +104,36 @@ public data class ReducerContext<State, Action>(
 
 public typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
 
-public data class ReducerContextNoAction<State>(
-    val state: State,
+public class ReducerContextNoAction<State>(
+    public val state: State,
     // we need the CoroutineScope so we can launch jobs in a reducer
     // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
     internal val coroutineScope: CoroutineScope
-)
+) {
+    private val runner = CoroutineRunner()
+
+    internal fun runSingle(jobConfig: JobConfig, block: suspend CoroutineScope.() -> Unit) {
+        runner.runSingle(jobConfig, coroutineScope, block)
+    }
+}
+
+// TODO use a Queue instead of a Map
+internal class CoroutineRunner {
+    private val map: MutableMap<String, Job> = HashMap()
+
+    internal fun runSingle(
+        jobConfig: JobConfig,
+        coroutineScope: CoroutineScope,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        map[jobConfig.jobId]
+            ?.run { cancel() }
+            ?:run {
+                val job = coroutineScope.launch { block() }
+                map[jobConfig.jobId] = job
+            }
+    }
+}
 
 public typealias ReducerNoAction<State, Proposal> = suspend ReducerContextNoAction<State>.() -> Proposal
 
