@@ -1,14 +1,26 @@
 Tests:
-- TODO how to cancel a "request" if the result is obsolete, e.g. a call to the backend if the user
+
+- TODO thunk
+       how to cancel a "request" if the result is obsolete, e.g. a call to the backend if the user
        navigates away from the screen -> launch a new coroutine and cancel the old one (see PostsComponentImpl for example)
        --> add this to the FAQ
-- TODO Fix Subscriber extension functions aren't published...
 
+- TODO feature/redesign_initializers
+       synchronize initializers / onCreate execution with the lifecycle of the bloc
+       -> a bloc could not transition to Started while the initializer is still running
+       we would only need to synchronize the initializer code block itself and not wait for
+       dispatched actions to be processed because those actions won't be executed before the bloc is
+       started / transitions to Started
+
+
+- TODO Fix Subscriber extension functions aren't published...
 - TODO implement Subscriber tests
 
 - TODO implements Bloc tests with initializer, reducer, thunk, side effect
 - TODO implements BlocState tests
 - TODO implements all the other tests
+
+- TODO think about composition of blocs, one for ui state, one for domain logic?
 
 - TODO replace the buildSrc with a composite build so we don't need to maintain separate versions
        for dependencies
@@ -28,8 +40,3 @@ Tests:
 - TODO implement `sideEffects` in the Bloc DSL to allow emission of multiple side effects
        (`sideEffect` allows only a single side effect)
 - TODO compiler plugin to have compile-time checks when building Blocs and BlocStates
-- TODO synchronize initializers / onCreate execution with the lifecycle of the bloc
-       -> a bloc could not transition to Started while the initializer is still running
-       we would only need to synchronize the initializer code block itself and not wait for
-       dispatched actions to be processed because those actions won't be executed before the bloc is
-       started / transitions to Started

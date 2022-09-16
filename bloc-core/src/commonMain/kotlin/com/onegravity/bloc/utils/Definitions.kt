@@ -1,3 +1,6 @@
+// TODO update all the documentation for the different COntext objects that still mention th
+//      CoroutineScope which is internal now
+
 package com.onegravity.bloc.utils
 
 import kotlinx.coroutines.*
@@ -71,7 +74,13 @@ public data class ThunkContext<State, Action, A : Action>(
     // we need the CoroutineScope so we can launch jobs in a thunk
     // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
     internal val coroutineScope: CoroutineScope
-)
+) {
+    private val runner = CoroutineRunner()
+
+    internal fun runSingle(jobConfig: JobConfig, block: suspend CoroutineScope.() -> Unit) {
+        runner.runSingle(jobConfig, coroutineScope, block)
+    }
+}
 
 public typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
 
@@ -90,7 +99,13 @@ public data class ThunkContextNoAction<State, Action>(
     // we need the CoroutineScope so we can launch jobs in a thunk
     // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
     internal val coroutineScope: CoroutineScope,
-)
+) {
+    private val runner = CoroutineRunner()
+
+    internal fun runSingle(jobConfig: JobConfig, block: suspend CoroutineScope.() -> Unit) {
+        runner.runSingle(jobConfig, coroutineScope, block)
+    }
+}
 
 public typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit
 
@@ -100,7 +115,13 @@ public data class ReducerContext<State, Action>(
     // we need the CoroutineScope so we can launch jobs in a reducer
     // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
     internal val coroutineScope: CoroutineScope
-)
+) {
+    private val runner = CoroutineRunner()
+
+    internal fun runSingle(jobConfig: JobConfig, block: suspend CoroutineScope.() -> Unit) {
+        runner.runSingle(jobConfig, coroutineScope, block)
+    }
+}
 
 public typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
 
@@ -117,23 +138,10 @@ public class ReducerContextNoAction<State>(
     }
 }
 
-// TODO use a Queue instead of a Map
-internal class CoroutineRunner {
-    private val map: MutableMap<String, Job> = HashMap()
-
-    internal fun runSingle(
-        jobConfig: JobConfig,
-        coroutineScope: CoroutineScope,
-        block: suspend CoroutineScope.() -> Unit
-    ) {
-        map[jobConfig.jobId]
-            ?.run { cancel() }
-            ?:run {
-                val job = coroutineScope.launch { block() }
-                map[jobConfig.jobId] = job
-            }
-    }
-}
+/**
+ * This definition is experimental, might lead to naming conflicts
+ */
+public typealias Coroutine = suspend CoroutineScope.() -> Unit
 
 public typealias ReducerNoAction<State, Proposal> = suspend ReducerContextNoAction<State>.() -> Proposal
 

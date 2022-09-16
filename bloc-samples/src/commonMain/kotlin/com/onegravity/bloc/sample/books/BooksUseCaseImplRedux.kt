@@ -59,7 +59,7 @@ class BooksUseCaseImplRedux(
     )) {
         reduce<BookAction.Load> {
             // our Proposal: a Thunk which is being dispatched to the Redux Store
-            loadThunk(repository) { block -> launch(false, block = block) }
+            loadThunk(repository) { block -> launch(block) }
         }
         reduce<BookAction.Clear> { BookStore.ReduxAction.Clear }
     }

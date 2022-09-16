@@ -1,17 +1,18 @@
 package com.onegravity.bloc.utils
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
+/**
+ * TODO document
+ */
+public data class JobConfig(val runSingle: Boolean = false, val jobId: String = "DefaultJobId")
 
 /**
  * InitializerContext extension function to encapsulate the CoroutineScope
  * (initializers shouldn't manipulate the CoroutineScope)
  */
 @BlocDSL
-public fun <State, Action> InitializerContext<State, Action>.launch(
-    block: suspend CoroutineScope.() -> Unit
-) {
+public fun <State, Action> InitializerContext<State, Action>.launch(block: Coroutine) {
     coroutineScope.launch { block() }
 }
 
@@ -23,9 +24,17 @@ public fun <State, Action> InitializerContext<State, Action>.launch(
 @BlocDSL
 public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(
     jobConfig: JobConfig? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: Coroutine
 ) {
-    coroutineScope.launch { block() }
+    when (jobConfig?.runSingle) {
+        true -> runSingle(jobConfig, block)
+        else -> coroutineScope.launch { block() }
+    }
+}
+
+@BlocDSL
+public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(block: Coroutine) {
+    launch(null, block)
 }
 
 /**
@@ -34,9 +43,17 @@ public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(
 @BlocDSL
 public fun <State, Action> ThunkContextNoAction<State, Action>.launch(
     jobConfig: JobConfig? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: Coroutine
 ) {
-    coroutineScope.launch { block() }
+    when (jobConfig?.runSingle) {
+        true -> runSingle(jobConfig, block)
+        else -> coroutineScope.launch { block() }
+    }
+}
+
+@BlocDSL
+public fun <State, Action> ThunkContextNoAction<State, Action>.launch(block: Coroutine) {
+    launch(null, block)
 }
 
 /**
@@ -47,12 +64,20 @@ public fun <State, Action> ThunkContextNoAction<State, Action>.launch(
 @BlocDSL
 public fun <State, Action> ReducerContext<State, Action>.launch(
     jobConfig: JobConfig? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: Coroutine
 ) {
-    coroutineScope.launch { block() }
+    when (jobConfig?.runSingle) {
+        true -> runSingle(jobConfig, block)
+        else -> coroutineScope.launch { block() }
+    }
 }
 
-public data class JobConfig(val runSingle: Boolean = false, val jobId: String = "DefaultJobId")
+@BlocDSL
+public fun <State, Action> ReducerContext<State, Action>.launch(
+    block: Coroutine
+) {
+    launch(null) { block() }
+}
 
 /**
  * ReducerContextNoAction extension function (see [ReducerContext])
@@ -60,10 +85,15 @@ public data class JobConfig(val runSingle: Boolean = false, val jobId: String = 
 @BlocDSL
 public fun <State> ReducerContextNoAction<State>.launch(
     jobConfig: JobConfig? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: Coroutine
 ) {
     when (jobConfig?.runSingle) {
         true -> runSingle(jobConfig, block)
         else -> coroutineScope.launch { block() }
     }
+}
+
+@BlocDSL
+public fun <State> ReducerContextNoAction<State>.launch(block: Coroutine) {
+    launch(null, block)
 }

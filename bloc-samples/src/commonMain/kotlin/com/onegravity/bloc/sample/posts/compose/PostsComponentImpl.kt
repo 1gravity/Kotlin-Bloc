@@ -12,6 +12,7 @@ import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.thunk
 import com.onegravity.bloc.util.getKoinInstance
+import com.onegravity.bloc.utils.JobConfig
 import com.onegravity.bloc.utils.ThunkContextNoAction
 import com.onegravity.bloc.utils.launch
 
@@ -65,7 +66,7 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         if (postState.loadingId == null || postState.loadingId != post.id || postState.post?.component1()?.id != post.id) {
             // we cancel a previous loading job before starting a new one from the Bloc's
             // CoroutineScope (so it's cancelled when the Bloc is stopped)
-            launch(runSingleJob = true) {
+            launch(JobConfig(true)) {
                 load(post)
             }
         }
