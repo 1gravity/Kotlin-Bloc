@@ -45,7 +45,13 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      */
     internal val sideEffects: SideEffectStream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
-    private var scope: CoroutineScope? = null
+    private var coroutineScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
+        set(value) {
+            field = value
+            coroutineRunner = CoroutineRunner(coroutineScope)
+        }
+
+    private var coroutineRunner = CoroutineRunner(coroutineScope)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -54,18 +60,22 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     init {
         blocContext.lifecycle.doOnStart {
             logger.d("onStart -> start Bloc")
-            scope = CoroutineScope(SupervisorJob() + reduceDispatcher)
+            coroutineScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
             processQueue()
         }
 
         blocContext.lifecycle.doOnStop {
             logger.d("onStop -> stop Bloc")
-            scope?.cancel()
+            try {
+                coroutineScope.cancel()
+            } catch (e: IllegalStateException) {
+                logger.w("CoroutineScope cancellation failed: ${e.message}")
+            }
         }
     }
 
     private fun processQueue() {
-        scope?.launch {
+        coroutineScope.launch {
             for (element in reduceChannel) {
                 element.action?.let { action ->
                     runReducers(action)
@@ -132,9 +142,9 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(
         action: Action
     ) {
-        scope?.run {
+        coroutineScope.run {
             mutex.withLock {
-                val context = ReducerContext(blocState.value, action, this)
+                val context = ReducerContext(blocState.value, action, coroutineRunner)
                 val reduce = this@runReducer
                 val (proposal, sideEffects) = context.reduce()
                 proposal?.let { blocState.send(it) }
@@ -147,9 +157,9 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * Triggered to execute a specific reducer (dispatched MVVM+ style)
      */
     private fun runReducer(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
-        scope?.launch {
+        coroutineScope.launch {
             mutex.withLock {
-                val context = ReducerContextNoAction(blocState.value, this)
+                val context = ReducerContextNoAction(blocState.value, coroutineRunner)
                 val (proposal, sideEffects) = context.reduce()
                 proposal?.let { blocState.send(it) }
                 postSideEffects(sideEffects)

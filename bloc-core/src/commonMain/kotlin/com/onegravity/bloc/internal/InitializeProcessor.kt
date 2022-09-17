@@ -25,7 +25,13 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
      * of the bloc.
      */
     private val mutex = Mutex()
-    private var scope: CoroutineScope? = null
+    private var coroutineScope = CoroutineScope(SupervisorJob() + initDispatcher)
+        set(value) {
+            field = value
+            coroutineRunner = CoroutineRunner(coroutineScope)
+        }
+
+    private var coroutineRunner = CoroutineRunner(coroutineScope)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -34,12 +40,16 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     init {
         blocContext.lifecycle.doOnCreate {
             logger.d("onCreate -> initialize Bloc")
-            scope = CoroutineScope(SupervisorJob() + initDispatcher)
+            coroutineScope = CoroutineScope(SupervisorJob() + initDispatcher)
             initialize?.let { runInitializer(it) }
         }
         blocContext.lifecycle.doOnDestroy {
             logger.d("onDestroy -> destroy Bloc")
-            scope?.cancel()
+            try {
+                coroutineScope.cancel()
+            } catch (e: IllegalStateException) {
+                logger.w("CoroutineScope cancellation failed: ${e.message}")
+            }
         }
     }
 
@@ -57,12 +67,12 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     }
 
     private fun runInitializer(initialize: Initializer<State, Action>) =
-        scope?.launch {
+        coroutineScope.launch {
             if (mutex.tryLock(this@InitializeProcessor)) {
                 val context = InitializerContext(
                     state = blocState.value,
-                    coroutineScope = this,
-                    dispatch = dispatch
+                    dispatch = dispatch,
+                    runner = coroutineRunner
                 )
                 context.initialize()
             } else {

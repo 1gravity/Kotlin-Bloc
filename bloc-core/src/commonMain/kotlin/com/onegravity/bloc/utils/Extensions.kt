@@ -1,99 +1,118 @@
 package com.onegravity.bloc.utils
 
-import kotlinx.coroutines.launch
-
 /**
- * TODO document
- */
-public data class JobConfig(val runSingle: Boolean = false, val jobId: String = "DefaultJobId")
-
-/**
- * InitializerContext extension function to encapsulate the CoroutineScope
- * (initializers shouldn't manipulate the CoroutineScope)
+ * Extension function for [InitializerContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
  */
 @BlocDSL
-public fun <State, Action> InitializerContext<State, Action>.launch(block: Coroutine) {
-    coroutineScope.launch { block() }
+public fun <State, Action> InitializerContext<State, Action>.launch(block: CoroutineBlock) {
+    runner.run(null, block)
 }
 
 /**
- * ThunkContext extension function to:
- * 1. encapsulate the CoroutineScope (thunks shouldn't manipulate the CoroutineScope)
- * 2. add extra functionality like auto-cancel of previously started jobs
+ * Extension function for [InitializerContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ *
+ * @param jobConfig @see [JobConfig]
+ */
+@BlocDSL
+public fun <State, Action> InitializerContext<State, Action>.launch(
+    jobConfig: JobConfig,
+    block: CoroutineBlock
+) {
+    runner.run(jobConfig, block)
+}
+
+/**
+ * Extension function for [ThunkContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ */
+@BlocDSL
+public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(block: CoroutineBlock) {
+    runner.run(null, block)
+}
+
+/**
+ * Extension function for [ThunkContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ *
+ * @param jobConfig @see [JobConfig]
  */
 @BlocDSL
 public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(
-    jobConfig: JobConfig? = null,
-    block: Coroutine
+    jobConfig: JobConfig,
+    block: CoroutineBlock
 ) {
-    when (jobConfig?.runSingle) {
-        true -> runSingle(jobConfig, block)
-        else -> coroutineScope.launch { block() }
-    }
-}
-
-@BlocDSL
-public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(block: Coroutine) {
-    launch(null, block)
+    runner.run(jobConfig, block)
 }
 
 /**
- * ThunkContextNoAction extension function (see [ThunkContext])
+ * Extension function for [ThunkContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ */
+@BlocDSL
+public fun <State, Action> ThunkContextNoAction<State, Action>.launch(block: CoroutineBlock) {
+    runner.run(null, block)
+}
+
+/**
+ * Extension function for [ThunkContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ *
+ * @param jobConfig @see [JobConfig]
  */
 @BlocDSL
 public fun <State, Action> ThunkContextNoAction<State, Action>.launch(
-    jobConfig: JobConfig? = null,
-    block: Coroutine
+    jobConfig: JobConfig,
+    block: CoroutineBlock
 ) {
-    when (jobConfig?.runSingle) {
-        true -> runSingle(jobConfig, block)
-        else -> coroutineScope.launch { block() }
-    }
-}
-
-@BlocDSL
-public fun <State, Action> ThunkContextNoAction<State, Action>.launch(block: Coroutine) {
-    launch(null, block)
+    runner.run(jobConfig, block)
 }
 
 /**
- * ReducerContext extension function to:
- * 1. encapsulate the CoroutineScope (reducers shouldn't manipulate the CoroutineScope)
- * 2. add extra functionality like auto-cancel of previously started jobs
+ * Extension function for [ReducerContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
  */
 @BlocDSL
 public fun <State, Action> ReducerContext<State, Action>.launch(
-    jobConfig: JobConfig? = null,
-    block: Coroutine
+    block: CoroutineBlock
 ) {
-    when (jobConfig?.runSingle) {
-        true -> runSingle(jobConfig, block)
-        else -> coroutineScope.launch { block() }
-    }
-}
-
-@BlocDSL
-public fun <State, Action> ReducerContext<State, Action>.launch(
-    block: Coroutine
-) {
-    launch(null) { block() }
+    runner.run(null, block)
 }
 
 /**
- * ReducerContextNoAction extension function (see [ReducerContext])
+ * Extension function for [ReducerContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ *
+ * @param jobConfig @see [JobConfig]
+ */
+@BlocDSL
+public fun <State, Action> ReducerContext<State, Action>.launch(
+    jobConfig: JobConfig,
+    block: CoroutineBlock
+) {
+    runner.run(jobConfig, block)
+}
+
+/**
+ * Extension function for [ReducerContextNoAction] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ */
+@BlocDSL
+public fun <State> ReducerContextNoAction<State>.launch(block: CoroutineBlock) {
+    runner.run(null, block)
+}
+
+/**
+ * Extension function for [ReducerContextNoAction] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ *
+ * @param jobConfig @see [JobConfig]
  */
 @BlocDSL
 public fun <State> ReducerContextNoAction<State>.launch(
-    jobConfig: JobConfig? = null,
-    block: Coroutine
+    jobConfig: JobConfig,
+    block: CoroutineBlock
 ) {
-    when (jobConfig?.runSingle) {
-        true -> runSingle(jobConfig, block)
-        else -> coroutineScope.launch { block() }
-    }
-}
-
-@BlocDSL
-public fun <State> ReducerContextNoAction<State>.launch(block: Coroutine) {
-    launch(null, block)
+    runner.run(jobConfig, block)
 }

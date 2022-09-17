@@ -4,13 +4,10 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.runCatching
-import com.onegravity.bloc.BlocContext
-import com.onegravity.bloc.bloc
-import com.onegravity.bloc.reduce
+import com.onegravity.bloc.*
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.BlocState
-import com.onegravity.bloc.thunk
 import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.utils.JobConfig
 import com.onegravity.bloc.utils.ThunkContextNoAction

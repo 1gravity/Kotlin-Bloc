@@ -27,7 +27,13 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     private val thunkChannel = Channel<Action>(UNLIMITED)
 
-    private var scope: CoroutineScope? = null
+    private var coroutineScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
+        set(value) {
+            field = value
+            coroutineRunner = CoroutineRunner(coroutineScope)
+        }
+
+    private var coroutineRunner = CoroutineRunner(coroutineScope)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -35,17 +41,21 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     init {
         blocContext.lifecycle.doOnStart {
-            scope = CoroutineScope(SupervisorJob() + thunkDispatcher)
+            coroutineScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
             processQueue()
         }
 
         blocContext.lifecycle.doOnStop {
-            scope?.cancel()
+            try {
+                coroutineScope.cancel()
+            } catch (e: IllegalStateException) {
+                logger.w("CoroutineScope cancellation failed: ${e.message}")
+            }
         }
     }
 
     private fun processQueue() {
-        scope?.launch {
+        coroutineScope.launch {
             for (action in thunkChannel) {
                 runThunks(action)
             }
@@ -69,14 +79,14 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * thunk { } -> run a thunk MVVM+ style
      */
     internal fun thunk(thunk: ThunkNoAction<State, Action>) =
-        scope?.launch {
+        coroutineScope.launch {
             val dispatcher: Dispatcher<Action> = {
                 nextThunkDispatcher(it).invoke(it)
             }
             val context = ThunkContextNoAction(
                 getState = { blocState.value },
                 dispatch = dispatcher,
-                coroutineScope = this
+                runner = coroutineRunner
             )
             context.thunk()
         }
@@ -101,7 +111,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * Run a specific thunk
      */
     private suspend fun runThunk(action: Action, index: Int) {
-        scope?.run {
+        coroutineScope.run {
             val dispatcher: Dispatcher<Action> = {
                 nextThunkDispatcher(it, index + 1).invoke(it)
             }
@@ -110,7 +120,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
                 getState = { blocState.value },
                 action = action,
                 dispatch = dispatcher,
-                coroutineScope = this
+                runner = coroutineRunner
             )
             context.thunk()
         }

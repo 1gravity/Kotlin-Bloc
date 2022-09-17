@@ -7,7 +7,7 @@ import com.onegravity.bloc.utils.launch
 import com.onegravity.bloc.redux.toBlocState
 import com.onegravity.bloc.sample.books.BookStore.reduxStore
 import com.onegravity.bloc.toObservable
-import kotlinx.coroutines.CoroutineScope
+import com.onegravity.bloc.utils.CoroutineBlock
 import org.reduxkotlin.Thunk
 
 /**
@@ -37,7 +37,7 @@ class BooksUseCaseImplRedux(
     // The Load Books Thunk
     private fun loadThunk(
         repository: BooksRepository,
-        launch: (block: suspend CoroutineScope.() -> Unit) -> Unit
+        launch: (block: CoroutineBlock) -> Unit
     ): Thunk<BookStore.ReduxModel> =
         { dispatch, _, _ ->
             dispatch(BookStore.ReduxAction.Loading)
