@@ -75,13 +75,12 @@ Processing an `Action` usually means invoking a `Reducer`:
 Above definition is the official Redux reducer definition and captures its essence, although reducers in the context of `Kotlin Bloc` are a bit more complex: 
 
 ```kotlin
-suspend (State, Action, CoroutineScope) -> Proposal
+suspend (State, Action) -> Proposal
 ```
 
-Compared to a Redux reducer, this one is:
-1. suspending
-2. takes a CoroutineScope as parameter (on top of the `State` and the `Action`)
-3. returns a `Proposal` instead of `State`
+Compared to a Redux reducer, this one:
+1. is suspending
+2. returns a `Proposal` instead of `State`
 
 More details can be found in [Reducer](./bloc/reducer).
 
@@ -104,10 +103,10 @@ The difference between a "regular" reducer and one with side effects is simply t
 
 ```kotlin
 // no side effects
-suspend (State, Action, CoroutineScope) -> Proposal
+suspend (State, Action) -> Proposal
 
 // with side effects
-suspend (State, Action, CoroutineScope) -> Effect<Proposal, SideEffect>
+suspend (State, Action) -> Effect<Proposal, SideEffect>
 ```
 
 When the framework detects an `Effect` it will emit the side effects to a dedicated `Stream` that can be observed separately from the regular `State` stream. There's a DSL that make it easy to "build" reducers with side effects (see [Reducer](./bloc/reducer)).
@@ -121,8 +120,7 @@ https://redux.js.org/usage/writing-logic-thunks
 
 A `Thunk` in the context of `Kotlin Bloc` is exactly what above definition implies, although its implementation and especially its execution is completely different from a Redux thunk. While the latter is a function, dispatched as an action to a Redux store and processed by the redux-thunk middleware, "our" thunk is not dispatched as an action but triggered the same way a reducer is triggered, by reacting to an `Action` that was sent to the `Bloc`. On top of that it's also:
 1. a suspending function
-2. takes a CoroutineScope as parameter (next to the `GetState`, `Action` and `Dispatcher` parameters)
-3. Actions are dispatched to the "next" thunk or reducer in the execution chain
+2. actions are dispatched to the "next" thunk or reducer in the execution chain
 
 Details can be found in [Thunk](./bloc/thunk).
 

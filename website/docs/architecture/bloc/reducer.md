@@ -11,25 +11,23 @@ To reiterate:
 > A reducer is a function that receives the current state and an action object, decides how to update the state if necessary, and returns the new state: (state, action) => newState  
 (https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
 
-While the official Redux reducer definition captures the essence, reducers in the context of `Kotlin Bloc` are a bit more complex: 
+While the official Redux reducer definition captures the essence, reducers in the context of `Kotlin Bloc` are slightly different: 
 ```kotlin
-suspend (State, Action, CoroutineScope) -> Proposal
+suspend (State, Action) -> Proposal
 ```
 Compared to a Redux reducer, "our" reducer is:
 1. suspending
-2. takes a CoroutineScope as parameter (on top of the `State` and the `Action`)
-3. returns a `Proposal` instead of `State`
+2. returns a `Proposal` instead of `State`
 
 ### Context
 
-A reducer is called with a `ReducerContext` as receiver. The context giving access to the current `State`, the `Action` that triggered the reducer's execution and a CoroutineScope:
+A reducer is called with a `ReducerContext` as receiver. The context giving access to the current `State` and the `Action` that triggered the reducer's execution:
 
 
 ```kotlin
 public data class ReducerContext<State, Action>(
     val state: State,
-    val action: Action,
-    val coroutineScope: CoroutineScope
+    val action: Action
 )
 ```
 
@@ -43,8 +41,9 @@ reduce {
     }
 }
 ```
-
-The `CoroutineScope` is only used in the [Redux Extension](../../extensions/redux/redux_motivation). It's tied to the lifecycle of the bloc and will be cancelled when the bloc is destroyed.
+:::tip
+There are extension functions to launch `Coroutines` from a reducer (see [Coroutine Launcher](coroutine_launcher)). Reducers compute and return new state synchronously and it's not recommended to use the launch function. However when used in conjunction with a `Redux` store, access to this function is crucial to bridge the gap between `Redux Thunks` and the coroutine world (see also [Redux Extension](../../extensions/redux/redux_motivation)). 
+:::
 
 ### Side Effect
 
@@ -54,14 +53,14 @@ Default: reducer returns `Proposal`:
 
 ```kotlin
 // reducer without side effects
-suspend (State, Action, CoroutineScope) -> Proposal
+suspend (State, Action) -> Proposal
 ```
 
 Exception: reducer returns `Effect<Proposal, SideEffect>`:
 
 ```kotlin
 // reducer with side effects
-suspend (State, Action, CoroutineScope) -> Effect<Proposal, SideEffect>
+suspend (State, Action) -> Effect<Proposal, SideEffect>
 
 public data class Effect<Proposal : Any, SideEffect : Any>(
     val proposal: Proposal?,

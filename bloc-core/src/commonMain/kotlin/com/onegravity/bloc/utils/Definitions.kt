@@ -1,6 +1,6 @@
 package com.onegravity.bloc.utils
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 
 @DslMarker
@@ -35,7 +35,7 @@ public typealias BlocObserver<State> = (State) -> Unit
 public typealias SideEffectStream<Value> = Flow<Value>
 
 /**
- * Function for accepting / rejecting a [Proposal].
+ * Function for accepting / rejecting a Proposal.
  * If the proposal is accepted, returns the new State (which is based on the Proposal).
  * If the proposal is rejected, returns Null.
  */
@@ -47,67 +47,17 @@ public typealias Selector<State, Model> = (State) -> Model
 
 public typealias Dispatcher<Action> = suspend (Action) -> Unit
 
-public data class InitializerContext<State, Action>(
-    val state: State,
-    val dispatch: Dispatcher<Action>,
-    // we need the CoroutineScope so we can launch jobs from an Initializer
-    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
-    val coroutineScope: CoroutineScope
-)
-
 public typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
-
-/**
- * ThunkContext is used when defining a thunk like this:
- * ```
- *   thunk<A: Action> {
- *   }
- * ```
- */
-public data class ThunkContext<State, Action, A : Action>(
-    val getState: GetState<State>,
-    val action: A,
-    val dispatch: Dispatcher<Action>,
-    // we need the CoroutineScope so we can launch jobs from a Thunk
-    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
-    val coroutineScope: CoroutineScope
-)
 
 public typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
 
 public typealias GetState<State> = () -> State
 
-/**
- * ThunkContextNoAction is used when defining a thunk like this (as part of a function call e.g.):
- * ```
- *   fun doSomething() = thunk {
- *   }
- * ```
- */
-public data class ThunkContextNoAction<State, Action>(
-    val getState: GetState<State>,
-    val dispatch: Dispatcher<Action>,
-    // we need the CoroutineScope so we can launch jobs from a Thunk
-    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
-    val coroutineScope: CoroutineScope
-)
-
 public typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit
-
-public data class ReducerContext<State, Action>(
-    val state: State,
-    val action: Action,
-    // we need the CoroutineScope to use suspend functions in Redux Thunks
-    // the CoroutineScope is the same used in the Bloc itself --> it's tied to BlocContext.lifecycle
-    val coroutineScope: CoroutineScope
-)
 
 public typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
 
-public data class ReducerContextNoAction<State>(
-    val state: State,
-    val coroutineScope: CoroutineScope
-)
+public typealias CoroutineBlock = suspend CoroutineScope.() -> Unit
 
 public typealias ReducerNoAction<State, Proposal> = suspend ReducerContextNoAction<State>.() -> Proposal
 

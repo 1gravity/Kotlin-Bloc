@@ -11,14 +11,13 @@ Initializers are functions executed when the bloc is created, typically to kick 
 
 ### Context
 
-An initializer is called with a `InitializerContext` as receiver. The context is giving access to the current `State`, a `Dispatcher` and a `CoroutineScope`:
+An initializer is called with a `InitializerContext` as receiver. The context is giving access to the current `State` and a `Dispatcher`:
 
 
 ```kotlin
 public data class InitializerContext<State, Action>(
     val state: State,
-    val dispatch: Dispatcher<Action>,
-    val coroutineScope: CoroutineScope
+    val dispatch: Dispatcher<Action>
 )
 ```
 
@@ -52,4 +51,8 @@ The order of declaration is irrelevant, the initializer will always be called fi
 
 :::tip
 If more than one initializer is defined, the first one (according to their order of declaration) is used, all others are ignored.
+:::
+
+:::tip
+There are extension functions to launch `Coroutines` from an initializer (see [Coroutine Launcher](coroutine_launcher)). 
 :::
