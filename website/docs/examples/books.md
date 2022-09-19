@@ -73,7 +73,7 @@ The code shows a typical pattern for thunks:
 3. it dispatches an action with the result of that asynchronous operation which will result in another state update by a reducer 
 
 :::tip
-Reducers are suspended functions as well and also have access to a CoroutineScope so reducers can theoretically run asynchronous code as well. While there's nothing preventing you from doing that, don't:
+Reducers are suspended functions as well and can launch coroutines (see [Coroutine Launcher](../architecture/bloc/coroutine_launcher)) -> reducers can theoretically run asynchronous code as well. While there's nothing preventing you from doing that, don't:
 1. A thunk's purpose is to run asynchronous code, a reducer's purpose is to reduce state based on ui events. Trying to use a component for something they aren't built for, will inevitably lead to problems.
 2. Reducers run sequentially. Consequentially this will update the state to `SomeState` first before processing `SomeAction`:
 ```kotlin
@@ -84,6 +84,7 @@ reduce {
 ```
 3. Reducers expect `State` as return value. You can theoretically do something like this:
 ```kotlin
+// use your own CoroutineScope here
 withContext(coroutineScope.coroutineContext) {
   // do asynchronous stuff
   BookState.Loading
@@ -91,6 +92,7 @@ withContext(coroutineScope.coroutineContext) {
 ```
 or:
 ```kotlin
+// use your own CoroutineScope here
 coroutineScope.async {
  // do asynchronous stuff
  BookState.Loading

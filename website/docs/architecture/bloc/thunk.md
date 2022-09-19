@@ -13,20 +13,18 @@ https://redux.js.org/usage/writing-logic-thunks
 
 While a Redux thunk is a function, dispatched as an action to a Redux store and processed by the redux-thunk middleware, a `Kotlin Bloc` thunk is not dispatched as an action but triggered the same way a reducer is triggered, by reacting to an `Action` that was sent to the `Bloc`. On top of that it's also:
 1. a suspending function
-2. takes a CoroutineScope as parameter (next to the `GetState`, `Action` and `Dispatcher` parameters)
-3. Actions are dispatched to the "next" thunk or reducer in the execution chain 
+2. actions are dispatched to the "next" thunk or reducer in the execution chain 
 
 ### Context
 
-A thunk is called with a `ThunkContext` as receiver. The context is giving access to the current `State`, the `Action` that triggered the thunk's execution, a `Dispatcher` and a `CoroutineScope`:
+A thunk is called with a `ThunkContext` as receiver. The context is giving access to the current `State`, the `Action` that triggered the thunk's execution and a `Dispatcher`:
 
 
 ```kotlin
 public data class ThunkContext<State, Action>(
     val getState: GetState<State>,
     val action: Action,
-    val dispatch: Dispatcher<Action>,
-    val coroutineScope: CoroutineScope
+    val dispatch: Dispatcher<Action>
 )
 ```
 
@@ -70,29 +68,9 @@ thunk<Load> {
 
 This doesn't require to call `dispatch(action)` explicitly since it only catches a single action (`Load`) and then dispatches its own actions.
 
-#### CoroutineScope
-
-The `CoroutineScope` can be used if coroutines / jobs need to be manually controlled, e.g. to launch/cancel asynchronous operations when a thunk is triggered multiple times like in this example (not a thread-safe implementation):
-
-```kotlin
-private var loadingJob: Job? = null
-
-// the user can select multiple posts within a brief period of time
-fun onSelected(post: Post) = thunk {
-    
-    // only load if not already being loaded and if a different post was selected
-    if (loadingJob != null && state.id != post.id) {
-        
-        // we cancel a previous loading job before starting a new one
-        loadingJob?.cancel()
-        loadingJob = coroutineScope.launch {
-            load(post)
-        }
-    }
-}
-```
-
-The `CoroutineScope` is tied to the lifecycle of the bloc and will be cancelled when the bloc is destroyed.
+:::tip
+There are extension functions to launch `Coroutines` from a thunk (see [Coroutine Launcher](coroutine_launcher)). 
+:::
 
 ## Execution
 

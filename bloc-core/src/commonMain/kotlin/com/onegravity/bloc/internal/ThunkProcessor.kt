@@ -46,11 +46,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
         }
 
         blocContext.lifecycle.doOnStop {
-            try {
-                coroutineScope.cancel()
-            } catch (e: IllegalStateException) {
-                logger.w("CoroutineScope cancellation failed: ${e.message}")
-            }
+            coroutineScope.cancel()
         }
     }
 

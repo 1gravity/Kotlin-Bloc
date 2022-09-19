@@ -1,22 +1,19 @@
 package com.onegravity.bloc.utils
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-
-private const val DefaultJobId = "DefaultJobId"
+import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
- * TODO document
- */
-public data class JobConfig(val cancelPrevious: Boolean = false, val jobId: String = DefaultJobId)
-
-// TODO use a Queue instead of a Map
-/**
- * Unfortunately this needs to be public....
+ * The CoroutineRunner is tied to a bloc either to run initializer, thunk or reducer coroutines.
+ * It's using one of the three bloc CoroutineScopes -> it's tied to the bloc's lifecycle.
+ *
+ * Unfortunately the CoroutineRunner needs to be public because it's exposed by public functions
+ * (InitializerContext, ThunkContext, ReducerContext etc.).
  */
 public class CoroutineRunner(private val coroutineScope: CoroutineScope) {
-    private val map: MutableMap<String, Job> = HashMap()
+    private val mutex = Mutex()
+    private val map: MutableMap<String, ArrayDeque<Job>> = mutableMapOf()
 
     internal fun run(
         jobConfig: JobConfig?,
@@ -24,10 +21,19 @@ public class CoroutineRunner(private val coroutineScope: CoroutineScope) {
     ) {
         val cancelPrevious = jobConfig?.cancelPrevious == true
         val jobId = jobConfig?.jobId ?: DefaultJobId
-        if (cancelPrevious) {
-            map[jobId]?.cancel()
+
+        coroutineScope.launch {
+            mutex.withLock {
+                val queue = map[jobId] ?: ArrayDeque<Job>().also { map[jobId] = it }
+                if (cancelPrevious) {
+                    queue.forEach {
+                        it.cancelAndJoin()
+                    }
+                }
+                val job = coroutineScope.launch(block = block)
+                queue.add(job)
+            }
         }
-        map[jobId] = coroutineScope.launch { block() }
     }
 
 }

@@ -66,11 +66,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
 
         blocContext.lifecycle.doOnStop {
             logger.d("onStop -> stop Bloc")
-            try {
-                coroutineScope.cancel()
-            } catch (e: IllegalStateException) {
-                logger.w("CoroutineScope cancellation failed: ${e.message}")
-            }
+            coroutineScope.cancel()
         }
     }
 

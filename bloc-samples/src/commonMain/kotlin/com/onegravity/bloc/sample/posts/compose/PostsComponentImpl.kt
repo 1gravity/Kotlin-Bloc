@@ -12,6 +12,7 @@ import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.utils.JobConfig
 import com.onegravity.bloc.utils.ThunkContextNoAction
 import com.onegravity.bloc.utils.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 // no external actions, we use a simple function call
 sealed class PostsAction
@@ -62,7 +63,7 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         val postState = getState().postState
         if (postState.loadingId == null || postState.loadingId != post.id || postState.post?.component1()?.id != post.id) {
             // we cancel a previous loading job before starting a new one from the Bloc's
-            // CoroutineScope (so it's cancelled when the Bloc is stopped)
+            // CoroutineScope -> it's also cancelled when the Bloc is stopped
             launch(JobConfig(true)) {
                 load(post)
             }
@@ -79,7 +80,9 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
             val result = repository.getDetail(post.id)
             dispatch(PostLoaded(result))
         }.onFailure {
-            dispatch(PostLoaded(Err(it)))
+            // this was launched with JobConfig(cancelPrevious = true) -> CancellationExceptions can
+            // occur which we don't want to propagate to the ui
+            if (it !is CancellationException) dispatch(PostLoaded(Err(it)))
         }
     }
 }

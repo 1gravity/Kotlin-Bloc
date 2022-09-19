@@ -1,8 +1,5 @@
 package com.onegravity.bloc.utils
 
-// TODO update the documentation for the different Context objects that still mention the
-//      CoroutineScope which was removed and replaced by launch extension functions
-
 /**
  * [InitializerContext] is used as receiver for an initializer:
  * ```

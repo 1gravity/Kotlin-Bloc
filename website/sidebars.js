@@ -65,7 +65,10 @@ const sidebars = {
           "type": "doc",
           "id": "architecture/bloc/bloc_context"
         },
-      ]
+        {
+          "type": "doc",
+          "id": "architecture/bloc/coroutine_launcher"
+        }      ]
     },
     {
       "Bloc State": [

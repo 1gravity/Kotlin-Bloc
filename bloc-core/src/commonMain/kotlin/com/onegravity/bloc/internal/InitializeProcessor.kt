@@ -45,11 +45,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
         }
         blocContext.lifecycle.doOnDestroy {
             logger.d("onDestroy -> destroy Bloc")
-            try {
-                coroutineScope.cancel()
-            } catch (e: IllegalStateException) {
-                logger.w("CoroutineScope cancellation failed: ${e.message}")
-            }
+            coroutineScope.cancel()
         }
     }
 
