@@ -47,7 +47,7 @@ public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(
 }
 
 /**
- * Extension function for [ThunkContext] to launch a coroutine and a run a suspend function
+ * Extension function for [ThunkContextNoAction] to launch a coroutine and a run a suspend function
  * without exposing the bloc's CoroutineScope.
  */
 @BlocDSL
@@ -56,7 +56,7 @@ public fun <State, Action> ThunkContextNoAction<State, Action>.launch(block: Cor
 }
 
 /**
- * Extension function for [ThunkContext] to launch a coroutine and a run a suspend function
+ * Extension function for [ThunkContextNoAction] to launch a coroutine and a run a suspend function
  * without exposing the bloc's CoroutineScope.
  *
  * @param jobConfig @see [JobConfig]

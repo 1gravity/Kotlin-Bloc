@@ -1,10 +1,5 @@
 Tests:
 
-- TODO thunk
-       how to cancel a "request" if the result is obsolete, e.g. a call to the backend if the user
-       navigates away from the screen -> launch a new coroutine and cancel the old one (see PostsComponentImpl for example)
-       --> add this to the FAQ
-
 - TODO feature/redesign_initializers
        synchronize initializers / onCreate execution with the lifecycle of the bloc
        -> a bloc could not transition to Started while the initializer is still running
