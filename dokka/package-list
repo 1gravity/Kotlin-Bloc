@@ -1,0 +1,14 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.onegravity.bloc//bloc/#com.onegravity.bloc.BlocContext#com.onegravity.bloc.state.BlocState[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#kotlin.Function1[com.onegravity.bloc.internal.builder.BlocBuilder[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])],kotlin.Unit]/PointingToDeclaration/Bloc Core/com.onegravity.bloc/[common]bloc.html
+module:Bloc Compose
+com.onegravity.bloc.compose
+module:Bloc Core
+com.onegravity.bloc
+com.onegravity.bloc.internal
+com.onegravity.bloc.internal.builder
+com.onegravity.bloc.state
+com.onegravity.bloc.utils
+module:Bloc Redux
+com.onegravity.bloc.redux
+com.onegravity.bloc.redux.select
