@@ -2,23 +2,31 @@
 
 package com.onegravity.bloc.internal.fsm
 
-// TODO use AtomicFu to synchronize access to the state (see
-//      https://github.com/GuilhE/Expressus/blob/main/shared/src/commonMain/kotlin/com/expressus/domain/stateMachines/base/StateMachine.kt)
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.locks.SynchronizedObject
+import kotlinx.atomicfu.locks.synchronized
 
 internal class StateMachine<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> private constructor(
     private val graph: Graph<STATE, EVENT, SIDE_EFFECT>
 ) {
 
-    private var stateRef: STATE = graph.initialState
+    private val lock = SynchronizedObject()
+    private val stateRef = atomic(graph.initialState)
 
-    internal val state: STATE
-        get() = stateRef
+    var state: STATE
+        get() = stateRef.value
+        private set(value) {
+            stateRef.value = value
+        }
 
     internal fun transition(event: EVENT): Transition<STATE, EVENT, SIDE_EFFECT> {
-        val fromState = stateRef
-        val transition = fromState.getTransition(event)
-        if (transition is Transition.Valid) {
-            stateRef = transition.toState
+        val transition = synchronized(lock) {
+            val fromState = state
+            val transition = fromState.getTransition(event)
+            if (transition is Transition.Valid) {
+                state = transition.toState
+            }
+            transition
         }
         transition.notifyOnTransition()
         if (transition is Transition.Valid) {
