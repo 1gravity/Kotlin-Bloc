@@ -6,7 +6,6 @@ import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
-import kotlin.coroutines.CoroutineContext
 
 /**
  * The InitializeProcessor is responsible for processing onCreate { } blocks.
@@ -15,7 +14,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     private val blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private var initialize: Initializer<State, Action>? = null,
-    private val initDispatcher: CoroutineContext = Dispatchers.Default,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val dispatch: (Action) -> Unit
 ) {
 
@@ -25,13 +24,8 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
      * of the bloc.
      */
     private val mutex = Mutex()
-    private var coroutineScope = CoroutineScope(SupervisorJob() + initDispatcher)
-        set(value) {
-            field = value
-            coroutineRunner = CoroutineRunner(coroutineScope)
-        }
 
-    private var coroutineRunner = CoroutineRunner(coroutineScope)
+    private var coroutine: Coroutine = Coroutine(dispatcher)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -40,12 +34,12 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     init {
         blocContext.lifecycle.doOnCreate {
             logger.d("onCreate -> initialize Bloc")
-            coroutineScope = CoroutineScope(SupervisorJob() + initDispatcher)
+            coroutine.onStart()
             initialize?.let { runInitializer(it) }
         }
         blocContext.lifecycle.doOnDestroy {
             logger.d("onDestroy -> destroy Bloc")
-            coroutineScope.cancel()
+            coroutine.onStop()
         }
     }
 
@@ -63,14 +57,16 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     }
 
     private fun runInitializer(initialize: Initializer<State, Action>) =
-        coroutineScope.launch {
+        coroutine.scope?.launch {
             if (mutex.tryLock(this@InitializeProcessor)) {
-                val context = InitializerContext(
-                    state = blocState.value,
-                    dispatch = dispatch,
-                    runner = coroutineRunner
-                )
-                context.initialize()
+                coroutine.runner?.let { runner ->
+                    val context = InitializerContext(
+                        state = blocState.value,
+                        dispatch = dispatch,
+                        runner = runner
+                    )
+                    context.initialize()
+                }
             } else {
                 logger.e("onCreate { } can only be run once!")
             }

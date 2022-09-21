@@ -9,7 +9,6 @@ import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.FlowCollector
-import kotlin.coroutines.CoroutineContext
 
 /**
  * The probably most important class in the framework.
@@ -23,9 +22,9 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     initialize: Initializer<State, Action>? = null,
     thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
-    initDispatcher: CoroutineContext = Dispatchers.Default,
-    thunkDispatcher: CoroutineContext = Dispatchers.Default,
-    reduceDispatcher: CoroutineContext = Dispatchers.Default
+    initDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    thunkDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    reduceDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : Bloc<State, Action, SideEffect>(),
     BlocExtension<State, Action, SideEffect, Proposal> {
 

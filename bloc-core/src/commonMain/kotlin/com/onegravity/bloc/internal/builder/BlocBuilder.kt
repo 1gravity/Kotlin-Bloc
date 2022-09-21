@@ -5,8 +5,8 @@ import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.internal.BlocImpl
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.JvmName
 
 /**
@@ -21,9 +21,9 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     private var _initialize: Initializer<State, Action>? = null
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
-    private var _initDispatcher: CoroutineContext = Dispatchers.Default
-    private var _thunkDispatcher: CoroutineContext = Dispatchers.Default
-    private var _reduceDispatcher: CoroutineContext = Dispatchers.Default
+    private var _initDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private var _thunkDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private var _reduceDispatcher: CoroutineDispatcher = Dispatchers.Default
 
     internal fun build(
         context: BlocContext,
@@ -242,7 +242,7 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     /* Dispatcher */
 
     @BlocDSL
-    public var dispatchers: CoroutineContext = Dispatchers.Default
+    public var dispatchers: CoroutineDispatcher = Dispatchers.Default
         set(value) {
             field = value
             _initDispatcher = value
@@ -251,21 +251,21 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
         }
 
     @BlocDSL
-    public var initDispatcher: CoroutineContext = Dispatchers.Default
+    public var initDispatcher: CoroutineDispatcher = Dispatchers.Default
         set(value) {
             field = value
             _initDispatcher = value
         }
 
     @BlocDSL
-    public var thunkDispatcher: CoroutineContext = Dispatchers.Default
+    public var thunkDispatcher: CoroutineDispatcher = Dispatchers.Default
         set(value) {
             field = value
             _thunkDispatcher = value
         }
 
     @BlocDSL
-    public var reduceDispatcher: CoroutineContext = Dispatchers.Default
+    public var reduceDispatcher: CoroutineDispatcher = Dispatchers.Default
         set(value) {
             field = value
             _reduceDispatcher = value

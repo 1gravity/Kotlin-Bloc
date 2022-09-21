@@ -12,7 +12,6 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlin.coroutines.CoroutineContext
 
 /**
  * The ReduceProcessor is responsible for processing the reduce { }, reduceAnd { } and
@@ -22,7 +21,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
-    private val reduceDispatcher: CoroutineContext = Dispatchers.Default
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 
     /**
@@ -45,13 +44,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      */
     internal val sideEffects: SideEffectStream<SideEffect> = sideEffectChannel.receiveAsFlow()
 
-    private var coroutineScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
-        set(value) {
-            field = value
-            coroutineRunner = CoroutineRunner(coroutineScope)
-        }
-
-    private var coroutineRunner = CoroutineRunner(coroutineScope)
+    private var coroutine: Coroutine = Coroutine(dispatcher)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -60,18 +53,18 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     init {
         blocContext.lifecycle.doOnStart {
             logger.d("onStart -> start Bloc")
-            coroutineScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
+            coroutine.onStart()
             processQueue()
         }
 
         blocContext.lifecycle.doOnStop {
             logger.d("onStop -> stop Bloc")
-            coroutineScope.cancel()
+            coroutine.onStop()
         }
     }
 
     private fun processQueue() {
-        coroutineScope.launch {
+        coroutine.scope?.launch {
             for (element in reduceChannel) {
                 element.action?.let { action ->
                     runReducers(action)
@@ -138,13 +131,15 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(
         action: Action
     ) {
-        coroutineScope.run {
+        coroutine.scope?.run {
             mutex.withLock {
-                val context = ReducerContext(blocState.value, action, coroutineRunner)
-                val reduce = this@runReducer
-                val (proposal, sideEffects) = context.reduce()
-                proposal?.let { blocState.send(it) }
-                postSideEffects(sideEffects)
+                coroutine.runner?.let { runner ->
+                    val context = ReducerContext(blocState.value, action, runner)
+                    val reduce = this@runReducer
+                    val (proposal, sideEffects) = context.reduce()
+                    proposal?.let { blocState.send(it) }
+                    postSideEffects(sideEffects)
+                }
             }
         }
     }
@@ -153,12 +148,14 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * Triggered to execute a specific reducer (dispatched MVVM+ style)
      */
     private fun runReducer(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
-        coroutineScope.launch {
-            mutex.withLock {
-                val context = ReducerContextNoAction(blocState.value, coroutineRunner)
-                val (proposal, sideEffects) = context.reduce()
-                proposal?.let { blocState.send(it) }
-                postSideEffects(sideEffects)
+        coroutine.scope?.launch {
+            coroutine.runner?.let { runner ->
+                mutex.withLock {
+                    val context = ReducerContextNoAction(blocState.value, runner)
+                    val (proposal, sideEffects) = context.reduce()
+                    proposal?.let { blocState.send(it) }
+                    postSideEffects(sideEffects)
+                }
             }
         }
     }

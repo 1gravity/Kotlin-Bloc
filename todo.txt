@@ -7,7 +7,6 @@ Tests:
        dispatched actions to be processed because those actions won't be executed before the bloc is
        started / transitions to Started
 
-
 - TODO Fix Subscriber extension functions aren't published...
 - TODO implement Subscriber tests
 

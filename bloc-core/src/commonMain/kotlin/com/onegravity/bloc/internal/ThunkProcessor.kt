@@ -9,7 +9,6 @@ import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
-import kotlin.coroutines.CoroutineContext
 
 /**
  * The ThunkProcessor is responsible for processing thunk { } blocks.
@@ -18,7 +17,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
-    private val thunkDispatcher: CoroutineContext = Dispatchers.Default,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val runReducers: (action: Action) -> Unit
 ) {
 
@@ -27,13 +26,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     private val thunkChannel = Channel<Action>(UNLIMITED)
 
-    private var coroutineScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
-        set(value) {
-            field = value
-            coroutineRunner = CoroutineRunner(coroutineScope)
-        }
-
-    private var coroutineRunner = CoroutineRunner(coroutineScope)
+    private var coroutine: Coroutine = Coroutine(dispatcher)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -41,17 +34,17 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     init {
         blocContext.lifecycle.doOnStart {
-            coroutineScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
+            coroutine.onStart()
             processQueue()
         }
 
         blocContext.lifecycle.doOnStop {
-            coroutineScope.cancel()
+            coroutine.onStop()
         }
     }
 
     private fun processQueue() {
-        coroutineScope.launch {
+        coroutine.scope?.launch {
             for (action in thunkChannel) {
                 runThunks(action)
             }
@@ -75,16 +68,18 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * thunk { } -> run a thunk MVVM+ style
      */
     internal fun thunk(thunk: ThunkNoAction<State, Action>) =
-        coroutineScope.launch {
-            val dispatcher: Dispatcher<Action> = {
-                nextThunkDispatcher(it).invoke(it)
+        coroutine.scope?.launch {
+            coroutine.runner?.let { runner ->
+                val dispatcher: Dispatcher<Action> = {
+                    nextThunkDispatcher(it).invoke(it)
+                }
+                val context = ThunkContextNoAction(
+                    getState = { blocState.value },
+                    dispatch = dispatcher,
+                    runner = runner
+                )
+                context.thunk()
             }
-            val context = ThunkContextNoAction(
-                getState = { blocState.value },
-                dispatch = dispatcher,
-                runner = coroutineRunner
-            )
-            context.thunk()
         }
 
     /**
@@ -107,18 +102,20 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * Run a specific thunk
      */
     private suspend fun runThunk(action: Action, index: Int) {
-        coroutineScope.run {
-            val dispatcher: Dispatcher<Action> = {
-                nextThunkDispatcher(it, index + 1).invoke(it)
+        coroutine.scope.run {
+            coroutine.runner?.let { runner ->
+                val dispatcher: Dispatcher<Action> = {
+                    nextThunkDispatcher(it, index + 1).invoke(it)
+                }
+                val thunk = thunks[index].thunk
+                val context = ThunkContext(
+                    getState = { blocState.value },
+                    action = action,
+                    dispatch = dispatcher,
+                    runner = runner
+                )
+                context.thunk()
             }
-            val thunk = thunks[index].thunk
-            val context = ThunkContext(
-                getState = { blocState.value },
-                action = action,
-                dispatch = dispatcher,
-                runner = coroutineRunner
-            )
-            context.thunk()
         }
     }
 
