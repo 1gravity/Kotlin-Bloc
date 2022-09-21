@@ -28,6 +28,32 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 ) : Bloc<State, Action, SideEffect>(),
     BlocExtension<State, Action, SideEffect, Proposal> {
 
+    /**
+     * This needs to come after all variable/property declarations to make sure everything is
+     * initialized before the Bloc is started
+     */
+//    init {
+//        blocContext.lifecycle.toBlocLifecycle(
+//            onCreate = {
+//                initScope = CoroutineScope(SupervisorJob() + initDispatcher)
+//                initScope?.initialize()
+//            },
+//            onStart = {
+//                thunkScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
+//                reduceScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
+//                thunkScope?.startThunks()
+//                reduceScope?.startReducers()
+//            },
+//            onStop = {
+//                thunkScope?.cancel()
+//                reduceScope?.cancel()
+//            },
+//            onDestroy = {
+//                initScope?.cancel()
+//            }
+//        )
+//    }
+
     // ReduceProcessor, ThunkProcessor and InitializeProcessor need to be defined in this exact
     // order or we risk NullPointerExceptions
 
