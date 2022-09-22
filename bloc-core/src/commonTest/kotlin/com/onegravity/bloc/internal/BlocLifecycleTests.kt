@@ -10,6 +10,9 @@ import kotlin.test.assertNotEquals
 
 class BlocLifecycleTests : BaseTestClass() {
 
+    /**
+     * Testing the Essenty lifecycle
+     */
     @Test
     fun lifecycleTransitions() = runTests {
         LifecycleRegistry().legalTransition { onCreate() }
@@ -138,6 +141,7 @@ class BlocLifecycleTests : BaseTestClass() {
         testState(bloc, 1, 5)
     }
 
+    @Suppress("RemoveExplicitTypeArguments")
     @Test
     fun initializerLifecycleTest() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
@@ -162,10 +166,13 @@ class BlocLifecycleTests : BaseTestClass() {
 
         lifecycleRegistry.onStart()
         testState(bloc, null, 9)
+        testState(bloc, 1, 10)
+        testState(bloc, 1, 11)
 
         lifecycleRegistry.onStop()
-        lifecycleRegistry.onDestroy()
+        testState(bloc, 1, 11)
 
-        testState(bloc, 1, 9)
+        lifecycleRegistry.onDestroy()
+        testState(bloc, 1, 11)
     }
 }

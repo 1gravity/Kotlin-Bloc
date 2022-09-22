@@ -14,11 +14,11 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
  * The ThunkProcessor is responsible for processing thunk { } blocks.
  */
 internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
-    blocLifecycle: BlocLifecycle,
-    private val blocState: BlocState<State, Proposal>,
-    private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
+    lifecycle: BlocLifecycle,
+    private val state: BlocState<State, Proposal>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    private val runReducers: (action: Action) -> Unit
+    private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
+    private val dispatch: (action: Action) -> Unit
 ) {
 
     /**
@@ -33,12 +33,12 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * initialized before the Bloc is started
      */
     init {
-        blocLifecycle.doOnStart {
+        lifecycle.doOnStart {
             coroutine.onStart()
             processQueue()
         }
 
-        blocLifecycle.doOnStop {
+        lifecycle.doOnStop {
             coroutine.onStop()
         }
     }
@@ -59,7 +59,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             thunkChannel.trySend(action)
         } else {
-            runReducers(action)
+            dispatch(action)
         }
     }
 
@@ -74,7 +74,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
                     nextThunkDispatcher(it).invoke(it)
                 }
                 val context = ThunkContextNoAction(
-                    getState = { blocState.value },
+                    getState = { state.value },
                     dispatch = dispatcher,
                     runner = runner
                 )
@@ -109,7 +109,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
                 }
                 val thunk = thunks[index].thunk
                 val context = ThunkContext(
-                    getState = { blocState.value },
+                    getState = { state.value },
                     action = action,
                     dispatch = dispatcher,
                     runner = runner
@@ -130,7 +130,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
             }
         }
 
-        return { runReducers(action) }
+        return { dispatch(action) }
     }
 
 }

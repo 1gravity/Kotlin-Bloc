@@ -71,4 +71,5 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         lifecycleRegistry.onDestroy()
     }
 
+    // TODO write test to make sure a bloc isn't started when initializers are still running
 }

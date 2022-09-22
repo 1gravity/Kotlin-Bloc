@@ -1,60 +1,29 @@
 package com.onegravity.bloc.internal.lifecycle
 
-/**
- * Convenience extension function to subscribe to onCreate events
- */
-internal inline fun BlocLifecycle.doOnCreate(crossinline block: () -> Unit) {
-    subscribe(object : Callbacks {
-        override fun onCreate() {
-            unsubscribe(this)
-            block()
-        }
-    })
-}
+internal fun BlocLifecycle.subscribe(
+    onCreate: (() -> Unit)? = null,
+    onInitialize: (() -> Unit)? = null,
+    onStart: (() -> Unit)? = null,
+    onStop: (() -> Unit)? = null,
+    onDestroy: (() -> Unit)? = null
+) = object : Callbacks {
+    override fun onCreate() {
+        onCreate?.invoke()
+    }
 
-/**
- * Convenience extension function to subscribe to onInitialize events
- */
-internal inline fun BlocLifecycle.doOnInitialize(crossinline block: () -> Unit) {
-    subscribe(object : Callbacks {
-        override fun onInitialize() {
-            unsubscribe(this)
-            block()
-        }
-    })
-}
+    override fun onInitialize() {
+        onInitialize?.invoke()
+    }
 
-/**
- * Convenience extension function to subscribe to onStart events
- */
-internal inline fun BlocLifecycle.doOnStart(isOneTime: Boolean = false, crossinline block: () -> Unit) {
-    subscribe(object : Callbacks {
-        override fun onStart() {
-            if (isOneTime) unsubscribe(this)
-            block()
-        }
-    })
-}
+    override fun onStart() {
+        onStart?.invoke()
+    }
 
-/**
- * Convenience extension function to subscribe to onStop events
- */
-internal inline fun BlocLifecycle.doOnStop(isOneTime: Boolean = false, crossinline block: () -> Unit) {
-    subscribe(object : Callbacks {
-        override fun onStop() {
-            if (isOneTime) unsubscribe(this)
-            block()
-        }
-    })
-}
+    override fun onStop() {
+        onStop?.invoke()
+    }
 
-/**
- * Convenience extension function to subscribe to onDestroy events
- */
-internal inline fun BlocLifecycle.doOnDestroy(crossinline block: () -> Unit) {
-    subscribe(object : Callbacks {
-        override fun onDestroy() {
-            block()
-        }
-    })
-}
+    override fun onDestroy() {
+        onDestroy?.invoke()
+    }
+}.also(::subscribe)

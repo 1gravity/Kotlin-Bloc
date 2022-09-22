@@ -11,12 +11,13 @@ internal class BlocLifecycleImpl(essentyLifecycle: Lifecycle) : BlocLifecycle {
 
     private var callbacks = emptySet<Callbacks>()
 
-    private val stateMachine = LifecycleStateMachine() { transition ->
+    private val stateMachine = LifecycleStateMachine { transition ->
         // translate BlocLifecycle lifecycle events to Callbacks
         when (transition.to) {
             InitialState -> { /* NOP */ }
             Created -> callbacks.forEach(Callbacks::onCreate)
-            RunInitializer -> callbacks.forEach(Callbacks::onInitialize)
+            Initializing -> callbacks.forEach(Callbacks::onInitialize)
+            Initialized -> { /* NOP */ }
             Started -> callbacks.forEach(Callbacks::onStart)
             Stopped -> callbacks.forEach(Callbacks::onStop)
             Destroyed -> callbacks.forEach(Callbacks::onDestroy)
@@ -36,14 +37,13 @@ internal class BlocLifecycleImpl(essentyLifecycle: Lifecycle) : BlocLifecycle {
 
         this.callbacks += callbacks
 
-        val state = stateMachine.state
-        // TODO
-//        if (state >= Created) {
-//            callbacks.onCreate()
-//        }
-//        if (state >= Started) {
-//            callbacks.onStart()
-//        }
+        val position = stateMachine.state.pos
+        if (position >= Created.pos) {
+            callbacks.onCreate()
+        }
+        if (position >= Started.pos) {
+            callbacks.onStart()
+        }
     }
 
     override fun unsubscribe(callbacks: Callbacks) {
@@ -51,7 +51,7 @@ internal class BlocLifecycleImpl(essentyLifecycle: Lifecycle) : BlocLifecycle {
     }
 
     override fun initializerStarting() {
-        stateMachine.transition(LifecycleEvent.InitializerStarting)
+        stateMachine.transition(LifecycleEvent.StartInitializer)
     }
 
     override fun initializerCompleted() {

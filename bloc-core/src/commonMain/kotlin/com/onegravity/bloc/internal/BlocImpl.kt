@@ -30,10 +30,6 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 ) : Bloc<State, Action, SideEffect>(),
     BlocExtension<State, Action, SideEffect, Proposal> {
 
-    /**
-     * This needs to come after all variable/property declarations to make sure everything is
-     * initialized before the Bloc is started
-     */
     private val blocLifecycle: BlocLifecycle = BlocLifecycleImpl(blocContext.lifecycle)
 
     /* ******************************************************************************************
@@ -42,26 +38,27 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      ********************************************************************************************/
 
     private val reduceProcessor = ReduceProcessor(
-        blocLifecycle,
-        blocState,
-        reducers,
-        reduceDispatcher
+        lifecycle = blocLifecycle,
+        state = blocState,
+        dispatcher = reduceDispatcher,
+        reducers = reducers
     )
 
     private val thunkProcessor = ThunkProcessor(
-        blocLifecycle,
-        blocState,
-        thunks,
-        thunkDispatcher,
-        reduceProcessor::send
+        lifecycle = blocLifecycle,
+        state = blocState,
+        dispatcher = thunkDispatcher,
+        thunks = thunks,
+        dispatch = reduceProcessor::send
     )
 
     private val initializeProcessor = InitializeProcessor(
-        blocLifecycle,
-        blocState,
-        initialize,
-        initDispatcher
-    ) { send(it) }
+        lifecycle = blocLifecycle,
+        state = blocState,
+        dispatcher = initDispatcher,
+        initializer = initialize,
+        dispatch = ::send
+    )
 
     /**
      * The current state

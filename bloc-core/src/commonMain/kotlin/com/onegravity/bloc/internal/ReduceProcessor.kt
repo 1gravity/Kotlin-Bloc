@@ -2,8 +2,7 @@ package com.onegravity.bloc.internal
 
 import com.onegravity.bloc.internal.builder.MatcherReducer
 import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
-import com.onegravity.bloc.internal.lifecycle.doOnStart
-import com.onegravity.bloc.internal.lifecycle.doOnStop
+import com.onegravity.bloc.internal.lifecycle.subscribe
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,10 +19,10 @@ import kotlinx.coroutines.sync.withLock
  * sideEffect { } blocks.
  */
 internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
-    blocLifecycle: BlocLifecycle,
-    private val blocState: BlocState<State, Proposal>,
-    private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
+    lifecycle: BlocLifecycle,
+    private val state: BlocState<State, Proposal>,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>
 ) {
 
     /**
@@ -53,16 +52,17 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * initialized before the Bloc is started
      */
     init {
-        blocLifecycle.doOnStart {
-            logger.d("onStart -> start Bloc")
-            coroutine.onStart()
-            processQueue()
-        }
-
-        blocLifecycle.doOnStop {
-            logger.d("onStop -> stop Bloc")
-            coroutine.onStop()
-        }
+        lifecycle.subscribe(
+            onStart = {
+                logger.d("onStart -> start Bloc")
+                coroutine.onStart()
+                processQueue()
+            },
+            onStop = {
+                logger.d("onStop -> stop Bloc")
+                coroutine.onStop()
+            }
+        )
     }
 
     private fun processQueue() {
@@ -136,10 +136,10 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
         coroutine.scope?.run {
             mutex.withLock {
                 coroutine.runner?.let { runner ->
-                    val context = ReducerContext(blocState.value, action, runner)
+                    val context = ReducerContext(state.value, action, runner)
                     val reduce = this@runReducer
                     val (proposal, sideEffects) = context.reduce()
-                    proposal?.let { blocState.send(it) }
+                    proposal?.let { state.send(it) }
                     postSideEffects(sideEffects)
                 }
             }
@@ -153,9 +153,9 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
         coroutine.scope?.launch {
             coroutine.runner?.let { runner ->
                 mutex.withLock {
-                    val context = ReducerContextNoAction(blocState.value, runner)
+                    val context = ReducerContextNoAction(state.value, runner)
                     val (proposal, sideEffects) = context.reduce()
-                    proposal?.let { blocState.send(it) }
+                    proposal?.let { state.send(it) }
                     postSideEffects(sideEffects)
                 }
             }
