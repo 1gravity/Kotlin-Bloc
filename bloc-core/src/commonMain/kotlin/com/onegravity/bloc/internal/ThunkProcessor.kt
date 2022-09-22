@@ -1,9 +1,9 @@
 package com.onegravity.bloc.internal
 
-import com.arkivanov.essenty.lifecycle.doOnStart
-import com.arkivanov.essenty.lifecycle.doOnStop
-import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.internal.builder.MatcherThunk
+import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
+import com.onegravity.bloc.internal.lifecycle.doOnStart
+import com.onegravity.bloc.internal.lifecycle.doOnStop
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
@@ -14,7 +14,7 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
  * The ThunkProcessor is responsible for processing thunk { } blocks.
  */
 internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
-    blocContext: BlocContext,
+    blocLifecycle: BlocLifecycle,
     private val blocState: BlocState<State, Proposal>,
     private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
@@ -33,12 +33,12 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * initialized before the Bloc is started
      */
     init {
-        blocContext.lifecycle.doOnStart {
+        blocLifecycle.doOnStart {
             coroutine.onStart()
             processQueue()
         }
 
-        blocContext.lifecycle.doOnStop {
+        blocLifecycle.doOnStop {
             coroutine.onStop()
         }
     }

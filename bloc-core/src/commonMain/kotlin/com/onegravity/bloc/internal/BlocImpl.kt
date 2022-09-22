@@ -5,6 +5,8 @@ import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.internal.builder.MatcherReducer
 import com.onegravity.bloc.internal.builder.MatcherThunk
+import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
+import com.onegravity.bloc.internal.lifecycle.BlocLifecycleImpl
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
@@ -32,40 +34,22 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * This needs to come after all variable/property declarations to make sure everything is
      * initialized before the Bloc is started
      */
-//    init {
-//        blocContext.lifecycle.toBlocLifecycle(
-//            onCreate = {
-//                initScope = CoroutineScope(SupervisorJob() + initDispatcher)
-//                initScope?.initialize()
-//            },
-//            onStart = {
-//                thunkScope = CoroutineScope(SupervisorJob() + thunkDispatcher)
-//                reduceScope = CoroutineScope(SupervisorJob() + reduceDispatcher)
-//                thunkScope?.startThunks()
-//                reduceScope?.startReducers()
-//            },
-//            onStop = {
-//                thunkScope?.cancel()
-//                reduceScope?.cancel()
-//            },
-//            onDestroy = {
-//                initScope?.cancel()
-//            }
-//        )
-//    }
+    private val blocLifecycle: BlocLifecycle = BlocLifecycleImpl(blocContext.lifecycle)
 
-    // ReduceProcessor, ThunkProcessor and InitializeProcessor need to be defined in this exact
-    // order or we risk NullPointerExceptions
+    /* ******************************************************************************************
+     * ReduceProcessor, ThunkProcessor and InitializeProcessor need to be defined in this exact *
+     * order or we risk NullPointerExceptions                                                   *
+     ********************************************************************************************/
 
     private val reduceProcessor = ReduceProcessor(
-        blocContext,
+        blocLifecycle,
         blocState,
         reducers,
         reduceDispatcher
     )
 
     private val thunkProcessor = ThunkProcessor(
-        blocContext,
+        blocLifecycle,
         blocState,
         thunks,
         thunkDispatcher,
@@ -73,7 +57,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     )
 
     private val initializeProcessor = InitializeProcessor(
-        blocContext,
+        blocLifecycle,
         blocState,
         initialize,
         initDispatcher

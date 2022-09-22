@@ -1,19 +1,25 @@
 package com.onegravity.bloc.internal
 
-import com.arkivanov.essenty.lifecycle.*
-import com.onegravity.bloc.BlocContext
+import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
+import com.onegravity.bloc.internal.lifecycle.doOnCreate
+import com.onegravity.bloc.internal.lifecycle.doOnDestroy
+import com.onegravity.bloc.internal.lifecycle.doOnInitialize
 import com.onegravity.bloc.state.BlocState
-import com.onegravity.bloc.utils.*
-import kotlinx.coroutines.*
+import com.onegravity.bloc.utils.Initializer
+import com.onegravity.bloc.utils.InitializerContext
+import com.onegravity.bloc.utils.logger
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 
 /**
  * The InitializeProcessor is responsible for processing onCreate { } blocks.
  */
 internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
-    private val blocContext: BlocContext,
+    private val blocLifecycle: BlocLifecycle,
     private val blocState: BlocState<State, Proposal>,
-    private var initialize: Initializer<State, Action>? = null,
+    private var initializer: Initializer<State, Action>? = null,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val dispatch: (Action) -> Unit
 ) {
@@ -32,12 +38,17 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
      * initialized before the Bloc is started
      */
     init {
-        blocContext.lifecycle.doOnCreate {
+        blocLifecycle.doOnCreate {
             logger.d("onCreate -> initialize Bloc")
             coroutine.onStart()
-            initialize?.let { runInitializer(it) }
+            initializer?.run { blocLifecycle.initializerStarting() }
+
         }
-        blocContext.lifecycle.doOnDestroy {
+        blocLifecycle.doOnInitialize {
+            logger.d("doOnInitialize -> run initializer")
+            initializer?.run { runInitializer(this) }
+        }
+        blocLifecycle.doOnDestroy {
             logger.d("onDestroy -> destroy Bloc")
             coroutine.onStop()
         }
@@ -47,12 +58,10 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
      * BlocExtension interface implementation:
      * onCreate { } -> run an initializer MVVM+ style
      */
-    internal fun initialize(initialize: Initializer<State, Action>) {
-        when (blocContext.lifecycle.state) {
-            // if onCreate() hasn't been called yet, we can't run the initializer but we can
-            // set the initializer if there isn't one yet
-            Lifecycle.State.INITIALIZED -> if (this.initialize == null) this.initialize = initialize
-            else -> runInitializer(initialize)
+    internal fun initialize(initializer: Initializer<State, Action>) {
+        if (this.initializer == null) {
+            this.initializer = initializer
+            blocLifecycle.initializerStarting()
         }
     }
 
@@ -66,6 +75,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
                         runner = runner
                     )
                     context.initialize()
+                    blocLifecycle.initializerCompleted()
                 }
             } else {
                 logger.e("onCreate { } can only be run once!")

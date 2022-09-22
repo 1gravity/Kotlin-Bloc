@@ -1,15 +1,17 @@
 package com.onegravity.bloc.internal
 
-import com.arkivanov.essenty.lifecycle.doOnStart
-import com.arkivanov.essenty.lifecycle.doOnStop
-import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.internal.builder.MatcherReducer
+import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
+import com.onegravity.bloc.internal.lifecycle.doOnStart
+import com.onegravity.bloc.internal.lifecycle.doOnStop
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -18,7 +20,7 @@ import kotlinx.coroutines.sync.withLock
  * sideEffect { } blocks.
  */
 internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
-    blocContext: BlocContext,
+    blocLifecycle: BlocLifecycle,
     private val blocState: BlocState<State, Proposal>,
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
@@ -51,13 +53,13 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * initialized before the Bloc is started
      */
     init {
-        blocContext.lifecycle.doOnStart {
+        blocLifecycle.doOnStart {
             logger.d("onStart -> start Bloc")
             coroutine.onStart()
             processQueue()
         }
 
-        blocContext.lifecycle.doOnStop {
+        blocLifecycle.doOnStop {
             logger.d("onStop -> stop Bloc")
             coroutine.onStop()
         }
