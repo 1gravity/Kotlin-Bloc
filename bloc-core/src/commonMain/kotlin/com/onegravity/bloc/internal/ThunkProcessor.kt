@@ -2,8 +2,7 @@ package com.onegravity.bloc.internal
 
 import com.onegravity.bloc.internal.builder.MatcherThunk
 import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
-import com.onegravity.bloc.internal.lifecycle.doOnStart
-import com.onegravity.bloc.internal.lifecycle.doOnStop
+import com.onegravity.bloc.internal.lifecycle.subscribe
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.*
 import kotlinx.coroutines.*
@@ -33,14 +32,15 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * initialized before the Bloc is started
      */
     init {
-        lifecycle.doOnStart {
-            coroutine.onStart()
-            processQueue()
-        }
-
-        lifecycle.doOnStop {
-            coroutine.onStop()
-        }
+        lifecycle.subscribe(
+            onStart = {
+                coroutine.onStart()
+                processQueue()
+            },
+            onStop = {
+                coroutine.onStop()
+            }
+        )
     }
 
     private fun processQueue() {
