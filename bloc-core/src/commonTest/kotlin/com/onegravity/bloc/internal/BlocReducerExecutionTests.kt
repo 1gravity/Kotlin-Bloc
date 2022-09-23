@@ -30,6 +30,17 @@ class BlocReducerExecutionTests : BaseTestClass() {
         testState(bloc, null, 2)
 
         lifecycleRegistry.onStop()
+
+        testState(bloc, Increment, 2)
+        testState(bloc, Increment, 2)
+        testState(bloc, Increment, 2)
+
+        // even if we restart the bloc, actions that were sent when it was stopped, are dropped
+        lifecycleRegistry.onStart()
+        delay(10)
+        assertEquals(2, bloc.value)
+
+        lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
     }
 
@@ -63,7 +74,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         delayReducerDec: Long = 0,
         delayReducerWhatever: Long = 0
     ) = runTest {
-        val (bloc, lifecycleRegistry) = createBloc(delayReducerInc, delayReducerDec, delayReducerWhatever)
+        val (bloc, lifecycleRegistry) = createBloc()
 
         assertEquals(1, bloc.value)
         lifecycleRegistry.onCreate()
@@ -167,24 +178,17 @@ class BlocReducerExecutionTests : BaseTestClass() {
         lifecycleRegistry.onDestroy()
     }
 
-    private fun createBloc(
-        delayInc: Long = 0,
-        delayDec: Long = 0,
-        delayWhatever: Long = 0
-    ) : Pair<Bloc<Int, Action, Unit>, LifecycleRegistry> {
+    private fun createBloc() : Pair<Bloc<Int, Action, Unit>, LifecycleRegistry> {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
         val bloc = bloc<Int, Action, Unit>(context, 1) {
             reduce<Increment> {
-                delay(delayInc)
                 state + 1
             }
             reduce<Decrement> {
-                delay(delayDec)
                 state - 1
             }
             reduce {
-                delay(delayWhatever)
                 state + 5
             }
         }

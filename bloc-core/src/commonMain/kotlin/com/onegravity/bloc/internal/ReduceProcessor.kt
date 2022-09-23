@@ -11,29 +11,22 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 /**
  * The ReduceProcessor is responsible for processing the reduce { }, reduceAnd { } and
  * sideEffect { } blocks.
  */
 internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
-    lifecycle: BlocLifecycle,
+    private val lifecycle: BlocLifecycle,
     private val state: BlocState<State, Proposal>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>
 ) {
 
     /**
-     * Mutex to ensure only one reducer runs at a time.
-     */
-    private val mutex = Mutex()
-
-    /**
      * Channel for reducers to be processed (incoming)
      */
-    private val reduceChannel = Channel<ReduceChannelElement<State, Action, SideEffect, Proposal>>(UNLIMITED)
+    private val reduceChannel = Channel<ReducerContainer<State, Action, SideEffect, Proposal>>(UNLIMITED)
 
     /**
      * Channel for side effects (outgoing)
@@ -68,12 +61,8 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     private fun processQueue() {
         coroutine.scope?.launch {
             for (element in reduceChannel) {
-                element.action?.let { action ->
-                    runReducers(action)
-                }
-                element.reducer?.let { reduce ->
-                    runReducer(reduce)
-                }
+                element.action?.run(::runReducers)
+                element.reducer?.run(::runReducer)
             }
         }
     }
@@ -83,7 +72,10 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * reduce { } -> run a Reducer Redux style
      */
     internal fun send(action: Action) {
-        reduceChannel.trySend(ReduceChannelElement(action))
+        if (! lifecycle.isStarted()) return
+
+        logger.d("received reducer with action ${action.trimOutput()}")
+        reduceChannel.trySend(ReducerContainer(action))
     }
 
     /**
@@ -91,13 +83,16 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * reduce { } -> run a Reducer MVVM+ style
      */
     internal fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
-        reduceChannel.trySend(ReduceChannelElement(reducer = reduce))
+        if (! lifecycle.isStarted()) return
+
+        logger.d("received reducer without action")
+        reduceChannel.trySend(ReducerContainer(reducer = reduce))
     }
 
     /**
      * Triggered to execute reducers with a matching Action
      */
-    private suspend fun runReducers(action: Action) {
+    private fun runReducers(action: Action) {
         logger.d("run reducers for action ${action.trimOutput()}")
         getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
             val (_, reducer, expectsProposal) = matcherReducer
@@ -130,42 +125,22 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     /**
      * Triggered to execute a specific reducer (dispatched Redux style)
      */
-    private suspend fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(
-        action: Action
-    ) {
-        coroutine.scope?.run {
-            mutex.withLock {
-                coroutine.runner?.let { runner ->
-                    val context = ReducerContext(state.value, action, runner)
-                    val reduce = this@runReducer
-                    val (proposal, sideEffects) = context.reduce()
-                    proposal?.let { state.send(it) }
-                    postSideEffects(sideEffects)
-                }
-            }
-        }
+    private fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action) {
+        val context = ReducerContext(state.value, action)
+        val reduce = this@runReducer
+        val (proposal, sideEffects) = context.reduce()
+        proposal?.let(state::send)
+        sideEffects.forEach(sideEffectChannel::trySend)
     }
 
     /**
      * Triggered to execute a specific reducer (dispatched MVVM+ style)
      */
     private fun runReducer(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
-        coroutine.scope?.launch {
-            coroutine.runner?.let { runner ->
-                mutex.withLock {
-                    val context = ReducerContextNoAction(state.value, runner)
-                    val (proposal, sideEffects) = context.reduce()
-                    proposal?.let { state.send(it) }
-                    postSideEffects(sideEffects)
-                }
-            }
-        }
-    }
-
-    private suspend fun postSideEffects(sideEffects: List<SideEffect>) {
-        sideEffects.forEach {
-            sideEffectChannel.send(it)
-        }
+        val context = ReducerContextNoAction(state.value)
+        val (proposal, sideEffects) = context.reduce()
+        proposal?.let(state::send)
+        sideEffects.forEach(sideEffectChannel::trySend)
     }
 
 }

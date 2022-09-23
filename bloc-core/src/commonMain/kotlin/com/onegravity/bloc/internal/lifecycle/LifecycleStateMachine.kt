@@ -3,7 +3,6 @@ package com.onegravity.bloc.internal.lifecycle
 import com.onegravity.bloc.internal.fsm.StateMachine
 import com.onegravity.bloc.internal.fsm.Transition
 import com.onegravity.bloc.utils.logger
-import kotlinx.atomicfu.atomic
 
 internal data class LifecycleTransition(val from: LifecycleState, val to: LifecycleState)
 internal typealias LifecycleSideEffect = List<LifecycleState>
@@ -12,8 +11,6 @@ internal typealias LifecycleSideEffect = List<LifecycleState>
 internal fun LifecycleStateMachine(
     observer: (transition: LifecycleTransition) -> Unit,
 ) = StateMachine.create<LifecycleState, LifecycleEvent, LifecycleSideEffect> {
-
-    val started = atomic(false)
 
     initialState(LifecycleState.InitialState)
 
@@ -32,8 +29,7 @@ internal fun LifecycleStateMachine(
             transitionTo(LifecycleState.Initializing)
         }
         on<LifecycleEvent.Start> {
-            started.value = true
-            dontTransition()
+            transitionTo(LifecycleState.Starting)
         }
         on<LifecycleEvent.Stop> {
             logger.e("a Bloc must be started before it can be stopped")
@@ -44,18 +40,32 @@ internal fun LifecycleStateMachine(
         }
     }
 
-    state<LifecycleState.Initializing> {
-        on<LifecycleEvent.InitializerCompleted> {
-            val nextState = if (started.value) LifecycleState.Started else LifecycleState.Initialized
-            transitionTo(nextState)
+    state<LifecycleState.Starting> {
+        on<LifecycleEvent.Start> {
+            logger.e("a starting Bloc can't be started twice")
+            dontTransition()
         }
+        on<LifecycleEvent.StartInitializer> {
+            transitionTo(LifecycleState.InitializingStarting)
+        }
+        on<LifecycleEvent.Stop> {
+            transitionTo(LifecycleState.Stopped)
+        }
+        on<LifecycleEvent.Destroy> {
+            transitionTo(LifecycleState.Destroyed, listOf(LifecycleState.Stopped, LifecycleState.Destroyed))
+        }
+    }
+
+    state<LifecycleState.Initializing> {
         on<LifecycleEvent.StartInitializer> {
             logger.e("Initializer already running")
             dontTransition()
         }
+        on<LifecycleEvent.InitializerCompleted> {
+            transitionTo(LifecycleState.Initialized)
+        }
         on<LifecycleEvent.Start> {
-            started.value = true
-            dontTransition()
+            transitionTo(LifecycleState.InitializingStarting)
         }
         on<LifecycleEvent.Stop> {
             transitionTo(LifecycleState.Stopped)
@@ -75,8 +85,27 @@ internal fun LifecycleStateMachine(
             dontTransition()
         }
         on<LifecycleEvent.Start> {
-            started.value = true
             transitionTo(LifecycleState.Started)
+        }
+        on<LifecycleEvent.Stop> {
+            transitionTo(LifecycleState.Stopped)
+        }
+        on<LifecycleEvent.Destroy> {
+            transitionTo(LifecycleState.Destroyed, listOf(LifecycleState.Stopped, LifecycleState.Destroyed))
+        }
+    }
+
+    state<LifecycleState.InitializingStarting> {
+        on<LifecycleEvent.InitializerCompleted> {
+            transitionTo(LifecycleState.Started)
+        }
+        on<LifecycleEvent.StartInitializer> {
+            logger.e("Initializer already completed")
+            dontTransition()
+        }
+        on<LifecycleEvent.Start> {
+            logger.e("a starting Bloc can't be started twice")
+            dontTransition()
         }
         on<LifecycleEvent.Stop> {
             transitionTo(LifecycleState.Stopped)
@@ -153,6 +182,8 @@ internal fun LifecycleStateMachine(
 
     onTransition {
         val validTransition = it as? Transition.Valid ?: return@onTransition
+        if (validTransition.fromState == validTransition.toState) return@onTransition
+
         logger.d("transition from ${validTransition.fromState} to ${validTransition.toState}")
 
         // if the transition has side effects (a list of states), we emit all transitions one by one

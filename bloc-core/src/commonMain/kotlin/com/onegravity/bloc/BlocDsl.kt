@@ -6,33 +6,6 @@ import com.onegravity.bloc.internal.BlocExtension
 import com.onegravity.bloc.utils.*
 
 /**
- * Submit an Initializer to a Bloc to be run.
- * The initializer will receive the state and a dispatch function.
- * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
- */
-@BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.onCreate(
-    initializer: Initializer<State, Action>
-) {
-    // we assume that every class implementing Bloc also implements BlocExtension
-    // since we provide all concrete Bloc implementations, this is guaranteed
-    // the proposal is irrelevant for an initializer so we set it to Unit
-    (this as BlocExtension<State, Action, SideEffect, Unit>).initialize(initializer)
-}
-
-/**
- * Submit an Initializer to a BlocOwner/Bloc to be run.
- * The initializer will receive the state and a dispatch function.
- * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
- */
-@BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.onCreate(
-    initializer: Initializer<State, Action>
-) {
-    bloc.onCreate(initializer)
-}
-
-/**
  * Submit a Thunk to a Bloc to be run.
  * The thunk will receive the dispatch and the getState function but no action (since it was
  * triggered "manually", not by sending an action to the Bloc).

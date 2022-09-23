@@ -10,4 +10,8 @@ internal interface BlocLifecycle {
 
     fun initializerCompleted()
 
+    fun isStarted(): Boolean
+
+    fun isStarting(): Boolean
+
 }

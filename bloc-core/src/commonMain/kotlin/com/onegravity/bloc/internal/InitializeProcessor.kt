@@ -44,9 +44,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
             },
             onInitialize = {
                 logger.d("onInitialize -> run initializer")
-                initializer
-                    ?.apply { runInitializer(this) }
-                    ?: lifecycle.initializerCompleted()
+                initializer?.apply(::runInitializer) ?:lifecycle.initializerCompleted()
             },
             onDestroy = {
                 logger.d("onDestroy -> destroy Bloc")
@@ -82,4 +80,5 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
                 logger.e("onCreate { } can only be run once!")
             }
         }
+
 }

@@ -55,11 +55,11 @@ public typealias GetState<State> = () -> State
 
 public typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit
 
-public typealias Reducer<State, Action, Proposal> = suspend ReducerContext<State, Action>.() -> Proposal
+public typealias Reducer<State, Action, Proposal> = ReducerContext<State, Action>.() -> Proposal
 
 public typealias CoroutineBlock = suspend CoroutineScope.() -> Unit
 
-public typealias ReducerNoAction<State, Proposal> = suspend ReducerContextNoAction<State>.() -> Proposal
+public typealias ReducerNoAction<State, Proposal> = ReducerContextNoAction<State>.() -> Proposal
 
 public typealias SideEffect<State, Action, SideEffect> = ReducerContext<State, Action>.() -> SideEffect
 
