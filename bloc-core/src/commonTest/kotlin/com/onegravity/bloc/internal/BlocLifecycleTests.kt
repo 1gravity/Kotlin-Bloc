@@ -207,7 +207,7 @@ class BlocLifecycleTests : BaseTestClass() {
             reduce { state + action }
         }
 
-        delay(50)
+        delay(100)
         assertEquals(8, bloc.value)
 
         lifecycleRegistry.onStop()
