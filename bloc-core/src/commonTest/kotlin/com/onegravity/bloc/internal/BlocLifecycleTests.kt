@@ -193,4 +193,46 @@ class BlocLifecycleTests : BaseTestClass() {
         lifecycleRegistry.onDestroy()
         testState(bloc, 1, 10)
     }
+
+    @Suppress("RemoveExplicitTypeArguments")
+    @Test
+    fun initializerLifecycleTestEarlyStart() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        val context = BlocContextImpl(lifecycleRegistry)
+        val bloc = bloc<Int, Int>(context, 1) {
+            onCreate { dispatch(7) }
+            reduce { state + action }
+        }
+
+        delay(50)
+        assertEquals(8, bloc.value)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Suppress("RemoveExplicitTypeArguments")
+    @Test
+    fun initializerLifecycleTestEarlyStart2() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+
+        val context = BlocContextImpl(lifecycleRegistry)
+        val bloc = bloc<Int, Int>(context, 1) {
+            onCreate { dispatch(7) }
+            reduce { state + action }
+        }
+
+        delay(50)
+        bloc.send(1)
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onDestroy()
+    }
+
 }

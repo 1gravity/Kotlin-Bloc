@@ -59,7 +59,11 @@ public data class ThunkContextNoAction<State, Action>(
  *   }
  * ```
  */
-public data class ReducerContext<State, Action>(val state: State, val action: Action)
+public data class ReducerContext<State, Action>(
+    val state: State,
+    val action: Action,
+    internal val runner: CoroutineRunner
+)
 
 /**
  * [ReducerContextNoAction] is used as receiver for the receiver defined MVVM+ style (no action):
@@ -68,4 +72,7 @@ public data class ReducerContext<State, Action>(val state: State, val action: Ac
  *   }
  * ```
  */
-public class ReducerContextNoAction<State>(public val state: State)
+public class ReducerContextNoAction<State>(
+    public val state: State,
+    internal val runner: CoroutineRunner
+)

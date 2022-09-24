@@ -68,3 +68,51 @@ public fun <State, Action> ThunkContextNoAction<State, Action>.launch(
 ) {
     runner.run(jobConfig, block)
 }
+
+/**
+ * Extension function for [ReducerContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ */
+@BlocDSL
+public fun <State, Action> ReducerContext<State, Action>.launch(
+    block: CoroutineBlock
+) {
+    runner.run(null, block)
+}
+
+/**
+ * Extension function for [ReducerContext] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ *
+ * @param jobConfig @see [JobConfig]
+ */
+@BlocDSL
+public fun <State, Action> ReducerContext<State, Action>.launch(
+    jobConfig: JobConfig,
+    block: CoroutineBlock
+) {
+    runner.run(jobConfig, block)
+}
+
+/**
+ * Extension function for [ReducerContextNoAction] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ */
+@BlocDSL
+public fun <State> ReducerContextNoAction<State>.launch(block: CoroutineBlock) {
+    runner.run(null, block)
+}
+
+/**
+ * Extension function for [ReducerContextNoAction] to launch a coroutine and a run a suspend function
+ * without exposing the bloc's CoroutineScope.
+ *
+ * @param jobConfig @see [JobConfig]
+ */
+@BlocDSL
+public fun <State> ReducerContextNoAction<State>.launch(
+    jobConfig: JobConfig,
+    block: CoroutineBlock
+) {
+    runner.run(jobConfig, block)
+}

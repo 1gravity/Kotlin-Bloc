@@ -65,7 +65,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * Queue for actions dispatched by the initializer.
      * These actions are processed once the bloc transitions to the Started state.
      */
-    private val initActionQueue = ArrayDeque<Action>(10)
+    private val initActionQueue by lazy { ArrayDeque<Action>(10) }
 
     private inner class ActionQueueElement(
         val action: Action? = null,
@@ -77,7 +77,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * Queue for thunks and reducers submitted while the bloc is being initialized (initializer is
      * running). These thunks/reducers are processed once the bloc transitions to the Started state.
      */
-    private val actionQueue = ArrayDeque<ActionQueueElement>(10)
+    private val actionQueue by lazy { ArrayDeque<ActionQueueElement>(10) }
 
     init {
         blocLifecycle.subscribe(onStart = {

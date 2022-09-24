@@ -126,21 +126,25 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * Triggered to execute a specific reducer (dispatched Redux style)
      */
     private fun Reducer<State, Action, Effect<Proposal, SideEffect>>.runReducer(action: Action) {
-        val context = ReducerContext(state.value, action)
-        val reduce = this@runReducer
-        val (proposal, sideEffects) = context.reduce()
-        proposal?.let(state::send)
-        sideEffects.forEach(sideEffectChannel::trySend)
+        coroutine.runner?.let { runner ->
+            val context = ReducerContext(state.value, action, runner)
+            val reduce = this@runReducer
+            val (proposal, sideEffects) = context.reduce()
+            proposal?.let(state::send)
+            sideEffects.forEach(sideEffectChannel::trySend)
+        }
     }
 
     /**
      * Triggered to execute a specific reducer (dispatched MVVM+ style)
      */
     private fun runReducer(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
-        val context = ReducerContextNoAction(state.value)
-        val (proposal, sideEffects) = context.reduce()
-        proposal?.let(state::send)
-        sideEffects.forEach(sideEffectChannel::trySend)
+        coroutine.runner?.let { runner ->
+            val context = ReducerContextNoAction(state.value, runner)
+            val (proposal, sideEffects) = context.reduce()
+            proposal?.let(state::send)
+            sideEffects.forEach(sideEffectChannel::trySend)
+        }
     }
 
 }
