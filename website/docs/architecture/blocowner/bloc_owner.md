@@ -79,9 +79,10 @@ class PostListViewModel(context: ActivityBlocContext) : ViewModel(),
     override val bloc = bloc<PostsState, Nothing, Posts.OpenPost, PostsState>(
         blocContext(context),
         blocState(PostsState())
-    )
-
-    init {
+    ) {
+        // note: an initializer needs to be defined in the bloc because it can't transition
+        // to Started state if it doesn't know if and when an initializer is submitted 
+        // (no MVVM+ style initializers!)
         onCreate {
             if (state.isEmpty()) {
                 loading()

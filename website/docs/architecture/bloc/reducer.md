@@ -13,11 +13,9 @@ To reiterate:
 
 While the official Redux reducer definition captures the essence, reducers in the context of `Kotlin Bloc` are slightly different: 
 ```kotlin
-suspend (State, Action) -> Proposal
+(State, Action) -> Proposal
 ```
-Compared to a Redux reducer, "our" reducer is:
-1. suspending
-2. returns a `Proposal` instead of `State`
+Compared to a Redux reducer, "our" reducer returns a `Proposal` instead of `State`.
 
 ### Context
 
@@ -53,14 +51,14 @@ Default: reducer returns `Proposal`:
 
 ```kotlin
 // reducer without side effects
-suspend (State, Action) -> Proposal
+(State, Action) -> Proposal
 ```
 
 Exception: reducer returns `Effect<Proposal, SideEffect>`:
 
 ```kotlin
 // reducer with side effects
-suspend (State, Action) -> Effect<Proposal, SideEffect>
+(State, Action) -> Effect<Proposal, SideEffect>
 
 public data class Effect<Proposal : Any, SideEffect : Any>(
     val proposal: Proposal?,
@@ -151,7 +149,7 @@ reduce {
 }
 ```
 
-This behavior also makes sense since state must be reduced only once. Whichever matching reducer is declared first is the one being called. While the order of declaration is relevant for reducers (if they match the same action), it's not for thunks and reducers, thunks will always be executed first.
+This behavior also makes sense since state must be reduced only once. Whichever matching reducer is declared first is the one being called. The order of declaration is relevant for reducers (if they match the same action). If there are matching thunks and reducers, the order of declaration is irrelevant, thunks will always be executed first.
 
 What about side effects?
 
@@ -186,19 +184,16 @@ object Decrement : Action()
 
 private val bloc by getOrCreate { bloc<Int, Action>(it, 1) {
     reduce<Increment> {
-        delay(10000)
+        // heavy computation
         state + 1
     }
     reduce<Decrement> {
-        delay(5000)
         state - 1
     }
 } }
 ```
 
 Even if `Increment` and `Decrement` are sent in quick succession, `Increment` will always be processed first and the reducer will finish before the `Decrement` action is processed.
-1. `Increment` reducer starts, waits 10 seconds and sets the counter to 2
-2. `Decrement` reducer starts, waits 5 seconds and sets the counter to 1 
 
 :::tip
 This behavior is true for reducers triggered by an action (Redux style) or triggered by a function (MVVM+ style) (see [BlocOwner](../blocowner/bloc_owner.md#blocowner)). As a matter of fact, both types of reducers are sent to the same queue to be processed.
@@ -256,7 +251,8 @@ enum class Action {
 
 ## A Matter of Taste
 
-Reducers can be catch-all reducers or they can be single-action reducers (we can also use a combination of the two). Catch-all reducers are the traditional/Redux style of writing reducers.
+Reducers can be catch-all reducers or they can be single-action reducers (we can also use a combination of the two).
+Catch-all reducers are the traditional/Redux style of writing reducers.
 
 Catch-all reducers make sense if you want the reducer logic in one place like in this (calculator) example:
 
@@ -319,4 +315,4 @@ reduce<Equals> {
 
 It's a "matter of taste", which style you prefer. While the traditional/Redux style is to have reducers dealing with different actions, [this article](https://dev.to/feresr/a-case-against-the-mvi-architecture-pattern-1add) advocates for splitting reducers into smaller chunks. 
 
-[Orbit](https://orbit-mvi.org/) is one of the frameworks championing the MVVM+ style (that's what they call it in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27)) and it served as inspiration for some of the `Kotlin Bloc` design although they take the idea one step further (see [BlowOwner](../blocowner/bloc_owner)).
+[Orbit](https://orbit-mvi.org/) is one of the frameworks championing the MVVM+ style (that's what they call it in [this article](https://appmattus.medium.com/top-android-mvi-libraries-in-2021-de1afe890f27)) and it served as inspiration for some of the `Kotlin Bloc` design, although we take the idea one step further (see [BlowOwner](../blocowner/bloc_owner)).

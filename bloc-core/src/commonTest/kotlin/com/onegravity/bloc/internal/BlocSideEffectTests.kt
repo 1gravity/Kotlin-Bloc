@@ -41,4 +41,58 @@ class BlocSideEffectTests : BaseTestClass() {
         lifecycleRegistry.onDestroy()
     }
 
+    @Test
+    fun testMultipleSideEffects() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, SideEffect>(context, 1) {
+            reduce<Increment> { state + 1 }
+            sideEffect<Increment> { Open }
+            sideEffect<Increment> { Open }
+            sideEffect<Decrement> { Close }
+            sideEffect { Something }
+        }
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        testCollectSideEffects(bloc, listOf(Open, Open, Something, Open, Open, Something, Open, Open, Something)) {
+            repeat(3) {
+                bloc.send(Increment)
+                delay(10)
+            }
+        }
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun testThunksAndSideEffects() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, SideEffect>(context, 1) {
+            thunk<Increment> { dispatch(Decrement) }
+            sideEffect<Increment> { Open }
+            sideEffect<Increment> { Open }
+            sideEffect<Decrement> { Close }
+            sideEffect { Something }
+        }
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        testCollectSideEffects(bloc, listOf(Close, Something, Close, Something, Close, Something)) {
+            repeat(3) {
+                bloc.send(Increment)
+                delay(10)
+            }
+        }
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
 }

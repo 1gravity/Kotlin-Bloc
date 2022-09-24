@@ -60,6 +60,8 @@ class BlocThunkExecutionTests : BaseTestClass() {
 
         var count = 0
         val bloc = bloc<Int, Action, Unit>(context, 1) {
+            reduce<Increment> { state + 1 }
+            reduce { state }
             thunk<Increment> {
                 count++
                 dispatch(Increment)
@@ -77,8 +79,6 @@ class BlocThunkExecutionTests : BaseTestClass() {
                 count += 5
                 dispatch(action)
             }
-            reduce<Increment> { state + 1 }
-            reduce { state }
         }
 
         assertEquals(1, bloc.value)

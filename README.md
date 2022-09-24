@@ -10,7 +10,7 @@
 - **predictable**: write reactive applications that behave consistently and are easy to debug and test
 - **composable**: grows with the complexity of the app and the size of the team
 
-<img alt="Bloc Architecture - Overview" src="./docs/BLoC Architecture - BLoC Overview.svg" width="625" /><br/>
+<img alt="Bloc Architecture - Overview" src="./website/static/img/Bloc Architecture - Bloc Overview.svg" width="625" /><br/>
 
 - The `Bloc` (Business Logic Component) encapsulates the application's business logic. It receives `Action(s)` from the view, processes those actions and outputs `Proposals` and optionally `SideEffect(s)`.
 - The `BlocState` holds the component's `State`. It's separate from the actual `Bloc` to support different scenarios like:
