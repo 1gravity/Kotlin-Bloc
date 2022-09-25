@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: unit-tests-results
-          path: bloc-core/build/reports/tests/testReleaseUnitTest/index.html
+          path: Kotlin-Bloc/bloc-core/build/reports/tests/testReleaseUnitTest/
 
   tests:
     runs-on: ubuntu-latest
