@@ -27,13 +27,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: debug-unit-tests-results
-          path: Kotlin-Bloc/Kotlin-Bloc/bloc-core/build/reports/tests/testDebugUnitTest/
+          path: bloc-core/build/reports/tests/testDebugUnitTest/
 
       - name: Test results Release
         uses: actions/upload-artifact@v2
         with:
           name: release-unit-tests-results
-          path: Kotlin-Bloc/Kotlin-Bloc/bloc-core/build/reports/tests/testReleaseUnitTest/
+          path: bloc-core/build/reports/tests/testReleaseUnitTest/
 
   tests:
     runs-on: ubuntu-latest
