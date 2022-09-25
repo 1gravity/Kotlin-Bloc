@@ -23,6 +23,12 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
 
+      - name: Test results
+          uses: actions/upload-artifact@v2
+          with:
+            name: unit-tests-results
+            path: bloc-core/build/reports/tests/testReleaseUnitTest/index.html
+
   tests:
     runs-on: ubuntu-latest
 
