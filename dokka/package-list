@@ -7,6 +7,8 @@ module:Bloc Core
 com.onegravity.bloc
 com.onegravity.bloc.internal
 com.onegravity.bloc.internal.builder
+com.onegravity.bloc.internal.fsm
+com.onegravity.bloc.internal.lifecycle
 com.onegravity.bloc.state
 com.onegravity.bloc.utils
 module:Bloc Redux
