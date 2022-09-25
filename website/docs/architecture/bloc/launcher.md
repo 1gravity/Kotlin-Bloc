@@ -65,5 +65,5 @@ fun onSelected(post: Post) = thunk {
 }
 ```
 :::tip
-The `CoroutineScope` could be exposed through the context (InitializerContext, ThunkContext, ReducerContext) in order to facilitate the launch of new coroutines. However I decided to encapsulate that scope to prevent "unauthorized interventions" (like cancellations). This design decision could be temporary.
+The `CoroutineScope` could be exposed through the context (InitializerContext, ThunkContext, ReducerContext) in order to facilitate the launch of new coroutines. However I decided to encapsulate that scope to prevent "unauthorized interventions" (like cancellations). This design decision could be changed in the future.
 :::

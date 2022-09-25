@@ -32,13 +32,22 @@ class BlocThunkExecutionTests : BaseTestClass() {
 
         lifecycleRegistry.onStart()
         testState(bloc, null, 1)
-        assertEquals(8, count)
+        assertEquals(0, count)
 
         testState(bloc, Decrement, 1)
-        assertEquals(17, count)
+        assertEquals(9, count)
 
         testState(bloc, Whatever, 1)
-        assertEquals(24, count)
+        assertEquals(16, count)
+
+        // even if we restart the bloc, actions that were sent when it was stopped, are dropped
+        lifecycleRegistry.onStop()
+        testState(bloc, Whatever, 1)
+        testState(bloc, Whatever, 1)
+        testState(bloc, Whatever, 1)
+        lifecycleRegistry.onStart()
+        assertEquals(1, bloc.value)
+        assertEquals(16, count)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
@@ -51,6 +60,8 @@ class BlocThunkExecutionTests : BaseTestClass() {
 
         var count = 0
         val bloc = bloc<Int, Action, Unit>(context, 1) {
+            reduce<Increment> { state + 1 }
+            reduce { state }
             thunk<Increment> {
                 count++
                 dispatch(Increment)
@@ -68,8 +79,6 @@ class BlocThunkExecutionTests : BaseTestClass() {
                 count += 5
                 dispatch(action)
             }
-            reduce<Increment> { state + 1 }
-            reduce { state }
         }
 
         assertEquals(1, bloc.value)
@@ -78,8 +87,14 @@ class BlocThunkExecutionTests : BaseTestClass() {
         testState(bloc, Increment, 1)
 
         lifecycleRegistry.onStart()
-        testState(bloc, null, 9)
+        testState(bloc, null, 1)
+        assertEquals(0, count)
+
+        testState(bloc, Increment, 9)
         assertEquals(61, count)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
     }
 
     @Test

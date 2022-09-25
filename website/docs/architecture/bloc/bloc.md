@@ -72,19 +72,13 @@ Processing an `Action` usually means invoking a `Reducer`:
 > A reducer is a function that receives the current state and an action object, decides how to update the state if necessary, and returns the new state: (state, action) => newState  
 (https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
 
-Above definition is the official Redux reducer definition and captures its essence, although reducers in the context of `Kotlin Bloc` are a bit more complex: 
+Above definition is the official Redux reducer definition and captures its essence. Reducers in the context of `Kotlin Bloc` are very similar: 
 
 ```kotlin
-suspend (State, Action) -> Proposal
+(State, Action) -> Proposal
 ```
 
-Compared to a Redux reducer, this one:
-1. is suspending
-2. returns a `Proposal` instead of `State`
-
-More details can be found in [Reducer](./bloc/reducer).
-
-Reducers are asynchronous in nature when they are defined using one of the [BlocBuilders](./bloc/bloc_builder). They can be synchronous when defined using [BlocOwner](./blocowner/bloc_owner) extensions.
+Compared to a Redux reducer, this one returns a `Proposal` instead of `State`. More details can be found in [Reducer](./bloc/reducer).
 
 ## Side Effect
 
@@ -103,18 +97,17 @@ The difference between a "regular" reducer and one with side effects is simply t
 
 ```kotlin
 // no side effects
-suspend (State, Action) -> Proposal
+(State, Action) -> Proposal
 
 // with side effects
-suspend (State, Action) -> Effect<Proposal, SideEffect>
+(State, Action) -> Effect<Proposal, SideEffect>
 ```
 
 When the framework detects an `Effect` it will emit the side effects to a dedicated `Stream` that can be observed separately from the regular `State` stream. There's a DSL that make it easy to "build" reducers with side effects (see [Reducer](./bloc/reducer)).
 
 ## Thunk
 
-While reducers are normally asynchronous in nature, their intended purpose is to update `State` right away to make sure the user interface is responsive to user input and updates "without" perceptible delay.
-Longer running operations should be executed using a `Thunk`:
+Reducers are synchronous in nature and their intended purpose is to update `State` right away to make sure the user interface is responsive to user input and updates "without" perceptible delay. Longer running operations should be executed using a `Thunk`:
 >The word "thunk" is a programming term that means "a piece of code that does some delayed work". Rather than execute some logic now, we can write a function body or code that can be used to perform the work later.  
 https://redux.js.org/usage/writing-logic-thunks
 

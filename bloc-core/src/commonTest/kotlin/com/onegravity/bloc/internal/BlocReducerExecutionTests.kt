@@ -8,7 +8,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BlocReducerExecutionTests : BaseTestClass() {
-
     @Test
     fun testReducerExecutionSimple() = runTests {
         val (bloc, lifecycleRegistry) = createBloc()
@@ -28,6 +27,56 @@ class BlocReducerExecutionTests : BaseTestClass() {
         assertEquals(6, bloc.value)
         bloc.reduce { state - 4 }
         testState(bloc, null, 2)
+
+        lifecycleRegistry.onStop()
+
+        testState(bloc, Increment, 2)
+        testState(bloc, Increment, 2)
+        testState(bloc, Increment, 2)
+
+        // even if we restart the bloc, actions that were sent when it was stopped, are dropped
+        lifecycleRegistry.onStart()
+        delay(10)
+        assertEquals(2, bloc.value)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun testReducerOrderOfExecution() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        var running = false
+        val bloc = bloc<Int, Action, Unit>(context, 1) {
+            reduce<Increment> {
+                running = true
+                // some longer running code
+                val count = (0..9999).fold(0) { acc, value -> acc + value }
+                repeat(10000) { count + 1 }
+                (state + 1).also { running = false }
+            }
+            reduce<Decrement> {
+                assertEquals(false, running, "Reducer 1 is still running!")
+                state - 1
+            }
+        }
+
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        testCollectState(
+            bloc,
+            listOf(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1)
+        ) {
+            repeat(10) {
+                bloc.send(Increment)
+                bloc.send(Decrement)
+            }
+        }
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
@@ -63,7 +112,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         delayReducerDec: Long = 0,
         delayReducerWhatever: Long = 0
     ) = runTest {
-        val (bloc, lifecycleRegistry) = createBloc(delayReducerInc, delayReducerDec, delayReducerWhatever)
+        val (bloc, lifecycleRegistry) = createBloc()
 
         assertEquals(1, bloc.value)
         lifecycleRegistry.onCreate()
@@ -84,7 +133,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         assertEquals(11, bloc.value)
         testCollectState(
             bloc,
-            listOf(11,10,9,8,7,6,5,4,3,2,1),
+            listOf(11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1),
             delayReducerDec.times(10).plus(100).coerceAtLeast(100)
         ) {
             repeat(10) {
@@ -97,7 +146,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         assertEquals(1, bloc.value)
         testCollectState(
             bloc,
-            listOf(1,6,11,16,21,26,31,36,41,46,51),
+            listOf(1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51),
             delayReducerWhatever.times(10).plus(100).coerceAtLeast(100)
         ) {
             repeat(10) {
@@ -109,8 +158,9 @@ class BlocReducerExecutionTests : BaseTestClass() {
         assertEquals(51, bloc.value)
         testCollectState(
             bloc,
-            listOf(51, 52,57,56, 57,62,61, 62,67,66),
-            (delayReducerInc + delayReducerDec + delayReducerWhatever + 100).times(3).coerceAtLeast(100)
+            listOf(51, 52, 57, 56, 57, 62, 61, 62, 67, 66),
+            (delayReducerInc + delayReducerDec + delayReducerWhatever + 100).times(3)
+                .coerceAtLeast(100)
         ) {
             repeat(3) {
                 bloc.send(Increment)
@@ -167,28 +217,20 @@ class BlocReducerExecutionTests : BaseTestClass() {
         lifecycleRegistry.onDestroy()
     }
 
-    private fun createBloc(
-        delayInc: Long = 0,
-        delayDec: Long = 0,
-        delayWhatever: Long = 0
-    ) : Pair<Bloc<Int, Action, Unit>, LifecycleRegistry> {
+    private fun createBloc(): Pair<Bloc<Int, Action, Unit>, LifecycleRegistry> {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
         val bloc = bloc<Int, Action, Unit>(context, 1) {
             reduce<Increment> {
-                delay(delayInc)
                 state + 1
             }
             reduce<Decrement> {
-                delay(delayDec)
                 state - 1
             }
             reduce {
-                delay(delayWhatever)
                 state + 5
             }
         }
         return Pair(bloc, lifecycleRegistry)
     }
-
 }

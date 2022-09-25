@@ -65,8 +65,8 @@ kotlin {
                 implementation(Ktor.client.logging)
                 implementation(Ktor.client.json)
                 implementation(Ktor.client.serialization)
-                implementation("io.ktor:ktor-client-content-negotiation:_")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:_")
+                implementation(Ktor.client.contentNegotiation)
+                implementation(Ktor.plugins.serialization.kotlinx.json)
 
                 // SQLDelight (https://cashapp.github.io/sqldelight/)
                 implementation("com.squareup.sqldelight:runtime:_")

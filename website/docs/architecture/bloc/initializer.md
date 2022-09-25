@@ -47,12 +47,10 @@ onCreate {
 }
 ```
 
-The order of declaration is irrelevant, the initializer will always be called first (see [Lifecycle](lifecycle)). It could however be that the initializer is still running when the bloc starts processing actions (thunks and reducers). This behavior might change in a future version.
+The order of declaration is irrelevant, the initializer will always be called first. The bloc also waits for the initializer to finish before processing thunks or reducers. Actions dispatched before the initializer finishes (between `onCreate()` and `onStart()`) are sent to a queue and are processed once the bloc transitions to the `Started` state (see [Lifecycle](lifecycle)).
+That's true for actions dispatched by the initializer itself and also for actions dispatched directly to the bloc (MVVM+ style). 
+The only exception to that rule is if the initializer launches asynchronous code e.g. via [launch](coroutine_launcher) and would dispatch actions from there. 
 
 :::tip
 If more than one initializer is defined, the first one (according to their order of declaration) is used, all others are ignored.
-:::
-
-:::tip
-There are extension functions to launch `Coroutines` from an initializer (see [Coroutine Launcher](coroutine_launcher)). 
 :::

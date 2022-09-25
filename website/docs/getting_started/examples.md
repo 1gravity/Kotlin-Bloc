@@ -225,15 +225,6 @@ class PostViewModel : ViewModel(), BlocOwner<State, Action, SideEffect, State> {
         }
     }
 
-    init {
-        // initializer, MVVM+ style
-        onCreate {
-            if (state.posts.isEmpty()) {
-                load()
-            }
-        }
-    }
-
     // thunks for asynchronous operations, MVVM+ style
     private fun load() = thunk {
         dispatch(Loading)
