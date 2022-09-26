@@ -11,7 +11,6 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* MainMenuView.swift */; };
-		8829BF2028582E5300349B91 /* CalculatorView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829BF1F28582E5300349B91 /* CalculatorView2.swift */; };
 		8842E3402835A7C800CD25ED /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */; };
 		8842E346283ABADE00CD25ED /* PostItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E345283ABADE00CD25ED /* PostItemView.swift */; };
 		8842E348283D3C7900CD25ED /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842E347283D3C7900CD25ED /* PostListView.swift */; };
@@ -38,7 +37,6 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8829BF1F28582E5300349B91 /* CalculatorView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView2.swift; sourceTree = "<group>"; };
 		8842E33F2835A7C800CD25ED /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		8842E345283ABADE00CD25ED /* PostItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemView.swift; sourceTree = "<group>"; };
 		8842E347283D3C7900CD25ED /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 				88890E6A2825973700E2BAEA /* CalculatorView.swift */,
 				88890EDB282D0D4D00E2BAEA /* KeypadView.swift */,
 				88890EDE282D1EF000E2BAEA /* CalculatorButtonStyle.swift */,
-				8829BF1F28582E5300349B91 /* CalculatorView2.swift */,
 			);
 			path = calculator;
 			sourceTree = "<group>";
@@ -255,7 +252,6 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				8842E3402835A7C800CD25ED /* ActivityIndicator.swift in Sources */,
 				8842E34C283D692100CD25ED /* BlocComponent.swift in Sources */,
-				8829BF2028582E5300349B91 /* CalculatorView2.swift in Sources */,
 				8842E34A283D44A900CD25ED /* PostView.swift in Sources */,
 				88890E5F2821DAC800E2BAEA /* BlocObserver.swift in Sources */,
 				88E328802831A5C700AADAFE /* NavigationLazyView.swift in Sources */,

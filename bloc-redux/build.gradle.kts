@@ -22,16 +22,7 @@ kotlin {
 
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
-        listOf(
-            iosX64(),
-            iosArm64(),
-            iosSimulatorArm64()
-        ).forEach {
-            it.binaries.framework {
-                baseName = "blocRedux"
-                transitiveExport = true
-            }
-        }
+        listOf(iosX64(), iosArm64(), iosSimulatorArm64())
     }
 
     sourceSets {

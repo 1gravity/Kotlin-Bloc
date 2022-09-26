@@ -24,11 +24,11 @@ kotlin {
         ).forEach { target ->
             target.binaries.framework {
                 baseName = "blocSamples"
-                transitiveExport = true
                 export(project(":bloc-core"))
                 export(project(":bloc-redux"))
 //                export("com.1gravity:bloc-core:_")
 //                export("com.1gravity:bloc-redux:_")
+                export("com.arkivanov.essenty:lifecycle:_")
             }
         }
     }

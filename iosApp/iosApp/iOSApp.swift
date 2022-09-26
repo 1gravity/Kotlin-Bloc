@@ -4,9 +4,9 @@ import blocSamples
 @main
 struct iOSApp: App {
     init() {
-		UtilsKt.logger.i(msg: "iOS App started")
+        LoggerUtilsKt.logger.i(msg: "iOS App started")
 		KoinKt.doInitKoin(koinAppDeclaration: { _ in })
-		UtilsKt.logger.i(msg: "iOS App injected")
+        LoggerUtilsKt.logger.i(msg: "iOS App injected")
 
 		#if DEBUG
 		var injectionBundlePath = "/Applications/InjectionIII.app/Contents/Resources"
