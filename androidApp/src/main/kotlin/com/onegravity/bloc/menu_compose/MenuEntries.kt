@@ -4,12 +4,13 @@ import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,9 +46,10 @@ internal fun MenuEntries(bloc: MenuBloc, modifier: Modifier) {
                 Button(
                     modifier = Modifier.padding(8.dp).defaultMinSize(200.dp).width(IntrinsicSize.Min),
                     onClick = { bloc.send(menuItem) },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
                     content = {
                         val text = menuItem2Text[menuItem]?.let { stringResource(it) } ?: "Text not found"
-                        Text(text = text, textAlign = TextAlign.Center)
+                        Text(text = text, textAlign = TextAlign.Center, color = Color.White)
                     }
                 )
             }

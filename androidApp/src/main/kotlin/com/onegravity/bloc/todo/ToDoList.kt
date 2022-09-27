@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -20,7 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.compose.observeState
-import com.onegravity.bloc.posts_compose.*
 import com.onegravity.bloc.sample.todo.ToDo
 import com.onegravity.bloc.sample.todo.ToDoAction
 import com.onegravity.bloc.sample.todo.ToggleToDo
@@ -33,11 +31,11 @@ fun ToDoList(bloc: Bloc<List<ToDo>, ToDoAction, Unit>) {
 
     var filter by remember { mutableStateOf(FilterStatus.All) }
 
-    val regular = TextStyle(color = Color.Black)
-    val selected = TextStyle(color = Color.Blue, fontWeight = FontWeight.Bold)
+    val regular = TextStyle(color = MaterialTheme.colors.primaryVariant)
+    val selected = TextStyle(color = MaterialTheme.colors.secondaryVariant, fontWeight = FontWeight.Bold)
 
     Row(Modifier.fillMaxWidth()) {
-        Text("${state.filter { ! it.completed }.size} items left")
+        Text("${state.filter { ! it.completed }.size} items left", color = MaterialTheme.colors.primaryVariant)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
@@ -69,7 +67,7 @@ fun ToDoList(bloc: Bloc<List<ToDo>, ToDoAction, Unit>) {
                         checked = todo.completed,
                         onCheckedChange = { bloc.send(ToggleToDo(todo.uuid)) }
                     )
-                    Text(text = todo.description, Modifier.fillMaxWidth().fillMaxHeight(),textAlign = TextAlign.Left)
+                    Text(text = todo.description, Modifier.fillMaxWidth().fillMaxHeight(),textAlign = TextAlign.Left, color = MaterialTheme.colors.primaryVariant)
                 }
             }
         }

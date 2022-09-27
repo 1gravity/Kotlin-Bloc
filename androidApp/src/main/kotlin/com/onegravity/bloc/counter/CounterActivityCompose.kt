@@ -5,10 +5,13 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,18 +36,21 @@ class CounterActivityCompose : AppCompatActivity() {
                     Text(
                         text = stringResource(R.string.counter_value, state),
                         fontSize = 18.sp,
+                        color = Color.White,
                         modifier = Modifier.fillMaxWidth().padding(32.dp)
                     )
                     Row {
                         Button(
                             modifier = Modifier.padding(8.dp).defaultMinSize(120.dp).width(IntrinsicSize.Min),
                             onClick = { bloc.send(1) },
-                            content = { Text(text = stringResource(R.string.counter_increment), textAlign = TextAlign.Center) }
+                            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                            content = { Text(text = stringResource(R.string.counter_increment), textAlign = TextAlign.Center, color = Color.White) }
                         )
                         Button(
                             modifier = Modifier.padding(8.dp).defaultMinSize(120.dp).width(IntrinsicSize.Min),
                             onClick = { bloc.send(-1) },
-                            content = { Text(text = stringResource(R.string.counter_decrement), textAlign = TextAlign.Center) }
+                            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                            content = { Text(text = stringResource(R.string.counter_decrement), textAlign = TextAlign.Center, color = Color.White) }
                         )
                     }
                 }

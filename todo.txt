@@ -1,6 +1,5 @@
 - TODO Fix Subscriber extension functions aren't published...
 - TODO implement Subscriber tests
-- TODO fix the theming
 
 - TODO implements Bloc tests with initializer, reducer, thunk, side effect
 - TODO implements BlocState tests
