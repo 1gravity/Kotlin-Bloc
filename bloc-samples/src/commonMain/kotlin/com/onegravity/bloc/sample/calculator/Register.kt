@@ -27,6 +27,7 @@ import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.decimal.toBigDecimal
 
+@Suppress("TooManyFunctions")
 class Register(private val value: String = "") {
     private val asBigDecimal: BigDecimal
         get() = if (value.isEmpty()) BigDecimal.ZERO else value.toBigDecimal()

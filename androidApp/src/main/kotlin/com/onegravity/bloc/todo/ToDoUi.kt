@@ -12,12 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.onegravity.bloc.Bloc
-import com.onegravity.bloc.sample.todo.ToDo
 import com.onegravity.bloc.sample.todo.ToDoAction
+import com.onegravity.bloc.sample.todo.ToDoState
 
 @Composable
 @Suppress("FunctionNaming", "FunctionName")
-fun ToDoUi(bloc: Bloc<List<ToDo>, ToDoAction, Unit>) {
+fun ToDoUi(bloc: Bloc<ToDoState, ToDoAction, Unit>) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -27,6 +27,8 @@ fun ToDoUi(bloc: Bloc<List<ToDo>, ToDoAction, Unit>) {
 
         Spacer(Modifier.height(24.0.dp))
 
-        ToDoList(bloc)
+        ToDoListHeader(bloc)
+
+        ToDoListTasks(bloc)
     }
 }

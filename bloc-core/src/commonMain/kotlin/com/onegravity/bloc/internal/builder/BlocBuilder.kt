@@ -24,6 +24,7 @@ import kotlin.jvm.JvmName
  * It has to be a class because of the reified functions and it has to be public because it's
  * exposed by the BlocBuilderDsl.
  */
+@Suppress("TooManyFunctions")
 public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
     private var _initialize: Initializer<State, Action>? = null

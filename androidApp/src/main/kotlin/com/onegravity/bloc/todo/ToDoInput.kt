@@ -21,12 +21,12 @@ import androidx.compose.ui.text.input.ImeAction
 import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.R
 import com.onegravity.bloc.sample.todo.AddToDo
-import com.onegravity.bloc.sample.todo.ToDo
 import com.onegravity.bloc.sample.todo.ToDoAction
+import com.onegravity.bloc.sample.todo.ToDoState
 
 @Composable
 @Suppress("FunctionNaming", "FunctionName")
-fun ToDoInput(bloc: Bloc<List<ToDo>, ToDoAction, Unit>) {
+fun ToDoInput(bloc: Bloc<ToDoState, ToDoAction, Unit>) {
     var text: String by rememberSaveable { mutableStateOf("") }
 
     TextField(

@@ -4,7 +4,7 @@ import com.onegravity.bloc.internal.fsm.StateMachine
 import com.onegravity.bloc.internal.fsm.Transition
 import com.onegravity.bloc.utils.logger
 
-@Suppress("FunctionName", "FunctionNaming", "RemoveExplicitTypeArguments")
+@Suppress("FunctionName", "FunctionNaming", "RemoveExplicitTypeArguments", "LongMethod")
 internal fun LifecycleStateMachine(
     observer: (transition: LifecycleTransition) -> Unit,
 ) = StateMachine.create<LifecycleState, LifecycleEvent, LifecycleSideEffect> {

@@ -34,6 +34,7 @@ private const val QUEUE_INITIAL_SIZE = 10
  * Implements Bloc and BlocExtension and is responsible for executing initializers, reducers and
  * thunks.
  */
+@Suppress("LongParameterList")
 internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,

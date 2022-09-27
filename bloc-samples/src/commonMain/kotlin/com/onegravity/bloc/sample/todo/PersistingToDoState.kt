@@ -8,24 +8,33 @@ import kotlinx.coroutines.launch
 
 class PersistingToDoState(
     coroutineScope: CoroutineScope
-) : BlocStateBase<List<ToDo>, List<ToDo>>(
-    initialState = emptyList()
+) : BlocStateBase<ToDoState, ToDoState>(
+    initialState = ToDoState()
 ) {
 
     private val dao = getKoinInstance<ToDoDao>()
 
+    private var cachedState: ToDoState = ToDoState()
+
     init {
         coroutineScope.launch(Dispatchers.Default) {
-            dao.getFlow().collect { state.send(it) }
+            dao.getFlow().collect {
+                cachedState = cachedState.copy(todos = it)
+                state.send(ToDoState(it, cachedState.filter))
+            }
         }
     }
 
-    override fun send(proposal: List<ToDo>) {
-        proposal.forEach { newTodo ->
-            val oldTodo = value.firstOrNull { it.uuid == newTodo.uuid }
+    override fun send(proposal: ToDoState) {
+        proposal.todos.forEach { newTodo ->
+            val oldTodo = value.todos.firstOrNull { it.uuid == newTodo.uuid }
             if (newTodo != oldTodo) {
                 dao.upsert(newTodo.uuid, newTodo.description, newTodo.completed)
             }
+        }
+        if (proposal.filter != cachedState.filter) {
+            cachedState = cachedState.copy(filter = proposal.filter)
+            state.send(cachedState)
         }
     }
 

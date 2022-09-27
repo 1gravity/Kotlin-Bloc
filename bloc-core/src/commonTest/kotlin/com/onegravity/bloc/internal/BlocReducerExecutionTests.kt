@@ -111,6 +111,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         testReducerExecutionWithDelays(10, 100, 0, 1000, 100, 500)
     }
 
+    @Suppress("LongParameterList")
     private fun testReducerExecutionWithDelays(
         delaySendInc: Long = 0,
         delaySendDec: Long = 0,
