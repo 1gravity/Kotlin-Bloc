@@ -56,9 +56,6 @@ kotlin {
             }
         }
 
-        val androidMain by getting
-        val androidTest by getting
-
         if (isMacOsX) {
             val iosX64Main by getting
             val iosArm64Main by getting

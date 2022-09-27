@@ -28,13 +28,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.michaelbull.result.mapBoth
 import com.google.android.material.snackbar.Snackbar
+import com.onegravity.bloc.BlocOwner
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostListFragmentBinding
 import com.onegravity.bloc.getOrCreate
 import com.onegravity.bloc.sample.posts.bloc.Posts
 import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.subscribe
-import com.onegravity.bloc.BlocOwner
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -91,7 +91,8 @@ class PostsFragment :
                     adapter.update(items)
                 },
                 { error ->
-                    Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error: ${error.message}", Snackbar.LENGTH_LONG)
+                        .show()
                 }
             )
         }

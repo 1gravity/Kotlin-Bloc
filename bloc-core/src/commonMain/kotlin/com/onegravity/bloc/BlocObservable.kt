@@ -12,6 +12,7 @@ import com.onegravity.bloc.utils.subscribe
  * It depends on the concrete implementations of the BlocObservable which transitions of the
  * lifecycle are relevant (typically onStart() and onStop()).
  */
+@Suppress("UnnecessaryAbstractClass") // can't be interface because of type erasure in iOS
 public abstract class BlocObservable<out State : Any, out SideEffect : Any> {
 
     public abstract val value: State

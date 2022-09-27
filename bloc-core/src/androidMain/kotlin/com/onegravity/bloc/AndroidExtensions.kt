@@ -4,9 +4,14 @@ import androidx.activity.ComponentActivity
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
-import com.onegravity.bloc.utils.*
+import com.onegravity.bloc.utils.BlocDSL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -48,7 +53,7 @@ fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<Stat
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
-    bloc.subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
+    bloc.subscribe(lifecycleOwner, state, sideEffect)
 }
 
 /**
@@ -60,7 +65,7 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
 ) {
-    subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
+    toObservable().subscribe(lifecycleOwner.lifecycle.asEssentyLifecycle(), state, sideEffect)
 }
 
 /**
@@ -91,7 +96,9 @@ fun <State : Any, Action : Any, SideEffect : Any> LifecycleOwner.toLiveData(bloc
     bloc.toLiveData(lifecycleScope)
 
 @BlocDSL
-private fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toLiveData(scope: CoroutineScope): LiveData<State> =
+private fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toLiveData(
+    scope: CoroutineScope
+): LiveData<State> =
     MutableLiveData<State>().apply {
         scope.launch {
             collect { value = it }

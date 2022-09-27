@@ -6,7 +6,6 @@ import com.badoo.reaktive.disposable.scope.doOnDispose
 import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.redux.select.select
 import com.onegravity.bloc.state.BlocState
-import com.onegravity.bloc.utils.BlocDSL
 import com.onegravity.bloc.utils.Mapper
 import com.onegravity.bloc.utils.Selector
 import org.reduxkotlin.Store

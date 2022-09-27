@@ -40,15 +40,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.onegravity.bloc.R
 import com.onegravity.bloc.databinding.PostDetailsFragmentBinding
 import com.onegravity.bloc.getOrCreate
-import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.sample.posts.bloc.Post
 import com.onegravity.bloc.sample.posts.bloc.PostBloc
+import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.utils.logger
-import com.onegravity.bloc.sample.posts.domain.repositories.Post as PostData
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import com.onegravity.bloc.sample.posts.domain.repositories.Post as PostData
 
 class PostFragment : Fragment(R.layout.post_details_fragment) {
 
@@ -76,7 +76,11 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
         ViewCompat.setNestedScrollingEnabled(binding.postCommentsList, false)
 
         binding.postCommentsList.addItemDecoration(
-            SeparatorDecoration(requireActivity(), R.dimen.separator_margin_start, R.dimen.separator_margin_end)
+            SeparatorDecoration(
+                requireActivity(),
+                R.dimen.separator_margin_start,
+                R.dimen.separator_margin_end
+            )
         )
 
         binding.postCommentsList.adapter = adapter
@@ -140,9 +144,18 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
                             placeholder?.let(::setLogo)
                         }
 
-                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable>?
+                        ) {
                             val logo = LayerDrawable(arrayOf(resource)).apply {
-                                setLayerInset(0, 0, 0, resources.getDimensionPixelSize(R.dimen.toolbar_logo_padding_end), 0)
+                                setLayerInset(
+                                    0,
+                                    0,
+                                    0,
+                                    resources.getDimensionPixelSize(R.dimen.toolbar_logo_padding_end),
+                                    0
+                                )
                             }
 
                             setLogo(logo)

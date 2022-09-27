@@ -4,7 +4,13 @@ import com.onegravity.bloc.internal.builder.MatcherReducer
 import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
 import com.onegravity.bloc.internal.lifecycle.subscribe
 import com.onegravity.bloc.state.BlocState
-import com.onegravity.bloc.utils.*
+import com.onegravity.bloc.utils.Effect
+import com.onegravity.bloc.utils.Reducer
+import com.onegravity.bloc.utils.ReducerContext
+import com.onegravity.bloc.utils.ReducerContextNoAction
+import com.onegravity.bloc.utils.ReducerNoAction
+import com.onegravity.bloc.utils.SideEffectStream
+import com.onegravity.bloc.utils.logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -26,7 +32,8 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     /**
      * Channel for reducers to be processed (incoming)
      */
-    private val reduceChannel = Channel<ReducerContainer<State, Action, SideEffect, Proposal>>(UNLIMITED)
+    private val reduceChannel =
+        Channel<ReducerContainer<State, Action, SideEffect, Proposal>>(UNLIMITED)
 
     /**
      * Channel for side effects (outgoing)
@@ -72,7 +79,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * reduce { } -> run a Reducer Redux style
      */
     internal fun send(action: Action) {
-        if (! lifecycle.isStarted()) return
+        if (!lifecycle.isStarted()) return
 
         logger.d("received reducer with action ${action.trimOutput()}")
         reduceChannel.trySend(ReducerContainer(action))
@@ -83,7 +90,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * reduce { } -> run a Reducer MVVM+ style
      */
     internal fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
-        if (! lifecycle.isStarted()) return
+        if (!lifecycle.isStarted()) return
 
         logger.d("received reducer without action")
         reduceChannel.trySend(ReducerContainer(reducer = reduce))

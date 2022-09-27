@@ -34,7 +34,8 @@ object CounterStore {
     )
 
     // Redux Store
-    internal val reduxStore = createThreadSafeStore(::rootReducer,
+    internal val reduxStore = createThreadSafeStore(
+        ::rootReducer,
         ReduxModel(
             purpose = Purpose(
                 title = "Redux Test",

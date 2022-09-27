@@ -1,11 +1,22 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.menu_compose
 
 import android.content.Intent
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,6 +34,7 @@ import com.onegravity.bloc.sample.MainMenuCompose
 import com.onegravity.bloc.sample.MenuBloc
 
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 internal fun MenuEntries(bloc: MenuBloc, modifier: Modifier) {
     val state by bloc.observeState()
     val sideEffect by bloc.observeSideEffects()
@@ -44,11 +56,15 @@ internal fun MenuEntries(bloc: MenuBloc, modifier: Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Button(
-                    modifier = Modifier.padding(8.dp).defaultMinSize(200.dp).width(IntrinsicSize.Min),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .defaultMinSize(200.dp)
+                        .width(IntrinsicSize.Min),
                     onClick = { bloc.send(menuItem) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
                     content = {
-                        val text = menuItem2Text[menuItem]?.let { stringResource(it) } ?: "Text not found"
+                        val text =
+                            menuItem2Text[menuItem]?.let { stringResource(it) } ?: "Text not found"
                         Text(text = text, textAlign = TextAlign.Center, color = Color.White)
                     }
                 )
@@ -59,7 +75,11 @@ internal fun MenuEntries(bloc: MenuBloc, modifier: Modifier) {
 
 @Preview
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 fun MenuEntriesPreview() {
     val bloc = MainMenuCompose.bloc(previewBlocContext())
-    MenuEntries(bloc, Modifier.fillMaxWidth().fillMaxHeight())
+    MenuEntries(bloc,
+        Modifier
+            .fillMaxWidth()
+            .fillMaxHeight())
 }

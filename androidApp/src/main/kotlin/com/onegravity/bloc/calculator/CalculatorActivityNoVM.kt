@@ -20,7 +20,9 @@ class CalculatorActivityNoVM : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        bind<ActivityCalculatorNoVmBinding>(R.layout.activity_calculator_no_vm) { it.activity = this }
+        bind<ActivityCalculatorNoVmBinding>(R.layout.activity_calculator_no_vm) {
+            it.activity = this
+        }
     }
 
     fun button(action: ActionEnum) {

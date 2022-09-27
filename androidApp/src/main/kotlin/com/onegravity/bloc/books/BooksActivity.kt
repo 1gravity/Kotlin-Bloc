@@ -11,7 +11,6 @@ import com.onegravity.bloc.sample.books.BookState
 import com.onegravity.bloc.sample.books.BooksRepositoryImpl
 import com.onegravity.bloc.sample.books.BooksUseCase
 import com.onegravity.bloc.sample.books.BooksUseCaseImpl
-import com.onegravity.bloc.sample.books.BooksUseCaseImplRedux
 import com.onegravity.bloc.subscribe
 
 class BooksActivity : AppCompatActivity() {

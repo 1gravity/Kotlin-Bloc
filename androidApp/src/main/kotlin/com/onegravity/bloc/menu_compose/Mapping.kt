@@ -1,3 +1,5 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.menu_compose
 
 import com.onegravity.bloc.R

@@ -15,23 +15,23 @@ import kotlinx.coroutines.flow.MutableSharedFlow
  */
 internal class MutableBehaviorFlow<T>(
     private val initialValue: T,
-    private val _backingSharedFlow: MutableSharedFlow<T> =
+    private val backingSharedFlow: MutableSharedFlow<T> =
         MutableSharedFlow(replay = 1, extraBufferCapacity = Int.MAX_VALUE, BufferOverflow.SUSPEND)
-) : MutableSharedFlow<T> by _backingSharedFlow {
+) : MutableSharedFlow<T> by backingSharedFlow {
 
     init {
-        _backingSharedFlow.tryEmit(initialValue)
+        backingSharedFlow.tryEmit(initialValue)
     }
 
     val value: T
         get() = runCatching { replayCache.last() }.getOrDefault(initialValue)
 
     override suspend fun emit(value: T) {
-        if (value != this.value) _backingSharedFlow.emit(value)
+        if (value != this.value) backingSharedFlow.emit(value)
     }
 
     override fun tryEmit(value: T) =
         if (value != this.value) {
-            _backingSharedFlow.tryEmit(value)
+            backingSharedFlow.tryEmit(value)
         } else true
 }

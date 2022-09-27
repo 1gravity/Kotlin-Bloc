@@ -109,7 +109,6 @@ kotlin {
                 implementation(AndroidX.compose.ui.tooling)
             }
         }
-        val androidTest by getting
 
         if (isMacOsX) {
             val iosX64Main by getting

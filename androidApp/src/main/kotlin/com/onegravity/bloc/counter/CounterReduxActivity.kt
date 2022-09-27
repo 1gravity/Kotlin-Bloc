@@ -13,7 +13,9 @@ class CounterReduxActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bind<ActivityCounterReduxBinding>(R.layout.activity_counter_redux) { it.viewmodel = viewModel }
+        bind<ActivityCounterReduxBinding>(R.layout.activity_counter_redux) {
+            it.viewmodel = viewModel
+        }
     }
 
 }

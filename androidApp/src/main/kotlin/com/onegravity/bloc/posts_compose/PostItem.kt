@@ -1,7 +1,15 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.posts_compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ContentAlpha
@@ -19,6 +27,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 internal fun PostItem(
     post: Post,
     isSelected: Boolean,
@@ -40,7 +49,10 @@ internal fun PostItem(
 
     ) {
         Box(
-            modifier = Modifier.height(80.dp).width(80.dp).padding(16.dp)
+            modifier = Modifier
+                .height(80.dp)
+                .width(80.dp)
+                .padding(16.dp)
         ) {
             GlideImage(
                 imageModel = post.avatarUrl,
@@ -60,12 +72,16 @@ internal fun PostItem(
             Text(
                 text = post.username,
                 fontSize = 14.sp,
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp)
             )
             Text(
                 text = post.title,
                 fontSize = 16.sp,
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp)
             )
         }
     }

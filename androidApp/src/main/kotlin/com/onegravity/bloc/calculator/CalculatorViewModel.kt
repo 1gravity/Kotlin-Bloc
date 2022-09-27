@@ -1,3 +1,5 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.calculator
 
 import androidx.lifecycle.ViewModel

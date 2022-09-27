@@ -1,7 +1,7 @@
 package com.onegravity.bloc.sample.counter
 
-import com.onegravity.bloc.bloc
 import com.onegravity.bloc.BlocContext
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.state.asBlocState
 import com.onegravity.bloc.utils.logger
 
@@ -14,16 +14,17 @@ object SimpleCounter {
     data class Increment(val value: Int = 1) : Action()
     data class Decrement(val value: Int = 1) : Action()
 
-    private fun <State: Any> auditTrailBloc(context: BlocContext, initialValue: State) = bloc<State, State>(
-        context,
-        initialValue
-    ) {
-        thunk {
-            logger.d("auditTrailBloc: changing state from ${getState()} to $action")
-            dispatch(action)
+    private fun <State : Any> auditTrailBloc(context: BlocContext, initialValue: State) =
+        bloc<State, State>(
+            context,
+            initialValue
+        ) {
+            thunk {
+                logger.d("auditTrailBloc: changing state from ${getState()} to $action")
+                dispatch(action)
+            }
+            reduce { action }
         }
-        reduce { action }
-    }
 
     private fun interceptorBloc2(context: BlocContext, initialValue: Int) = bloc<Int, Int>(
         context,

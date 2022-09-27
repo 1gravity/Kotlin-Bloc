@@ -1,17 +1,32 @@
 package com.onegravity.bloc.internal
 
-import com.arkivanov.essenty.lifecycle.*
+import com.arkivanov.essenty.lifecycle.Lifecycle
+import com.arkivanov.essenty.lifecycle.doOnStart
+import com.arkivanov.essenty.lifecycle.doOnStop
 import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.BlocContext
-import com.onegravity.bloc.internal.lifecycle.subscribe
 import com.onegravity.bloc.internal.builder.MatcherReducer
 import com.onegravity.bloc.internal.builder.MatcherThunk
 import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
 import com.onegravity.bloc.internal.lifecycle.BlocLifecycleImpl
+import com.onegravity.bloc.internal.lifecycle.subscribe
 import com.onegravity.bloc.state.BlocState
-import com.onegravity.bloc.utils.*
-import kotlinx.coroutines.*
+import com.onegravity.bloc.utils.BlocObserver
+import com.onegravity.bloc.utils.Effect
+import com.onegravity.bloc.utils.Initializer
+import com.onegravity.bloc.utils.ReducerNoAction
+import com.onegravity.bloc.utils.SideEffectStream
+import com.onegravity.bloc.utils.ThunkNoAction
+import com.onegravity.bloc.utils.logger
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
+
+private const val QUEUE_INITIAL_SIZE = 10
 
 /**
  * The probably most important class in the framework.
@@ -42,7 +57,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * Queue for actions dispatched by the initializer.
      * These actions are processed once the bloc transitions to the Started state.
      */
-    private val initActionQueue = ArrayDeque<Action>(10)
+    private val initActionQueue = ArrayDeque<Action>(QUEUE_INITIAL_SIZE)
 
     private inner class ActionQueueElement(
         val action: Action? = null,
@@ -54,7 +69,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * Queue for thunks and reducers submitted while the bloc is being initialized (initializer is
      * running). These thunks/reducers are processed once the bloc transitions to the Started state.
      */
-    private val actionQueue = ArrayDeque<ActionQueueElement>(10)
+    private val actionQueue = ArrayDeque<ActionQueueElement>(QUEUE_INITIAL_SIZE)
 
     private val reduceProcessor = ReduceProcessor(
         lifecycle = blocLifecycle,
@@ -76,19 +91,19 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = initDispatcher,
         initializer = initialize,
-        dispatch = {  initActionQueue += it }
+        dispatch = { initActionQueue += it }
     )
 
     init {
         blocLifecycle.subscribe(onStart = {
             // process initializer actions first
-            while (! initActionQueue.isEmpty()) {
+            while (!initActionQueue.isEmpty()) {
                 val entry = initActionQueue.removeFirst()
                 send(entry)
             }
 
             // before processing action, thunks and reducers
-            while (! actionQueue.isEmpty()) {
+            while (!actionQueue.isEmpty()) {
                 val entry = actionQueue.removeFirst()
                 entry.action?.run(::send)
                 entry.thunk?.run(thunkProcessor::thunk)

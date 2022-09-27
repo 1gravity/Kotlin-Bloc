@@ -2,7 +2,8 @@ package com.onegravity.bloc.state
 
 import com.onegravity.bloc.utils.Acceptor
 
-internal class BlocStateBuilderImpl<State: Any, Proposal: Any> : BlocStateBuilder<State, Proposal> {
+internal class BlocStateBuilderImpl<State : Any, Proposal : Any> :
+    BlocStateBuilder<State, Proposal> {
 
     private var _initialState: State? = null
     private var _accept: Acceptor<Proposal, State>? = null

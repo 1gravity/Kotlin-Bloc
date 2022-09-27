@@ -1,7 +1,15 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import kotlin.test.assertEquals
 
 /**
@@ -14,7 +22,7 @@ fun runTests(block: suspend () -> Unit) =
         }
     }
 
-suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
+suspend fun <State : Any, Action : Any, SideEffect : Any> testCollectState(
     bloc: Bloc<State, Action, SideEffect>,
     expected: List<State>,
     block: suspend () -> Unit
@@ -22,7 +30,7 @@ suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
     testCollectState(bloc, expected, 100, block)
 }
 
-suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
+suspend fun <State : Any, Action : Any, SideEffect : Any> testCollectState(
     bloc: Bloc<State, Action, SideEffect>,
     expected: List<State>,
     delay: Long = 100,
@@ -41,7 +49,7 @@ suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectState(
     assertEquals(expected, values)
 }
 
-fun <State : Any, Action : Any, SideEffect: Any> collectState(
+fun <State : Any, Action : Any, SideEffect : Any> collectState(
     bloc: Bloc<State, Action, SideEffect>,
 ): Pair<Job, MutableList<State>> {
     val coroutineScope = CoroutineScope(Dispatchers.Default)
@@ -54,7 +62,7 @@ fun <State : Any, Action : Any, SideEffect: Any> collectState(
     return Pair(job, values)
 }
 
-suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectSideEffects(
+suspend fun <State : Any, Action : Any, SideEffect : Any> testCollectSideEffects(
     bloc: Bloc<State, Action, SideEffect>,
     expected: List<SideEffect>,
     block: suspend () -> Unit
@@ -71,7 +79,7 @@ suspend fun <State : Any, Action : Any, SideEffect: Any> testCollectSideEffects(
     assertEquals(expected, values)
 }
 
-fun <State : Any, Action : Any, SideEffect: Any> collectSideEffects(
+fun <State : Any, Action : Any, SideEffect : Any> collectSideEffects(
     bloc: Bloc<State, Action, SideEffect>,
 ): Pair<Job, MutableList<SideEffect>> {
     val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -84,7 +92,7 @@ fun <State : Any, Action : Any, SideEffect: Any> collectSideEffects(
     return Pair(job, values)
 }
 
-suspend fun <State : Any, Action : Any, SideEffect: Any> testState(
+suspend fun <State : Any, Action : Any, SideEffect : Any> testState(
     bloc: Bloc<State, Action, SideEffect>,
     action: Action?,
     expected: State

@@ -33,9 +33,11 @@ data class PostsItem(private val post: Post, private val onClicked: (post: Post)
 
     override fun initializeViewBinding(view: View) = PostListItemBinding.bind(view)
 
-    override fun isSameAs(other: com.xwray.groupie.Item<*>) = other is PostsItem && post.id == other.post.id
+    override fun isSameAs(other: com.xwray.groupie.Item<*>) =
+        other is PostsItem && post.id == other.post.id
 
-    override fun hasSameContentAs(other: com.xwray.groupie.Item<*>) = other is PostsItem && post == other.post
+    override fun hasSameContentAs(other: com.xwray.groupie.Item<*>) =
+        other is PostsItem && post == other.post
 
     override fun getLayout() = R.layout.post_list_item
 

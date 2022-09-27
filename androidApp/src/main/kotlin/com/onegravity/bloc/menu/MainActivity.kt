@@ -1,3 +1,5 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.menu
 
 import android.app.Activity

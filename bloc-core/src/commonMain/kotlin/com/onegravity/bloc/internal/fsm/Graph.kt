@@ -11,7 +11,8 @@ internal data class Graph<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
     internal class State<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> internal constructor() {
         internal val onEnterListeners = mutableListOf<(STATE, EVENT) -> Unit>()
         internal val onExitListeners = mutableListOf<(STATE, EVENT) -> Unit>()
-        internal val transitions = linkedMapOf<Matcher<EVENT, EVENT>, (STATE, EVENT) -> TransitionTo<STATE, SIDE_EFFECT>>()
+        internal val transitions =
+            linkedMapOf<Matcher<EVENT, EVENT>, (STATE, EVENT) -> TransitionTo<STATE, SIDE_EFFECT>>()
 
         internal data class TransitionTo<out STATE : Any, out SIDE_EFFECT : Any> internal constructor(
             val toState: STATE,

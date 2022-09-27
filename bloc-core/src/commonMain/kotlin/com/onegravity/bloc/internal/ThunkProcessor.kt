@@ -4,10 +4,16 @@ import com.onegravity.bloc.internal.builder.MatcherThunk
 import com.onegravity.bloc.internal.lifecycle.BlocLifecycle
 import com.onegravity.bloc.internal.lifecycle.subscribe
 import com.onegravity.bloc.state.BlocState
-import com.onegravity.bloc.utils.*
-import kotlinx.coroutines.*
+import com.onegravity.bloc.utils.Dispatcher
+import com.onegravity.bloc.utils.ThunkContext
+import com.onegravity.bloc.utils.ThunkContextNoAction
+import com.onegravity.bloc.utils.ThunkNoAction
+import com.onegravity.bloc.utils.logger
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
+import kotlinx.coroutines.launch
 
 /**
  * The ThunkProcessor is responsible for processing thunk { } blocks.
@@ -56,7 +62,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * thunk { } -> run a thunk Redux style
      */
     internal fun send(action: Action) {
-        if (! lifecycle.isStarted()) return
+        if (!lifecycle.isStarted()) return
 
         logger.d("received thunk with action ${action.trimOutput()}")
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {

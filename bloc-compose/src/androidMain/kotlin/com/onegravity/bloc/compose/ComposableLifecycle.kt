@@ -13,7 +13,7 @@ import com.onegravity.bloc.BlocContext
  * Creates a BlocContext for compose previews with a Composable lifecycle
  */
 @Composable
-fun previewBlocContext(): BlocContext = object: BlocContext {
+fun previewBlocContext(): BlocContext = object : BlocContext {
     override val lifecycle = composableLifecycle()
 }
 

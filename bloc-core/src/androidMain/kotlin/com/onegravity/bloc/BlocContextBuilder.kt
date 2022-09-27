@@ -6,7 +6,12 @@
 
 package com.onegravity.bloc
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewModelScope
 import com.arkivanov.essenty.lifecycle.asEssentyLifecycle
 import com.onegravity.bloc.internal.BlocContextImpl
 import kotlinx.coroutines.Dispatchers
@@ -46,7 +51,7 @@ import kotlinx.coroutines.launch
  * Alternatively a bloc can be wrapped into a concrete class in which case Component::class would
  * work again as key.
  */
-inline fun <A: ViewModelStoreOwner, reified Component : Any> A.getOrCreate(
+inline fun <A : ViewModelStoreOwner, reified Component : Any> A.getOrCreate(
     key: Any = Component::class,
     noinline create: (context: BlocContext) -> Component
 ): Lazy<Component> = ComponentLazy(

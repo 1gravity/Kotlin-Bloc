@@ -53,7 +53,6 @@ kotlin {
                 implementation(AndroidX.activity.compose)
             }
         }
-        val androidTest by getting
     }
 }
 

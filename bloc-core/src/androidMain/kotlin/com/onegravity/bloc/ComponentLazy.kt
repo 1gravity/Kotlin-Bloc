@@ -1,11 +1,14 @@
 package com.onegravity.bloc
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.get
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.onegravity.bloc.internal.BlocContextImpl
 
-class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
+class ComponentLazy<A : ViewModelStoreOwner, Component : Any>(
     private val owner: Lazy<A>,
     private val key: Any,
     private val create: (context: BlocContext) -> Component
@@ -54,7 +57,7 @@ class ComponentLazy<A: ViewModelStoreOwner, Component : Any>(
      * InstanceKeeper.Instance interface.
      */
     private class InstanceWrapper<C>(val component: C) : InstanceKeeper.Instance {
-        override fun onDestroy() { }
+        override fun onDestroy() { /* nothing to do here */ }
     }
 
 }

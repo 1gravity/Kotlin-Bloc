@@ -8,7 +8,7 @@ import com.onegravity.bloc.sample.counter.SimpleCounter.bloc
 import com.onegravity.bloc.toLiveData
 import org.koin.core.component.KoinComponent
 
-class CounterSimpleViewModel() : ViewModel(), KoinComponent {
+class CounterSimpleViewModel : ViewModel(), KoinComponent {
 
     private val bloc = bloc(blocContext())
 

@@ -1,7 +1,14 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.internal
 
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import com.onegravity.bloc.*
+import com.onegravity.bloc.bloc
+import com.onegravity.bloc.reduce
+import com.onegravity.bloc.runTests
+import com.onegravity.bloc.testCollectState
+import com.onegravity.bloc.testState
+import com.onegravity.bloc.thunk
 import kotlinx.coroutines.delay
 import kotlin.test.Test
 import kotlin.test.assertEquals

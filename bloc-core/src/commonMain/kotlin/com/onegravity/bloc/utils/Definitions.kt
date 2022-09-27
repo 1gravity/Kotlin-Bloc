@@ -1,6 +1,6 @@
 package com.onegravity.bloc.utils
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 @DslMarker

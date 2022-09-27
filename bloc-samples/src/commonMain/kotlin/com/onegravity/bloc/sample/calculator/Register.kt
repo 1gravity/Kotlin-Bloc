@@ -41,6 +41,7 @@ class Register(private val value: String = "") {
 
     fun isNotEmpty() = value.isNotEmpty()
 
+    @Suppress("SwallowedException", "TooGenericExceptionCaught")
     fun isError() = try {
         asBigDecimal
         false
@@ -68,9 +69,10 @@ class Register(private val value: String = "") {
         Register((asBigDecimal * register.asBigDecimal).toPlainString())
 
     operator fun div(register: Register) =
-        Register(asBigDecimal
-            .divide(register.asBigDecimal, DECIMAL_MODE)
-            .toPlainString()
+        Register(
+            asBigDecimal
+                .divide(register.asBigDecimal, DECIMAL_MODE)
+                .toPlainString()
         )
 
     companion object {

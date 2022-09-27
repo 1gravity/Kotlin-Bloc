@@ -37,7 +37,11 @@ data class CalculatorState(
     }.toString()
 
     companion object {
-        fun error(msg: String?) = CalculatorState(register1 = Register(msg ?: "Error"), register2 = Register(), operator = null)
+        fun error(msg: String?) = CalculatorState(
+            register1 = Register(msg ?: "Error"),
+            register2 = Register(),
+            operator = null
+        )
     }
 }
 

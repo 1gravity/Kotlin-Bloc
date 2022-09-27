@@ -7,7 +7,7 @@ import com.onegravity.bloc.utils.logger
 internal data class LifecycleTransition(val from: LifecycleState, val to: LifecycleState)
 internal typealias LifecycleSideEffect = List<LifecycleState>
 
-@Suppress("FunctionName", "RemoveExplicitTypeArguments")
+@Suppress("FunctionName", "FunctionNaming", "RemoveExplicitTypeArguments")
 internal fun LifecycleStateMachine(
     observer: (transition: LifecycleTransition) -> Unit,
 ) = StateMachine.create<LifecycleState, LifecycleEvent, LifecycleSideEffect> {
@@ -52,7 +52,10 @@ internal fun LifecycleStateMachine(
             transitionTo(LifecycleState.Stopped)
         }
         on<LifecycleEvent.Destroy> {
-            transitionTo(LifecycleState.Destroyed, listOf(LifecycleState.Stopped, LifecycleState.Destroyed))
+            transitionTo(
+                LifecycleState.Destroyed,
+                listOf(LifecycleState.Stopped, LifecycleState.Destroyed)
+            )
         }
     }
 
@@ -71,7 +74,10 @@ internal fun LifecycleStateMachine(
             transitionTo(LifecycleState.Stopped)
         }
         on<LifecycleEvent.Destroy> {
-            transitionTo(LifecycleState.Destroyed, listOf(LifecycleState.Stopped, LifecycleState.Destroyed))
+            transitionTo(
+                LifecycleState.Destroyed,
+                listOf(LifecycleState.Stopped, LifecycleState.Destroyed)
+            )
         }
     }
 
@@ -91,7 +97,10 @@ internal fun LifecycleStateMachine(
             transitionTo(LifecycleState.Stopped)
         }
         on<LifecycleEvent.Destroy> {
-            transitionTo(LifecycleState.Destroyed, listOf(LifecycleState.Stopped, LifecycleState.Destroyed))
+            transitionTo(
+                LifecycleState.Destroyed,
+                listOf(LifecycleState.Stopped, LifecycleState.Destroyed)
+            )
         }
     }
 
@@ -111,7 +120,10 @@ internal fun LifecycleStateMachine(
             transitionTo(LifecycleState.Stopped)
         }
         on<LifecycleEvent.Destroy> {
-            transitionTo(LifecycleState.Destroyed, listOf(LifecycleState.Stopped, LifecycleState.Destroyed))
+            transitionTo(
+                LifecycleState.Destroyed,
+                listOf(LifecycleState.Stopped, LifecycleState.Destroyed)
+            )
         }
     }
 
@@ -193,7 +205,7 @@ internal fun LifecycleStateMachine(
                 observer(LifecycleTransition(fromState, toState))
                 toState
             }
-            // the transition has no side effect -> emit a single transition
+        // the transition has no side effect -> emit a single transition
             ?: observer(LifecycleTransition(validTransition.fromState, validTransition.toState))
     }
 }

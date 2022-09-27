@@ -44,7 +44,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
             },
             onInitialize = {
                 logger.d("onInitialize -> run initializer")
-                initializer?.apply(::runInitializer) ?:lifecycle.initializerCompleted()
+                initializer?.apply(::runInitializer) ?: lifecycle.initializerCompleted()
             },
             onDestroy = {
                 logger.d("onDestroy -> destroy Bloc")

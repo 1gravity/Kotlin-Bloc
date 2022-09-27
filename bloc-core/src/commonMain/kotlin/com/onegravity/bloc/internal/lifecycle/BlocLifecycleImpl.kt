@@ -1,6 +1,12 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.internal.lifecycle
 
-import com.arkivanov.essenty.lifecycle.*
+import com.arkivanov.essenty.lifecycle.Lifecycle
+import com.arkivanov.essenty.lifecycle.doOnCreate
+import com.arkivanov.essenty.lifecycle.doOnDestroy
+import com.arkivanov.essenty.lifecycle.doOnStart
+import com.arkivanov.essenty.lifecycle.doOnStop
 import com.onegravity.bloc.internal.lifecycle.LifecycleState.*
 
 /**
@@ -33,6 +39,7 @@ internal class BlocLifecycleImpl(essentyLifecycle: Lifecycle) : BlocLifecycle {
     private enum class CallbackElement {
         OnCreate, OnInitialize, OnStart, OnStop, OnDestroy
     }
+
     private val callbackSet = HashSet<CallbackElement>()
 
     init {
@@ -69,6 +76,7 @@ internal class BlocLifecycleImpl(essentyLifecycle: Lifecycle) : BlocLifecycle {
 
     override fun isStarted() = stateMachine.state == Started
 
-    override fun isStarting() = stateMachine.state.let { it == InitializingStarting || it == Initializing }
+    override fun isStarting() =
+        stateMachine.state.let { it == InitializingStarting || it == Initializing }
 
 }

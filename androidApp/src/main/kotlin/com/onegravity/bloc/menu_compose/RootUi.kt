@@ -11,15 +11,23 @@ import com.onegravity.bloc.sample.MainMenuCompose
 import com.onegravity.bloc.sample.MenuBloc
 
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 fun RootUi(bloc: MenuBloc) {
     BoxWithConstraints(
-        Modifier.fillMaxWidth().fillMaxHeight()) {
-        MenuEntries(bloc, Modifier.fillMaxWidth().fillMaxHeight())
+        Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        MenuEntries(bloc,
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight())
     }
 }
 
 @Preview
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 fun RootUiPreview() {
     val bloc = MainMenuCompose.bloc(previewBlocContext())
     RootUi(bloc)

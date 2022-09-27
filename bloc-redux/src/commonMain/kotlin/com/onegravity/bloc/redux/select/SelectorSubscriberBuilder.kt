@@ -30,7 +30,10 @@ internal class SelectorSubscriberBuilder<State : Any>(val store: Store<State>) {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <SelectedState: Any> select(selector: (State) -> SelectedState, action: (SelectedState) -> Unit) {
+    fun <SelectedState : Any> select(
+        selector: (State) -> SelectedState,
+        action: (SelectedState) -> Unit
+    ) {
         val selBuilder = SelectorBuilder<State>()
         val sel = selBuilder.withSingleField(selector) as Selector<State, Any>
         selectorList[sel] = action as (Any) -> Unit

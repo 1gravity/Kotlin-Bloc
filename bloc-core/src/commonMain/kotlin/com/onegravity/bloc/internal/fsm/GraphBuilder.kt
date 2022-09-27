@@ -17,14 +17,18 @@ internal class GraphBuilder<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
         stateMatcher: Matcher<STATE, S>,
         init: StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>.() -> Unit
     ) {
-        stateDefinitions[stateMatcher] = StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>().apply(init).build()
+        stateDefinitions[stateMatcher] =
+            StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>().apply(init).build()
     }
 
     internal inline fun <reified S : STATE> state(noinline init: StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>.() -> Unit) {
         state(Matcher.any(), init)
     }
 
-    internal inline fun <reified S : STATE> state(state: S, noinline init: StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>.() -> Unit) {
+    internal inline fun <reified S : STATE> state(
+        state: S,
+        noinline init: StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>.() -> Unit
+    ) {
         state(Matcher.eq(state), init)
     }
 

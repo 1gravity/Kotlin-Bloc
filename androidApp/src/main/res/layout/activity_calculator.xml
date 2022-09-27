@@ -21,6 +21,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.onegravity.bloc.calculator.CalculatorViewModel" />
@@ -30,8 +31,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
         android:background="@android:color/background_light"
+        android:padding="16dp"
         tools:context="com.onegravity.bloc.calculator.CalculatorActivity">
 
         <TextView

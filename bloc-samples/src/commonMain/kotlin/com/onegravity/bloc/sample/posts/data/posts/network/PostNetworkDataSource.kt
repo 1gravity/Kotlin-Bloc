@@ -5,10 +5,11 @@ import com.github.michaelbull.result.runCatching
 import com.onegravity.bloc.sample.posts.data.posts.model.CommentData
 import com.onegravity.bloc.sample.posts.data.posts.model.PostData
 import com.onegravity.bloc.sample.posts.data.posts.model.UserData
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

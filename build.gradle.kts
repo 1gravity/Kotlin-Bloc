@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import io.gitlab.arturbosch.detekt.Detekt
 
 buildscript {
     repositories {
@@ -22,10 +23,29 @@ buildscript {
 // then deploy the website (cd website, yarn deploy)
 plugins {
     id("org.jetbrains.dokka")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 tasks.dokkaHtmlMultiModule.configure {
     outputDirectory.set(buildDir.resolve("../website/static/dokka"))
+}
+
+detekt {
+    config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+    // activate all available (even unstable) rules.
+    source = files("${rootProject.projectDir}")
+    allRules = false
+    ignoreFailures = false
+}
+
+tasks.withType<Detekt>().configureEach {
+    include("**/*.kt")
+    include("**/*.kts")
+    exclude("**/resources/**")
+    exclude("**/build/**")
+    reports {
+        html.required.set(true) // observe findings in your browser with structure and code snippets
+    }
 }
 
 allprojects {

@@ -1,8 +1,18 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.posts_compose
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -19,22 +29,35 @@ import com.onegravity.bloc.sample.posts.compose.PostsRootState
 private val MULTI_PANE_WIDTH_THRESHOLD = 700.dp
 
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 fun RootUi(component: PostsComponent) {
     val state: PostsRootState by component.observeState()
 
     BoxWithConstraints(
-        Modifier.fillMaxWidth().fillMaxHeight()) {
+        Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         val isMultiPane = this@BoxWithConstraints.maxWidth >= MULTI_PANE_WIDTH_THRESHOLD
         Scaffold(
             topBar = { ToolBar(component, isMultiPane) }
         ) { padding ->
             val showDetail = state.postIsLoading() || state.postIsLoaded()
-            val modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(padding)
+            val modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(padding)
             when {
                 isMultiPane && showDetail ->
                     Row(modifier) {
-                        PostsPane(component, Modifier.fillMaxWidth(0.33f).fillMaxHeight())
-                        PostPane(component, Modifier.fillMaxWidth().fillMaxHeight())
+                        PostsPane(component,
+                            Modifier
+                                .fillMaxWidth(0.33f)
+                                .fillMaxHeight())
+                        PostPane(component,
+                            Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight())
                     }
                 showDetail -> PostPane(component, modifier)
                 else -> PostsPane(component, modifier)
@@ -44,6 +67,7 @@ fun RootUi(component: PostsComponent) {
 }
 
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 private fun ToolBar(component: PostsComponent, isMultiPane: Boolean) {
     val state by component.observeState()
     val showDetail = state.postIsLoading() || state.postIsLoaded()

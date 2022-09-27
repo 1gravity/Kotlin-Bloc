@@ -5,7 +5,10 @@ public data class Effect<Proposal : Any, SideEffect : Any>(
     val sideEffects: List<SideEffect>
 ) {
 
-    public constructor(proposal: Proposal?, sideEffect: SideEffect) : this(proposal, listOf(sideEffect))
+    public constructor(proposal: Proposal?, sideEffect: SideEffect) : this(
+        proposal,
+        listOf(sideEffect)
+    )
 
     @BlocDSL
     public infix fun and(sideEffect: SideEffect): Effect<Proposal, SideEffect> =

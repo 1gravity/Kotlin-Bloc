@@ -26,13 +26,16 @@ import com.onegravity.bloc.databinding.PostCommentListItemBinding
 import com.onegravity.bloc.sample.posts.domain.repositories.PostComment
 import com.xwray.groupie.viewbinding.BindableItem
 
-data class PostCommentItem(private val post: PostComment) : BindableItem<PostCommentListItemBinding>() {
+data class PostCommentItem(private val post: PostComment) :
+    BindableItem<PostCommentListItemBinding>() {
 
     override fun initializeViewBinding(view: View) = PostCommentListItemBinding.bind(view)
 
-    override fun isSameAs(other: com.xwray.groupie.Item<*>) = other is PostCommentItem && post.id == other.post.id
+    override fun isSameAs(other: com.xwray.groupie.Item<*>) =
+        other is PostCommentItem && post.id == other.post.id
 
-    override fun hasSameContentAs(other: com.xwray.groupie.Item<*>) = other is PostCommentItem && post == other.post
+    override fun hasSameContentAs(other: com.xwray.groupie.Item<*>) =
+        other is PostCommentItem && post == other.post
 
     override fun getLayout() = R.layout.post_comment_list_item
 

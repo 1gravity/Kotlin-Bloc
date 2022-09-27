@@ -21,7 +21,8 @@ public class Matcher<SuperClazz : Any, out ChildClazz : SuperClazz> constructor(
     // but it doesn't compile for JS so we use this instead
     internal fun clazzName() = clazz.simpleName + clazz.hashCode()
 
-    private val defaultPredicate: (SuperClazz) -> Boolean = { superClazz -> clazz.isInstance(superClazz) }
+    private val defaultPredicate: (SuperClazz) -> Boolean =
+        { superClazz -> clazz.isInstance(superClazz) }
 
     private val predicates = mutableListOf(defaultPredicate)
 
@@ -39,7 +40,8 @@ public class Matcher<SuperClazz : Any, out ChildClazz : SuperClazz> constructor(
                 Matcher<SuperClazz, ChildClazz> = Matcher(ChildClazz::class, value)
 
         public inline fun <SuperClazz : Any, reified ChildClazz : SuperClazz> eq(value: ChildClazz):
-                Matcher<SuperClazz, ChildClazz> = any<SuperClazz, ChildClazz>().where { this == value }
+                Matcher<SuperClazz, ChildClazz> =
+            any<SuperClazz, ChildClazz>().where { this == value }
 
         /**
          * Use this for enum values

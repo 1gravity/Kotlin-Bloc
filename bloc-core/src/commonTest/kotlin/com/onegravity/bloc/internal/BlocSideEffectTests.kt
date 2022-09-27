@@ -30,7 +30,10 @@ class BlocSideEffectTests : BaseTestClass() {
             }
         }
 
-        testCollectSideEffects(bloc, listOf(Something, Something, Something, Something, Something)) {
+        testCollectSideEffects(
+            bloc,
+            listOf(Something, Something, Something, Something, Something)
+        ) {
             repeat(5) {
                 bloc.send(Whatever)
                 delay(10)
@@ -57,7 +60,10 @@ class BlocSideEffectTests : BaseTestClass() {
         lifecycleRegistry.onCreate()
         lifecycleRegistry.onStart()
 
-        testCollectSideEffects(bloc, listOf(Open, Open, Something, Open, Open, Something, Open, Open, Something)) {
+        testCollectSideEffects(
+            bloc,
+            listOf(Open, Open, Something, Open, Open, Something, Open, Open, Something)
+        ) {
             repeat(3) {
                 bloc.send(Increment)
                 delay(10)

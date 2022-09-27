@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.onegravity.bloc.R
 
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 fun Error(retry: () -> Unit, error: Throwable) {
     Snackbar(
         action = { Button(retry) { Text(stringResource(id = R.string.posts_compose_retry)) } },

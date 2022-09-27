@@ -1,8 +1,10 @@
+@file:Suppress("WildcardImport")
+
 package com.onegravity.bloc.sample.calculator
 
 import com.github.michaelbull.result.runCatching
-import com.onegravity.bloc.bloc
 import com.onegravity.bloc.BlocContext
+import com.onegravity.bloc.bloc
 import com.onegravity.bloc.sample.calculator.CalculatorAction.*
 
 /**
@@ -10,7 +12,7 @@ import com.onegravity.bloc.sample.calculator.CalculatorAction.*
  * This way we can use a data class for the digits (less reduce code) but we need to map the view
  * clicks to Action (typically in the ViewModel).
  */
-fun bloc(context: BlocContext) = bloc<CalculatorState, CalculatorAction>(context, CalculatorState()) {
+fun bloc(context: BlocContext) = bloc(context, CalculatorState()) {
     fun CalculatorState.resetErrors() =
         if (register1.isError() || register2.isError()) CalculatorState() else this
 

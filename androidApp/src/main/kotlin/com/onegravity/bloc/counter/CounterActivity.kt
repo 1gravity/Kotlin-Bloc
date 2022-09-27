@@ -13,7 +13,9 @@ class CounterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bind<ActivityCounterSimpleBinding>(R.layout.activity_counter_simple) { it.viewmodel = viewModel }
+        bind<ActivityCounterSimpleBinding>(R.layout.activity_counter_simple) {
+            it.viewmodel = viewModel
+        }
     }
 
 }

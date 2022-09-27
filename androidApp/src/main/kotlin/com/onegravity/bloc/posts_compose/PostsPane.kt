@@ -14,6 +14,7 @@ import com.onegravity.bloc.sample.posts.compose.PostsComponent
 import com.onegravity.bloc.utils.logger
 
 @Composable
+@Suppress("FunctionNaming", "FunctionName")
 internal fun PostsPane(
     component: PostsComponent,
     modifier: Modifier
