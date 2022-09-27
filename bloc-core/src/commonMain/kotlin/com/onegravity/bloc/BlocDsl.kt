@@ -32,7 +32,8 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.thunk(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
+        BlocOwner<State, Action, SideEffect, Proposal>.thunk(
     thunk: ThunkNoAction<State, Action>
 ) {
     bloc.thunk(thunk)
@@ -44,7 +45,8 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
  * sending an action to the Bloc).
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduce(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
+        Bloc<State, Action, SideEffect>.reduce(
     reducer: ReducerNoAction<State, Proposal>
 ) {
     val reducerNoSideEffect: ReducerNoAction<State, Effect<Proposal, SideEffect>> = {
@@ -60,7 +62,8 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
  * sending an action to the Bloc).
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduce(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
+        BlocOwner<State, Action, SideEffect, Proposal>.reduce(
     reducer: ReducerNoAction<State, Proposal>
 ) {
     bloc.reduce(reducer)
@@ -72,7 +75,8 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwn
  * sending an action to the Bloc).
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<State, Action, SideEffect>.reduceAnd(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
+        Bloc<State, Action, SideEffect>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) {
     // we assume that every class implementing Bloc also implements BlocExtension
@@ -86,7 +90,8 @@ public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> Bloc<St
  * sending an action to the Bloc).
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
+        BlocOwner<State, Action, SideEffect, Proposal>.reduceAnd(
     reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>
 ) {
     bloc.reduceAnd(reducer)
@@ -116,7 +121,8 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
  * sending an action to the Bloc).
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
+        BlocOwner<State, Action, SideEffect, Proposal>.sideEffect(
     sideEffect: SideEffectNoAction<State, SideEffect>
 ) {
     bloc.sideEffect(sideEffect)

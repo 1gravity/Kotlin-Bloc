@@ -6,17 +6,21 @@ import com.onegravity.bloc.sample.books.BooksRepository.Failure
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
+private const val ERROR_THRESHOLD = 0.35
+private const val NETWORK_ERROR_THRESHOLD = 0.5
+private const val LOAD_DELAY = 1000L
+
 class BooksRepositoryImpl : BooksRepository {
 
     override suspend fun loadBooks() =
-        when (Random.nextFloat() < 0.35) {
+        when (Random.nextFloat() < ERROR_THRESHOLD) {
             true -> {
-                val network = Random.nextFloat() < 0.5
+                val network = Random.nextFloat() < NETWORK_ERROR_THRESHOLD
                 val error = if (network) Failure.Network else Failure.Generic
                 Err(error)
             }
             else -> Ok(books)
-        }.also { delay(1000) }
+        }.also { delay(LOAD_DELAY) }
 
     private val books = listOf(
         Book("The Hobbit or There and Back Again", "1937"),

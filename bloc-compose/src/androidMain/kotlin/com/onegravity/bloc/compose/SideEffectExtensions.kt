@@ -28,7 +28,8 @@ import kotlinx.coroutines.launch
  *   val sideEffects = bloc.observeSideEffects()
  */
 @Composable
-fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any> Bloc<STATE, ACTION, SIDE_EFFECT>.observeSideEffects(): State<SIDE_EFFECT?> {
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any>
+        Bloc<STATE, ACTION, SIDE_EFFECT>.observeSideEffects(): State<SIDE_EFFECT?> {
     val state: MutableState<SIDE_EFFECT?> = remember(this) { mutableStateOf(null) }
 
     DisposableEffect(this) {
@@ -62,7 +63,8 @@ fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any> Bloc<STATE, ACTION, SIDE_EFFE
  *   val sideEffects = observeSideEffects()  // assuming `this` is a BlocOwner
  */
 @Composable
-fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any> BlocOwner<STATE, ACTION, SIDE_EFFECT, PROPOSAL>.observeSideEffects() =
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any>
+        BlocOwner<STATE, ACTION, SIDE_EFFECT, PROPOSAL>.observeSideEffects() =
     bloc.observeSideEffects()
 
 /**
@@ -72,7 +74,8 @@ fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any> BlocOwner<STA
  *   val sideEffects = observable.observeSideEffects()
  */
 @Composable
-fun <STATE : Any, SIDE_EFFECT : Any> BlocObservable<STATE, SIDE_EFFECT>.observeSideEffects(): State<SIDE_EFFECT?> {
+fun <STATE : Any, SIDE_EFFECT : Any> BlocObservable<STATE, SIDE_EFFECT>
+        .observeSideEffects(): State<SIDE_EFFECT?> {
     val state: MutableState<SIDE_EFFECT?> = remember(this) { mutableStateOf(null) }
 
     val lifecycleRegistry = LifecycleRegistry()

@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.onegravity.bloc.util
 
 import androidx.compose.material.darkColors

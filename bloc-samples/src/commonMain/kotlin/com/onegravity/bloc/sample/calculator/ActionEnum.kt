@@ -1,5 +1,6 @@
 package com.onegravity.bloc.sample.calculator
 
+@Suppress("MagicNumber")
 enum class ActionEnum(val digit: Int? = null) {
     Clear,
     Add,

@@ -1,4 +1,4 @@
-package com.onegravity.bloc.menu_compose
+package com.onegravity.bloc.menuCompose
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

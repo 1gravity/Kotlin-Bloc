@@ -1,6 +1,6 @@
-@file:Suppress("WildcardImport")
+@file:Suppress("WildcardImport", "MagicNumber")
 
-package com.onegravity.bloc.posts_compose
+package com.onegravity.bloc.postsCompose
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.BoxWithConstraints

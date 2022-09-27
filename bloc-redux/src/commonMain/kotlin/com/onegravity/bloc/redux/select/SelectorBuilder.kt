@@ -18,7 +18,7 @@ internal class SelectorBuilder<S : Any> {
         private val inputField = InputField(fn, byRefEqualityCheck) as SelectorInput<Any, Any>
 
         override val computeAndCount = fun(i: Array<out Any>): I {
-            ++_recomputations
+            ++recomputationsBackingField
             @Suppress("UNCHECKED_CAST")
             return i[0] as I
         }
@@ -44,7 +44,7 @@ internal class SelectorBuilder<S : Any> {
         @Suppress("UNCHECKED_CAST")
         private val inputField = InputField(fn, byValEqualityCheck) as SelectorInput<Any, Any>
         override val computeAndCount = fun(i: Array<out Any>): I {
-            ++_recomputations
+            ++recomputationsBackingField
             @Suppress("UNCHECKED_CAST")
             return i[0] as I
         }

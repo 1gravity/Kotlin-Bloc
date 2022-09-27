@@ -27,7 +27,8 @@ import kotlinx.coroutines.launch
  *   val state = bloc.observeState()
  */
 @Composable
-fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any> Bloc<STATE, ACTION, SIDE_EFFECT>.observeState(): State<STATE> {
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any> Bloc<STATE, ACTION, SIDE_EFFECT>
+        .observeState(): State<STATE> {
     val state = remember(this) { mutableStateOf(value) }
 
     DisposableEffect(this) {
@@ -54,8 +55,8 @@ fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any> Bloc<STATE, ACTION, SIDE_EFFE
  *   val state = observeState()  // assuming `this` is a BlocOwner
  */
 @Composable
-fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any> BlocOwner<STATE, ACTION, SIDE_EFFECT, PROPOSAL>.observeState() =
-    bloc.observeState()
+fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any>
+        BlocOwner<STATE, ACTION, SIDE_EFFECT, PROPOSAL>.observeState() = bloc.observeState()
 
 /**
  * Adapter for Jetpack / Jetbrains Compose to observe a BlocObservable's/Bloc's state as
@@ -64,7 +65,8 @@ fun <STATE : Any, ACTION : Any, SIDE_EFFECT : Any, PROPOSAL : Any> BlocOwner<STA
  *   val state = observable.observeState()
  */
 @Composable
-fun <STATE : Any, SIDE_EFFECT : Any> BlocObservable<STATE, SIDE_EFFECT>.observeState(): State<STATE> {
+fun <STATE : Any, SIDE_EFFECT : Any> BlocObservable<STATE, SIDE_EFFECT>
+        .observeState(): State<STATE> {
     val state = remember(this) { mutableStateOf(value) }
 
     val lifecycleRegistry = LifecycleRegistry()

@@ -33,7 +33,7 @@ fun <T : ViewDataBinding> ComponentActivity.bind(
 
 /**
  * Subscribes to a BlocObservableOwner (typically a ViewModel, a Fragment or an Activity).
- * The subscription is tied to the lifecycle of a LifecycleOwner (normally an Activity or a Fragment).
+ * The subscription is tied to the lifecycle of a LifecycleOwner (normally an Activity or Fragment).
  */
 @BlocDSL
 fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subscribe(
@@ -48,7 +48,8 @@ fun <State : Any, SideEffect : Any> BlocObservableOwner<State, SideEffect>.subsc
  * Same as above for a BlocOwner
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any> BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
+fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
+        BlocOwner<State, Action, SideEffect, Proposal>.subscribe(
     lifecycleOwner: LifecycleOwner,
     state: (suspend (state: State) -> Unit)? = null,
     sideEffect: (suspend (sideEffect: SideEffect) -> Unit)? = null
@@ -85,20 +86,19 @@ fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect
  * ```
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any> ViewModel.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
-    bloc.toLiveData(viewModelScope)
+fun <State : Any, Action : Any, SideEffect : Any> ViewModel
+        .toLiveData(bloc: Bloc<State, Action, SideEffect>) = bloc.toLiveData(viewModelScope)
 
 /**
  * The same for Activities / Fragments
  */
 @BlocDSL
-fun <State : Any, Action : Any, SideEffect : Any> LifecycleOwner.toLiveData(bloc: Bloc<State, Action, SideEffect>) =
-    bloc.toLiveData(lifecycleScope)
+fun <State : Any, Action : Any, SideEffect : Any> LifecycleOwner
+        .toLiveData(bloc: Bloc<State, Action, SideEffect>) = bloc.toLiveData(lifecycleScope)
 
 @BlocDSL
-private fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.toLiveData(
-    scope: CoroutineScope
-): LiveData<State> =
+private fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>
+        .toLiveData(scope: CoroutineScope): LiveData<State> =
     MutableLiveData<State>().apply {
         scope.launch {
             collect { value = it }

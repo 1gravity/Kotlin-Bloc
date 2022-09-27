@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.FlowCollector
  * This can be used only if the Action type is the same as the Proposal type
  * (what goes in, must come out).
  */
-public fun <State : Any, SideEffect : Any, Proposal : Any> Bloc<State, Proposal, SideEffect>.asBlocState(): BlocState<State, Proposal> =
+public fun <State : Any, SideEffect : Any, Proposal : Any> Bloc<State, Proposal, SideEffect>
+        .asBlocState(): BlocState<State, Proposal> =
     object : BlocState<State, Proposal>() {
         override fun send(proposal: Proposal) {
             this@asBlocState.send(proposal)

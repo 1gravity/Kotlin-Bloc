@@ -1,7 +1,5 @@
 package com.onegravity.bloc.utils
 
-internal const val DefaultJobId = "DefaultJobId"
-
 /**
  * The JobConfig defines how a coroutine/job is executed.
  * @param cancelPrevious If false (default) a coroutine is simply launched, no additional checks.
@@ -12,4 +10,6 @@ internal const val DefaultJobId = "DefaultJobId"
  *              together to make sure only one of them is run at a time. The jobId defaults to
  *              "DefaultJobId".
  */
-public data class JobConfig(val cancelPrevious: Boolean = false, val jobId: String = DefaultJobId)
+public data class JobConfig(val cancelPrevious: Boolean = false, val jobId: String = DEFAULT_JOB_ID)
+
+internal const val DEFAULT_JOB_ID = "DefaultJobId"

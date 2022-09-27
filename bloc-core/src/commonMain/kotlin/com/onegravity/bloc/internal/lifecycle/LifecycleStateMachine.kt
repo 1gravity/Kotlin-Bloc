@@ -4,9 +4,6 @@ import com.onegravity.bloc.internal.fsm.StateMachine
 import com.onegravity.bloc.internal.fsm.Transition
 import com.onegravity.bloc.utils.logger
 
-internal data class LifecycleTransition(val from: LifecycleState, val to: LifecycleState)
-internal typealias LifecycleSideEffect = List<LifecycleState>
-
 @Suppress("FunctionName", "FunctionNaming", "RemoveExplicitTypeArguments")
 internal fun LifecycleStateMachine(
     observer: (transition: LifecycleTransition) -> Unit,

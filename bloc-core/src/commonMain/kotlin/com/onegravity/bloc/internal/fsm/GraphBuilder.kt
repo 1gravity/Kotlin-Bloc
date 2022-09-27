@@ -7,7 +7,8 @@ internal class GraphBuilder<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
 ) {
     private var initialState = graph?.initialState
     private val stateDefinitions = LinkedHashMap(graph?.stateDefinitions ?: emptyMap())
-    private val onTransitionListeners = ArrayList(graph?.onTransitionListeners ?: emptyList())
+    private val onTransitionListeners = ArrayList(graph?.onTransitionListeners
+        ?: emptyList())
 
     internal fun initialState(initialState: STATE) {
         this.initialState = initialState
@@ -21,7 +22,9 @@ internal class GraphBuilder<STATE : Any, EVENT : Any, SIDE_EFFECT : Any>(
             StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>().apply(init).build()
     }
 
-    internal inline fun <reified S : STATE> state(noinline init: StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>.() -> Unit) {
+    internal inline fun <reified S : STATE> state(
+        noinline init: StateDefinitionBuilder<STATE, S, EVENT, SIDE_EFFECT>.() -> Unit
+    ) {
         state(Matcher.any(), init)
     }
 

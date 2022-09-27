@@ -1,6 +1,6 @@
 @file:Suppress("WildcardImport")
 
-package com.onegravity.bloc.menu_compose
+package com.onegravity.bloc.menuCompose
 
 import com.onegravity.bloc.R
 import com.onegravity.bloc.books.BooksActivity
@@ -36,6 +36,6 @@ val menuItem2Activity = mapOf(
     Calculator to CalculatorActivity::class.java,
     CalculatorNoViewModel to CalculatorActivityNoVM::class.java,
     Posts to PostsActivity::class.java,
-    PostsCompose to com.onegravity.bloc.posts_compose.PostsActivity::class.java,
+    PostsCompose to com.onegravity.bloc.postsCompose.PostsActivity::class.java,
     ToDo to TodoActivity::class.java
 )

@@ -1,6 +1,6 @@
 @file:Suppress("WildcardImport")
 
-package com.onegravity.bloc.posts_compose
+package com.onegravity.bloc.postsCompose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

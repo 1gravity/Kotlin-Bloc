@@ -1,6 +1,6 @@
 @file:Suppress("WildcardImport")
 
-package com.onegravity.bloc.menu_compose
+package com.onegravity.bloc.menuCompose
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.onegravity.bloc.posts_compose
+package com.onegravity.bloc.postsCompose
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

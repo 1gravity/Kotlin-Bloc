@@ -10,22 +10,22 @@ internal abstract class AbstractSelector<S, O> : Selector<S, O> {
     protected var recomputationsLastChanged = 0L
 
     @JvmField
-    protected var _recomputations = 0L
+    protected var recomputationsBackingField = 0L
 
     override val recomputations: Long
-        get() = _recomputations
+        get() = recomputationsBackingField
 
     /**
      * see documentation to [Selector.signalChanged]
      */
     override fun signalChanged() {
-        ++_recomputations
+        ++recomputationsBackingField
     }
 
-    override fun isChanged(): Boolean = _recomputations != recomputationsLastChanged
+    override fun isChanged(): Boolean = recomputationsBackingField != recomputationsLastChanged
 
     override fun resetChanged() {
-        recomputationsLastChanged = _recomputations
+        recomputationsLastChanged = recomputationsBackingField
     }
 
     protected abstract val computeAndCount: (i: Array<out Any>) -> O

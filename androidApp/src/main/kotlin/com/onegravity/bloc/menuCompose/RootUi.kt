@@ -1,4 +1,4 @@
-package com.onegravity.bloc.menu_compose
+package com.onegravity.bloc.menuCompose
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxHeight

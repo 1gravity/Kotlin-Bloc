@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
 

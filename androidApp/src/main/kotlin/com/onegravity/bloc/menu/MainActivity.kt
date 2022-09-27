@@ -16,12 +16,12 @@ import com.onegravity.bloc.counter.CounterActivity
 import com.onegravity.bloc.counter.CounterActivityCompose
 import com.onegravity.bloc.counter.CounterReduxActivity
 import com.onegravity.bloc.databinding.ActivityMainBinding
-import com.onegravity.bloc.menu_compose.MainActivityCompose
+import com.onegravity.bloc.menuCompose.MainActivityCompose
 import com.onegravity.bloc.posts.PostsActivity
 import com.onegravity.bloc.sample.MainMenu.ActionState.*
 import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.todo.TodoActivity
-import com.onegravity.bloc.posts_compose.PostsActivity as ComposePostsActivity
+import com.onegravity.bloc.postsCompose.PostsActivity as ComposePostsActivity
 
 class MainActivity : AppCompatActivity() {
 

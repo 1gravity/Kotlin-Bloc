@@ -42,9 +42,8 @@ internal class StateMachine<STATE : Any, EVENT : Any, SIDE_EFFECT : Any> private
         return transition
     }
 
-    internal fun with(init: GraphBuilder<STATE, EVENT, SIDE_EFFECT>.() -> Unit): StateMachine<STATE, EVENT, SIDE_EFFECT> {
-        return create(graph.copy(initialState = state), init)
-    }
+    internal fun with(init: GraphBuilder<STATE, EVENT, SIDE_EFFECT>.() -> Unit):
+            StateMachine<STATE, EVENT, SIDE_EFFECT> = create(graph.copy(initialState = state), init)
 
     private fun STATE.getTransition(event: EVENT): Transition<STATE, EVENT, SIDE_EFFECT> {
         for ((eventMatcher, createTransitionTo) in getDefinition().transitions) {

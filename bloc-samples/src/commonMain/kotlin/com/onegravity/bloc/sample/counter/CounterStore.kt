@@ -39,7 +39,8 @@ object CounterStore {
         ReduxModel(
             purpose = Purpose(
                 title = "Redux Test",
-                description = "This model is used to demonstrate how Blocs can interact with parts of the state held by a Redux store"
+                description = "This model is used to demonstrate how Blocs can interact with " +
+                        "parts of the state held by a Redux store"
             ),
             counter = Counter(1, 1)
         )

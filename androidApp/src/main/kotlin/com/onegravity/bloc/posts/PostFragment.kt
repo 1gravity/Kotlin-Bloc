@@ -44,7 +44,6 @@ import com.onegravity.bloc.sample.posts.bloc.Post
 import com.onegravity.bloc.sample.posts.bloc.PostBloc
 import com.onegravity.bloc.sample.posts.bloc.PostState
 import com.onegravity.bloc.subscribe
-import com.onegravity.bloc.utils.logger
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -92,8 +91,6 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
     }
 
     private fun render(state: PostState) {
-        logger.e("RENDERING: ${state.toString().take(100)}")
-
         if (state.loading) loading() else showPost(state)
     }
 

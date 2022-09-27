@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Bloc">
 
         <activity
-            android:name=".menu_compose.MainActivityCompose"
+            android:name=".menuCompose.MainActivityCompose"
             android:exported="true"
             android:label="Kotlin Bloc"
             android:theme="@style/Theme.Bloc">
@@ -70,7 +70,7 @@
             android:theme="@style/AppThemePosts" />
 
         <activity
-            android:name=".posts_compose.PostsActivity"
+            android:name=".postsCompose.PostsActivity"
             android:exported="false"
             android:label="Posts Compose"
             android:theme="@style/AppThemePosts" />

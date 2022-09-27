@@ -1,4 +1,4 @@
-package com.onegravity.bloc.posts_compose
+package com.onegravity.bloc.postsCompose
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button

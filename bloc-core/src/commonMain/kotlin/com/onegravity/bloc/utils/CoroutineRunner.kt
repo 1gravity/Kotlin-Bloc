@@ -23,7 +23,7 @@ public class CoroutineRunner(private val coroutineScope: CoroutineScope) {
         block: CoroutineBlock
     ) {
         val cancelPrevious = jobConfig?.cancelPrevious == true
-        val jobId = jobConfig?.jobId ?: DefaultJobId
+        val jobId = jobConfig?.jobId ?: DEFAULT_JOB_ID
 
         coroutineScope.launch {
             mutex.withLock {

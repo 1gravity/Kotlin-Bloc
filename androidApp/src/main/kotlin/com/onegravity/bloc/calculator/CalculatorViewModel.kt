@@ -9,6 +9,7 @@ import com.onegravity.bloc.sample.calculator.CalculatorAction.*
 import com.onegravity.bloc.sample.calculator.bloc
 import com.onegravity.bloc.toLiveData
 
+@Suppress("MagicNumber")
 class CalculatorViewModel : ViewModel() {
 
     private val bloc = bloc(blocContext())

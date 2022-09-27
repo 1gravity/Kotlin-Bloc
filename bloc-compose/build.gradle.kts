@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
 
 plugins {

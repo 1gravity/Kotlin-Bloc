@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 import Bloc_android_base_gradle.AndroidBuild
 
 plugins {

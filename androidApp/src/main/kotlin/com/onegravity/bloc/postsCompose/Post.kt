@@ -1,4 +1,4 @@
-package com.onegravity.bloc.posts_compose
+package com.onegravity.bloc.postsCompose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
