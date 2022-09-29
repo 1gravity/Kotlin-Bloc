@@ -9,7 +9,7 @@ struct iOSApp: App {
 
         // and with DI
         KoinKt.doInitKoin(koinAppDeclaration: { _ in })
-        let logger = LoggeriOS().logger()
+        let logger = LoggeriOS.shared.logger()
         logger.i(msg: "iOS App injected")
 
 		#if DEBUG
