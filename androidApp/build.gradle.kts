@@ -122,6 +122,9 @@ dependencies {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs = listOf("-Xcontext-receivers", "-Xskip-prerelease-check")
+        freeCompilerArgs = listOf(
+            "-Xcontext-receivers",
+            "-Xskip-prerelease-check",
+        )
     }
 }
