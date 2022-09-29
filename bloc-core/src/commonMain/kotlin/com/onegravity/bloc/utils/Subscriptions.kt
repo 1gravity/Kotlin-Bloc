@@ -8,6 +8,7 @@ import com.arkivanov.essenty.lifecycle.doOnStop
 import com.onegravity.bloc.Bloc
 import com.onegravity.bloc.BlocObservableOwner
 import com.onegravity.bloc.BlocOwner
+import com.onegravity.bloc.utils.logger.logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

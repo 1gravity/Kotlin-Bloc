@@ -8,8 +8,8 @@ import org.koin.dsl.KoinAppDeclaration
 // called by Android and iOS
 fun initKoin(koinAppDeclaration: KoinAppDeclaration = {}) {
     startKoin {
-        koinAppDeclaration()
         modules(commonModule, dbModule)
+        koinAppDeclaration()
     }
 }
 

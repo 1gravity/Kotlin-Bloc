@@ -1,4 +1,4 @@
-package com.onegravity.bloc.utils
+package com.onegravity.bloc.utils.logger
 
 public data class LoggerConfig(
     val tag: String = "bloc",

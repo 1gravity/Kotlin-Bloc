@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 
 @Composable
 @Suppress("FunctionNaming", "FunctionName")

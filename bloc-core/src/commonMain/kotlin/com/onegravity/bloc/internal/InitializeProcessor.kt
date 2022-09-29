@@ -5,7 +5,7 @@ import com.onegravity.bloc.internal.lifecycle.subscribe
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.utils.Initializer
 import com.onegravity.bloc.utils.InitializerContext
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

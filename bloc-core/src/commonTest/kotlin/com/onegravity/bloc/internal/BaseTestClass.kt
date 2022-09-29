@@ -1,6 +1,6 @@
 package com.onegravity.bloc.internal
 
-import com.onegravity.bloc.utils.loggerConfig
+import com.onegravity.bloc.utils.logger.loggerConfig
 import kotlin.test.BeforeTest
 
 @Suppress("UnnecessaryAbstractClass")

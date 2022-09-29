@@ -17,7 +17,7 @@ import com.onegravity.bloc.utils.Initializer
 import com.onegravity.bloc.utils.ReducerNoAction
 import com.onegravity.bloc.utils.SideEffectStream
 import com.onegravity.bloc.utils.ThunkNoAction
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

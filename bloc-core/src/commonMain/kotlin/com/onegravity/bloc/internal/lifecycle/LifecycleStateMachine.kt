@@ -2,7 +2,7 @@ package com.onegravity.bloc.internal.lifecycle
 
 import com.onegravity.bloc.internal.fsm.StateMachine
 import com.onegravity.bloc.internal.fsm.Transition
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 
 @Suppress("FunctionName", "FunctionNaming", "RemoveExplicitTypeArguments", "LongMethod")
 internal fun LifecycleStateMachine(

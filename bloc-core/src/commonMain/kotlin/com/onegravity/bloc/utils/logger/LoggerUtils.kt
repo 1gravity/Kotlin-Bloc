@@ -1,4 +1,4 @@
-package com.onegravity.bloc.utils
+package com.onegravity.bloc.utils.logger
 
 import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.LogWriter

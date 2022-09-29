@@ -10,7 +10,7 @@ import com.onegravity.bloc.utils.ReducerContext
 import com.onegravity.bloc.utils.ReducerContextNoAction
 import com.onegravity.bloc.utils.ReducerNoAction
 import com.onegravity.bloc.utils.SideEffectStream
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel

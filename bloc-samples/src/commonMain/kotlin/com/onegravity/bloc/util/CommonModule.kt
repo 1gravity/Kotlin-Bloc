@@ -17,7 +17,7 @@ import org.koin.dsl.module
 
 internal val commonModule = module {
     // we can either inject a Logger or just use the static Logger.x(msg)
-    single { com.onegravity.bloc.utils.logger }
+    single { com.onegravity.bloc.utils.logger.logger }
 
     single {
         HttpClient {

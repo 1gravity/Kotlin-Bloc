@@ -8,7 +8,7 @@ import com.onegravity.bloc.utils.Dispatcher
 import com.onegravity.bloc.utils.ThunkContext
 import com.onegravity.bloc.utils.ThunkContextNoAction
 import com.onegravity.bloc.utils.ThunkNoAction
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel

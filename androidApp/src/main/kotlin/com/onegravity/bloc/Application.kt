@@ -13,11 +13,8 @@ class Application : MultiDexApplication() {
         super.onCreate()
 
         initKoin {
-            androidLogger(Level.ERROR)
             androidContext(this@Application)
-            module {
-
-            }
+            androidLogger(Level.ERROR)
         }
     }
 

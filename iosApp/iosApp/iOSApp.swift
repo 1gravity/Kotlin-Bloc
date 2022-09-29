@@ -4,9 +4,13 @@ import blocSamples
 @main
 struct iOSApp: App {
     init() {
+        // two ways to use the logger, without DI
         LoggerUtilsKt.logger.i(msg: "iOS App started")
-		KoinKt.doInitKoin(koinAppDeclaration: { _ in })
-        LoggerUtilsKt.logger.i(msg: "iOS App injected")
+
+        // and with DI
+        KoinKt.doInitKoin(koinAppDeclaration: { _ in })
+        let logger = LoggeriOS().logger()
+        logger.i(msg: "iOS App injected")
 
 		#if DEBUG
 		var injectionBundlePath = "/Applications/InjectionIII.app/Contents/Resources"

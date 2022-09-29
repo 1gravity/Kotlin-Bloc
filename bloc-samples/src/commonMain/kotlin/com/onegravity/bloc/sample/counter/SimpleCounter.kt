@@ -3,7 +3,7 @@ package com.onegravity.bloc.sample.counter
 import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.state.asBlocState
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 
 /**
  * Demo to show how a Bloc can "act" as a BlocState.

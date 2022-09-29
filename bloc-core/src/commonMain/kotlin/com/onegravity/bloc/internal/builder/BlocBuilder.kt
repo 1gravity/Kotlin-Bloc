@@ -12,7 +12,7 @@ import com.onegravity.bloc.utils.Initializer
 import com.onegravity.bloc.utils.Reducer
 import com.onegravity.bloc.utils.SideEffect
 import com.onegravity.bloc.utils.Thunk
-import com.onegravity.bloc.utils.logger
+import com.onegravity.bloc.utils.logger.logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlin.jvm.JvmName
