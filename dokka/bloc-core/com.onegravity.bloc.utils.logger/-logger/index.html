@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>LoggerImpl</title>
+    <title>Logger</title>
 </head><body><link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
     <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><link href="../../../styles/prism.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script><script type="text/javascript" src="../../../scripts/main.js" defer></script><script type="text/javascript" src="../../../scripts/prism.js" async></script><script>const storage = localStorage.getItem("dokka-dark-mode")
 const savedDarkMode = storage ? JSON.parse(storage) : false
@@ -25,84 +25,97 @@ if(savedDarkMode === true){
         <div id="sideMenu"></div>
       </div>
       <div id="main">
-        <div class="main-content" id="content" pageids="Bloc Core::com.onegravity.bloc.utils/LoggerImpl///PointingToDeclaration//459125438">
-          <div class="breadcrumbs"><a href="../../index.html">Bloc Core</a>/<a href="../index.html">com.onegravity.bloc.utils</a>/<a href="index.html">LoggerImpl</a></div>
+        <div class="main-content" id="content" pageids="Bloc Core::com.onegravity.bloc.utils.logger/Logger///PointingToDeclaration//459125438">
+          <div class="breadcrumbs"><a href="../../index.html">Bloc Core</a>/<a href="../index.html">com.onegravity.bloc.utils.logger</a>/<a href="index.html">Logger</a></div>
           <div class="cover ">
-            <h1 class="cover"><span>Logger</span><wbr><span><span>Impl</span></span></h1>
+            <h1 class="cover"><span><span>Logger</span></span></h1>
             <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
               <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark common-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">common</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">internal </span><span class="token keyword">object </span><a href="index.html">LoggerImpl</a> : <a href="../-logger/index.html">Logger</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>            </div>
+<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">Logger</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">A basic Logger interface.</p><p class="paragraph">We use this internally to encapsulate the actual Logger which is Kermit atm.</p></div>            </div>
           </div>
           <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button></div>
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
             <div class="tabs-section-body">
               <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="-472128351%2FFunctions%2F459125438" anchor-label="d" id="-472128351%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
+              <div class="table" data-togglable="Functions"><a data-name="-1655805417%2FFunctions%2F459125438" anchor-label="d" id="-1655805417%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
                 <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest">
                   <div class="main-subrow keyValue ">
                     <div class=""><span class="inline-flex">
                         <div><a href="d.html"><span><span>d</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-472128351%2FFunctions%2F459125438"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1655805417%2FFunctions%2F459125438"></span>
                           <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                         </span></span></div>
                     <div>
                       <div class="title">
                         <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
                           <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark common-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">common</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="d.html"><span class="token function">d</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log debug messages</p></div></div>                        </div>
+<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="d.html"><span class="token function">d</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log debug messages</p></div></div>                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-<a data-name="-811277543%2FFunctions%2F459125438" anchor-label="e" id="-811277543%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
+<a data-name="568932111%2FFunctions%2F459125438" anchor-label="e" id="568932111%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
                 <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest">
                   <div class="main-subrow keyValue ">
                     <div class=""><span class="inline-flex">
                         <div><a href="e.html"><span><span>e</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-811277543%2FFunctions%2F459125438"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="568932111%2FFunctions%2F459125438"></span>
                           <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                         </span></span></div>
                     <div>
                       <div class="title">
                         <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
                           <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark common-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">common</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="e.html"><span class="token function">e</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span>t<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a><span class="token operator">?</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log error messages</p></div></div>                        </div>
+<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="e.html"><span class="token function">e</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span>t<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log error messages</p></div></div>                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-<a data-name="-790578970%2FFunctions%2F459125438" anchor-label="i" id="-790578970%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
+<a data-name="-1974256036%2FFunctions%2F459125438" anchor-label="i" id="-1974256036%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
                 <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest">
                   <div class="main-subrow keyValue ">
                     <div class=""><span class="inline-flex">
                         <div><a href="i.html"><span><span>i</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-790578970%2FFunctions%2F459125438"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1974256036%2FFunctions%2F459125438"></span>
                           <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                         </span></span></div>
                     <div>
                       <div class="title">
                         <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
                           <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark common-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">common</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="i.html"><span class="token function">i</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log info messages</p></div></div>                        </div>
+<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="i.html"><span class="token function">i</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log info messages</p></div></div>                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-<a data-name="-823247244%2FFunctions%2F459125438" anchor-label="w" id="-823247244%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
+<a data-name="-2006924310%2FFunctions%2F459125438" anchor-label="w" id="-2006924310%2FFunctions%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
                 <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest">
                   <div class="main-subrow keyValue ">
                     <div class=""><span class="inline-flex">
                         <div><a href="w.html"><span><span>w</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-823247244%2FFunctions%2F459125438"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2006924310%2FFunctions%2F459125438"></span>
                           <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                         </span></span></div>
                     <div>
                       <div class="title">
                         <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
                           <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark common-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">common</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="w.html"><span class="token function">w</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log warning messages</p></div></div>                        </div>
+<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="w.html"><span class="token function">w</span></a><span class="token punctuation">(</span>msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Log warning messages</p></div></div>                        </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Inheritors</h2>
+              <div class="table" data-togglable="Inheritors"><a data-name="-1133240458%2FInheritors%2F459125438" anchor-label="LoggerImpl" id="-1133240458%2FInheritors%2F459125438" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest"></a>
+                <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="../-logger-impl/index.html">LoggerImpl</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1133240458%2FInheritors%2F459125438"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div></div>
                   </div>
                 </div>
               </div>

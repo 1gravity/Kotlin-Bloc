@@ -11,6 +11,7 @@ com.onegravity.bloc.internal.fsm
 com.onegravity.bloc.internal.lifecycle
 com.onegravity.bloc.state
 com.onegravity.bloc.utils
+com.onegravity.bloc.utils.logger
 module:Bloc Redux
 com.onegravity.bloc.redux
 com.onegravity.bloc.redux.select
