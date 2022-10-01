@@ -11,16 +11,33 @@ import com.onegravity.bloc.utils.Selector
 import org.reduxkotlin.Store
 
 /**
- * Extension function to convert a Redux store to a ReduxBlocState:
+ * Extension function to convert a Redux store to a [BlocState].
+ *
+ * @param select memoized selector function to select sub-state from the (global) redux state
+ * @param map maps the selected sub state to bloc state if needed (can be the identity function)
+ *
+ * @return a [BlocState] with state reflecting the selected and mapped redux store state:
+ *         `state = map(select(redux model))`
+ *
+ * Example:
  * ```
- *    store.toBlocState(context, { /* select function */ },  { /* map function */ })
+ * store.toBlocState(
+ *   context = context,
+ *   select = { reduxModel -> reduxModel.books },
+ *   map = { model ->
+ *     when {
+ *       model.isLoading -> BookState.Loading
+ *       else -> model.books.toState()
+ *     }
+ *   }
+ * )
  * ```
  */
 public fun <State : Any, Proposal : Any, Model : Any, ReduxModel : Any> Store<ReduxModel>.toBlocState(
     context: BlocContext,
     select: Selector<ReduxModel, Model>,
     map: Mapper<Model, State>
-): BlocState<State, Proposal> = reduxBlocState<State, Proposal, Model, ReduxModel>(
+): BlocState<State, Proposal> = reduxBlocState(
     disposableScope = context.disposableScope(),
     store = this
 ) {

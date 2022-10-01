@@ -43,7 +43,7 @@ internal fun <State : Any> Store<State>.selectors(
     return this.subscribe(sub)
 }
 
-public fun <State : Any, SelectedState : Any> Store<State>.select(
+internal fun <State : Any, SelectedState : Any> Store<State>.select(
     selector: (State) -> SelectedState,
     onChange: (SelectedState) -> Unit
 ): StoreSubscriber = selectors { select(selector, onChange) }

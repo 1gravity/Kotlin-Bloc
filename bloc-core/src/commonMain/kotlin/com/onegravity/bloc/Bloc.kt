@@ -16,12 +16,12 @@ import com.onegravity.bloc.utils.SideEffectStream
  * - optionally creates SideEffect(s) which can be consumed by the view / ui component
  *   (e.g. for navigation) or by other consumers (analytics events, logging etc.).
  *
- * A Bloc is also a BlocState (allowing us to use a Bloc as BlocState and create composable Blocs):
+ * A Bloc is a BlocState (allowing us to use a Bloc as BlocState and create composable Blocs):
  * - a StateStream<State> emitting state
  * - a Sink<Action> accepting actions that might trigger state changes
  *
- * A Bloc is also
- * - a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for navigation
+ * A Bloc has a SideEffectStream<SideEffect> emitting side effects that can be used e.g. for
+ * navigation
  */
 public abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
     BlocState<State, Action>() {

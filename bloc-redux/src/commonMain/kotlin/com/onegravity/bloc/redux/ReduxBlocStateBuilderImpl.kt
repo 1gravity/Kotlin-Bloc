@@ -11,8 +11,8 @@ import org.reduxkotlin.Store
 internal class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxModel : Any> :
     ReduxBlocStateBuilder<State, Model, ReduxModel> {
 
-    private var _selector: Selector<ReduxModel, Model>? = null
-    private var _mapper: Mapper<Model, State>? = null
+    private var selector: Selector<ReduxModel, Model>? = null
+    private var mapper: Mapper<Model, State>? = null
 
     fun <Proposal : Any> build(
         disposableScope: DisposableScope,
@@ -21,16 +21,16 @@ internal class ReduxBlocStateBuilderImpl<State : Any, Model : Any, ReduxModel : 
         ReduxBlocState(
             disposableScope = disposableScope,
             store = store,
-            select = checkNotNull(_selector) { "select { } must be declared" },
-            map = checkNotNull(_mapper) { "map { } must be declared" },
+            select = checkNotNull(selector) { "select { } must be declared" },
+            map = checkNotNull(mapper) { "map { } must be declared" },
         )
 
     override fun select(selector: Selector<ReduxModel, Model>) {
-        _selector = selector
+        this.selector = selector
     }
 
     override fun map(mapper: Mapper<Model, State>) {
-        _mapper = mapper
+        this.mapper = mapper
     }
 
 }

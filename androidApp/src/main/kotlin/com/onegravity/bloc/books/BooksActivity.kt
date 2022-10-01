@@ -10,14 +10,14 @@ import com.onegravity.bloc.getOrCreate
 import com.onegravity.bloc.sample.books.BookState
 import com.onegravity.bloc.sample.books.BooksRepositoryImpl
 import com.onegravity.bloc.sample.books.BooksUseCase
-import com.onegravity.bloc.sample.books.BooksUseCaseImpl
+import com.onegravity.bloc.sample.books.BooksUseCaseImplRedux
 import com.onegravity.bloc.subscribe
 
 class BooksActivity : AppCompatActivity() {
 
-    private val useCase by getOrCreate { BooksUseCaseImpl(it, BooksRepositoryImpl()) }
+//    private val useCase by getOrCreate { BooksUseCaseImpl(it, BooksRepositoryImpl()) }
 //    private val useCase by getOrCreate { BooksUseCaseImplSimple(it, BooksRepositoryImpl()) }
-//    private val useCase by getOrCreate { BooksUseCaseImplRedux(it, BooksRepositoryImpl()) }
+    private val useCase by getOrCreate { BooksUseCaseImplRedux(it, BooksRepositoryImpl()) }
 
     lateinit var pageEmpty: View
     lateinit var pageLoading: View

@@ -49,13 +49,13 @@ class BooksUseCaseImplRedux(
 
     private val bloc = bloc<BookState, BookAction, Nothing, Any>(context, reduxStore.toBlocState(
         context = context,
-        select = { reduxModel ->
+        select = { reduxModel -> reduxModel },
+        map = { model ->
             when {
-                reduxModel.isLoading -> BookState.Loading
-                else -> reduxModel.books.toState()
+                model.isLoading -> BookState.Loading
+                else -> model.books.toState()
             }
-        },
-        map = { model -> model }
+        }
     )) {
         reduce<BookAction.Load> {
             // our Proposal: a Thunk which is being dispatched to the Redux Store
