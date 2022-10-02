@@ -24,8 +24,6 @@ kotlin {
         publishLibraryVariants("release")
     }
 
-    jvm()
-
     val isMacOsX = DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX
     if (isMacOsX) {
         listOf(iosX64(), iosArm64(), iosSimulatorArm64())

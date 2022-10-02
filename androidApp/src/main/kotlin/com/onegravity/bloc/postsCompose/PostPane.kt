@@ -8,10 +8,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import co.touchlab.kermit.Logger
 import com.github.michaelbull.result.mapBoth
 import com.onegravity.bloc.compose.observeState
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
-import com.onegravity.bloc.utils.logger.logger
 
 @Composable
 @Suppress("FunctionNaming", "FunctionName")
@@ -27,7 +27,7 @@ internal fun PostPane(
         }
         else -> state.postState.post?.mapBoth(
             { post -> Post(post, modifier) },
-            { error -> Error({ logger.e("$error") }, error) }
+            { error -> Error({ Logger.e("$error") }, error) }
         )
     }
 }

@@ -1,9 +1,9 @@
 package com.onegravity.bloc.sample.counter
 
+import co.touchlab.kermit.Logger
 import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.state.asBlocState
-import com.onegravity.bloc.utils.logger.logger
 
 /**
  * Demo to show how a Bloc can "act" as a BlocState.
@@ -20,7 +20,7 @@ object SimpleCounter {
             initialValue
         ) {
             thunk {
-                logger.d("auditTrailBloc: changing state from ${getState()} to $action")
+                Logger.d("auditTrailBloc: changing state from ${getState()} to $action")
                 dispatch(action)
             }
             reduce { action }
@@ -31,7 +31,7 @@ object SimpleCounter {
         auditTrailBloc(context, initialValue).asBlocState()
     ) {
         reduce {
-            logger.d("interceptor 2: $action -> ${action - 1}")
+            Logger.d("interceptor 2: $action -> ${action - 1}")
             action - 1
         }
     }
@@ -41,7 +41,7 @@ object SimpleCounter {
         interceptorBloc2(context, initialValue).asBlocState()
     ) {
         reduce {
-            logger.d("interceptor 1: $action -> ${action + 1}")
+            Logger.d("interceptor 1: $action -> ${action + 1}")
             action + 1
         }
     }

@@ -100,6 +100,9 @@ dependencies {
 
     implementation(Koin.android)
 
+    // Logging (https://github.com/touchlab/Kermit)
+    implementation(Touchlab.kermit)
+
     implementation("com.github.skydoves:landscapist-glide:_")
     implementation("com.github.bumptech.glide:glide:_")
     implementation("com.github.lisawray.groupie:groupie:_")
