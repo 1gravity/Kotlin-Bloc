@@ -21,20 +21,19 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
 
+  detekt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3.3.0
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '11'
+
       - name: Run Detekt
         run: ./gradlew detekt
-
-      - name: Test results Debug
-        uses: actions/upload-artifact@v2
-        with:
-          name: debug-unit-tests-results
-          path: bloc-core/build/reports/tests/testDebugUnitTest/
-
-      - name: Test results Release
-        uses: actions/upload-artifact@v2
-        with:
-          name: release-unit-tests-results
-          path: bloc-core/build/reports/tests/testReleaseUnitTest/
 
   tests:
     runs-on: ubuntu-latest
@@ -49,3 +48,16 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew test
+
+      - name: Test results Debug
+        uses: actions/upload-artifact@v2
+        with:
+          name: debug-unit-tests-results
+          path: bloc-core/build/reports/tests/testDebugUnitTest/
+
+      - name: Test results Release
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-unit-tests-results
+          path: bloc-core/build/reports/tests/testReleaseUnitTest/
+
