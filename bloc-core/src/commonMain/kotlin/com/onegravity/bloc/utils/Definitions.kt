@@ -6,14 +6,9 @@ import kotlinx.coroutines.flow.Flow
 @DslMarker
 public annotation class BlocDSL
 
-@RequiresOptIn(message = "This is an internal API designed for Bloc extensions.")
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
-public annotation class BlocProtected
-
-@Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
-public annotation class BlocInternal
+internal annotation class BlocInternal
 
 /**
  * This is the Observer specifically for Swift

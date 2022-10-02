@@ -1,3 +1,6 @@
+- TODO thunks could have a reduce(State) function that submits a reducer that reduces the current
+       state to the value passed in
+
 - TODO implement Subscriber tests
 
 - TODO implements Bloc tests with initializer, reducer, thunk, side effect
