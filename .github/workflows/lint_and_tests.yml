@@ -21,6 +21,9 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
 
+      - name: Run Detekt
+        run: ./gradlew detekt
+
       - name: Test results Debug
         uses: actions/upload-artifact@v2
         with:

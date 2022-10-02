@@ -1,6 +1,7 @@
 package com.onegravity.bloc.internal
 
-import com.onegravity.bloc.utils.configureLogger
+import co.touchlab.kermit.CommonWriter
+import com.onegravity.bloc.utils.logWriter
 import kotlin.test.BeforeTest
 
 @Suppress("UnnecessaryAbstractClass")
@@ -8,7 +9,7 @@ abstract class BaseTestClass {
 
     @BeforeTest
     fun initialize() {
-        configureLogger(usePlatformWriter = false)
+        logWriter = CommonWriter()
     }
 
 }

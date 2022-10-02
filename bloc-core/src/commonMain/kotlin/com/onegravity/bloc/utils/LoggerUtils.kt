@@ -1,27 +1,28 @@
 package com.onegravity.bloc.utils
 
-import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.LogWriter
-import co.touchlab.kermit.Logger as KermitLogger
+import co.touchlab.kermit.Logger
 
 /**
  * Platform specific LogWriter, don't call this directly
  */
 internal expect fun logWriter(): LogWriter
 
-/**
- * Change this in tests to use the CommonLogger instead of the platform-specific logger
- */
-internal fun configureLogger(tag: String = "bloc", usePlatformWriter: Boolean = true) {
-    KermitLogger.setTag(tag)
+// use CommonWriter() for tests, platform-specific logWriter() otherwise
+internal var logWriter = logWriter()
+    set(value) {
+        field = value
+        Logger.setLogWriters(value)
+    }
 
-    // use CommonWriter for tests, platform-specific LogWriter otherwise
-    val writer = if (usePlatformWriter) logWriter() else CommonWriter()
-    KermitLogger.setLogWriters(writer)
-}
+internal var tag = "bloc"
+    set(value) {
+        field = value
+        Logger.setTag(tag)
+    }
 
 internal val logger by lazy {
-    KermitLogger.setLogWriters(logWriter())
-    KermitLogger.withTag("bloc")
-    KermitLogger
+    Logger.setLogWriters(logWriter)
+    Logger.setTag(tag)
+    Logger
 }

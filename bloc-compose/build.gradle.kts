@@ -18,8 +18,6 @@ kotlin {
         publishLibraryVariants("release")
     }
 
-    jvm()
-
     sourceSets {
         all {
             languageSettings.apply {
