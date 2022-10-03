@@ -34,9 +34,11 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onCreate()
-        testState(bloc, null, 1)
+        delay(50)
+        testState(bloc, null, 2)
 
         lifecycleRegistry.onStart()
+        delay(50)
         testState(bloc, null, 2)
 
         lifecycleRegistry.onStop()
@@ -45,10 +47,10 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
     /**
      * Test whether the bloc waits for the initializer to finish before transitioning to started
-     * which will start processing dispatched actions.
+     * which will start processing directly dispatched actions (not by the initializer).
      */
     @Test
-    fun testInitializerExecutionDelayed() = runTests {
+    fun testInitializerExecutionDelayed1() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -64,13 +66,57 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         assertEquals(5, bloc.value)
 
         lifecycleRegistry.onCreate()
+        // this will be queued and run after the initializer is done
+        testState(bloc, Whatever, 5)
+        delay(100)
+        // the initializer still hasn't dispatched the action
+        assertEquals(5, bloc.value)
+        delay(1000)
+        // now it has
+        assertEquals(6, bloc.value)
+
+        lifecycleRegistry.onStart()
+        delay(50)
+        // and now the directly submitted action should be processed
+        assertEquals(11, bloc.value)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+
+    /**
+     * Test whether the bloc waits for the initializer to finish before transitioning to started
+     * which will start processing directly dispatched actions (not by the initializer).
+     */
+    @Test
+    fun testInitializerExecutionDelayed2() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 5) {
+            onCreate {
+                delay(1000)
+                dispatch(Increment)
+            }
+            reduce<Increment> { state + 1 }
+            reduce { state + 5 }
+        }
+
         assertEquals(5, bloc.value)
 
-        // the initializer is still running -> the dispatched action has no effect
-        lifecycleRegistry.onStart()
+        lifecycleRegistry.onCreate()
+        // this will be queued and run after the initializer is done
         testState(bloc, Whatever, 5)
+        lifecycleRegistry.onStart()
+
+        // initializer still running and directly dispatched actions are processed afterwards
+        delay(100)
+        // the initializer still hasn't dispatched the action
+        assertEquals(5, bloc.value)
 
         delay(1050)
+        // now it has and also the directly dispatched action should be processed
         assertEquals(11, bloc.value)
 
         lifecycleRegistry.onStop()

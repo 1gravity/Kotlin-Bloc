@@ -39,7 +39,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
     initialize: Initializer<State, Action>? = null,
-    thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
+    thunks: List<MatcherThunk<State, Action, Action, Proposal>> = emptyList(),
     reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     initDispatcher: CoroutineDispatcher = Dispatchers.Default,
     thunkDispatcher: CoroutineDispatcher = Dispatchers.Default,
@@ -54,15 +54,9 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * order or we risk NullPointerExceptions                                                   *
      ********************************************************************************************/
 
-    /**
-     * Queue for actions dispatched by the initializer.
-     * These actions are processed once the bloc transitions to the Started state.
-     */
-    private val initActionQueue = ArrayDeque<Action>(QUEUE_INITIAL_SIZE)
-
     private inner class ActionQueueElement(
         val action: Action? = null,
-        val thunk: ThunkNoAction<State, Action>? = null,
+        val thunk: ThunkNoAction<State, Action, Proposal>? = null,
         val reducer: ReducerNoAction<State, Effect<Proposal, SideEffect>>? = null
     )
 
@@ -84,7 +78,11 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = thunkDispatcher,
         thunks = thunks,
-        dispatch = reduceProcessor::send
+        dispatch = reduceProcessor::send,
+        reduce = { proposal -> reduceProcessor.reduce {
+            // this reducer emits the proposal directly to the BlocState, no reduce functionality
+            Effect(proposal, emptyList())
+        }}
     )
 
     private val initializeProcessor = InitializeProcessor(
@@ -92,18 +90,12 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = initDispatcher,
         initializer = initialize,
-        dispatch = { initActionQueue += it }
+        dispatch = { thunkProcessor.send(it) }
     )
 
     init {
         blocLifecycle.subscribe(onStart = {
-            // process initializer actions first
-            while (!initActionQueue.isEmpty()) {
-                val entry = initActionQueue.removeFirst()
-                send(entry)
-            }
-
-            // before processing action, thunks and reducers
+            // process actions, thunks and reducers
             while (!actionQueue.isEmpty()) {
                 val entry = actionQueue.removeFirst()
                 entry.action?.run(::send)
@@ -205,7 +197,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * BlocExtension interface implementation:
      * thunk { } -> run a thunk MVVM+ style
      */
-    override fun thunk(thunk: ThunkNoAction<State, Action>) {
+    override fun thunk(thunk: ThunkNoAction<State, Action, Proposal>) {
         when {
             // we need to cache if the initializer is still running
             blocLifecycle.isStarting() -> actionQueue += ActionQueueElement(thunk = thunk)

@@ -27,10 +27,11 @@ public data class InitializerContext<State, Action>(
  *   }
  * ```
  */
-public data class ThunkContext<State, Action, A : Action>(
+public data class ThunkContext<State, Action, A : Action, Proposal>(
     val getState: GetState<State>,
     val action: A,
     val dispatch: Dispatcher<Action>,
+    val reduce: (proposal: Proposal) -> Unit,
     internal val runner: CoroutineRunner
 )
 
@@ -41,9 +42,10 @@ public data class ThunkContext<State, Action, A : Action>(
  *   }
  * ```
  */
-public data class ThunkContextNoAction<State, Action>(
+public data class ThunkContextNoAction<State, Action, Proposal>(
     val getState: GetState<State>,
     val dispatch: Dispatcher<Action>,
+    val reduce: (proposal: Proposal) -> Unit,
     internal val runner: CoroutineRunner
 )
 

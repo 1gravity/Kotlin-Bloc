@@ -19,11 +19,12 @@ import kotlinx.coroutines.launch
  * The ThunkProcessor is responsible for processing thunk { } blocks.
  */
 internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
-    private val lifecycle: BlocLifecycle,
+    lifecycle: BlocLifecycle,
     private val state: BlocState<State, Proposal>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    private val thunks: List<MatcherThunk<State, Action, Action>> = emptyList(),
-    private val dispatch: (action: Action) -> Unit
+    private val thunks: List<MatcherThunk<State, Action, Action, Proposal>> = emptyList(),
+    private val dispatch: (action: Action) -> Unit,
+    private val reduce: (proposal: Proposal) -> Unit
 ) {
 
     /**
@@ -39,17 +40,21 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     init {
         lifecycle.subscribe(
+            onInitialize = {
+                startProcessing()
+            },
             onStart = {
-                coroutine.onStart()
-                processQueue()
+                startProcessing()
             },
             onStop = {
                 coroutine.onStop()
             }
         )
     }
+    private fun startProcessing() {
+        // only start processing if the coroutine wasn't already started
+        if (!coroutine.onStart()) return
 
-    private fun processQueue() {
         coroutine.scope?.launch {
             for (action in thunkChannel) {
                 runThunks(action)
@@ -62,8 +67,6 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * thunk { } -> run a thunk Redux style
      */
     internal fun send(action: Action) {
-        if (!lifecycle.isStarted()) return
-
         logger.d("received thunk with action ${action.trimOutput()}")
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             thunkChannel.trySend(action)
@@ -76,7 +79,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * BlocExtension interface implementation:
      * thunk { } -> run a thunk MVVM+ style
      */
-    internal fun thunk(thunk: ThunkNoAction<State, Action>) {
+    internal fun thunk(thunk: ThunkNoAction<State, Action, Proposal>) {
         // we don't need to check if (lifecycle.state == LifecycleState.Started) since the
         // CoroutineScope is cancelled onStop()
         coroutine.scope?.launch {
@@ -88,6 +91,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
                 val context = ThunkContextNoAction(
                     getState = { state.value },
                     dispatch = dispatcher,
+                    reduce = reduce,
                     runner = runner
                 )
                 context.thunk()
@@ -125,6 +129,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
                     getState = { state.value },
                     action = action,
                     dispatch = dispatcher,
+                    reduce = reduce,
                     runner = runner
                 )
                 context.thunk()
