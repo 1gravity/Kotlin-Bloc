@@ -110,6 +110,11 @@ class BlocLifecycleTests : BaseTestClass() {
         assertEquals(2, bloc.value)
 
         lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onStart()
+
         testState(bloc, null, 2)
         testState(bloc, 1, 3)
 
@@ -142,6 +147,11 @@ class BlocLifecycleTests : BaseTestClass() {
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onStart()
+
         testState(bloc, null, 1)
         testState(bloc, 1, 3)
 
@@ -180,7 +190,8 @@ class BlocLifecycleTests : BaseTestClass() {
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onCreate()
-        testState(bloc, null, 1)
+        delay(50)
+        testState(bloc, null, 8)
 
         lifecycleRegistry.onStart()
         testState(bloc, null, 8)
@@ -189,6 +200,11 @@ class BlocLifecycleTests : BaseTestClass() {
         testState(bloc, 1, 8)
 
         lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onStart()
+
         testState(bloc, null, 8)
         testState(bloc, 1, 9)
         testState(bloc, 1, 10)
@@ -235,8 +251,10 @@ class BlocLifecycleTests : BaseTestClass() {
         }
 
         delay(50)
+        assertEquals(8, bloc.value)
         bloc.send(1)
-        assertEquals(1, bloc.value)
+        delay(50)
+        assertEquals(8, bloc.value)
 
         lifecycleRegistry.onDestroy()
     }
