@@ -17,14 +17,15 @@ While a Redux thunk is a function, dispatched as an action to a Redux store and 
 
 ### Context
 
-A thunk is called with a `ThunkContext` as receiver. The context is giving access to the current `State`, the `Action` that triggered the thunk's execution and a `Dispatcher`:
+A thunk is called with a `ThunkContext` as receiver. The context is giving access to the current `State`, the `Action` that triggered the thunk's execution a `Dispatcher` and a function to "reduce" state directly:
 
 
 ```kotlin
 public data class ThunkContext<State, Action>(
     val getState: GetState<State>,
     val action: Action,
-    val dispatch: Dispatcher<Action>
+    val dispatch: Dispatcher<Action>,
+    val reduce: (proposal: Proposal) -> Unit
 )
 ```
 
@@ -34,11 +35,11 @@ A typical thunk would evaluate the action, run some asynchronous operation and d
 thunk {
     if (action == Load) {
         dispatch(Loading)
-        val nextAction = repository.load().toAction()
-        dispatch(nextAction)
+        val books = repository.load()
+        dispatch(LoadComplete(books))
     } else {
-        // without this no action would reach the reducers below
-        // because this is a catch-all thunk
+        // without this no action would reach the reducers 
+        // below because this is a catch-all thunk
         dispatch(action)
     }
 }
@@ -48,7 +49,7 @@ reduce<Loading> {
 }
 
 reduce<LoadComplete> { 
-    state.copy(loading = false, books = action.result)
+    state.copy(loading = false, books = action.books)
 }
 ```
 
@@ -61,8 +62,8 @@ In this case using a single action thunk would be simpler though and you'd write
 ```kotlin
 thunk<Load> {
     dispatch(Loading)
-    val nextAction = repository.load().toAction()
-    dispatch(nextAction)
+    val books = repository.load()
+    dispatch(LoadComplete(books))
 }
 ```
 
@@ -71,6 +72,25 @@ This doesn't require to call `dispatch(action)` explicitly since it only catches
 :::tip
 There are extension functions to launch `Coroutines` from a thunk (see [Coroutine Launcher](coroutine_launcher)). 
 :::
+## Thunk reduce()
+
+Thunks are meant to run asynchronous code and reducers are meant to reduce state. In many cases however the reducers are very simple functions. In the example above we need to add a dedicated action `Loading`, dispatch that action in the thunk in order for a reducer to reduce the current state to one that indicates loading. While that "separation of concerns" is useful in many cases, it adds a good amount of boilerplate code for simple cases like the one we have here. To simplify this we can use the `ThunkContext.reduce` function:
+```kotlin
+thunk<Load> {
+    reduce( getState().copy(loading = true) )
+
+    val books = repository.load()
+    
+    reduce( getState().copy(loading = false, books = books) )
+}
+```
+
+`ThunkContext.reduce()` is identical to submitting an action that triggers a reducer except that the reducer is implicitly defined as:
+```kotlin
+reduce {
+    Effect(proposal, emptyList())
+}
+```
 
 ## Execution
 
