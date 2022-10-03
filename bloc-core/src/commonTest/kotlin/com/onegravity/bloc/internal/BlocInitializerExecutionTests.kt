@@ -15,6 +15,28 @@ import kotlin.test.assertEquals
 
 class BlocInitializerExecutionTests : BaseTestClass() {
 
+    @Test
+    fun testWithoutInitializer() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Int, Unit>(context, 1) {
+            reduce { state + action }
+        }
+
+        lifecycleRegistry.onCreate()
+        assertEquals(1, bloc.value)
+        bloc.send(3)
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onStart()
+        delay(150)
+        assertEquals(4, bloc.value)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
     /**
      * Test regular initializer and make sure MVVM+ style initializer don't run
      */
@@ -206,6 +228,36 @@ class BlocInitializerExecutionTests : BaseTestClass() {
             delay(1200)
             bloc.reduce { state + 1 }
         }
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    /**
+     * Test whether an action is queued if the initializer is already done
+     */
+    @Test
+    fun testEarlyBird() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Int, Unit>(context, 1) {
+            onCreate { dispatch(2) }
+            reduce { state + action }
+        }
+
+        lifecycleRegistry.onCreate()
+        delay(100)
+        // this should be queued here
+        bloc.send(3)
+        delay(50)
+        assertEquals(3, bloc.value)
+
+        lifecycleRegistry.onStart()
+        // and be processed here
+        delay(50)
+        // and be done by now
+        assertEquals(6, bloc.value)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()

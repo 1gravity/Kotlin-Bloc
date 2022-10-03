@@ -1,4 +1,3 @@
-- TODO update the documentation for initializers
 - TODO add documentation for thunk.reduce
 
 - TODO implement Subscriber tests
