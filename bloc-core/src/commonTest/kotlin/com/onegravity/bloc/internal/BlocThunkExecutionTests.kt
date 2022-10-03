@@ -135,6 +135,45 @@ class BlocThunkExecutionTests : BaseTestClass() {
         bloc.thunk { dispatch(Whatever) }
         delay(50)
         assertEquals(18, count)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun testThunkReduceExecution() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 1) {
+            thunk<Increment> {
+                reduce(getState() + 1)
+            }
+            thunk<Decrement> {
+                reduce(getState() - 1)
+                dispatch(Decrement)
+            }
+            thunk {
+                dispatch(action)
+            }
+            reduce<Increment> { state + 1 }
+            reduce<Decrement> { state - 1 }
+            reduce { state + 5 }
+        }
+
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        testState(bloc, Increment, 3)
+
+        testState(bloc, Whatever, 8)
+
+        testState(bloc, Decrement, 5)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
     }
 
 }
