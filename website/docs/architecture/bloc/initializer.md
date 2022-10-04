@@ -26,6 +26,7 @@ public data class InitializerContext<State, Action>(
 ```
 
 ## Execution
+Actions dispatched by the initializer are processed by thunks and reducers even before `onStart()` is called. Actions that are not dispatched by the initializer however are ignored before the bloc transitions to the `Started` state (see [Lifecycle](lifecycle)). This guarantees that the initializer runs and finishes before any thunks and reducers are executed. The only exception to that rule is if the initializer launches asynchronous code e.g. via [launch](coroutine_launcher) and would dispatch actions from there (so don't do this).
 ### Example 1
 
 ```kotlin
@@ -53,9 +54,6 @@ onCreate {
     }
 }
 ```
-
-Actions dispatched by the initializer are processed by the thunks and reducers even before `onStart()` is called. Actions that are not dispatched by the initializer however are sent to a queue and are processed once the bloc transitions to the `Started` state (see [Lifecycle](lifecycle)). This way it's guaranteed that the initializer runs and finishes first before any thunks and reducers are executed. The only exception to that rule is if the initializer launches asynchronous code e.g. via [launch](coroutine_launcher) and would dispatch actions from there (so don't do this).
-
 ### Example 2
 ```kotlin
 val lifecycleRegistry = LifecycleRegistry()
@@ -63,28 +61,28 @@ val context = BlocContextImpl(lifecycleRegistry)
 
 val bloc = bloc<Int, Int, Unit>(context, 1) {
     onCreate {
-        delay(1000)
         dispatch(2)
     }
     reduce { state + action }
 }
 
+// initializer executes -> reduce state
 lifecycleRegistry.onCreate()
-
-// this action will be queued
-bloc.send(3)
-
-delay(1050)
+delay(50)
 assertEquals(3, bloc.value)
 
-lifecycleRegistry.onStart()
-delay(100)
+// this action however will be ignored
+bloc.send(3)
+delay(50)
+assertEquals(3, bloc.value)
 
-// and only processed once the the initializer is done and onStart() was called
+// after onStart() -> "regular" reducer is being executed
+lifecycleRegistry.onStart()
+bloc.send(3)
+delay(50)
 assertEquals(6, bloc.value)
 ```
 ### Example 3
-
 ```kotlin
 val lifecycleRegistry = LifecycleRegistry()
 val context = BlocContextImpl(lifecycleRegistry)
@@ -99,17 +97,19 @@ val bloc = bloc<Int, Int, Unit>(context, 1) {
 
 lifecycleRegistry.onCreate()
 
-// this action won't be processed before the initializer is done...
+// this action will be ignored
 bloc.send(3)
-
-lifecycleRegistry.onStart()
-delay(100)
-
-// ...which isn't the case here yet...
+delay(50)
 assertEquals(1, bloc.value)
 
-delay(950)
+lifecycleRegistry.onStart()
 
-// ...but after 1050ms initializer and dispatched action are both processed
+// this action will be queued...
+bloc.send(3)
+delay(50)
+assertEquals(1, bloc.value)
+
+// ...and processed once the initializer is done
+delay(900)
 assertEquals(6, bloc.value)
 ```

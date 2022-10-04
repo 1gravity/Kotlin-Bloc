@@ -31,14 +31,14 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
         lifecycleRegistry.onStart()
         delay(150)
-        assertEquals(4, bloc.value)
+        assertEquals(1, bloc.value)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
     }
 
     /**
-     * Test regular initializer and make sure MVVM+ style initializer don't run
+     * Test regular initializer
      */
     @Test
     fun testInitializerExecutionReduxStyle() = runTests {
@@ -58,6 +58,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         lifecycleRegistry.onCreate()
         delay(50)
         testState(bloc, null, 2)
+        testState(bloc, Increment, 2)
 
         lifecycleRegistry.onStart()
         delay(50)
@@ -88,7 +89,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         assertEquals(5, bloc.value)
 
         lifecycleRegistry.onCreate()
-        // this will be queued and run after the initializer is done
+        // this will be ignored
         testState(bloc, Whatever, 5)
         delay(100)
         // the initializer still hasn't dispatched the action
@@ -99,8 +100,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
         lifecycleRegistry.onStart()
         delay(50)
-        // and now the directly submitted action should be processed
-        assertEquals(11, bloc.value)
+        assertEquals(6, bloc.value)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
@@ -128,9 +128,10 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         assertEquals(5, bloc.value)
 
         lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
         // this will be queued and run after the initializer is done
         testState(bloc, Whatever, 5)
-        lifecycleRegistry.onStart()
 
         // initializer still running and directly dispatched actions are processed afterwards
         delay(100)
@@ -246,17 +247,20 @@ class BlocInitializerExecutionTests : BaseTestClass() {
             reduce { state + action }
         }
 
+        // initializer executes and reduces the state
         lifecycleRegistry.onCreate()
-        delay(100)
-        // this should be queued here
+        delay(50)
+        assertEquals(3, bloc.value)
+
+        // this action however will be ignored
         bloc.send(3)
         delay(50)
         assertEquals(3, bloc.value)
 
+        // only after onStart are "regular" reducers being executed
         lifecycleRegistry.onStart()
-        // and be processed here
+        bloc.send(3)
         delay(50)
-        // and be done by now
         assertEquals(6, bloc.value)
 
         lifecycleRegistry.onStop()

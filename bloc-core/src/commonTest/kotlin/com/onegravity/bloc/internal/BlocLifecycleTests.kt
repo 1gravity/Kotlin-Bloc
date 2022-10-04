@@ -100,6 +100,7 @@ class BlocLifecycleTests : BaseTestClass() {
 
         lifecycleRegistry.onStart()
         testState(bloc, null, 1)
+        assertEquals(1, bloc.value)
         testState(bloc, 1, 2)
 
         lifecycleRegistry.onStop()

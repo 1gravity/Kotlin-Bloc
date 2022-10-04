@@ -31,6 +31,7 @@ class BlocThunkExecutionTests : BaseTestClass() {
         testState(bloc, Increment, 1)
 
         lifecycleRegistry.onStart()
+        delay(50)
         testState(bloc, null, 1)
         assertEquals(0, count)
 

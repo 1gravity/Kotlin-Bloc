@@ -76,7 +76,7 @@ internal class BlocLifecycleImpl(essentyLifecycle: Lifecycle) : BlocLifecycle {
 
     override fun isStarted() = stateMachine.state == Started
 
-    private val isStartingStates = setOf(Starting, Initializing, InitializingStarting, Initialized)
+    private val isStartingStates = setOf(Starting, InitializingStarting)
 
     override fun isStarting() = isStartingStates.contains(stateMachine.state)
 
