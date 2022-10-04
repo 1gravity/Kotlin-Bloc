@@ -15,14 +15,27 @@ If more than one initializer is defined, the first one (according to their order
 
 ### Context
 
-An initializer is called with a `InitializerContext` as receiver. The context is giving access to the current `State` and a `Dispatcher`:
+An initializer is called with a `InitializerContext` as receiver. The context is giving access to the current `State`, a `Dispatcher` and a function to "reduce" state directly:
 
 
 ```kotlin
 public data class InitializerContext<State, Action>(
     val state: State,
-    val dispatch: Dispatcher<Action>
+    val dispatch: Dispatcher<Action>,
+    val reduce: (proposal: Proposal) -> Unit
 )
+```
+### reduce()
+
+Analogous to thunks, initializers have a `reduce()` function to eliminate boilerplate code:
+```kotlin
+onCreate {
+    reduce( state.copy(loading = true) )
+
+    val books = repository.load()
+    
+    reduce( state.copy(loading = false, books = books) )
+}
 ```
 
 ## Execution

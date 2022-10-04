@@ -10,7 +10,7 @@ hide_title: true
 To use the [Redux](https://developer.android.com/jetpack/compose) extensions please add the `bloc-redux` artifact as a dependency in the Gradle build file:
 
 ```kotlin
-implementation("com.1gravity:bloc-redux:0.9.0")
+implementation("com.1gravity:bloc-redux:0.9.1")
 ```
 
 ## Libraries

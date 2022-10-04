@@ -26,7 +26,6 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
     private val blocState = getKoinInstance<BlocState<PostsRootState, PostsRootState>>()
 
     // internal actions
-    private object PostsLoading : PostsAction()
     private data class PostsLoaded(val result: Result<List<Post>, Throwable>) : PostsAction()
     private data class PostLoaded(val result: Result<Post, Throwable>) : PostsAction()
 
@@ -35,17 +34,14 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
     override val bloc by lazy {
         bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
-                dispatch(PostsLoading)
+                // example of "reducing" state from an initializer directly
+                reduce(state.copy(postsState = state.postsState.copy(loading = true)))
 
                 // we can access the db here because Dispatchers.Default is a Bloc's default
                 // dispatcher, also we use Ktor which offloads the networking to another thread
                 val result = repository.getOverviews()
 
                 dispatch(PostsLoaded(result))
-            }
-
-            reduce<PostsLoading> {
-                state.copy(postsState = state.postsState.copy(loading = true))
             }
 
             reduce<PostsLoaded> {

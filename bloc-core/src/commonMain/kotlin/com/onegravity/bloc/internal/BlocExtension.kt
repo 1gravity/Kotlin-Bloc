@@ -17,7 +17,7 @@ internal interface BlocExtension<State : Any, Action : Any, SideEffect : Any, Pr
      * The Initializer is launched in a CoroutineScope managed by the bloc's lifecycle.
      * Only one Initializer can be executed during the lifetime of a bloc.
      */
-    fun initialize(initialize: Initializer<State, Action>)
+    fun initialize(initialize: Initializer<State, Action, Proposal>)
 
     /**
      * Dispatch a reducer to the bloc.

@@ -267,4 +267,36 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         lifecycleRegistry.onDestroy()
     }
 
+    @Test
+    fun testInitializerReduce() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Int, Unit>(context, 1) {
+            onCreate {
+                reduce(state + 2)
+            }
+            reduce { state + action }
+        }
+
+        // initializer executes and reduces the state
+        lifecycleRegistry.onCreate()
+        delay(50)
+        assertEquals(3, bloc.value)
+
+        // this action however will be ignored
+        bloc.send(3)
+        delay(50)
+        assertEquals(3, bloc.value)
+
+        // only after onStart are "regular" reducers being executed
+        lifecycleRegistry.onStart()
+        bloc.send(3)
+        delay(50)
+        assertEquals(6, bloc.value)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
 }

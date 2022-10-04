@@ -27,7 +27,7 @@ import kotlin.jvm.JvmName
 @Suppress("TooManyFunctions")
 public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
-    private var _initialize: Initializer<State, Action>? = null
+    private var _initialize: Initializer<State, Action, Proposal>? = null
     private val _thunks = ArrayList<MatcherThunk<State, Action, Action, Proposal>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
     private var _initDispatcher: CoroutineDispatcher = Dispatchers.Default
@@ -52,7 +52,7 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
      * Create an initializer (onCreate { })
      */
     @BlocDSL
-    public fun onCreate(initialize: Initializer<State, Action>) {
+    public fun onCreate(initialize: Initializer<State, Action, Proposal>) {
         when (_initialize) {
             null -> _initialize = initialize
             else -> logger.w("Initializer already defined -> ignoring this one")

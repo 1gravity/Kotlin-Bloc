@@ -38,7 +38,7 @@ private const val QUEUE_INITIAL_SIZE = 10
 internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
     blocContext: BlocContext,
     private val blocState: BlocState<State, Proposal>,
-    initialize: Initializer<State, Action>? = null,
+    initialize: Initializer<State, Action, Proposal>? = null,
     thunks: List<MatcherThunk<State, Action, Action, Proposal>> = emptyList(),
     reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>,
     initDispatcher: CoroutineDispatcher = Dispatchers.Default,
@@ -73,16 +73,18 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         reducers = reducers
     )
 
+    // this reducer emits the proposal directly to the BlocState, no reduce functionality
+    private val reducer: (proposal: Proposal) -> Unit = { proposal ->
+        reduceProcessor.reduce { Effect(proposal, emptyList()) }
+    }
+
     private val thunkProcessor = ThunkProcessor(
         lifecycle = blocLifecycle,
         state = blocState,
         dispatcher = thunkDispatcher,
         thunks = thunks,
         dispatch = reduceProcessor::send,
-        reduce = { proposal -> reduceProcessor.reduce {
-            // this reducer emits the proposal directly to the BlocState, no reduce functionality
-            Effect(proposal, emptyList())
-        }}
+        reduce = reducer
     )
 
     private val initializeProcessor = InitializeProcessor(
@@ -90,7 +92,8 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = initDispatcher,
         initializer = initialize,
-        dispatch = { thunkProcessor.send(it) }
+        dispatch = { thunkProcessor.send(it) },
+        reduce = reducer
     )
 
     init {
@@ -176,7 +179,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * BlocExtension interface implementation:
      * onCreate { } -> run an initializer MVVM+ style
      */
-    override fun initialize(initialize: Initializer<State, Action>) {
+    override fun initialize(initialize: Initializer<State, Action, Proposal>) {
         initializeProcessor.initialize(initialize)
     }
 

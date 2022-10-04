@@ -18,8 +18,9 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     private val lifecycle: BlocLifecycle,
     private val state: BlocState<State, Proposal>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    private var initializer: Initializer<State, Action>? = null,
-    private val dispatch: (Action) -> Unit
+    private var initializer: Initializer<State, Action, Proposal>? = null,
+    private val dispatch: (Action) -> Unit,
+    private val reduce: (proposal: Proposal) -> Unit
 ) {
 
     /**
@@ -57,20 +58,21 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
      * BlocExtension interface implementation:
      * onCreate { } -> run an initializer MVVM+ style
      */
-    internal fun initialize(initializer: Initializer<State, Action>) {
+    internal fun initialize(initializer: Initializer<State, Action, Proposal>) {
         if (this.initializer == null) {
             this.initializer = initializer
             lifecycle.initializerStarting()
         }
     }
 
-    private fun runInitializer(initialize: Initializer<State, Action>) =
+    private fun runInitializer(initialize: Initializer<State, Action, Proposal>) =
         coroutine.scope?.launch {
             if (mutex.tryLock(this@InitializeProcessor)) {
                 coroutine.runner?.let { runner ->
                     val context = InitializerContext(
                         state = state.value,
                         dispatch = dispatch,
+                        reduce = reduce,
                         runner = runner
                     )
                     context.initialize()

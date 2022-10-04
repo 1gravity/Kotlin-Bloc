@@ -61,7 +61,8 @@ public typealias Dispatcher<Action> = suspend (Action) -> Unit
  * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/initializer">
  *     Initializer</a>
  */
-public typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
+public typealias Initializer<State, Action, Proposal> =
+        suspend InitializerContext<State, Action, Proposal>.() -> Unit
 
 /**
  * Function that runs asynchronous code.
