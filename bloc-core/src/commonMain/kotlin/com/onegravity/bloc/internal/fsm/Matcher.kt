@@ -36,8 +36,9 @@ public class Matcher<SuperClazz : Any, out ChildClazz : SuperClazz> constructor(
     internal fun matches(value: SuperClazz) = predicates.all { it(value) }
 
     public companion object {
-        public inline fun <SuperClazz : Any, reified ChildClazz : SuperClazz> any(value: SuperClazz? = null):
-                Matcher<SuperClazz, ChildClazz> = Matcher(ChildClazz::class, value)
+        public inline fun <SuperClazz : Any, reified ChildClazz : SuperClazz>
+                any(value: SuperClazz? = null): Matcher<SuperClazz, ChildClazz> =
+            Matcher(ChildClazz::class, value)
 
         public inline fun <SuperClazz : Any, reified ChildClazz : SuperClazz> eq(value: ChildClazz):
                 Matcher<SuperClazz, ChildClazz> =
@@ -46,8 +47,8 @@ public class Matcher<SuperClazz : Any, out ChildClazz : SuperClazz> constructor(
         /**
          * Use this for enum values
          */
-        public inline fun <SuperClazz : Enum<SuperClazz>, reified ChildClazz : SuperClazz> eq(value: ChildClazz):
-                Matcher<SuperClazz, ChildClazz> =
+        public inline fun <SuperClazz : Enum<SuperClazz>, reified ChildClazz : SuperClazz>
+                eq(value: ChildClazz): Matcher<SuperClazz, ChildClazz> =
             any<SuperClazz, ChildClazz>(value).where { name == value.name }
     }
 

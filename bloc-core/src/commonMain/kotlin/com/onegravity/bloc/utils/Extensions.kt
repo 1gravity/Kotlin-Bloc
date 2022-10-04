@@ -28,7 +28,9 @@ public fun <State, Action> InitializerContext<State, Action>.launch(
  * without exposing the bloc's CoroutineScope.
  */
 @BlocDSL
-public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(block: CoroutineBlock) {
+public fun <State, Action, A : Action, Proposal> ThunkContext<State, Action, A, Proposal>.launch(
+    block: CoroutineBlock
+) {
     runner.run(null, block)
 }
 
@@ -39,7 +41,7 @@ public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(blo
  * @param jobConfig @see [JobConfig]
  */
 @BlocDSL
-public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(
+public fun <State, Action, A : Action, Proposal> ThunkContext<State, Action, A, Proposal>.launch(
     jobConfig: JobConfig,
     block: CoroutineBlock
 ) {
@@ -51,7 +53,9 @@ public fun <State, Action, A : Action> ThunkContext<State, Action, A>.launch(
  * without exposing the bloc's CoroutineScope.
  */
 @BlocDSL
-public fun <State, Action> ThunkContextNoAction<State, Action>.launch(block: CoroutineBlock) {
+public fun <State, Action, Proposal> ThunkContextNoAction<State, Action, Proposal>.launch(
+    block: CoroutineBlock
+) {
     runner.run(null, block)
 }
 
@@ -62,7 +66,7 @@ public fun <State, Action> ThunkContextNoAction<State, Action>.launch(block: Cor
  * @param jobConfig @see [JobConfig]
  */
 @BlocDSL
-public fun <State, Action> ThunkContextNoAction<State, Action>.launch(
+public fun <State, Action, Proposal> ThunkContextNoAction<State, Action, Proposal>.launch(
     jobConfig: JobConfig,
     block: CoroutineBlock
 ) {
