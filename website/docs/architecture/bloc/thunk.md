@@ -17,7 +17,7 @@ While a Redux thunk is a function, dispatched as an action to a Redux store and 
 
 ### Context
 
-A thunk is called with a `ThunkContext` as receiver. The context is giving access to the current `State`, the `Action` that triggered the thunk's execution a `Dispatcher` and a function to "reduce" state directly:
+A thunk is called with a `ThunkContext` as receiver. The context is giving access to the current `State`, the `Action` that triggered the thunk's execution, a `Dispatcher` and a function to "reduce" state directly:
 
 
 ```kotlin
@@ -72,7 +72,7 @@ This doesn't require to call `dispatch(action)` explicitly since it only catches
 :::tip
 There are extension functions to launch `Coroutines` from a thunk (see [Coroutine Launcher](coroutine_launcher)). 
 :::
-## Thunk reduce()
+### reduce()
 
 Thunks are meant to run asynchronous code and reducers are meant to reduce state. In many cases however the reducers are very simple functions. In the example above we need to add a dedicated action `Loading`, dispatch that action in the thunk in order for a reducer to reduce the current state to one that indicates loading. While that "separation of concerns" is useful in many cases, it adds a good amount of boilerplate code for simple cases like the one we have here. To simplify this we can use the `ThunkContext.reduce` function:
 ```kotlin

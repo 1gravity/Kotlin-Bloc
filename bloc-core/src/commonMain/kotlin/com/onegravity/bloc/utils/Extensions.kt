@@ -5,7 +5,9 @@ package com.onegravity.bloc.utils
  * without exposing the bloc's CoroutineScope.
  */
 @BlocDSL
-public fun <State, Action> InitializerContext<State, Action>.launch(block: CoroutineBlock) {
+public fun <State, Action, Proposal> InitializerContext<State, Action, Proposal>.launch(
+    block: CoroutineBlock
+) {
     runner.run(null, block)
 }
 
@@ -16,7 +18,7 @@ public fun <State, Action> InitializerContext<State, Action>.launch(block: Corou
  * @param jobConfig @see [JobConfig]
  */
 @BlocDSL
-public fun <State, Action> InitializerContext<State, Action>.launch(
+public fun <State, Action, Proposal> InitializerContext<State, Action, Proposal>.launch(
     jobConfig: JobConfig,
     block: CoroutineBlock
 ) {

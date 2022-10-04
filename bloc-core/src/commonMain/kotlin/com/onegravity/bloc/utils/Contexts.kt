@@ -9,9 +9,10 @@ package com.onegravity.bloc.utils
  *   }
  * ```
  */
-public data class InitializerContext<State, Action>(
+public data class InitializerContext<State, Action, Proposal>(
     val state: State,
     val dispatch: Dispatcher<Action>,
+    val reduce: (proposal: Proposal) -> Unit,
     internal val runner: CoroutineRunner
 )
 
