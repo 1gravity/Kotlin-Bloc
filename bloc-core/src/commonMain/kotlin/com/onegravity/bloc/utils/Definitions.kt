@@ -6,14 +6,9 @@ import kotlinx.coroutines.flow.Flow
 @DslMarker
 public annotation class BlocDSL
 
-@RequiresOptIn(message = "This is an internal API designed for Bloc extensions.")
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
-public annotation class BlocProtected
-
-@Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
-public annotation class BlocInternal
+internal annotation class BlocInternal
 
 /**
  * This is the Observer specifically for Swift
@@ -41,12 +36,31 @@ public typealias SideEffectStream<Value> = Flow<Value>
  */
 public typealias Acceptor<Proposal, State> = (proposal: Proposal, state: State) -> State?
 
+/**
+ * Function to map a (Redux) model to (bloc) state.
+ * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/extensions/redux/redux_motivation">
+ *     Redux Extension</a>
+ */
 public typealias Mapper<Model, State> = (model: Model) -> State
 
+/**
+ * Function to select memoized sub-state from (Redux) state.
+ * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/extensions/redux/redux_motivation">
+ *     Redux Extension</a>
+ */
 public typealias Selector<State, Model> = (State) -> Model
 
+/**
+ * Function to dispatch actions to a bloc. [Dispatcher]s are used by [Initializer]s and [Thunk]s or
+ * [ThunkNoAction]s to dispatch an action to the  "next" thunk or reducer in the execution chain.
+ */
 public typealias Dispatcher<Action> = suspend (Action) -> Unit
 
+/**
+ * Function that is executed when the bloc is created.
+ * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/initializer">
+ *     Initializer</a>
+ */
 public typealias Initializer<State, Action> = suspend InitializerContext<State, Action>.() -> Unit
 
 /**
@@ -71,12 +85,36 @@ public typealias ThunkNoAction<State, Action, Proposal> =
  */
 public typealias GetState<State> = () -> State
 
+/**
+ * Function that reduces state.
+ * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/reducer">
+ *     Reducer</a>
+ */
 public typealias Reducer<State, Action, Proposal> = ReducerContext<State, Action>.() -> Proposal
 
-public typealias CoroutineBlock = suspend CoroutineScope.() -> Unit
-
+/**
+ * Function that reduces state.
+ * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/reducer">
+ *     Reducer</a>
+ */
 public typealias ReducerNoAction<State, Proposal> = ReducerContextNoAction<State>.() -> Proposal
 
+/**
+ * Function that emits a side effect.
+ * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/reducer#side-effect">
+ *     Side Effect</a>
+ */
 public typealias SideEffect<State, Action, SideEffect> = ReducerContext<State, Action>.() -> SideEffect
 
+/**
+ * Function that emits a side effect.
+ * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/reducer#side-effect">
+ *     Side Effect</a>
+ */
 public typealias SideEffectNoAction<State, SideEffect> = ReducerContextNoAction<State>.() -> SideEffect
+
+/**
+ * Suspend function used as parameter in one of the launch function calls ([InitializerContext.launch],
+ * [ThunkContext.launch] etc.).
+ */
+public typealias CoroutineBlock = suspend CoroutineScope.() -> Unit

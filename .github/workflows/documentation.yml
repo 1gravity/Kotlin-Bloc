@@ -3,6 +3,7 @@ name: Create documentation (Dokka / Docusaurus)
 on:
   push:
     branches:
+      - documentation
       - master
 
 jobs:

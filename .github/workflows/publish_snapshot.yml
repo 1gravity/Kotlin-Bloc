@@ -2,7 +2,8 @@ name: Publish snapshot
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 env:
   SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}

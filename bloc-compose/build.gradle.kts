@@ -72,7 +72,7 @@ tasks.dokkaHtmlPartial.configure {
     dokkaSourceSets {
         configureEach {
             suppress.set(false)
-            includeNonPublic.set(true)  // we want to see some details
+            includeNonPublic.set(false)
         }
     }
 }
