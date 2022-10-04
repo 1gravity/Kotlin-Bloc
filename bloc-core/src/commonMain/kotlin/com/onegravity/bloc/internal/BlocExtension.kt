@@ -32,6 +32,6 @@ internal interface BlocExtension<State : Any, Action : Any, SideEffect : Any, Pr
      *
      * Since thunks are asynchronous by nature, more than one thunk can run at the same time.
      */
-    fun thunk(thunk: ThunkNoAction<State, Action>)
+    fun thunk(thunk: ThunkNoAction<State, Action, Proposal>)
 
 }

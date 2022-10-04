@@ -28,7 +28,6 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
     // internal actions
     private object PostsLoading : PostsAction()
     private data class PostsLoaded(val result: Result<List<Post>, Throwable>) : PostsAction()
-    private class PostLoading(val postId: Int) : PostsAction()
     private data class PostLoaded(val result: Result<Post, Throwable>) : PostsAction()
 
     // we need to lazy initialize the Bloc so that the component is fully initialized before
@@ -37,9 +36,11 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
                 dispatch(PostsLoading)
-                // we can access the db here because Dispatchers.Default is a Bloc's default dispatcher
-                // also we use Ktor which offloads the networking to another thread
+
+                // we can access the db here because Dispatchers.Default is a Bloc's default
+                // dispatcher, also we use Ktor which offloads the networking to another thread
                 val result = repository.getOverviews()
+
                 dispatch(PostsLoaded(result))
             }
 
@@ -49,15 +50,8 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
 
             reduce<PostsLoaded> {
                 state.copy(
-                    postsState = state.postsState.copy(
-                        loading = false,
-                        posts = action.result
-                    )
+                    postsState = state.postsState.copy(loading = false, posts = action.result)
                 )
-            }
-
-            reduce<PostLoading> {
-                state.copy(postState = state.postState.copy(loadingId = action.postId))
             }
 
             reduce<PostLoaded> {
@@ -84,9 +78,13 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         state.copy(postState = state.postState.copy(loadingId = null, post = null))
     }
 
-    private suspend fun ThunkContextNoAction<PostsRootState, PostsAction>.load(post: Post) {
+    private suspend fun ThunkContextNoAction<PostsRootState, PostsAction, PostsRootState>.load(
+        post: Post
+    ) {
         runCatching {
-            dispatch(PostLoading(post.id))
+            // example of "reducing" state from a thunk directly
+            val newState = getState().run { copy(postState = postState.copy(loadingId = post.id)) }
+            reduce(newState)
             val result = repository.getDetail(post.id)
             dispatch(PostLoaded(result))
         }.onFailure {

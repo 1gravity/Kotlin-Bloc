@@ -8,6 +8,7 @@ import com.onegravity.bloc.utils.Effect
 import com.onegravity.bloc.utils.ReducerNoAction
 import com.onegravity.bloc.utils.SideEffectNoAction
 import com.onegravity.bloc.utils.ThunkNoAction
+import kotlin.jvm.JvmName
 
 /**
  * Submit a Thunk to a Bloc to be run.
@@ -16,13 +17,23 @@ import com.onegravity.bloc.utils.ThunkNoAction
  * The dispatch function dispatches to the first matching thunk/reducer/side-effect in the Bloc.
  */
 @BlocDSL
-public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, SideEffect>.thunk(
-    thunk: ThunkNoAction<State, Action>
-) {
+public fun <State : Any, Action : Any, SideEffect : Any, Proposal: Any>
+        Bloc<State, Action, SideEffect>.thunk(thunk: ThunkNoAction<State, Action, Proposal>) {
     // we assume that every class implementing Bloc also implements BlocExtension
     // since we provide all concrete Bloc implementations, this is guaranteed
     // the proposal is irrelevant for a thunk so we set it to Unit
-    (this as BlocExtension<State, Action, SideEffect, Unit>).thunk(thunk)
+    (this as BlocExtension<State, Action, SideEffect, Proposal>).thunk(thunk)
+}
+
+/**
+ * Submit a Thunk to a Bloc to be run.
+ * Simplified version with Proposal = State.
+ */
+@BlocDSL
+@JvmName("BlocThunkSimplified")
+public fun <State : Any, Action : Any, SideEffect : Any>
+        Bloc<State, Action, SideEffect>.thunk(thunk: ThunkNoAction<State, Action, State>) {
+    (this as BlocExtension<State, Action, SideEffect, State>).thunk(thunk)
 }
 
 /**
@@ -34,7 +45,20 @@ public fun <State : Any, Action : Any, SideEffect : Any> Bloc<State, Action, Sid
 @BlocDSL
 public fun <State : Any, Action : Any, SideEffect : Any, Proposal : Any>
         BlocOwner<State, Action, SideEffect, Proposal>.thunk(
-    thunk: ThunkNoAction<State, Action>
+    thunk: ThunkNoAction<State, Action, Proposal>
+) {
+    bloc.thunk(thunk)
+}
+
+/**
+ * Submit a Thunk to a BlocOwner/Bloc to be run.
+ * Simplified version with Proposal = State.
+ */
+@BlocDSL
+@JvmName("BlocOwnerThunkSimplified")
+public fun <State : Any, Action : Any, SideEffect : Any>
+        BlocOwner<State, Action, SideEffect, State>.thunk(
+    thunk: ThunkNoAction<State, Action, State>
 ) {
     bloc.thunk(thunk)
 }

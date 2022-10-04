@@ -68,14 +68,16 @@ public typealias Initializer<State, Action> = suspend InitializerContext<State, 
  * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/thunk">
  *     Thunk</a>
  */
-public typealias Thunk<State, Action, A> = suspend ThunkContext<State, Action, A>.() -> Unit
+public typealias Thunk<State, Action, A, Proposal> =
+        suspend ThunkContext<State, Action, A, Proposal>.() -> Unit
 
 /**
  * Function that runs asynchronous code.
  * @see <a href="https://1gravity.github.io/Kotlin-Bloc/docs/architecture/bloc/thunk">
  *     Thunk</a>
  */
-public typealias ThunkNoAction<State, Action> = suspend ThunkContextNoAction<State, Action>.() -> Unit
+public typealias ThunkNoAction<State, Action, Proposal> =
+        suspend ThunkContextNoAction<State, Action, Proposal>.() -> Unit
 
 /**
  * Function that returns the current state. [GetState] is used by thunks to retrieve the current

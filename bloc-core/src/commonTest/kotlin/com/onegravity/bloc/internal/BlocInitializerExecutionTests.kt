@@ -15,8 +15,30 @@ import kotlin.test.assertEquals
 
 class BlocInitializerExecutionTests : BaseTestClass() {
 
+    @Test
+    fun testWithoutInitializer() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Int, Unit>(context, 1) {
+            reduce { state + action }
+        }
+
+        lifecycleRegistry.onCreate()
+        assertEquals(1, bloc.value)
+        bloc.send(3)
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onStart()
+        delay(150)
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
     /**
-     * Test regular initializer and make sure MVVM+ style initializer don't run
+     * Test regular initializer
      */
     @Test
     fun testInitializerExecutionReduxStyle() = runTests {
@@ -34,9 +56,12 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onCreate()
-        testState(bloc, null, 1)
+        delay(50)
+        testState(bloc, null, 2)
+        testState(bloc, Increment, 2)
 
         lifecycleRegistry.onStart()
+        delay(50)
         testState(bloc, null, 2)
 
         lifecycleRegistry.onStop()
@@ -45,10 +70,10 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
     /**
      * Test whether the bloc waits for the initializer to finish before transitioning to started
-     * which will start processing dispatched actions.
+     * which will start processing directly dispatched actions (not by the initializer).
      */
     @Test
-    fun testInitializerExecutionDelayed() = runTests {
+    fun testInitializerExecutionDelayed1() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -64,13 +89,57 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         assertEquals(5, bloc.value)
 
         lifecycleRegistry.onCreate()
+        // this will be ignored
+        testState(bloc, Whatever, 5)
+        delay(100)
+        // the initializer still hasn't dispatched the action
+        assertEquals(5, bloc.value)
+        delay(1000)
+        // now it has
+        assertEquals(6, bloc.value)
+
+        lifecycleRegistry.onStart()
+        delay(50)
+        assertEquals(6, bloc.value)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+
+    /**
+     * Test whether the bloc waits for the initializer to finish before transitioning to started
+     * which will start processing directly dispatched actions (not by the initializer).
+     */
+    @Test
+    fun testInitializerExecutionDelayed2() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 5) {
+            onCreate {
+                delay(1000)
+                dispatch(Increment)
+            }
+            reduce<Increment> { state + 1 }
+            reduce { state + 5 }
+        }
+
         assertEquals(5, bloc.value)
 
-        // the initializer is still running -> the dispatched action has no effect
+        lifecycleRegistry.onCreate()
         lifecycleRegistry.onStart()
+
+        // this will be queued and run after the initializer is done
         testState(bloc, Whatever, 5)
 
+        // initializer still running and directly dispatched actions are processed afterwards
+        delay(100)
+        // the initializer still hasn't dispatched the action
+        assertEquals(5, bloc.value)
+
         delay(1050)
+        // now it has and also the directly dispatched action should be processed
         assertEquals(11, bloc.value)
 
         lifecycleRegistry.onStop()
@@ -160,6 +229,39 @@ class BlocInitializerExecutionTests : BaseTestClass() {
             delay(1200)
             bloc.reduce { state + 1 }
         }
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    /**
+     * Test whether an action is queued if the initializer is already done
+     */
+    @Test
+    fun testEarlyBird() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Int, Unit>(context, 1) {
+            onCreate { dispatch(2) }
+            reduce { state + action }
+        }
+
+        // initializer executes and reduces the state
+        lifecycleRegistry.onCreate()
+        delay(50)
+        assertEquals(3, bloc.value)
+
+        // this action however will be ignored
+        bloc.send(3)
+        delay(50)
+        assertEquals(3, bloc.value)
+
+        // only after onStart are "regular" reducers being executed
+        lifecycleRegistry.onStart()
+        bloc.send(3)
+        delay(50)
+        assertEquals(6, bloc.value)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()

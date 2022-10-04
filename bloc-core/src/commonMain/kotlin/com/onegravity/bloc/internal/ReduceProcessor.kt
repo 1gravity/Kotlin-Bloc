@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
  * sideEffect { } blocks.
  */
 internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Proposal : Any>(
-    private val lifecycle: BlocLifecycle,
+    lifecycle: BlocLifecycle,
     private val state: BlocState<State, Proposal>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val reducers: List<MatcherReducer<State, Action, Effect<Proposal, SideEffect>>>
@@ -53,19 +53,25 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      */
     init {
         lifecycle.subscribe(
+            onInitialize = {
+                startProcessing()
+            },
             onStart = {
                 logger.d("onStart -> start Bloc")
-                coroutine.onStart()
-                processQueue()
+                startProcessing()
             },
             onStop = {
                 logger.d("onStop -> stop Bloc")
+                // stopping
                 coroutine.onStop()
             }
         )
     }
 
-    private fun processQueue() {
+    private fun startProcessing() {
+        // only start processing if the coroutine wasn't already started
+        if (!coroutine.onStart()) return
+
         coroutine.scope?.launch {
             for (element in reduceChannel) {
                 element.action?.run(::runReducers)
@@ -79,8 +85,6 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * reduce { } -> run a Reducer Redux style
      */
     internal fun send(action: Action) {
-        if (!lifecycle.isStarted()) return
-
         logger.d("received reducer with action ${action.trimOutput()}")
         reduceChannel.trySend(ReducerContainer(action))
     }
@@ -90,8 +94,6 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * reduce { } -> run a Reducer MVVM+ style
      */
     internal fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
-        if (!lifecycle.isStarted()) return
-
         logger.d("received reducer without action")
         reduceChannel.trySend(ReducerContainer(reducer = reduce))
     }

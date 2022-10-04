@@ -28,7 +28,7 @@ import kotlin.jvm.JvmName
 public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
 
     private var _initialize: Initializer<State, Action>? = null
-    private val _thunks = ArrayList<MatcherThunk<State, Action, Action>>()
+    private val _thunks = ArrayList<MatcherThunk<State, Action, Action, Proposal>>()
     private val _reducers = ArrayList<MatcherReducer<State, Action, Effect<Proposal, SE>>>()
     private var _initDispatcher: CoroutineDispatcher = Dispatchers.Default
     private var _thunkDispatcher: CoroutineDispatcher = Dispatchers.Default
@@ -63,7 +63,7 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
      * Create a catch-all thunk (thunk { })
      */
     @BlocDSL
-    public fun thunk(thunk: Thunk<State, Action, Action>) {
+    public fun thunk(thunk: Thunk<State, Action, Action, Proposal>) {
         _thunks.add(MatcherThunk(null, thunk))
     }
 
@@ -72,7 +72,8 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
      */
     @BlocDSL
     @JvmName("thunkMatching")
-    public inline fun <reified A : Action> thunk(noinline thunk: Thunk<State, Action, A>) {
+    public inline fun <reified A : Action>
+            thunk(noinline thunk: Thunk<State, Action, A, Proposal>) {
         addThunk(Matcher.any(), thunk)
     }
 
@@ -84,11 +85,11 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
     @Suppress("UNCHECKED_CAST")
     public inline fun <reified ActionEnum : Enum<ActionEnum>, reified A : ActionEnum> thunk(
         childClazz: A,
-        noinline thunk: Thunk<State, ActionEnum, A>
+        noinline thunk: Thunk<State, ActionEnum, A, Proposal>
     ) {
         addThunk(
             Matcher.eq(childClazz) as Matcher<Action, Action>,
-            thunk as Thunk<State, Action, Action>
+            thunk as Thunk<State, Action, Action, Proposal>
         )
     }
 
@@ -97,8 +98,11 @@ public class BlocBuilder<State : Any, Action : Any, SE : Any, Proposal : Any> {
      */
     @BlocInternal
     @Suppress("UNCHECKED_CAST")
-    public fun <A : Action> addThunk(matcher: Matcher<Action, A>, thunk: Thunk<State, Action, A>) {
-        _thunks.add(MatcherThunk(matcher, thunk as Thunk<State, Action, Action>))
+    public fun <A : Action> addThunk(
+        matcher: Matcher<Action, A>,
+        thunk: Thunk<State, Action, A, Proposal>
+    ) {
+        _thunks.add(MatcherThunk(matcher, thunk as Thunk<State, Action, Action, Proposal>))
     }
 
     /**
