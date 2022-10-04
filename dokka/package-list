@@ -1,6 +1,8 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:com.onegravity.bloc//bloc/#com.onegravity.bloc.BlocContext#com.onegravity.bloc.state.BlocState[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#kotlin.Function1[com.onegravity.bloc.internal.builder.BlocBuilder[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])],kotlin.Unit]/PointingToDeclaration/Bloc Core/com.onegravity.bloc/[common]bloc.html
+$dokka.location:com.onegravity.bloc//thunk/com.onegravity.bloc.BlocOwner[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#kotlin.coroutines.SuspendFunction1[com.onegravity.bloc.utils.ThunkContextNoAction[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])],kotlin.Unit]/PointingToDeclaration/Bloc Core/com.onegravity.bloc/[common]thunk.html
+$dokka.location:com.onegravity.bloc//thunk/com.onegravity.bloc.Bloc[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#kotlin.coroutines.SuspendFunction1[com.onegravity.bloc.utils.ThunkContextNoAction[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])],kotlin.Unit]/PointingToDeclaration/Bloc Core/com.onegravity.bloc/[common]thunk.html
 module:Bloc Compose
 com.onegravity.bloc.compose
 module:Bloc Core
