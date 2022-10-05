@@ -1,6 +1,7 @@
 name: Create documentation (Dokka / Docusaurus)
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - documentation

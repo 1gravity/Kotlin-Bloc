@@ -1,6 +1,7 @@
 name: Run lint and tests
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - feature/**
