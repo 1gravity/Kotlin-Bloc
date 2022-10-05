@@ -10,7 +10,7 @@ hide_title: true
 To use the [Jetpack Compose](https://developer.android.com/jetpack/compose) extensions please add the `bloc-compose` artifact as a dependency in the Gradle build file:
 
 ```kotlin
-implementation("com.1gravity:bloc-compose:0.9.1")
+implementation("com.1gravity:bloc-compose:0.9.2")
 ```
 
 ## observeState
