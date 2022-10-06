@@ -24,6 +24,7 @@ buildscript {
 plugins {
     id("org.jetbrains.dokka")
     id("io.gitlab.arturbosch.detekt")
+    id("com.louiscad.complete-kotlin")
 }
 
 tasks.dokkaHtmlMultiModule.configure {
