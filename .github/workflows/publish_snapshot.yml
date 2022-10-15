@@ -67,6 +67,8 @@ jobs:
           path: bloc-core/build/reports/tests/testReleaseUnitTest/
 
   publish-snapshot:
+    needs: [lint, detekt, tests]
+
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
