@@ -96,24 +96,24 @@ dependencies {
 
     implementation(Google.android.material)
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:_")
+    implementation(libs.kotlin.reflect)
 
     implementation(Koin.android)
 
     // Logging (https://github.com/touchlab/Kermit)
     implementation(Touchlab.kermit)
 
-    implementation("com.github.skydoves:landscapist-glide:_")
-    implementation("com.github.bumptech.glide:glide:_")
-    implementation("com.github.lisawray.groupie:groupie:_")
-    implementation("com.github.lisawray.groupie:groupie-viewbinding:_")
+    implementation(libs.landscapist.glide)
+    implementation(libs.glide)
+    implementation(libs.groupie)
+    implementation(libs.groupie.viewbinding)
 
     // Kotlin Result (https://github.com/michaelbull/kotlin-result)
-    implementation("com.michael-bull.kotlin-result:kotlin-result:_")
-    implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
+    implementation(libs.kotlin.result)
+    implementation(libs.kotlin.result.coroutines)
 
     // Essenty (https://github.com/arkivanov/Essenty)
-    implementation("com.arkivanov.essenty:lifecycle:_")
+    implementation(libs.lifecycle)
 
     testImplementation(Testing.kotest.runner.junit5)
     testImplementation(KotlinX.coroutines.test)

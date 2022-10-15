@@ -30,7 +30,7 @@ kotlin {
                 export(project(":bloc-redux"))
 //                export("com.1gravity:bloc-core:_")
 //                export("com.1gravity:bloc-redux:_")
-                export("com.arkivanov.essenty:lifecycle:_")
+                export(libs.lifecycle)
             }
         }
     }
@@ -53,11 +53,11 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Redux store (https://reduxkotlin.org)
-                implementation("com.1gravity:redux-kotlin-threadsafe:_")
+                implementation(libs.redux.kotlin.threadsafe)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api("com.arkivanov.essenty:lifecycle:_")
-                api("com.arkivanov.essenty:parcelable:_")
+                api(libs.lifecycle)
+                api(libs.parcelable)
 
                 // Koin
                 implementation(Koin.core)
@@ -71,7 +71,7 @@ kotlin {
                 implementation(Ktor.plugins.serialization.kotlinx.json)
 
                 // SQLDelight (https://cashapp.github.io/sqldelight/)
-                implementation("com.squareup.sqldelight:runtime:_")
+                implementation(libs.com.squareup.sqldelight.runtime)
                 implementation(Square.sqlDelight.extensions.coroutines)
                 implementation(KotlinX.datetime)
 
@@ -79,14 +79,14 @@ kotlin {
                 implementation(Touchlab.kermit)
 
                 // BigNums (https://github.com/ionspin/kotlin-multiplatform-bignum)
-                implementation("com.ionspin.kotlin:bignum:_")
+                implementation(libs.bignum)
 
                 // UUIDs (https://github.com/benasher44/uuid)
-                implementation("com.benasher44:uuid:_")
+                implementation(libs.uuid)
 
                 // Kotlin Result (https://github.com/michaelbull/kotlin-result)
-                implementation("com.michael-bull.kotlin-result:kotlin-result:_")
-                implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
+                implementation(libs.kotlin.result)
+                implementation(libs.kotlin.result.coroutines)
             }
         }
         val commonTest by getting {
@@ -119,7 +119,7 @@ kotlin {
             val iosMain by creating {
                 dependsOn(commonMain)
                 dependencies {
-                    implementation("io.ktor:ktor-client-ios:_")
+                    implementation(libs.ktor.client.ios)
                     implementation(Square.sqlDelight.drivers.native)
                 }
                 iosX64Main.dependsOn(this)

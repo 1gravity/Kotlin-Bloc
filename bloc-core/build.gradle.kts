@@ -42,17 +42,17 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api("com.arkivanov.essenty:lifecycle:_")
-                api("com.arkivanov.essenty:instance-keeper:_")
+                api(libs.lifecycle)
+                api(libs.instance.keeper)
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
 
-                implementation("org.jetbrains.kotlinx:atomicfu:_")
+                implementation(libs.atomicfu)
 
                 // Kotlin Result (https://github.com/michaelbull/kotlin-result)
-                implementation("com.michael-bull.kotlin-result:kotlin-result:_")
-                implementation("com.michael-bull.kotlin-result:kotlin-result-coroutines:_")
+                implementation(libs.kotlin.result)
+                implementation(libs.kotlin.result.coroutines)
             }
         }
         val commonTest by getting {

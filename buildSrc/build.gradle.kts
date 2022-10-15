@@ -9,6 +9,6 @@ repositories {
 }
 
 dependencies {
-    api("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
+    api(libs.kotlin.gradle.plugin)
     api(Android.tools.build.gradlePlugin)
 }

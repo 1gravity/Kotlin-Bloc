@@ -33,7 +33,7 @@ kotlin {
                 implementation(KotlinX.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api("com.arkivanov.essenty:lifecycle:_")
+                api(libs.lifecycle)
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)

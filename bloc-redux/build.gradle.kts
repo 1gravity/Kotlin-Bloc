@@ -41,13 +41,13 @@ kotlin {
 
                 // Reaktive (https://github.com/badoo/Reaktive)
                 // we only use the DisposableScope
-                implementation("com.badoo.reaktive:reaktive:_")
+                implementation(libs.reaktive)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api("com.arkivanov.essenty:lifecycle:_")
+                api(libs.lifecycle)
 
                 // Redux store (https://reduxkotlin.org)
-                api("com.1gravity:redux-kotlin-threadsafe:_")
+                api(libs.redux.kotlin.threadsafe)
             }
         }
         val commonTest by getting {

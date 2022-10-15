@@ -15,6 +15,15 @@ plugins {
     id("de.fayard.refreshVersions") version "0.50.2"
 }
 
+dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
+    versionCatalogs {
+        create("libs") {
+            from(files("./buildSrc/gradle/libs.versions.toml"))
+        }
+    }
+}
+
 include(":bloc-core")
 include(":bloc-redux")
 include(":bloc-compose")

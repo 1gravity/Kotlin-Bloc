@@ -13,8 +13,8 @@ buildscript {
     dependencies {
         classpath(Android.tools.build.gradlePlugin)
         classpath(AndroidX.navigation.safeArgsGradlePlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
-        classpath("org.jetbrains.compose:compose-gradle-plugin:_")
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.compose.gradle.plugin)
         classpath(Square.sqlDelight.gradlePlugin)
     }
 }
