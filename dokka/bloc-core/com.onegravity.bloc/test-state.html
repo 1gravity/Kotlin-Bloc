@@ -4,10 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>testState</title>
 <link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
-const savedDarkMode = storage ? JSON.parse(storage) : false
-if(savedDarkMode === true){
-    document.getElementsByTagName("html")[0].classList.add("theme-dark")
-}</script>
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
 <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
 <link href="../../styles/style.css" rel="Stylesheet">
 <link href="../../styles/jetbrains-mono.css" rel="Stylesheet">
@@ -18,7 +26,8 @@ if(savedDarkMode === true){
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../scripts/main.js" defer></script>
-<script type="text/javascript" src="../../scripts/prism.js" async></script></head>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
 <div class="navigation-wrapper" id="navigation-wrapper">
     <div id="leftToggler"><span class="icon-toggler"></span></div>
@@ -41,13 +50,13 @@ if(savedDarkMode === true){
     </div>
     <div id="main">
 <div class="main-content" id="content" pageids="Bloc Core::com.onegravity.bloc//testState/#[Error type: Unresolved type for Bloc<State, Action, SideEffect>][TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#TypeParam(bounds=[kotlin.Any])?#TypeParam(bounds=[kotlin.Any])/PointingToDeclaration//1420134753">
-  <div class="breadcrumbs"><a href="../index.html">Bloc Core</a><span class="delimiter">/</span><a href="index.html">com.onegravity.bloc</a><span class="delimiter">/</span><a href="test-state.html">testState</a></div>
+  <div class="breadcrumbs"><a href="../index.html">Bloc Core</a><span class="delimiter">/</span><a href="index.html">com.onegravity.bloc</a><span class="delimiter">/</span><span class="current">testState</span></div>
   <div class="cover ">
     <h1 class="cover"><span>test</span><wbr><span><span>State</span></span></h1>
   </div>
   <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="test-state.html">State</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">Action</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">SideEffect</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="test-state.html"><span class="token function">testState</span></a><span class="token punctuation">(</span><span class="parameters wrapped"><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;bloc<span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="test-state.html">State</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">Action</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">SideEffect</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;action<span class="token operator">: </span><a href="test-state.html">Action</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;expected<span class="token operator">: </span><a href="test-state.html">State</a></span></span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>  </div>
+    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="test-state.html">State</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">Action</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">SideEffect</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="test-state.html"><span class="token function">testState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bloc<span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="test-state.html">State</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">Action</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="test-state.html">SideEffect</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">action<span class="token operator">: </span><a href="test-state.html">Action</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">expected<span class="token operator">: </span><a href="test-state.html">State</a></span></span><span class="token punctuation">)</span></div></div>  </div>
 </div>
       <div class="footer">
         <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>

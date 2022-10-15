@@ -4,10 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>BlocInitializerExecutionTests</title>
 <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
-const savedDarkMode = storage ? JSON.parse(storage) : false
-if(savedDarkMode === true){
-    document.getElementsByTagName("html")[0].classList.add("theme-dark")
-}</script>
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
 <link href="../../../styles/style.css" rel="Stylesheet">
 <link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
@@ -18,7 +26,8 @@ if(savedDarkMode === true){
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
-<script type="text/javascript" src="../../../scripts/prism.js" async></script></head>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
 <div class="navigation-wrapper" id="navigation-wrapper">
     <div id="leftToggler"><span class="icon-toggler"></span></div>
@@ -41,12 +50,12 @@ if(savedDarkMode === true){
     </div>
     <div id="main">
 <div class="main-content" id="content" pageids="Bloc Core::com.onegravity.bloc.internal/BlocInitializerExecutionTests///PointingToDeclaration//1420134753">
-  <div class="breadcrumbs"><a href="../../index.html">Bloc Core</a><span class="delimiter">/</span><a href="../index.html">com.onegravity.bloc.internal</a><span class="delimiter">/</span><a href="index.html">BlocInitializerExecutionTests</a></div>
+  <div class="breadcrumbs"><a href="../../index.html">Bloc Core</a><span class="delimiter">/</span><a href="../index.html">com.onegravity.bloc.internal</a><span class="delimiter">/</span><span class="current">BlocInitializerExecutionTests</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Bloc</span><wbr><span>Initializer</span><wbr><span>Execution</span><wbr><span><span>Tests</span></span></h1>
     <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-      <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">BlocInitializerExecutionTests</a> : <a href="../-base-test-class/index.html">BaseTestClass</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>    </div>
+      <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">BlocInitializerExecutionTests</a> : <a href="../-base-test-class/index.html">BaseTestClass</a></div></div>    </div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button></div>
@@ -63,8 +72,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-bloc-initializer-execution-tests.html"><span class="token function">BlocInitializerExecutionTests</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-bloc-initializer-execution-tests.html"><span class="token function">BlocInitializerExecutionTests</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div>                </div>
               </div>
             </div>
           </div>
@@ -82,8 +91,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-base-test-class/initialize.html"><span class="token function">initialize</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-base-test-class/initialize.html"><span class="token function">initialize</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div>                </div>
               </div>
             </div>
           </div>
@@ -99,8 +108,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-early-bird.html"><span class="token function">testEarlyBird</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Test whether an action is queued if the initializer is already done</p></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-early-bird.html"><span class="token function">testEarlyBird</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">Test whether an action is queued if the initializer is already done</p></div></div>                </div>
               </div>
             </div>
           </div>
@@ -116,8 +125,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-delayed1.html"><span class="token function">testInitializerExecutionDelayed1</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Test whether the bloc waits for the initializer to finish before transitioning to started which will start processing directly dispatched actions (not by the initializer).</p></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-delayed1.html"><span class="token function">testInitializerExecutionDelayed1</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">Test whether the bloc waits for the initializer to finish before transitioning to started which will start processing directly dispatched actions (not by the initializer).</p></div></div>                </div>
               </div>
             </div>
           </div>
@@ -133,8 +142,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-delayed2.html"><span class="token function">testInitializerExecutionDelayed2</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Test whether the bloc waits for the initializer to finish before transitioning to started which will start processing directly dispatched actions (not by the initializer).</p></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-delayed2.html"><span class="token function">testInitializerExecutionDelayed2</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">Test whether the bloc waits for the initializer to finish before transitioning to started which will start processing directly dispatched actions (not by the initializer).</p></div></div>                </div>
               </div>
             </div>
           </div>
@@ -150,8 +159,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-order.html"><span class="token function">testInitializerExecutionOrder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Test whether long running initializers still run before everything else</p></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-order.html"><span class="token function">testInitializerExecutionOrder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">Test whether long running initializers still run before everything else</p></div></div>                </div>
               </div>
             </div>
           </div>
@@ -167,8 +176,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-order-m-v-v-m.html"><span class="token function">testInitializerExecutionOrderMVVM</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Test whether long running initializers still run before everything else, now for MVVM+ style reducers and thunks</p></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-order-m-v-v-m.html"><span class="token function">testInitializerExecutionOrderMVVM</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">Test whether long running initializers still run before everything else, now for MVVM+ style reducers and thunks</p></div></div>                </div>
               </div>
             </div>
           </div>
@@ -184,8 +193,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-redux-style.html"><span class="token function">testInitializerExecutionReduxStyle</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Test regular initializer</p></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-execution-redux-style.html"><span class="token function">testInitializerExecutionReduxStyle</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">Test regular initializer</p></div></div>                </div>
               </div>
             </div>
           </div>
@@ -201,8 +210,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-reduce.html"><span class="token function">testInitializerReduce</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-initializer-reduce.html"><span class="token function">testInitializerReduce</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div></div>                </div>
               </div>
             </div>
           </div>
@@ -218,8 +227,8 @@ if(savedDarkMode === true){
             <div>
               <div class="title">
                 <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark jvm-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-without-initializer.html"><span class="token function">testWithoutInitializer</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>                </div>
+                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonTest" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonTest" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonTest">androidJvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonTest"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="test-without-initializer.html"><span class="token function">testWithoutInitializer</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/<Error class: unknown class>///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div></div>                </div>
               </div>
             </div>
           </div>

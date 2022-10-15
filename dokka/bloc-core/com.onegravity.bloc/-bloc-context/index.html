@@ -4,10 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>BlocContext</title>
 <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
-const savedDarkMode = storage ? JSON.parse(storage) : false
-if(savedDarkMode === true){
-    document.getElementsByTagName("html")[0].classList.add("theme-dark")
-}</script>
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
 <link href="../../../styles/style.css" rel="Stylesheet">
 <link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
@@ -18,7 +26,8 @@ if(savedDarkMode === true){
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
-<script type="text/javascript" src="../../../scripts/prism.js" async></script></head>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
 <div class="navigation-wrapper" id="navigation-wrapper">
     <div id="leftToggler"><span class="icon-toggler"></span></div>
@@ -41,12 +50,10 @@ if(savedDarkMode === true){
     </div>
     <div id="main">
 <div class="main-content" id="content" pageids="Bloc Core::com.onegravity.bloc/BlocContext///PointingToDeclaration//1301541495">
-  <div class="breadcrumbs"><a href="../../index.html">Bloc Core</a><span class="delimiter">/</span><a href="../index.html">com.onegravity.bloc</a><span class="delimiter">/</span><a href="index.html">BlocContext</a></div>
+  <div class="breadcrumbs"><a href="../../index.html">Bloc Core</a><span class="delimiter">/</span><a href="../index.html">com.onegravity.bloc</a><span class="delimiter">/</span><span class="current">BlocContext</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Bloc</span><wbr><span><span>Context</span></span></h1>
-    <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
-      <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark common-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonMain">common</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">BlocContext</a> : <span data-unresolved-link="com.arkivanov.essenty.lifecycle/LifecycleOwner///PointingToDeclaration/">LifecycleOwner</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Each Bloc receives a BlocContext.</p><p class="paragraph">Right now, the context only contains a Lifecycle object which is managed by the caller and determines when a Bloc starts, stops and is destroyed.</p><p class="paragraph">Future versions of the BlocContext might have more properties / settings.</p></div>    </div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">BlocContext</a> : <span data-unresolved-link="com.arkivanov.essenty.lifecycle/LifecycleOwner///PointingToDeclaration/">LifecycleOwner</span></div><p class="paragraph">Each Bloc receives a BlocContext.</p><p class="paragraph">Right now, the context only contains a Lifecycle object which is managed by the caller and determines when a Bloc starts, stops and is destroyed.</p><p class="paragraph">Future versions of the BlocContext might have more properties / settings.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Properties">Properties</button></div>
@@ -62,9 +69,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted" data-togglable="Properties">
-                  <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark common-like" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain" data-active="" data-toggle=":bloc-core:dokkaHtmlPartial/commonMain">common</button></div>
-<div class="content sourceset-depenent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><a data-name="-1197012679%2FProperties%2F1301541495" anchor-label="lifecycle" id="-1197012679%2FProperties%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="index.html#-1197012679%2FProperties%2F1301541495">lifecycle</a><span class="token operator">: </span><span data-unresolved-link="com.arkivanov.essenty.lifecycle/Lifecycle///PointingToDeclaration/">Lifecycle</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div>                </div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><a data-name="-1197012679%2FProperties%2F1301541495" anchor-label="lifecycle" id="-1197012679%2FProperties%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="index.html#-1197012679%2FProperties%2F1301541495">lifecycle</a><span class="token operator">: </span><span data-unresolved-link="com.arkivanov.essenty.lifecycle/Lifecycle///PointingToDeclaration/">Lifecycle</span></div></div></div>
               </div>
             </div>
           </div>
