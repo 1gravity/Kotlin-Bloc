@@ -4,7 +4,7 @@
 
 org-jetbrains-dokka = { id = "org.jetbrains.dokka", version = "1.7.20" }
 
-io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.22.0-RC1" }
+io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.22.0-RC2" }
 
 com-louiscad-complete-kotlin = { id = "com.louiscad.complete-kotlin", version = "1.1.0" }
 
@@ -54,7 +54,7 @@ androidx-compose-animation = "1.2.1"
 
 androidx-compose-ui = "1.2.1"
 
-google-android-material = "1.6.1"
+google-android-material = "1.7.0"
 
 koin = "3.2.2"
 
