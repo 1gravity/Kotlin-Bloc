@@ -68,7 +68,6 @@ kotlin {
                 implementation(AndroidX.activity.compose)
                 implementation(AndroidX.fragment)
 //                implementation(AndroidX.compose.runtime)
-//                implementation(AndroidX.compose.compiler)
 //                implementation(AndroidX.compose.foundation)
             }
         }

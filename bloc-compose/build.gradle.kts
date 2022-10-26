@@ -37,8 +37,6 @@ kotlin {
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(Touchlab.kermit)
-
-                implementation(AndroidX.Compose.compiler)
             }
         }
         val commonTest by getting {
