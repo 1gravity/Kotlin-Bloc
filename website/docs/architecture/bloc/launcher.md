@@ -72,7 +72,6 @@ The `CoroutineScope` could be exposed through the context (InitializerContext, T
 
 `Launch` returns a `Cancel` function that can be used to cancel the coroutine "manually":
 ```
-
 private var cancel: Cancel? = null
 
 fun onSelected(post: Post) = thunk {
@@ -82,7 +81,7 @@ fun onSelected(post: Post) = thunk {
         cancel = launch {
             load(post)
         }
-        
+
     }
 }
 
