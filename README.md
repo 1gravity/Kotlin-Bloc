@@ -27,13 +27,13 @@ Note, this readme offers a quick overview of the framework. For more in-depth in
 ```kotlin
 dependencies {
     // the core library
-    implementation("com.1gravity:bloc-core:0.9.2")
+    implementation("com.1gravity:bloc-core:0.9.3")
 
     // add to use the framework together with Redux
-    implementation("com.1gravity:bloc-redux:0.9.2")
+    implementation("com.1gravity:bloc-redux:0.9.3")
 
     // useful extensions for Android and Jetpack/JetBrains Compose
-    implementation("com.1gravity:bloc-compose:0.9.2")
+    implementation("com.1gravity:bloc-compose:0.9.3")
 }
 ```
 

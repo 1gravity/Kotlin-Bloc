@@ -65,5 +65,29 @@ fun onSelected(post: Post) = thunk {
 }
 ```
 :::tip
-The `CoroutineScope` could be exposed through the context (InitializerContext, ThunkContext, ReducerContext) in order to facilitate the launch of new coroutines. However I decided to encapsulate that scope to prevent "unauthorized interventions" (like cancellations). This design decision could be changed in the future.
+The `CoroutineScope` could be exposed through the context (InitializerContext, ThunkContext, ReducerContext) in order to facilitate the launch of new coroutines. However I decided to encapsulate that scope to prevent "unauthorized operations". This design decision could be changed in the future.
 :::
+
+### Manual Cancellation
+
+`Launch` returns a `Cancel` function that can be used to cancel the coroutine "manually":
+```
+
+private var cancel: Cancel? = null
+
+fun onSelected(post: Post) = thunk {
+    // only load if not already being loaded and if a different post was selected
+    if (loadingJob != null && state.id != post.id) {
+
+        cancel = launch {
+            load(post)
+        }
+        
+    }
+}
+
+fun onDestroy() {
+    cancel?.invoke()
+    // more cleanup
+}
+```
