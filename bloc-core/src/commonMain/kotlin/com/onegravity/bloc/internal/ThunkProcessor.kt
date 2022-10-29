@@ -13,7 +13,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
-import kotlinx.coroutines.launch
 
 /**
  * The ThunkProcessor is responsible for processing thunk { } blocks.
@@ -32,7 +31,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     private val thunkChannel = Channel<Action>(UNLIMITED)
 
-    private var coroutine: Coroutine = Coroutine(dispatcher)
+    private var coroutineHelper: CoroutineHelper = CoroutineHelper(dispatcher)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -47,15 +46,15 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
                 startProcessing()
             },
             onStop = {
-                coroutine.onStop()
+                coroutineHelper.onStop()
             }
         )
     }
     private fun startProcessing() {
         // only start processing if the coroutine wasn't already started
-        if (!coroutine.onStart()) return
+        if (!coroutineHelper.onStart()) return
 
-        coroutine.scope?.launch {
+        coroutineHelper.launch {
             for (action in thunkChannel) {
                 runThunks(action)
             }
@@ -82,20 +81,18 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
     internal fun thunk(thunk: ThunkNoAction<State, Action, Proposal>) {
         // we don't need to check if (lifecycle.state == LifecycleState.Started) since the
         // CoroutineScope is cancelled onStop()
-        coroutine.scope?.launch {
-            coroutine.runner?.let { runner ->
-                logger.d("received thunk without action")
-                val dispatcher: Dispatcher<Action> = {
-                    nextThunkDispatcher(it).invoke(it)
-                }
-                val context = ThunkContextNoAction(
-                    getState = { state.value },
-                    dispatch = dispatcher,
-                    reduce = reduce,
-                    runner = runner
-                )
-                context.thunk()
+        coroutineHelper.launch {
+            logger.d("received thunk without action")
+            val dispatcher: Dispatcher<Action> = {
+                nextThunkDispatcher(it).invoke(it)
             }
+            val context = ThunkContextNoAction(
+                getState = { state.value },
+                dispatch = dispatcher,
+                reduce = reduce,
+                launchBlock = coroutineHelper::launch
+            )
+            context.thunk()
         }
     }
 
@@ -119,22 +116,18 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * Run a specific thunk
      */
     private suspend fun runThunk(action: Action, index: Int) {
-        coroutine.scope.run {
-            coroutine.runner?.let { runner ->
-                val dispatcher: Dispatcher<Action> = {
-                    nextThunkDispatcher(it, index + 1).invoke(it)
-                }
-                val thunk = thunks[index].thunk
-                val context = ThunkContext(
-                    getState = { state.value },
-                    action = action,
-                    dispatch = dispatcher,
-                    reduce = reduce,
-                    runner = runner
-                )
-                context.thunk()
-            }
+        val dispatcher: Dispatcher<Action> = {
+            nextThunkDispatcher(it, index + 1).invoke(it)
         }
+        val thunk = thunks[index].thunk
+        val context = ThunkContext(
+            getState = { state.value },
+            action = action,
+            dispatch = dispatcher,
+            reduce = reduce,
+            launchBlock = coroutineHelper::launch
+        )
+        context.thunk()
     }
 
     /**

@@ -44,7 +44,7 @@ class CounterActivityCompose : AppCompatActivity() {
                     Text(
                         text = stringResource(R.string.counter_value, state),
                         fontSize = 18.sp,
-                        color = Color.White,
+                        color = MaterialTheme.colors.primary,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(32.dp)

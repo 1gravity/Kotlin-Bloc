@@ -8,7 +8,6 @@ import com.onegravity.bloc.utils.InitializerContext
 import com.onegravity.bloc.utils.logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 
 /**
@@ -30,7 +29,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     private val mutex = Mutex()
 
-    private var coroutine: Coroutine = Coroutine(dispatcher)
+    private var coroutineHelper: CoroutineHelper = CoroutineHelper(dispatcher)
 
     /**
      * This needs to come after all variable/property declarations to make sure everything is
@@ -40,7 +39,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
         lifecycle.subscribe(
             onCreate = {
                 logger.d("onCreate -> initialize Bloc")
-                coroutine.onStart()
+                coroutineHelper.onStart()
                 lifecycle.initializerStarting()
             },
             onInitialize = {
@@ -49,7 +48,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
             },
             onDestroy = {
                 logger.d("onDestroy -> destroy Bloc")
-                coroutine.onStop()
+                coroutineHelper.onStop()
             }
         )
     }
@@ -66,18 +65,16 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     }
 
     private fun runInitializer(initialize: Initializer<State, Action, Proposal>) =
-        coroutine.scope?.launch {
+        coroutineHelper.launch {
             if (mutex.tryLock(this@InitializeProcessor)) {
-                coroutine.runner?.let { runner ->
-                    val context = InitializerContext(
-                        state = state.value,
-                        dispatch = dispatch,
-                        reduce = reduce,
-                        runner = runner
-                    )
-                    context.initialize()
-                    lifecycle.initializerCompleted()
-                }
+                val context = InitializerContext(
+                    state = state.value,
+                    dispatch = dispatch,
+                    reduce = reduce,
+                    launchBlock = coroutineHelper::launch
+                )
+                context.initialize()
+                lifecycle.initializerCompleted()
             } else {
                 logger.e("onCreate { } can only be run once!")
             }

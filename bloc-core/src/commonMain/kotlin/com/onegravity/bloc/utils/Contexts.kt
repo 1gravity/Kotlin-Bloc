@@ -13,7 +13,7 @@ public data class InitializerContext<State, Action, Proposal>(
     val state: State,
     val dispatch: Dispatcher<Action>,
     val reduce: (proposal: Proposal) -> Unit,
-    internal val runner: CoroutineRunner
+    internal val launchBlock: Launch
 )
 
 /**
@@ -33,7 +33,7 @@ public data class ThunkContext<State, Action, A : Action, Proposal>(
     val action: A,
     val dispatch: Dispatcher<Action>,
     val reduce: (proposal: Proposal) -> Unit,
-    internal val runner: CoroutineRunner
+    internal val launchBlock: Launch
 )
 
 /**
@@ -47,7 +47,7 @@ public data class ThunkContextNoAction<State, Action, Proposal>(
     val getState: GetState<State>,
     val dispatch: Dispatcher<Action>,
     val reduce: (proposal: Proposal) -> Unit,
-    internal val runner: CoroutineRunner
+    internal val launchBlock: Launch
 )
 
 /**
@@ -65,7 +65,7 @@ public data class ThunkContextNoAction<State, Action, Proposal>(
 public data class ReducerContext<State, Action>(
     val state: State,
     val action: Action,
-    internal val runner: CoroutineRunner
+    internal val launchBlock: Launch
 )
 
 /**
@@ -75,7 +75,7 @@ public data class ReducerContext<State, Action>(
  *   }
  * ```
  */
-public class ReducerContextNoAction<State>(
-    public val state: State,
-    internal val runner: CoroutineRunner
+public data class ReducerContextNoAction<State>(
+    val state: State,
+    internal val launchBlock: Launch
 )

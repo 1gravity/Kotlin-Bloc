@@ -33,7 +33,7 @@ internal val commonModule = module {
 
     single<PostRepository> { PostDataRepository(get(), get()) }
 
-    single {
+    factory {
         blocState(PostsRootState(postsState = PostsState(), postState = PostState()))
     }
 

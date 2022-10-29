@@ -83,7 +83,7 @@ private fun ToolBar(component: PostsComponent, isMultiPane: Boolean) {
     if (isMultiPane || !showDetail) {
         TopAppBar(title = { Text(text = title) })
     } else {
-        BackHandler(onBack = { component.onClosed() })
+        BackHandler { component.onClosed() }
         TopAppBar(
             title = { Text(text = title) },
             navigationIcon = {
