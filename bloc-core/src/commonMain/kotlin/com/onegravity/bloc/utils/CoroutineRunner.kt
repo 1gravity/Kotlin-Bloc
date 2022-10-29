@@ -21,11 +21,11 @@ public class CoroutineRunner(private val coroutineScope: CoroutineScope) {
     internal fun run(
         jobConfig: JobConfig?,
         block: CoroutineBlock
-    ) {
+    ): Job {
         val cancelPrevious = jobConfig?.cancelPrevious == true
         val jobId = jobConfig?.jobId ?: DEFAULT_JOB_ID
 
-        coroutineScope.launch {
+        return coroutineScope.launch {
             mutex.withLock {
                 val queue = map[jobId] ?: ArrayDeque<Job>().also { map[jobId] = it }
                 if (cancelPrevious) {
@@ -33,7 +33,7 @@ public class CoroutineRunner(private val coroutineScope: CoroutineScope) {
                         it.cancelAndJoin()
                     }
                 }
-                val job = coroutineScope.launch(block = block)
+                val job = launch(block = block)
                 queue.add(job)
             }
         }

@@ -115,7 +115,13 @@ public typealias SideEffect<State, Action, SideEffect> = ReducerContext<State, A
 public typealias SideEffectNoAction<State, SideEffect> = ReducerContextNoAction<State>.() -> SideEffect
 
 /**
- * Suspend function used as parameter in one of the launch function calls ([InitializerContext.launch],
- * [ThunkContext.launch] etc.).
+ * Suspend function passed as parameter to one of the launch function calls:
+ * [InitializerContext.launch], [ThunkContext.launch] or [ReducerContext.launch]
  */
 public typealias CoroutineBlock = suspend CoroutineScope.() -> Unit
+
+/**
+ * A function used to cancel Coroutines launched with [InitializerContext.launch],
+ * [ThunkContext.launch]
+ */
+public typealias Cancel = () -> Unit

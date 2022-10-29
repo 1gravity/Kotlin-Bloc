@@ -26,7 +26,7 @@ kotlin = "1.7.20"
 
 sqldelight = "1.5.4"
 
-androidx-databinding = "7.2.2"
+androidx-databinding = "7.3.1"
 
 kotlinx-coroutines = "1.6.4"
 
@@ -70,7 +70,7 @@ mockk = "1.13.2"
 
 androidx-compose-compiler = "1.3.2"
 
-ktor = "2.1.2"
+ktor = "2.1.3"
 
 kotlinx-datetime = "0.4.0"
 
@@ -86,15 +86,15 @@ compose-gradle-plugin = "org.jetbrains.compose:compose-gradle-plugin:1.2.0"
 
 gradle-plugin = { group = "com.squareup.sqldelight", name = "gradle-plugin", version.ref = "sqldelight" }
 
-dokka-analysis = "org.jetbrains.dokka:dokka-analysis:1.4.32"
+dokka-analysis = "org.jetbrains.dokka:dokka-analysis:1.7.20"
 
-dokka-base = "org.jetbrains.dokka:dokka-base:1.4.32"
+dokka-base = "org.jetbrains.dokka:dokka-base:1.7.20"
 
-gfm-template-processing-plugin = "org.jetbrains.dokka:gfm-template-processing-plugin:1.4.32"
+gfm-template-processing-plugin = "org.jetbrains.dokka:gfm-template-processing-plugin:1.7.20"
 
-all-modules-page-plugin = "org.jetbrains.dokka:all-modules-page-plugin:1.4.32"
+all-modules-page-plugin = "org.jetbrains.dokka:all-modules-page-plugin:1.7.20"
 
-jekyll-template-processing-plugin = "org.jetbrains.dokka:jekyll-template-processing-plugin:1.4.32"
+jekyll-template-processing-plugin = "org.jetbrains.dokka:jekyll-template-processing-plugin:1.7.20"
 
 org-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
 
@@ -186,7 +186,7 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 
 kotlin-scripting-compiler-embeddable = { group = "org.jetbrains.kotlin", name = "kotlin-scripting-compiler-embeddable", version.ref = "kotlin" }
 
-org-jetbrains-compose-compiler-compiler = "org.jetbrains.compose.compiler:compiler:1.3.0-alpha01"
+org-jetbrains-compose-compiler-compiler = "org.jetbrains.compose.compiler:compiler:1.3.2"
 
 instance-keeper = "com.arkivanov.essenty:instance-keeper:0.6.0"
 
@@ -233,3 +233,7 @@ ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "
 android-driver = { group = "com.squareup.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
+
+ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }

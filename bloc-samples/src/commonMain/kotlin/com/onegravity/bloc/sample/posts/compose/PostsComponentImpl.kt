@@ -12,9 +12,11 @@ import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.thunk
 import com.onegravity.bloc.util.getKoinInstance
+import com.onegravity.bloc.utils.Cancel
 import com.onegravity.bloc.utils.JobConfig
 import com.onegravity.bloc.utils.ThunkContextNoAction
 import com.onegravity.bloc.utils.launch
+import kotlinx.coroutines.yield
 import kotlin.coroutines.cancellation.CancellationException
 
 // no external actions, we use a simple function call
@@ -56,6 +58,8 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         }
     }
 
+    private var cancel: Cancel? = null
+
     override fun onSelected(post: Post) = thunk {
         // only load if it's not already being loaded or is not yet loaded
         val postState = getState().postState
@@ -64,13 +68,14 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
         {
             // we cancel a previous loading job before starting a new one from the Bloc's
             // CoroutineScope -> it's also cancelled when the Bloc is stopped
-            launch(JobConfig(true)) {
+            cancel = launch(JobConfig(true)) {
                 load(post)
             }
         }
     }
 
     override fun onClosed() = reduce {
+        cancel?.invoke()
         state.copy(postState = state.postState.copy(loadingId = null, post = null))
     }
 
@@ -82,6 +87,7 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
             val newState = getState().run { copy(postState = postState.copy(loadingId = post.id)) }
             reduce(newState)
             val result = repository.getDetail(post.id)
+            yield()
             dispatch(PostLoaded(result))
         }.onFailure {
             // this was launched with JobConfig(cancelPrevious = true) -> CancellationExceptions can
@@ -89,4 +95,5 @@ class PostsComponentImpl(context: BlocContext) : PostsComponent() {
             if (it !is CancellationException) dispatch(PostLoaded(Err(it)))
         }
     }
+
 }

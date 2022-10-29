@@ -100,7 +100,7 @@ kotlin {
                 api(project(":bloc-compose"))
 //                api("com.1gravity:bloc-compose:_")
 
-                implementation(Ktor.client.cio)
+                implementation(Ktor.client.okHttp)
 
                 implementation(Square.sqlDelight.drivers.android)
 
@@ -119,7 +119,7 @@ kotlin {
             val iosMain by creating {
                 dependsOn(commonMain)
                 dependencies {
-                    implementation(libs.ktor.client.ios)
+                    implementation(Ktor.client.darwin)
                     implementation(Square.sqlDelight.drivers.native)
                 }
                 iosX64Main.dependsOn(this)
