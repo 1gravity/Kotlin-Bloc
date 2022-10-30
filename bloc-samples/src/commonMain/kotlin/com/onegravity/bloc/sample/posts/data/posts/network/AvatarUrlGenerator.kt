@@ -20,6 +20,8 @@
 
 package com.onegravity.bloc.sample.posts.data.posts.network
 
-class AvatarUrlGenerator {
-    fun generateUrl(email: String) = "https://robohash.org/$email?set=set1"
+fun interface AvatarUrlGenerator {
+
+    fun generateUrl(email: String): String
+
 }

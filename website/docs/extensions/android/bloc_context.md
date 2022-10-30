@@ -13,7 +13,7 @@ Creating a bloc always requires a `BlocContext`. On Android that process is rath
 
 ## Lifecycle
 
-As explained [here](../../architecture/bloc/lifecycle), there are three lifecycles. What we need for the `BlocContext` is an [Essenty Lifecycle](https://github.com/arkivanov/Essenty) which is the one determining when the bloc is created, started, stopped and destroyed.
+As explained [here](../../architecture/bloc/lifecycle), there are four lifecycles. What we need for the `BlocContext` is an [Essenty Lifecycle](https://github.com/arkivanov/Essenty) which is the one determining when the bloc is created, started, stopped and destroyed.
 
 The view lifecycle can be an Activity/Fragment lifecycle, a Composable lifecycle or something similar, depending on what tech is being used for the `View`. A bloc should not be tied to that lifecycle since it's too short lived and it would typically lose state upon configuration changes. 
 
@@ -70,7 +70,19 @@ class BooksActivity : AppCompatActivity() {
     private val useCase: BooksUseCase by getOrCreate { BooksUseCaseImpl(it, BooksRepositoryImpl()) }
 ```
 
-##### The Key
+:::tip
+Instead of creating a hard dependency on the implementing component `PostsComponentImpl`, we can use dependency injection. With Koin we would do:
+```kotlin
+private val component: PostsComponent by getOrCreate {
+    get(parameters = { parametersOf(it) })
+}
+
+// with this definition in the Koin module:
+factory<PostsComponent> { PostsComponentImpl(it.get()) }
+```
+:::
+
+#### The Key
 
 Some might have noticed that `getOrCreate()` has a optional `key` parameter. The `key` is needed to store/retrieve the component instantiated in the lambda / builder block and it's default value is `Component::class`. If the builder block returns a `Bloc` instance then the key value is `com.onegravity.bloc.Bloc`. That key ignores the bloc's generic types (which are erased at runtime) that make the bloc unique. If `getOrCreate()` is used to create/retrieve blocs with different generic types in the context of the same Activity, it would use the same key for different blocs which would lead to a `ClassCastException`.
 

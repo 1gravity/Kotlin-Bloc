@@ -74,8 +74,8 @@ fun ViewModel.blocContext(): BlocContext =
     )
 
 /**
- * To create a ViewModel "lifecycle" we create a Coroutine using the ViewModels own `viewModelScope`.
- * Upon launch the lifecycle moves to CREATED.
+ * To create a ViewModel "lifecycle" we create a Coroutine using the ViewModels own
+ * `viewModelScope`. Upon launch the lifecycle moves to CREATED.
  * When the Coroutine is cancelled we take that as the cue to move to DESTROYED.
  *
  * Why do we do all this? Because ViewModels don't have an observable lifecycle and we'd have to

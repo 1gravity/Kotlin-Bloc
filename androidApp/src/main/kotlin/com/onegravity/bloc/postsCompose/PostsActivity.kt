@@ -5,8 +5,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.onegravity.bloc.getOrCreate
 import com.onegravity.bloc.sample.posts.compose.PostsComponent
-import com.onegravity.bloc.sample.posts.compose.PostsComponentImpl
 import com.onegravity.bloc.util.ComposeAppTheme
+import org.koin.android.ext.android.get
+import org.koin.core.parameter.parametersOf
 
 class PostsActivity : AppCompatActivity() {
 
@@ -19,7 +20,9 @@ class PostsActivity : AppCompatActivity() {
     // Note: a ViewModel is created under the hood to have the "correct" lifecycle
     // (not the Activity lifecycle)
 
-    private val component: PostsComponent by getOrCreate { PostsComponentImpl(it) }
+    private val component: PostsComponent by getOrCreate {
+        get(parameters = { parametersOf(it) })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
