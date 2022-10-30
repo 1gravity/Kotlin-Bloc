@@ -1,6 +1,10 @@
 package com.onegravity.bloc.util
 
-import com.onegravity.bloc.sample.posts.compose.*
+import com.onegravity.bloc.sample.posts.compose.PostState
+import com.onegravity.bloc.sample.posts.compose.PostsState
+import com.onegravity.bloc.sample.posts.compose.PostsComponent
+import com.onegravity.bloc.sample.posts.compose.PostsComponentImpl
+import com.onegravity.bloc.sample.posts.compose.PostsRootState
 import com.onegravity.bloc.sample.posts.data.PostDataRepository
 import com.onegravity.bloc.sample.posts.data.posts.network.AvatarUrlGenerator
 import com.onegravity.bloc.sample.posts.data.posts.network.PostNetworkDataSource

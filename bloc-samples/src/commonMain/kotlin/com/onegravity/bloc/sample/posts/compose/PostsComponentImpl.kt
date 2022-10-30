@@ -22,6 +22,9 @@ import kotlin.coroutines.cancellation.CancellationException
 // no external actions, we use a simple function call
 sealed class PostsAction
 
+/**
+ * We can't make PostsComponentImpl internal because we need to access it from the iOS target.
+ */
 class PostsComponentImpl(context: BlocContext) : PostsComponent() {
 
     private val repository = getKoinInstance<PostRepository>()
