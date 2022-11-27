@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.1gravity/bloc-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.1gravity/bloc-core)
 
 # Kotlin Bloc
 
