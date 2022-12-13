@@ -11,7 +11,6 @@ import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.state.BlocState
 import com.onegravity.bloc.thunk
-import com.onegravity.bloc.util.getKoinInstance
 import com.onegravity.bloc.utils.Cancel
 import com.onegravity.bloc.utils.JobConfig
 import com.onegravity.bloc.utils.ThunkContextNoAction
@@ -25,10 +24,12 @@ sealed class PostsAction
 /**
  * We can't make PostsComponentImpl internal because we need to access it from the iOS target.
  */
-class PostsComponentImpl(context: BlocContext) : PostsComponent() {
-
-    private val repository = getKoinInstance<PostRepository>()
-    private val blocState = getKoinInstance<BlocState<PostsRootState, PostsRootState>>()
+class PostsComponentImpl(
+    context: BlocContext,
+    blocState: BlocState<PostsRootState, PostsRootState>,
+    private val repository: PostRepository
+) : PostsComponent() {
+//class PostsComponentImpl(context: BlocContext) : PostsComponent() {
 
     // internal actions
     private data class PostsLoaded(val result: Result<List<Post>, Throwable>) : PostsAction()

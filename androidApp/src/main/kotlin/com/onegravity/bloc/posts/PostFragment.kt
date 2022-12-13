@@ -47,6 +47,7 @@ import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import org.koin.android.ext.android.get
 import com.onegravity.bloc.sample.posts.domain.repositories.Post as PostData
 
 class PostFragment : Fragment(R.layout.post_details_fragment) {
@@ -55,7 +56,7 @@ class PostFragment : Fragment(R.layout.post_details_fragment) {
     private val post by lazy { args.post }
 
     private val bloc: PostBloc by getOrCreate("post") {
-        Post.bloc(it)
+        Post.bloc(it, get())
     }
 
     private val adapter = GroupAdapter<GroupieViewHolder>()

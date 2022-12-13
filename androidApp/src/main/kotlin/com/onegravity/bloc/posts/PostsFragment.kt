@@ -38,12 +38,13 @@ import com.onegravity.bloc.subscribe
 import com.onegravity.bloc.utils.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import org.koin.android.ext.android.get
 
 class PostsFragment :
     Fragment(R.layout.post_list_fragment),
     BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState> {
 
-    override val bloc by getOrCreate("posts") { Posts.bloc(it) }
+    override val bloc by getOrCreate("posts") { Posts.bloc(it, get()) }
 
     private val binding by viewBinding<PostListFragmentBinding>()
 

@@ -1,18 +1,16 @@
 package com.onegravity.bloc.sample.todo
 
 import com.onegravity.bloc.state.BlocStateBase
-import com.onegravity.bloc.util.getKoinInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PersistingToDoState(
+    private val dao: ToDoDao,
     coroutineScope: CoroutineScope
 ) : BlocStateBase<ToDoState, ToDoState>(
     initialState = ToDoState()
 ) {
-
-    private val dao = getKoinInstance<ToDoDao>()
 
     private var cachedState: ToDoState = ToDoState()
 

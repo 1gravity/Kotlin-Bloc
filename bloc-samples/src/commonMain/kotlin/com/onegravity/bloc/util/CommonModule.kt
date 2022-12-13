@@ -34,7 +34,7 @@ internal val commonModule = module {
         }
     }
 
-    factory<PostsComponent> { PostsComponentImpl(it.get()) }
+    factory<PostsComponent> { PostsComponentImpl(it.get(), get(), get()) }
 
     factory {
         blocState(PostsRootState(postsState = PostsState(), postState = PostState()))

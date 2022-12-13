@@ -2,7 +2,9 @@ import SwiftUI
 import blocSamples
 
 struct PostListView: View {
-    private let component = BlocComponent<PostsComponent> { PostsComponentImpl(context: $0) }
+     private let component = BlocComponent<PostsComponent> {
+         PostsComponentIOS.shared.postsComponent(context: $0)
+     }
 
     @ObservedObject
     private var model: BlocObserver<PostsRootState, PostsAction, KotlinUnit>

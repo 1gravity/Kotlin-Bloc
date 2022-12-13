@@ -6,16 +6,17 @@ import com.onegravity.bloc.blocContext
 import com.onegravity.bloc.sample.posts.bloc.Posts
 import com.onegravity.bloc.sample.posts.bloc.PostsState
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
+import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
 import com.onegravity.bloc.sideEffect
 
 /**
  * Not used any more but we keep it around for illustration purposes
  */
-class PostsViewModel :
+class PostsViewModel(repository: PostRepository) :
     ViewModel(),
     BlocOwner<PostsState, Posts.Action, Posts.OpenPost, PostsState> {
 
-    override val bloc = Posts.bloc(blocContext())
+    override val bloc = Posts.bloc(blocContext(), repository)
 
     fun onPostClicked(post: Post) = sideEffect {
         Posts.OpenPost(post)

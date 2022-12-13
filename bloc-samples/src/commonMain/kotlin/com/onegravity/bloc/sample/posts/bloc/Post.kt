@@ -5,7 +5,6 @@ import com.onegravity.bloc.BlocContext
 import com.onegravity.bloc.bloc
 import com.onegravity.bloc.sample.posts.domain.repositories.Post
 import com.onegravity.bloc.sample.posts.domain.repositories.PostRepository
-import com.onegravity.bloc.util.getKoinInstance
 
 object Post {
     // you can either send actions to the Bloc directly or call these functions instead
@@ -17,8 +16,10 @@ object Post {
         data class Loaded(val post: Result<Post, Throwable>) : Action()
     }
 
-    fun bloc(context: BlocContext): PostBloc = bloc(context, PostState()) {
-        val repository = getKoinInstance<PostRepository>()
+    fun bloc(
+        context: BlocContext,
+        repository: PostRepository
+    ): PostBloc = bloc(context, PostState()) {
 
         thunk<Action.Load> {
             dispatch(Action.Loading)

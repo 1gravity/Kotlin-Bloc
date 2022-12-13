@@ -5,10 +5,10 @@ import com.onegravity.bloc.bloc
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
-fun toDoBloc(context: BlocContext) = bloc<ToDoState, ToDoAction>(
+fun toDoBloc(context: BlocContext, dao: ToDoDao) = bloc<ToDoState, ToDoAction>(
     context = context,
-//    blocState = blocState(ToDoState())                                 // non persisting BlocState
-    blocState = PersistingToDoState(CoroutineScope(SupervisorJob()))     // persisting BlocState
+//    blocState = blocState(ToDoState())                                     // non persisting BlocState
+    blocState = PersistingToDoState(dao, CoroutineScope(SupervisorJob()))    // persisting BlocState
 ) {
     reduce<AddToDo> {
         val todo = ToDo(description = action.description)
