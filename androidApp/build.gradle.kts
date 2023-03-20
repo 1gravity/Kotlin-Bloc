@@ -1,4 +1,4 @@
-@file:Suppress("UnusedPrivateMember")
+@file:Suppress("UnusedPrivateMember", "UnstableApiUsage")
 
 import Bloc_android_base_gradle.AndroidBuild
 
@@ -46,11 +46,8 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
         compose = true
-    }
-
-    dataBinding {
-        enable = true
     }
 
     composeOptions {

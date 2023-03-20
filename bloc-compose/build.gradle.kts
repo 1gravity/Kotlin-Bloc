@@ -1,4 +1,4 @@
-@file:Suppress("UnusedPrivateMember")
+@file:Suppress("UnusedPrivateMember", "UnstableApiUsage")
 
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
 

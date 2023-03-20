@@ -1,4 +1,4 @@
-@file:Suppress("UnusedPrivateMember")
+@file:Suppress("UnusedPrivateMember", "UnstableApiUsage")
 
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
@@ -39,14 +39,14 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(KotlinX.coroutines.core)
+                implementation(libs.kotlinx.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
                 api(libs.lifecycle)
                 api(libs.instance.keeper)
 
                 // Logging (https://github.com/touchlab/Kermit)
-                implementation(Touchlab.kermit)
+                implementation(libs.kermit)
 
                 implementation(libs.atomicfu)
 
@@ -58,17 +58,15 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(KotlinX.coroutines.test)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation(AndroidX.appCompat)
-                implementation(AndroidX.activity.compose)
-                implementation(AndroidX.fragment)
-//                implementation(AndroidX.compose.runtime)
-//                implementation(AndroidX.compose.foundation)
+                implementation(libs.appcompat)
+                implementation(libs.activity.compose)
+                implementation(libs.fragment)
             }
         }
 
@@ -98,10 +96,7 @@ kotlin {
 android {
     buildFeatures {
         viewBinding = true
-    }
-
-    dataBinding {
-        enable = true
+        dataBinding = true
     }
 }
 
