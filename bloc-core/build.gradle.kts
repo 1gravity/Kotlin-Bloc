@@ -64,9 +64,9 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(libs.appcompat)
-                implementation(libs.activity.compose)
-                implementation(libs.fragment)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.fragment)
             }
         }
 

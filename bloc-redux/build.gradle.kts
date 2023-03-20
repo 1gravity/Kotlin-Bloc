@@ -37,7 +37,7 @@ kotlin {
             dependencies {
                 implementation(project(":bloc-core"))
 
-                implementation(KotlinX.coroutines.core)
+                implementation(libs.kotlinx.coroutines.core)
 
                 // Reaktive (https://github.com/badoo/Reaktive)
                 // we only use the DisposableScope

@@ -50,7 +50,7 @@ kotlin {
 //                api("com.1gravity:bloc-core:_")
 //                api("com.1gravity:bloc-redux:_")
 
-                implementation(KotlinX.coroutines.core)
+                implementation(libs.kotlinx.coroutines.core)
 
                 // Redux store (https://reduxkotlin.org)
                 implementation(libs.redux.kotlin.threadsafe)
@@ -60,23 +60,23 @@ kotlin {
                 api(libs.parcelable)
 
                 // Koin
-                implementation(Koin.core)
+                implementation(libs.koin.core)
 
                 // Ktor
-                implementation(Ktor.client.core)
-                implementation(Ktor.client.logging)
-                implementation(Ktor.client.json)
-                implementation(Ktor.client.serialization)
-                implementation(Ktor.client.contentNegotiation)
-                implementation(Ktor.plugins.serialization.kotlinx.json)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.json)
+                implementation(libs.ktor.client.serialization)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
 
                 // SQLDelight (https://cashapp.github.io/sqldelight/)
-                implementation(libs.com.squareup.sqldelight.runtime)
-                implementation(Square.sqlDelight.extensions.coroutines)
-                implementation(KotlinX.datetime)
+                implementation(libs.sqldelight.runtime)
+                implementation(libs.sqldelight.coroutines.extensions)
+                implementation(libs.kotlinx.datetime)
 
                 // Logging (https://github.com/touchlab/Kermit)
-                implementation(Touchlab.kermit)
+                implementation(libs.kermit)
 
                 // BigNums (https://github.com/ionspin/kotlin-multiplatform-bignum)
                 implementation(libs.bignum)
@@ -100,15 +100,14 @@ kotlin {
                 api(project(":bloc-compose"))
 //                api("com.1gravity:bloc-compose:_")
 
-                implementation(Ktor.client.okHttp)
+                implementation(libs.ktor.client.okhttp)
+                implementation(libs.sqldelight.android.driver)
 
-                implementation(Square.sqlDelight.drivers.android)
-
-                implementation(AndroidX.appCompat)
-                implementation(AndroidX.activity.compose)
-                implementation(AndroidX.compose.material)
-                implementation(AndroidX.compose.animation)
-                implementation(AndroidX.compose.ui.tooling)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.compose.material)
+                implementation(libs.androidx.compose.animation)
+                implementation(libs.androidx.compose.ui.tooling)
             }
         }
 
@@ -119,8 +118,8 @@ kotlin {
             val iosMain by creating {
                 dependsOn(commonMain)
                 dependencies {
-                    implementation(Ktor.client.darwin)
-                    implementation(Square.sqlDelight.drivers.native)
+                    implementation(libs.ktor.client.darwin)
+                    implementation(libs.sqldelight.native.driver)
                 }
                 iosX64Main.dependsOn(this)
                 iosArm64Main.dependsOn(this)
@@ -143,6 +142,6 @@ sqldelight {
     database("TodoDatabase") {
         packageName = "com.onegravity.bloc"
         sourceFolders = listOf("sqldelight")
-        dialect = "sqlite:3.25"
+        dialect = "sqlite:${libs.versions.sqldelight.dialect.get()}"
     }
 }
