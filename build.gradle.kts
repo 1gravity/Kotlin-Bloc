@@ -11,20 +11,22 @@ buildscript {
         maven("https://jitpack.io")
     }
     dependencies {
-        classpath(Android.tools.build.gradlePlugin)
-        classpath(AndroidX.navigation.safeArgsGradlePlugin)
+        classpath(libs.android.tools.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.compose.gradle.plugin)
-        classpath(Square.sqlDelight.gradlePlugin)
+        classpath(libs.navigation.safe.args.gradle.plugin)
+        classpath(libs.sqldelight.gradle.plugin)
     }
 }
 
 // run ./gradlew dokkaHtmlMultiModule to create the documentation
 // then deploy the website (cd website, yarn deploy)
 plugins {
-    id("org.jetbrains.dokka")
-    id("io.gitlab.arturbosch.detekt")
-    id("com.louiscad.complete-kotlin")
+    alias(libs.plugins.org.jetbrains.dokka)
+    alias(libs.plugins.io.gitlab.arturbosch.detekt)
+    alias(libs.plugins.com.louiscad.complete.kotlin)
+    alias(libs.plugins.org.barfuin.gradle.taskinfo)
+    alias(libs.plugins.org.jetbrains.kotlin.serialization)
 }
 
 tasks.dokkaHtmlMultiModule.configure {
