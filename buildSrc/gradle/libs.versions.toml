@@ -10,7 +10,7 @@ android-gradle-plugin = "7.2.2"
 androidx-activity = "1.6.1"
 androidx-appcompat = "1.6.1"
 androidx-compose-animation = "1.3.3"
-androidx-compose-compiler = "1.3.1"
+androidx-compose-compiler = "1.3.2"
 androidx-compose-material = "1.3.1"
 androidx-compose-ui = "1.3.3"
 androidx-constraintlayout = "2.1.4"
@@ -69,9 +69,13 @@ sqlDelight = { id = "app.cash.sqldelight", version = "1.5.5" }
 
 [libraries]
 
-all-modules-page-plugin = "org.jetbrains.dokka:all-modules-page-plugin:1.7.20"
-
 android-tools-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-gradle-plugin = "org.jetbrains.compose:compose-gradle-plugin:1.2.0"
+navigation-safe-args-gradle-plugin = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation" }
+sqldelight-gradle-plugin = { group = "com.squareup.sqldelight", name = "gradle-plugin", version.ref = "sqldelight" }
+
+all-modules-page-plugin = "org.jetbrains.dokka:all-modules-page-plugin:1.7.20"
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -94,7 +98,6 @@ atomicfu = "org.jetbrains.kotlinx:atomicfu:0.18.4"
 bignum = "com.ionspin.kotlin:bignum:0.3.7"
 
 com-google-android-material = { group = "com.google.android.material", name = "material", version.ref = "google-android-material" }
-compose-gradle-plugin = "org.jetbrains.compose:compose-gradle-plugin:1.2.0"
 
 databinding-adapters = { group = "androidx.databinding", name = "databinding-adapters", version.ref = "androidx-databinding" }
 databinding-common = { group = "androidx.databinding", name = "databinding-common", version.ref = "androidx-databinding" }
@@ -125,7 +128,6 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 
 kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
 
-kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-parcelize-compiler = { group = "org.jetbrains.kotlin", name = "kotlin-parcelize-compiler", version.ref = "kotlin" }
 kotlin-parcelize-runtime = { group = "org.jetbrains.kotlin", name = "kotlin-parcelize-runtime", version.ref = "kotlin" }
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
@@ -158,8 +160,6 @@ lifecycle = "com.arkivanov.essenty:lifecycle:0.6.0"
 
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
-navigation-safe-args-gradle-plugin = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation" }
-
 org-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
 org-jetbrains-compose-compiler-compiler = "org.jetbrains.compose.compiler:compiler:1.3.1"
 
@@ -171,7 +171,6 @@ redux-kotlin-threadsafe = "com.1gravity:redux-kotlin-threadsafe:0.5.10"
 
 sqldelight-android-driver = { group = "com.squareup.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { group = "com.squareup.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
-sqldelight-gradle-plugin = { group = "com.squareup.sqldelight", name = "gradle-plugin", version.ref = "sqldelight" }
 sqldelight-native-driver = { group = "com.squareup.sqldelight", name = "native-driver", version.ref = "sqldelight" }
 sqldelight-runtime = { group = "com.squareup.sqldelight", name = "runtime", version.ref = "sqldelight" }
 
