@@ -49,70 +49,50 @@
         <div id="sideMenu"></div>
     </div>
     <div id="main">
-<div class="main-content" id="content" pageids="Bloc Core::com.onegravity.bloc/StateStream///PointingToDeclaration//1301541495">
+<div class="main-content" data-page-type="classlike" id="content" pageids="Bloc Core::com.onegravity.bloc/StateStream///PointingToDeclaration//1301541495">
   <div class="breadcrumbs"><a href="../../index.html">Bloc Core</a><span class="delimiter">/</span><a href="../index.html">com.onegravity.bloc</a><span class="delimiter">/</span><span class="current">StateStream</span></div>
   <div class="cover ">
     <h1 class="cover"><span>State</span><wbr><span><span>Stream</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">StateStream</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="index.html">Value</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></div><p class="paragraph">A StateStream is a source of asynchronous (state) data. It's a hot stream, identical to kotlinx.coroutines.flow.StateFlow without exposing the replayCache and meant to deal with State data (compared to SideEffectStream for SideEffects).</p><p class="paragraph">A StateStream emits:</p><ul><li><p class="paragraph">no duplicate values</p></li><li><p class="paragraph">an initial value upon subscription (analogous BehaviorSubject)</p></li></ul><p class="paragraph">A SideEffectStream emits:</p><ul><li><p class="paragraph">all values even duplicates</p></li><li><p class="paragraph">no initial value upon subscription (analogous PublishSubject)</p></li></ul></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">StateStream</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="index.html">Value</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></div><p class="paragraph">A StateStream is a source of asynchronous (state) data. It's a hot stream, identical to kotlinx.coroutines.flow.StateFlow without exposing the replayCache and meant to deal with State data (compared to SideEffectStream for SideEffects).</p><p class="paragraph">A StateStream emits:</p><ul><li><p class="paragraph">no duplicate values</p></li><li><p class="paragraph">an initial value upon subscription (analogous BehaviorSubject)</p></li></ul><p class="paragraph">A SideEffectStream emits:</p><ul><li><p class="paragraph">all values even duplicates</p></li><li><p class="paragraph">no initial value upon subscription (analogous PublishSubject)</p></li></ul><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../../com.onegravity.bloc.utils/-mutable-state-stream/index.html">MutableStateStream</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../../com.onegravity.bloc.state/-bloc-state/index.html">BlocState</a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
-    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button></div>
     <div class="tabs-section-body">
-      <h2 class="">Functions</h2>
-      <div class="table" data-togglable="Functions"><a data-name="-2017979025%2FFunctions%2F1301541495" anchor-label="collect" id="-2017979025%2FFunctions%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a>
-        <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="collect.html"><span><span>collect</span></span></a></div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-2017979025%2FFunctions%2F1301541495" anchor-label="collect" id="-2017979025%2FFunctions%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="collect.html"><span><span>collect</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2017979025%2FFunctions%2F1301541495"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="collect.html"><span class="token function">collect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">collector<span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/FlowCollector///PointingToDeclaration/">FlowCollector</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">Value</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Accepts the given FlowCollector and emits values into it.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="collect.html"><span class="token function">collect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">collector<span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/FlowCollector///PointingToDeclaration/">FlowCollector</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">Value</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Accepts the given FlowCollector and emits values into it.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Properties</h2>
-      <div class="table" data-togglable="Properties"><a data-name="1775486146%2FProperties%2F1301541495" anchor-label="value" id="1775486146%2FProperties%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a>
-        <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="value.html"><span><span>value</span></span></a></div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1775486146%2FProperties%2F1301541495" anchor-label="value" id="1775486146%2FProperties%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value.html"><span><span>value</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1775486146%2FProperties%2F1301541495"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><a data-name="1775486146%2FProperties%2F1301541495" anchor-label="value" id="1775486146%2FProperties%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="value.html">value</a><span class="token operator">: </span><a href="index.html">Value</a></div><div class="brief "><a data-name="1775486146%2FProperties%2F1301541495" anchor-label="value" id="1775486146%2FProperties%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a><p class="paragraph">The current value.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":bloc-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="value.html">value</a><span class="token operator">: </span><a href="index.html">Value</a></div><div class="brief "><p class="paragraph">The current value.</p></div></div></div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <h2 class="">Inheritors</h2>
-      <div class="table" data-togglable="Inheritors"><a data-name="1132014513%2FInheritors%2F1301541495" anchor-label="MutableStateStream" id="1132014513%2FInheritors%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a>
-        <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="../../com.onegravity.bloc.utils/-mutable-state-stream/index.html">MutableStateStream</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1132014513%2FInheritors%2F1301541495"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="-1067106765%2FInheritors%2F1301541495" anchor-label="BlocState" id="-1067106765%2FInheritors%2F1301541495" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain"></a>
-        <div class="table-row" data-filterable-current=":bloc-core:dokkaHtmlPartial/commonMain" data-filterable-set=":bloc-core:dokkaHtmlPartial/commonMain">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="../../com.onegravity.bloc.state/-bloc-state/index.html">BlocState</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1067106765%2FInheritors%2F1301541495"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
           </div>
         </div>
       </div>
@@ -120,10 +100,10 @@
   </div>
 </div>
       <div class="footer">
-        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
       </div>
     </div>
 </div>
-
-</body></html>
+</body>
+</html>
 
