@@ -5,14 +5,19 @@
 [versions]
 
 kotlin = "1.7.20"
+
+## Plugins
 android-gradle-plugin = "7.3.1"
+compose-gradle-plugin = "1.2.0"
+
+complete-kotlin= "1.1.0"
+detekt = "1.22.0"
+taskinfo = "2.1.0"
+kotlin-dsl = "2.3.3"
+dokka = "1.8.10"
 
 androidx-activity = "1.6.1"
 androidx-appcompat = "1.6.1"
-androidx-compose-animation = "1.3.3"
-androidx-compose-compiler = "1.3.2"
-androidx-compose-material = "1.3.1"
-androidx-compose-ui = "1.3.3"
 androidx-constraintlayout = "2.1.4"
 androidx-core = "1.9.0"
 androidx-fragment = "1.5.5"
@@ -21,6 +26,11 @@ androidx-lifecycle-viewmodel-compose = "2.6.0"
 androidx-multidex = "2.0.1"
 androidx-navigation = "2.5.3"
 androidx-recyclerview = "1.3.0"
+
+androidx-compose-compiler = "1.3.2"
+androidx-compose-animation = "1.3.3"
+androidx-compose-material = "1.3.1"
+androidx-compose-ui = "1.3.3"
 
 atomicfu = "0.18.4"
 bignum = "0.3.7"
@@ -42,8 +52,7 @@ kotlinx-datetime = "0.4.0"
 
 ktor = "2.2.4"
 
-#upgrade to 1.0.0?
-essenty = "0.6.0"
+essenty = "1.0.0"
 
 reaktive = "1.2.3"
 
@@ -66,15 +75,11 @@ kotest = "5.5.5"
 
 [plugins]
 
-com-louiscad-complete-kotlin = { id = "com.louiscad.complete-kotlin", version = "1.1.0" }
-io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.22.0" }
-org-barfuin-gradle-taskinfo = { id = "org.barfuin.gradle.taskinfo", version = "2.1.0" }
-org-gradle-kotlin-kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version = "2.3.3" }
-
-org-jetbrains-dokka = { id = "org.jetbrains.dokka", version = "1.8.10" }
-
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.7.20" }
-org-jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.7.20" }
+org-jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+com-louiscad-complete-kotlin = { id = "com.louiscad.complete-kotlin", version.ref = "complete-kotlin" }
+org-barfuin-gradle-taskinfo = { id = "org.barfuin.gradle.taskinfo", version.ref = "taskinfo" }
+org-jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 ####################################################################################################
 ## LIBRARIES                                                                                      ##
@@ -82,17 +87,12 @@ org-jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.seriali
 
 [libraries]
 
+## Classpath
 android-tools-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-compose-gradle-plugin = "org.jetbrains.compose:compose-gradle-plugin:1.2.0"
+compose-gradle-plugin = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "compose-gradle-plugin" }
 navigation-safe-args-gradle-plugin = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation" }
 sqldelight-gradle-plugin = { group = "com.squareup.sqldelight", name = "gradle-plugin", version.ref = "sqldelight" }
-
-# TODO do we need these?
-all-modules-page-plugin = "org.jetbrains.dokka:all-modules-page-plugin:1.7.20"
-dokka-analysis = "org.jetbrains.dokka:dokka-analysis:1.7.20"
-dokka-base = "org.jetbrains.dokka:dokka-base:1.7.20"
-gfm-template-processing-plugin = "org.jetbrains.dokka:gfm-template-processing-plugin:1.7.20"
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
