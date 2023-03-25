@@ -30,7 +30,7 @@ kotlin {
                 export(project(":bloc-redux"))
 //                export("com.1gravity:bloc-core:_")
 //                export("com.1gravity:bloc-redux:_")
-                export(libs.lifecycle)
+                export(libs.essenty.lifecycle)
             }
         }
     }
@@ -56,8 +56,8 @@ kotlin {
                 implementation(libs.redux.kotlin.threadsafe)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api(libs.lifecycle)
-                api(libs.parcelable)
+                api(libs.essenty.lifecycle)
+                api(libs.essenty.parcelable)
 
                 // Koin
                 implementation(libs.koin.core)

@@ -44,7 +44,7 @@ kotlin {
                 implementation(libs.reaktive)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api(libs.lifecycle)
+                api(libs.essenty.lifecycle)
 
                 // Redux store (https://reduxkotlin.org)
                 api(libs.redux.kotlin.threadsafe)

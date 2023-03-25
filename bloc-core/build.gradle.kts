@@ -42,8 +42,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api(libs.lifecycle)
-                api(libs.instance.keeper)
+                api(libs.essenty.lifecycle)
+                api(libs.essenty.instance.keeper)
 
                 // Logging (https://github.com/touchlab/Kermit)
                 implementation(libs.kermit)

@@ -98,8 +98,8 @@ dependencies {
     // Logging (https://github.com/touchlab/Kermit)
     implementation(libs.kermit)
 
-    implementation(libs.landscapist.glide)
     implementation(libs.glide)
+    implementation(libs.landscapist.glide)
     implementation(libs.groupie)
     implementation(libs.groupie.viewbinding)
 
@@ -108,7 +108,7 @@ dependencies {
     implementation(libs.kotlin.result.coroutines)
 
     // Essenty (https://github.com/arkivanov/Essenty)
-    implementation(libs.lifecycle)
+    implementation(libs.essenty.lifecycle)
 
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotlinx.coroutines.test)
