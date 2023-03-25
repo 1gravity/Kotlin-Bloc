@@ -1,4 +1,4 @@
-@file:Suppress("UnusedPrivateMember")
+@file:Suppress("UnusedPrivateMember", "UnstableApiUsage")
 
 import Bloc_android_base_gradle.AndroidBuild
 
@@ -46,15 +46,12 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
         compose = true
     }
 
-    dataBinding {
-        enable = true
-    }
-
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 }
 
@@ -68,43 +65,41 @@ dependencies {
 
     implementation(project(":bloc-samples"))
 
-    implementation(Kotlin.stdlib)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation(KotlinX.coroutines.core)
-    implementation(KotlinX.coroutines.android)
-
-    implementation(AndroidX.multidex)
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.core.ktx)
-    implementation(AndroidX.lifecycle.viewModelKtx)
-    implementation(AndroidX.fragment.ktx)
-    implementation(AndroidX.constraintLayout)
-    implementation(AndroidX.navigation.fragmentKtx)
-    implementation(AndroidX.navigation.uiKtx)
-    implementation(AndroidX.recyclerView)
+    implementation(libs.androidx.multidex)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.recyclerview)
 
     // Integration with activities
-    implementation(AndroidX.activity.compose)
+    implementation(libs.androidx.activity.compose)
     // Integration with ViewModels
-    implementation(AndroidX.lifecycle.viewModelCompose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Compose Material Design
-    implementation(AndroidX.compose.material)
+    implementation(libs.androidx.compose.material)
     // Animations
-    implementation(AndroidX.compose.animation)
+    implementation(libs.androidx.compose.animation)
     // Tooling support (Previews, etc.)
-    implementation(AndroidX.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling)
 
-    implementation(Google.android.material)
+    implementation(libs.com.google.android.material)
 
     implementation(libs.kotlin.reflect)
 
-    implementation(Koin.android)
+    implementation(libs.koin.android)
 
     // Logging (https://github.com/touchlab/Kermit)
-    implementation(Touchlab.kermit)
+    implementation(libs.kermit)
 
-    implementation(libs.landscapist.glide)
     implementation(libs.glide)
+    implementation(libs.landscapist.glide)
     implementation(libs.groupie)
     implementation(libs.groupie.viewbinding)
 
@@ -113,13 +108,13 @@ dependencies {
     implementation(libs.kotlin.result.coroutines)
 
     // Essenty (https://github.com/arkivanov/Essenty)
-    implementation(libs.lifecycle)
+    implementation(libs.essenty.lifecycle)
 
-    testImplementation(Testing.kotest.runner.junit5)
-    testImplementation(KotlinX.coroutines.test)
-    testImplementation(CashApp.turbine)
-    testImplementation(Testing.junit4)
-    testImplementation(Testing.mockK)
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.junit4)
+    testImplementation(libs.mockk)
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

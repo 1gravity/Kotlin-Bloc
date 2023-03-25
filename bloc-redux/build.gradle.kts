@@ -37,14 +37,14 @@ kotlin {
             dependencies {
                 implementation(project(":bloc-core"))
 
-                implementation(KotlinX.coroutines.core)
+                implementation(libs.kotlinx.coroutines.core)
 
                 // Reaktive (https://github.com/badoo/Reaktive)
                 // we only use the DisposableScope
                 implementation(libs.reaktive)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api(libs.lifecycle)
+                api(libs.essenty.lifecycle)
 
                 // Redux store (https://reduxkotlin.org)
                 api(libs.redux.kotlin.threadsafe)

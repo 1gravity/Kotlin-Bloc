@@ -1,4 +1,4 @@
-@file:Suppress("UnusedPrivateMember")
+@file:Suppress("UnusedPrivateMember", "UnstableApiUsage")
 
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Strict
 
@@ -30,13 +30,13 @@ kotlin {
             dependencies {
                 api(project(":bloc-core"))
 
-                implementation(KotlinX.coroutines.core)
+                implementation(libs.kotlinx.coroutines.core)
 
                 // Essenty (https://github.com/arkivanov/Essenty)
-                api(libs.lifecycle)
+                api(libs.essenty.lifecycle)
 
                 // Logging (https://github.com/touchlab/Kermit)
-                implementation(Touchlab.kermit)
+                implementation(libs.kermit)
             }
         }
         val commonTest by getting {
@@ -47,8 +47,8 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(AndroidX.appCompat)
-                implementation(AndroidX.activity.compose)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activity.compose)
             }
         }
     }
@@ -60,7 +60,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
         useLiveLiterals = true
     }
 }
