@@ -87,7 +87,8 @@ private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner 
     private val lifecycleRegistry = LifecycleRegistry(this)
 
     init {
-        viewModelScope.launch(Dispatchers.Main) {
+        // viewModelScope is tied to Dispatchers.Main.immediate but we want to be explicit here
+        viewModelScope.launch(Dispatchers.Main.immediate) {
             lifecycleRegistry.currentState = Lifecycle.State.CREATED    // triggers onCreate()
             lifecycleRegistry.currentState = Lifecycle.State.STARTED    // triggers onStart()
             lifecycleRegistry.currentState = Lifecycle.State.RESUMED    // triggers onResume()

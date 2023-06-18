@@ -11,7 +11,7 @@ android-gradle-plugin = "7.4.0"
 compose-gradle-plugin = "1.4.0-alpha01-dev980"
 
 complete-kotlin= "1.1.0"
-detekt = "1.22.0"
+detekt = "1.23.0"
 taskinfo = "2.1.0"
 kotlin-dsl = "2.3.3"
 dokka = "1.8.10"
