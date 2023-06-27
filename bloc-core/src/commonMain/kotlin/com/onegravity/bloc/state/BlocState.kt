@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.FlowCollector
  *
  * It needs to be a class so generic types aren't erased in Swift.
  */
-public abstract class BlocState<out State : Any, in Proposal : Any> : StateStream<State>,
+public abstract class BlocState<out State : Any, in Proposal : Any> :
+    StateStream<State>,
     Sink<Proposal> {
 
     /**

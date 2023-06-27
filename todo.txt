@@ -24,3 +24,5 @@
 - TODO implement `sideEffects` in the Bloc DSL to allow emission of multiple side effects
        (`sideEffect` allows only a single side effect)
 - TODO compiler plugin to have compile-time checks when building Blocs and BlocStates
+
+- TODO implement lazy initial state

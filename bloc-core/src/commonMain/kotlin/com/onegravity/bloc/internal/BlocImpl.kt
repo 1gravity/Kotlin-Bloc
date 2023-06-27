@@ -123,7 +123,6 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * The Sink to dispatch Actions.
      * All it does is add the Action to a queue to be processed asynchronously.
      */
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun send(action: Action) {
         when {
             // we need to cache actions if the initializer is still running
