@@ -25,6 +25,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 private const val QUEUE_INITIAL_SIZE = 10
 
@@ -83,7 +86,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = thunkDispatcher,
         thunks = thunks,
-        dispatch = reduceProcessor::send,
+        dispatch = { reduce(it) },
         reduce = reducer
     )
 
@@ -92,9 +95,19 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = initDispatcher,
         initializer = initialize,
-        dispatch = { thunkProcessor.send(it) },
+        dispatch = {
+            val processed = thunkProcessor.send(it)
+            if (processed.not()) reduce(it)
+        },
         reduce = reducer
     )
+
+    /**
+     * Reduces the given action by suspending the coroutine until the action has been processed.
+     */
+    private suspend fun reduce(action: Action) = suspendCoroutine { continuation ->
+        reduceProcessor.send(action) { continuation.resume(Unit) }
+    }
 
     init {
         blocLifecycle.subscribe(onStart = {
@@ -130,7 +143,15 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 
             // thunks are always processed first
             // ThunkProcessor will send the action to ReduceProcessor if there's no matching thunk
-            blocLifecycle.isStarted() -> thunkProcessor.send(action)
+            blocLifecycle.isStarted() -> {
+                val processed = thunkProcessor.send(action)
+                if (processed.not()) {
+                    // reducers run synchronously -> usinh runBlocking here is OK
+                    runBlocking {
+                        reduce(action)
+                    }
+                }
+            }
 
             else -> { /* NOP*/ }
         }

@@ -73,8 +73,8 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
 
         coroutineHelper.launch {
             for (element in reduceChannel) {
-                element.action?.run(::runReducers)
-                element.reducer?.run(::runReducer)
+                element.action?.let(::runReducers)
+                element.reducer?.let(::runReducer)
             }
         }
     }
@@ -83,9 +83,9 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * BlocDSL:
      * reduce { } -> run a Reducer Redux style
      */
-    internal fun send(action: Action) {
+    internal fun send(action: Action, onFinished: () -> Unit) {
         logger.d("received reducer with action ${action.trimOutput()}")
-        reduceChannel.trySend(ReducerContainer(action))
+        reduceChannel.trySend(ReducerContainer(action = action to onFinished))
     }
 
     /**
@@ -100,7 +100,8 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     /**
      * Triggered to execute reducers with a matching Action
      */
-    private fun runReducers(action: Action) {
+    private fun runReducers(actionOnFinished: Pair<Action, () -> Unit>) {
+        val (action, onFinished) = actionOnFinished
         logger.d("run reducers for action ${action.trimOutput()}")
         getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
             val (_, reducer, expectsProposal) = matcherReducer
@@ -122,6 +123,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
                 else -> proposalEmitted
             }
         }
+        onFinished()
     }
 
     private fun getMatchingReducers(action: Action) = reducers

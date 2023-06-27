@@ -10,9 +10,9 @@ package com.onegravity.bloc.utils
  * ```
  */
 public data class InitializerContext<State, Action, Proposal>(
-    val state: State,
+    val getState: GetState<State>,
     val dispatch: Dispatcher<Action>,
-    val reduce: (proposal: Proposal) -> Unit,
+    val reduce: suspend (proposal: Proposal) -> Unit,
     internal val launchBlock: Launch
 )
 
@@ -32,7 +32,7 @@ public data class ThunkContext<State, Action, A : Action, Proposal>(
     val getState: GetState<State>,
     val action: A,
     val dispatch: Dispatcher<Action>,
-    val reduce: (proposal: Proposal) -> Unit,
+    val reduce: suspend (proposal: Proposal) -> Unit,
     internal val launchBlock: Launch
 )
 
@@ -46,7 +46,7 @@ public data class ThunkContext<State, Action, A : Action, Proposal>(
 public data class ThunkContextNoAction<State, Action, Proposal>(
     val getState: GetState<State>,
     val dispatch: Dispatcher<Action>,
-    val reduce: (proposal: Proposal) -> Unit,
+    val reduce: suspend (proposal: Proposal) -> Unit,
     internal val launchBlock: Launch
 )
 
