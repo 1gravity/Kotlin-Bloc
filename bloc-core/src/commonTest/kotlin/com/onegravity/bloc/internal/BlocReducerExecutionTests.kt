@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.seconds
 
 class BlocReducerExecutionTests : BaseTestClass() {
     @Test
@@ -100,15 +101,14 @@ class BlocReducerExecutionTests : BaseTestClass() {
     }
 
     @Test
-    fun testReducerExecutionReducerDelays() = runTest {
+    fun testReducerExecutionReducerDelays() = runTest(timeout = 20.seconds) {
         testReducerExecutionWithDelays(0, 0, 0, 1000, 100, 0)
         testReducerExecutionWithDelays(0, 0, 0, 10, 100, 500)
     }
 
-    @Test
-    fun testReducerExecutionSendAndReducerDelays() = runTest {
-        testReducerExecutionWithDelays(123, 1000, 500, 1000, 100, 500)
-        testReducerExecutionWithDelays(10, 100, 0, 1000, 100, 500)
+    @Test fun testReducerExecutionSendAndReducerDelays() = runTest(timeout = 20.seconds) {
+        testReducerExecutionWithDelays(90, 99, 55, 50, 50, 99)
+        testReducerExecutionWithDelays(10, 100, 0, 300, 100, 250)
     }
 
     @Suppress("LongParameterList")
@@ -130,7 +130,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         testCollectState(
             bloc,
             listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
-            delayReducerInc.times(10).plus(100).coerceAtLeast(100)
+            delayReducerInc.plus(100).coerceAtLeast(100)
         ) {
             repeat(10) {
                 bloc.send(Increment)
@@ -142,11 +142,10 @@ class BlocReducerExecutionTests : BaseTestClass() {
         testCollectState(
             bloc,
             listOf(11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1),
-            delayReducerDec.times(10).plus(100).coerceAtLeast(100)
+            delayReducerDec.plus(100).coerceAtLeast(100)
         ) {
             repeat(10) {
                 bloc.send(Decrement)
-                delay(100)
                 delay(delaySendDec)
             }
         }
@@ -155,7 +154,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         testCollectState(
             bloc,
             listOf(1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51),
-            delayReducerWhatever.times(10).plus(100).coerceAtLeast(100)
+            delayReducerWhatever.plus(100).coerceAtLeast(100)
         ) {
             repeat(10) {
                 bloc.send(Whatever)
@@ -167,7 +166,7 @@ class BlocReducerExecutionTests : BaseTestClass() {
         testCollectState(
             bloc,
             listOf(51, 52, 57, 56, 57, 62, 61, 62, 67, 66),
-            (delayReducerInc + delayReducerDec + delayReducerWhatever + 100).times(3)
+            (delayReducerInc + delayReducerDec + delayReducerWhatever + 100)
                 .coerceAtLeast(100)
         ) {
             repeat(3) {

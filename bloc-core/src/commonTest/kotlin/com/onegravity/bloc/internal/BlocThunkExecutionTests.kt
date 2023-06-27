@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 class BlocThunkExecutionTests : BaseTestClass() {
 
     @Test
-    fun testThunkExecution1() = runTests {
+    fun `test thunk execution - lifecycle - order of execution - matching`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -27,14 +27,15 @@ class BlocThunkExecutionTests : BaseTestClass() {
 
         assertEquals(1, bloc.value)
 
+        // action is sent before the bloc is started -> no effect
         lifecycleRegistry.onCreate()
         testState(bloc, Increment, 1)
-
         lifecycleRegistry.onStart()
         delay(50)
-        testState(bloc, null, 1)
         assertEquals(0, count)
+        testState(bloc, null, 1)
 
+        // thunk 2, 3 and 4 are executed
         testState(bloc, Decrement, 1)
         assertEquals(9, count)
 
@@ -55,7 +56,7 @@ class BlocThunkExecutionTests : BaseTestClass() {
     }
 
     @Test
-    fun testThunkExecution2() = runTests {
+    fun `test thunk execution - with dispatch`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -84,9 +85,9 @@ class BlocThunkExecutionTests : BaseTestClass() {
 
         assertEquals(1, bloc.value)
 
+        // action is sent before the bloc is started -> no effect
         lifecycleRegistry.onCreate()
         testState(bloc, Increment, 1)
-
         lifecycleRegistry.onStart()
         testState(bloc, null, 1)
         assertEquals(0, count)
@@ -99,7 +100,7 @@ class BlocThunkExecutionTests : BaseTestClass() {
     }
 
     @Test
-    fun testThunkExecution3() = runTests {
+    fun `test thunk execution - builder and MVVM+ style`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -142,7 +143,7 @@ class BlocThunkExecutionTests : BaseTestClass() {
     }
 
     @Test
-    fun testThunkReduceExecution() = runTests {
+    fun `test thunk execution - getState`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -172,6 +173,64 @@ class BlocThunkExecutionTests : BaseTestClass() {
         testState(bloc, Whatever, 8)
 
         testState(bloc, Decrement, 5)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun `test thunk execution - with getState and dispatch`() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 1) {
+            thunk<Increment> {
+                val state = getState()
+                dispatch(Increment)
+                assertEquals(state + 1, getState())
+                dispatch(Decrement)
+                assertEquals(state, getState())
+                reduce(getState() + 1)
+            }
+            reduce<Increment> { state + 1 }
+            reduce<Decrement> { state - 1 }
+        }
+
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        testState(bloc, Increment, 2)
+        testState(bloc, Increment, 3)
+        testState(bloc, Increment, 4)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun `test thunk execution - with getState and dispatch - MVVM+ style`() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 1) {
+            reduce<Increment> { state + 1 }
+            reduce<Decrement> { state - 1 }
+        }
+
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        bloc.thunk {
+            val state = getState()
+            dispatch(Increment)
+            assertEquals(state + 1, getState())
+            dispatch(Decrement)
+            assertEquals(state, getState())
+        }
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
