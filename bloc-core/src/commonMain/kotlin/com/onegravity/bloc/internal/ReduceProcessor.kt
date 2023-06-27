@@ -29,6 +29,12 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
 ) {
 
     /**
+     * Channel for reducers to be processed (incoming)
+     */
+    private val reduceChannel =
+        Channel<ReducerContainer<State, Action, SideEffect, Proposal>>(UNLIMITED)
+
+    /**
      * Channel for side effects (outgoing)
      */
     private val sideEffectChannel = Channel<SideEffect>(UNLIMITED)
@@ -46,8 +52,12 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      */
     init {
         lifecycle.subscribe(
+            onInitialize = {
+                startProcessing()
+            },
             onStart = {
                 logger.d("onStart -> start Bloc")
+                startProcessing()
             },
             onStop = {
                 logger.d("onStop -> stop Bloc")
@@ -57,13 +67,25 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
         )
     }
 
+    private fun startProcessing() {
+        // only start processing if the coroutine wasn't already started
+        if (!coroutineHelper.onStart()) return
+
+        coroutineHelper.launch {
+            for (element in reduceChannel) {
+                element.action?.run(::runReducers)
+                element.reducer?.run(::runReducer)
+            }
+        }
+    }
+
     /**
      * BlocDSL:
      * reduce { } -> run a Reducer Redux style
      */
     internal fun send(action: Action) {
-        logger.d("trigger reducers with action ${action.trimOutput()}")
-        runReducers(action)
+        logger.d("received reducer with action ${action.trimOutput()}")
+        reduceChannel.trySend(ReducerContainer(action))
     }
 
     /**
@@ -72,7 +94,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      */
     internal fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
         logger.d("received reducer without action")
-        runReducer(reduce)
+        reduceChannel.trySend(ReducerContainer(reducer = reduce))
     }
 
     /**

@@ -66,7 +66,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * thunk { } -> run a thunk Redux style
      */
     internal fun send(action: Action) {
-        logger.d("trigger thunks with action ${action.trimOutput()}")
+        logger.d("received thunk with action ${action.trimOutput()}")
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             thunkChannel.trySend(action)
         } else {
@@ -80,7 +80,7 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      */
     internal fun thunk(thunk: ThunkNoAction<State, Action, Proposal>) {
         // we don't need to check if (lifecycle.state == LifecycleState.Started) since the
-        // CoroutineScope is cancelled in onStop()
+        // CoroutineScope is cancelled onStop()
         coroutineHelper.launch {
             logger.d("received thunk without action")
             val dispatcher: Dispatcher<Action> = {
