@@ -8,6 +8,12 @@ package com.onegravity.bloc.utils
  *       // dispatch(action)
  *   }
  * ```
+ *
+ * @param getState returns the current state
+ * @param dispatch dispatches an action
+ * @param reduce reduces a proposal
+ * @param launchBlock launch a coroutine without exposing the bloc's CoroutineScope,
+ *                    it's internal to allow for JobConfig default values via extension functions
  */
 public data class InitializerContext<State, Action, Proposal>(
     val getState: GetState<State>,
@@ -27,6 +33,13 @@ public data class InitializerContext<State, Action, Proposal>(
  *   thunk(EnumAction) {
  *   }
  * ```
+ *
+ * @param getState returns the current state
+ * @param action the action that triggered the thunk
+ * @param dispatch dispatches an action
+ * @param reduce reduces a proposal
+ * @param launchBlock launch a coroutine without exposing the bloc's CoroutineScope,
+ *                    it's internal to allow for JobConfig default values via extension functions
  */
 public data class ThunkContext<State, Action, A : Action, Proposal>(
     val getState: GetState<State>,
@@ -42,6 +55,12 @@ public data class ThunkContext<State, Action, A : Action, Proposal>(
  *   fun doSomething() = thunk {
  *   }
  * ```
+ *
+ * @param getState returns the current state
+ * @param dispatch dispatches an action
+ * @param reduce reduces a proposal
+ * @param launchBlock launch a coroutine without exposing the bloc's CoroutineScope,
+ *                    it's internal to allow for JobConfig default values via extension functions
  */
 public data class ThunkContextNoAction<State, Action, Proposal>(
     val getState: GetState<State>,
@@ -61,6 +80,11 @@ public data class ThunkContextNoAction<State, Action, Proposal>(
  *   reduce(EnumAction) {
  *   }
  * ```
+ *
+ * @param state the current state
+ * @param action the action that triggered the reducer
+ * @param launchBlock launch a coroutine without exposing the bloc's CoroutineScope,
+ *                    it's internal to allow for JobConfig default values via extension functions
  */
 public data class ReducerContext<State, Action>(
     val state: State,
@@ -74,6 +98,10 @@ public data class ReducerContext<State, Action>(
  *   fun doSomething() = reduce {
  *   }
  * ```
+ *
+ * @param state the current state
+ * @param launchBlock launch a coroutine without exposing the bloc's CoroutineScope,
+ *                    it's internal to allow for JobConfig default values via extension functions
  */
 public data class ReducerContextNoAction<State>(
     val state: State,
