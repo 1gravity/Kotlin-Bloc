@@ -77,18 +77,34 @@ There are extension functions to launch `Coroutines` from a thunk (see [Coroutin
 Thunks are meant to run asynchronous code and reducers are meant to reduce state. In many cases however the reducers are very simple functions. In the example above we need to add a dedicated action `Loading`, dispatch that action in the thunk in order for a reducer to reduce the current state to one that indicates loading. While that "separation of concerns" is useful in many cases, it adds a good amount of boilerplate code for simple cases like the one we have here. To simplify this we can use the `ThunkContext.reduce` function:
 ```kotlin
 thunk<Load> {
-    reduce( getState().copy(loading = true) )
-
+    reduce(getState().copy(loading = true))
     val books = repository.load()
-    
-    reduce( getState().copy(loading = false, books = books) )
+    reduce(getState().copy(loading = false, books = books))
 }
 ```
 
-`ThunkContext.reduce()` is identical to submitting an action that triggers a reducer except that the reducer is implicitly defined as:
+:::tip
+Reducers are executed in the order they are added to the reducer queue (see [Reducer Concurrency](reducer#concurrency)). When `reduce()` is called from a thunk or an initializer, that reducer function is also added to the queue to guarantee the correct order of execution but the reduce call itself will suspend till the queued reducer was executed. This guarantees that this always succeeds:
+```
+thunk {
+    reduce(newState)                    // <- suspends till the state reduction is done
+    assertEquals(getState(), newState)  // <- assertion is always true
+}
+```
+:::
+
+### dispatch()
+
+When dispatching actions to reducers, the dispatch and the subsequent state reduction will happen in a blocking / suspending manner. Similar to `reduce()`, a call to `dispatch()` will suspend and continue once the reducer is done. This is NOT true if the action was dispatched to another thunk though, only actions dispatched to reducers are processed synchronously:
+
 ```kotlin
-reduce {
-    Effect(proposal, emptyList())
+thunk {
+    val state = getState()
+    dispatch(Increment)                 // <- suspends till the reducer has run
+    assertEquals(getState(), state + 1) // <- assertion is always true
+}
+reduce<Increment> {
+    state + 1
 }
 ```
 
