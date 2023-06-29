@@ -41,6 +41,7 @@ class PostsComponentImpl(
         bloc<PostsRootState, PostsAction>(context, blocState) {
             onCreate {
                 // example of "reducing" state from an initializer directly
+                val state = getState()
                 reduce(state.copy(postsState = state.postsState.copy(loading = true)))
 
                 // we can access the db here because Dispatchers.Default is a Bloc's default

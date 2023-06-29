@@ -1,8 +1,6 @@
 - TODO implement Subscriber tests
 
-- TODO implements Bloc tests with initializer, reducer, thunk, side effect
 - TODO implements BlocState tests
-- TODO implements all the other tests
 
 - TODO think about composition of blocs, one for ui state, one for domain logic?
 
@@ -24,3 +22,5 @@
 - TODO implement `sideEffects` in the Bloc DSL to allow emission of multiple side effects
        (`sideEffect` allows only a single side effect)
 - TODO compiler plugin to have compile-time checks when building Blocs and BlocStates
+
+- TODO implement lazy initial state

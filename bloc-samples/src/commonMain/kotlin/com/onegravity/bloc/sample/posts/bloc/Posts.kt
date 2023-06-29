@@ -31,7 +31,7 @@ object Posts {
         context,
         blocState(PostsState())
     ) {
-        onCreate { if (state.isEmpty()) dispatch(Action.Load) }
+        onCreate { if (getState().isEmpty()) dispatch(Action.Load) }
 
         // we could also put the thunk code into the onCreate block but we want to illustrate the
         // ability to use initializing code

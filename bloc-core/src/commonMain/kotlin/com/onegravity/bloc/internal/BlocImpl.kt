@@ -25,6 +25,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.coroutines.suspendCoroutine
 
 private const val QUEUE_INITIAL_SIZE = 10
 
@@ -73,9 +75,21 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         reducers = reducers
     )
 
-    // this reducer emits the proposal directly to the BlocState, no reduce functionality
-    private val reducer: (proposal: Proposal) -> Unit = { proposal ->
-        reduceProcessor.reduce { Effect(proposal, emptyList()) }
+    /**
+     *  Function that sends the proposal directly to the BlocState and waits for the process to
+     *  finish by suspending execution.
+     */
+    private val reducer: suspend (proposal: Proposal) -> Unit = { proposal ->
+        suspendCoroutine { continuation ->
+            reduceProcessor.reduce({ Effect(proposal, emptyList()) }, continuation)
+        }
+    }
+
+    /**
+     * Reduces the given action by suspending the coroutine until the action has been processed.
+     */
+    private suspend fun reduce(action: Action) = suspendCoroutine { continuation ->
+        reduceProcessor.send(action, continuation)
     }
 
     private val thunkProcessor = ThunkProcessor(
@@ -83,7 +97,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = thunkDispatcher,
         thunks = thunks,
-        dispatch = reduceProcessor::send,
+        dispatch = { reduce(it) },
         reduce = reducer
     )
 
@@ -92,7 +106,10 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         state = blocState,
         dispatcher = initDispatcher,
         initializer = initialize,
-        dispatch = { thunkProcessor.send(it) },
+        dispatch = {
+            val processed = thunkProcessor.send(it)
+            if (processed.not()) reduce(it)
+        },
         reduce = reducer
     )
 
@@ -123,7 +140,6 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
      * The Sink to dispatch Actions.
      * All it does is add the Action to a queue to be processed asynchronously.
      */
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun send(action: Action) {
         when {
             // we need to cache actions if the initializer is still running
@@ -131,7 +147,15 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
 
             // thunks are always processed first
             // ThunkProcessor will send the action to ReduceProcessor if there's no matching thunk
-            blocLifecycle.isStarted() -> thunkProcessor.send(action)
+            blocLifecycle.isStarted() -> {
+                val processed = thunkProcessor.send(action)
+                if (processed.not()) {
+                    // reducers are meant to run on the main thread -> using runBlocking here is OK
+                    runBlocking {
+                        reduce(action)
+                    }
+                }
+            }
 
             else -> { /* NOP*/ }
         }

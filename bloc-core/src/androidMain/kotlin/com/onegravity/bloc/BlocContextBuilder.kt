@@ -83,11 +83,13 @@ fun ViewModel.blocContext(): BlocContext =
  * The ViewModel would have to extend some BaseViewModel and we don't want that.
  */
 private fun ViewModel.viewModelLifeCycle(): Lifecycle = object : LifecycleOwner {
-    override fun getLifecycle() = lifecycleRegistry
     private val lifecycleRegistry = LifecycleRegistry(this)
 
+    override val lifecycle = lifecycleRegistry
+
     init {
-        viewModelScope.launch(Dispatchers.Main) {
+        // viewModelScope is tied to Dispatchers.Main.immediate but we want to be explicit here
+        viewModelScope.launch(Dispatchers.Main.immediate) {
             lifecycleRegistry.currentState = Lifecycle.State.CREATED    // triggers onCreate()
             lifecycleRegistry.currentState = Lifecycle.State.STARTED    // triggers onStart()
             lifecycleRegistry.currentState = Lifecycle.State.RESUMED    // triggers onResume()

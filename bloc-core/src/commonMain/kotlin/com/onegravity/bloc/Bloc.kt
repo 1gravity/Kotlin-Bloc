@@ -40,4 +40,10 @@ public abstract class Bloc<out State : Any, in Action : Any, SideEffect : Any> :
         sideEffect: BlocObserver<SideEffect>?
     )
 
+    /**
+     * Sink.send(Action)
+     */
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+    abstract override fun send(action: Action)
+
 }

@@ -19,7 +19,7 @@ class BlocLifecycleTests : BaseTestClass() {
      * Testing the Essenty lifecycle
      */
     @Test
-    fun lifecycleTransitions() = runTests {
+    fun `test Essenty lifecycle transitions`() = runTests {
         LifecycleRegistry().legalTransition { onCreate() }
         LifecycleRegistry().illegalTransition { onStart() }
         LifecycleRegistry().illegalTransition { onResume() }
@@ -84,7 +84,7 @@ class BlocLifecycleTests : BaseTestClass() {
     }
 
     @Test
-    fun reducerLifecycleTest() = runTests {
+    fun `test bloc lifecycle with reducer`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
         val bloc = bloc<Int, Int>(context, 1) {
@@ -101,14 +101,14 @@ class BlocLifecycleTests : BaseTestClass() {
         lifecycleRegistry.onStart()
         testState(bloc, null, 1)
         assertEquals(1, bloc.value)
-        testState(bloc, 1, 2)
+        testState(bloc, 5, 6)
 
         lifecycleRegistry.onStop()
-        testState(bloc, 1, 2)
+        testState(bloc, 1, 6)
 
         bloc.reduce { state + 5 }
         delay(10)
-        assertEquals(2, bloc.value)
+        assertEquals(6, bloc.value)
 
         lifecycleRegistry.onStart()
         lifecycleRegistry.onStop()
@@ -116,21 +116,21 @@ class BlocLifecycleTests : BaseTestClass() {
         lifecycleRegistry.onStop()
         lifecycleRegistry.onStart()
 
-        testState(bloc, null, 2)
-        testState(bloc, 1, 3)
+        testState(bloc, null, 6)
+        testState(bloc, 1, 7)
 
         bloc.reduce { state + 5 }
         delay(10)
-        assertEquals(8, bloc.value)
+        assertEquals(12, bloc.value)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
 
-        testState(bloc, 1, 8)
+        testState(bloc, 1, 12)
     }
 
     @Test
-    fun thunkLifecycleTest() = runTests {
+    fun `test bloc lifecycle with thunk`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
         val bloc = bloc<Int, Int>(context, 1) {
@@ -157,14 +157,14 @@ class BlocLifecycleTests : BaseTestClass() {
         testState(bloc, 1, 3)
 
         bloc.thunk { dispatch(1) }
-        delay(50)
+        delay(10)
         assertEquals(5, bloc.value)
 
         lifecycleRegistry.onStop()
         testState(bloc, 1, 5)
 
         bloc.thunk { dispatch(1) }
-        delay(50)
+        delay(10)
         assertEquals(5, bloc.value)
 
         lifecycleRegistry.onStart()
@@ -178,7 +178,7 @@ class BlocLifecycleTests : BaseTestClass() {
 
     @Suppress("RemoveExplicitTypeArguments")
     @Test
-    fun initializerLifecycleTest() = runTests {
+    fun `test bloc lifecycle with initializer`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
         val bloc = bloc<Int, Int>(context, 1) {
@@ -191,7 +191,8 @@ class BlocLifecycleTests : BaseTestClass() {
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onCreate()
-        delay(50)
+        delay(10)
+        assertEquals(8, bloc.value)
         testState(bloc, null, 8)
 
         lifecycleRegistry.onStart()
@@ -219,7 +220,7 @@ class BlocLifecycleTests : BaseTestClass() {
 
     @Suppress("RemoveExplicitTypeArguments")
     @Test
-    fun initializerLifecycleTestEarlyStart() = runTests {
+    fun `test bloc lifecycle started early with initializer`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         lifecycleRegistry.onCreate()
         lifecycleRegistry.onStart()
@@ -230,7 +231,7 @@ class BlocLifecycleTests : BaseTestClass() {
             reduce { state + action }
         }
 
-        delay(100)
+        delay(10)
         assertEquals(8, bloc.value)
 
         lifecycleRegistry.onStop()
@@ -239,7 +240,7 @@ class BlocLifecycleTests : BaseTestClass() {
 
     @Suppress("RemoveExplicitTypeArguments")
     @Test
-    fun initializerLifecycleTestEarlyStart2() = runTests {
+    fun `test bloc lifecycle started and stopped early with initializer`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         lifecycleRegistry.onCreate()
         lifecycleRegistry.onStart()
@@ -251,11 +252,11 @@ class BlocLifecycleTests : BaseTestClass() {
             reduce { state + action }
         }
 
-        delay(50)
+        delay(10)
         assertEquals(8, bloc.value)
-        bloc.send(1)
-        delay(50)
-        assertEquals(8, bloc.value)
+
+        // this won't have an effect because the bloc is already stopped
+        testState(bloc, 1, 8)
 
         lifecycleRegistry.onDestroy()
     }

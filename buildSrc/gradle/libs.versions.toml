@@ -11,7 +11,7 @@ android-gradle-plugin = "7.4.0"
 compose-gradle-plugin = "1.4.0-alpha01-dev980"
 
 complete-kotlin= "1.1.0"
-detekt = "1.22.0"
+detekt = "1.23.0"
 taskinfo = "2.1.0"
 kotlin-dsl = "2.3.3"
 dokka = "1.8.10"
@@ -20,7 +20,7 @@ androidx-activity = "1.6.1"
 androidx-appcompat = "1.6.1"
 androidx-constraintlayout = "2.1.4"
 androidx-core = "1.9.0"
-androidx-fragment = "1.5.5"
+androidx-fragment = "1.6.0"
 androidx-lifecycle = "2.6.0"
 androidx-lifecycle-viewmodel-compose = "2.6.0"
 androidx-multidex = "2.0.1"
@@ -32,7 +32,7 @@ androidx-compose-animation = "1.3.3"
 androidx-compose-material = "1.3.1"
 androidx-compose-ui = "1.3.3"
 
-atomicfu = "0.18.4"
+atomicfu = "0.20.2"
 bignum = "0.3.7"
 
 google-android-material = "1.8.0"
@@ -45,14 +45,14 @@ kermit = "1.2.2"
 
 koin = "3.3.3"
 
-kotlin-result = "1.1.16"
+kotlin-result = "1.1.18"
 
-kotlinx-coroutines = "1.6.4"
+kotlinx-coroutines = "1.7.1"
 kotlinx-datetime = "0.4.0"
 
 ktor = "2.2.4"
 
-essenty = "1.0.0"
+essenty = "1.1.0"
 
 reaktive = "1.2.3"
 

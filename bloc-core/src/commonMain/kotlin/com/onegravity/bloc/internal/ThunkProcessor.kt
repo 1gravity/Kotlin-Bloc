@@ -22,8 +22,8 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
     private val state: BlocState<State, Proposal>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val thunks: List<MatcherThunk<State, Action, Action, Proposal>> = emptyList(),
-    private val dispatch: (action: Action) -> Unit,
-    private val reduce: (proposal: Proposal) -> Unit
+    private val dispatch: suspend (action: Action) -> Unit,
+    private val reduce: suspend (proposal: Proposal) -> Unit
 ) {
 
     /**
@@ -65,13 +65,13 @@ internal class ThunkProcessor<State : Any, Action : Any, Proposal : Any>(
      * BlocDSL:
      * thunk { } -> run a thunk Redux style
      */
-    internal fun send(action: Action) {
+    internal fun send(action: Action): Boolean {
         logger.d("received thunk with action ${action.trimOutput()}")
         if (thunks.any { it.matcher == null || it.matcher.matches(action) }) {
             thunkChannel.trySend(action)
-        } else {
-            dispatch(action)
+            return true
         }
+        return false
     }
 
     /**

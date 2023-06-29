@@ -18,8 +18,8 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     private val state: BlocState<State, Proposal>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private var initializer: Initializer<State, Action, Proposal>? = null,
-    private val dispatch: (Action) -> Unit,
-    private val reduce: (proposal: Proposal) -> Unit
+    private val dispatch: suspend (Action) -> Unit,
+    private val reduce: suspend (proposal: Proposal) -> Unit
 ) {
 
     /**
@@ -68,7 +68,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
         coroutineHelper.launch {
             if (mutex.tryLock(this@InitializeProcessor)) {
                 val context = InitializerContext(
-                    state = state.value,
+                    getState = { state.value },
                     dispatch = dispatch,
                     reduce = reduce,
                     launchBlock = coroutineHelper::launch

@@ -16,7 +16,7 @@ import kotlin.test.assertEquals
 class BlocInitializerExecutionTests : BaseTestClass() {
 
     @Test
-    fun testWithoutInitializer() = runTests {
+    fun `test without initializer`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -26,43 +26,107 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
         lifecycleRegistry.onCreate()
         assertEquals(1, bloc.value)
-        bloc.send(3)
-        assertEquals(1, bloc.value)
+        testState(bloc, 3, 1)
 
         lifecycleRegistry.onStart()
-        delay(150)
         assertEquals(1, bloc.value)
+        testState(bloc, 3, 4)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
     }
 
     /**
-     * Test regular initializer
+     * Test regular initializer with dispatch to reducer
      */
     @Test
-    fun testInitializerExecutionReduxStyle() = runTests {
+    fun `test initializer with dispatch to reducer`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
         val bloc = bloc<Int, Action, Unit>(context, 1) {
             reduce<Increment> { state + 1 }
-            onCreate { dispatch(Increment) }
+            onCreate {
+                dispatch(Increment)
+                assertEquals(2, getState())
+            }
             reduce<Decrement> { state - 1 }
             reduce { state + 5 }
-            onCreate { dispatch(Decrement) }
         }
 
         assertEquals(1, bloc.value)
 
         lifecycleRegistry.onCreate()
-        delay(50)
         testState(bloc, null, 2)
         testState(bloc, Increment, 2)
 
         lifecycleRegistry.onStart()
-        delay(50)
         testState(bloc, null, 2)
+        testState(bloc, Increment, 3)
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun `test initializer with reduce and dispatch to reducer`() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        bloc<Int, Int, Unit>(context, 1) {
+            onCreate {
+                repeat(10) {
+                    val newState = getState() + 3
+                    reduce(newState)
+                    assertEquals(newState, getState())
+                    dispatch(3)
+                    assertEquals(newState + 3, getState())
+                }
+            }
+            reduce { state + action }
+        }
+
+        lifecycleRegistry.onCreate()
+        delay(50)
+        lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    /**
+     * Test regular initializer that triggers a thunk
+     */
+    @Test
+    fun `test initializer with dispatch to thunk`() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 1) {
+            reduce<Increment> { state + 1 }
+            onCreate {
+                // this dispatch is caught by the thunk -> state is updated asynchronously
+                // (hence with delay in this case)
+                dispatch(Increment)
+                assertEquals(1, getState())
+                delay(200)
+                assertEquals(2, getState())
+            }
+            thunk<Increment> {
+                delay(50)
+                dispatch(Increment)
+            }
+            reduce<Decrement> { state - 1 }
+            reduce { state + 5 }
+        }
+
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        delay(200)
+        testState(bloc, null, 2)
+        testState(bloc, Increment, 3, 75)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
@@ -73,7 +137,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
      * which will start processing directly dispatched actions (not by the initializer).
      */
     @Test
-    fun testInitializerExecutionDelayed1() = runTests {
+    fun `test initializer with dispatch and delay 1`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -81,6 +145,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
             onCreate {
                 delay(1000)
                 dispatch(Increment)
+                assertEquals(6, getState())
             }
             reduce<Increment> { state + 1 }
             reduce { state + 5 }
@@ -112,7 +177,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
      * which will start processing directly dispatched actions (not by the initializer).
      */
     @Test
-    fun testInitializerExecutionDelayed2() = runTests {
+    fun `test initializer with dispatch and delay 2`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -120,6 +185,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
             onCreate {
                 delay(1000)
                 dispatch(Increment)
+                assertEquals(6, getState())
             }
             reduce<Increment> { state + 1 }
             reduce { state + 5 }
@@ -150,7 +216,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
      * Test whether long running initializers still run before everything else
      */
     @Test
-    fun testInitializerExecutionOrder() = runTests {
+    fun `test long-running initializer's execution order`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -194,7 +260,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
      * now for MVVM+ style reducers and thunks
      */
     @Test
-    fun testInitializerExecutionOrderMVVM() = runTests {
+    fun `test long-running initializer's execution order with MVVM+`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -244,38 +310,6 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
         val bloc = bloc<Int, Int, Unit>(context, 1) {
             onCreate { dispatch(2) }
-            reduce { state + action }
-        }
-
-        // initializer executes and reduces the state
-        lifecycleRegistry.onCreate()
-        delay(50)
-        assertEquals(3, bloc.value)
-
-        // this action however will be ignored
-        bloc.send(3)
-        delay(50)
-        assertEquals(3, bloc.value)
-
-        // only after onStart are "regular" reducers being executed
-        lifecycleRegistry.onStart()
-        bloc.send(3)
-        delay(50)
-        assertEquals(6, bloc.value)
-
-        lifecycleRegistry.onStop()
-        lifecycleRegistry.onDestroy()
-    }
-
-    @Test
-    fun testInitializerReduce() = runTests {
-        val lifecycleRegistry = LifecycleRegistry()
-        val context = BlocContextImpl(lifecycleRegistry)
-
-        val bloc = bloc<Int, Int, Unit>(context, 1) {
-            onCreate {
-                reduce(state + 2)
-            }
             reduce { state + action }
         }
 

@@ -15,11 +15,11 @@ While the official Redux reducer definition captures the essence, reducers in th
 ```kotlin
 (State, Action) -> Proposal
 ```
-Compared to a Redux reducer, "our" reducer returns a `Proposal` instead of `State`.
+Compared to a Redux reducer, "our" reducer returns a `Proposal` instead of `State` (see [Bloc State](../blocstate/bloc_state.md#sink)).
 
 ### Context
 
-A reducer is called with a `ReducerContext` as receiver. The context giving access to the current `State` and the `Action` that triggered the reducer's execution:
+A reducer is called with a `ReducerContext` as receiver. The context gives access to the current `State` and the `Action` that triggered the reducer's execution:
 
 
 ```kotlin
