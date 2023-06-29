@@ -12,12 +12,12 @@ hide_title: true
 ```kotlin
 dependencies {
     // the core library
-    implementation("com.1gravity:bloc-core:0.10.0")
+    implementation("com.1gravity:bloc-core:0.11.0")
 
     // add to use the framework together with Redux
-    implementation("com.1gravity:bloc-redux:0.10.0")
+    implementation("com.1gravity:bloc-redux:0.11.0")
 
     // useful extensions for Android and Jetpack/JetBrains Compose
-    implementation("com.1gravity:bloc-compose:0.10.0")
+    implementation("com.1gravity:bloc-compose:0.11.0")
 }
 ```

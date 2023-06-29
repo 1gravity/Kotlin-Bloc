@@ -1,8 +1,6 @@
 - TODO implement Subscriber tests
 
-- TODO implements Bloc tests with initializer, reducer, thunk, side effect
 - TODO implements BlocState tests
-- TODO implements all the other tests
 
 - TODO think about composition of blocs, one for ui state, one for domain logic?
 
