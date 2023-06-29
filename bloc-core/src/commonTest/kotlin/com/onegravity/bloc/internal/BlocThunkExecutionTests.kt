@@ -185,12 +185,19 @@ class BlocThunkExecutionTests : BaseTestClass() {
 
         val bloc = bloc<Int, Action, Unit>(context, 1) {
             thunk<Increment> {
-                val state = getState()
-                dispatch(Increment)
-                assertEquals(state + 1, getState())
-                dispatch(Decrement)
-                assertEquals(state, getState())
-                reduce(getState() + 1)
+                repeat(3) {
+                    val state = getState()
+                    dispatch(Increment)
+                    assertEquals(state + 1, getState())
+                    dispatch(Decrement)
+                    assertEquals(state, getState())
+                    reduce(getState() + 1)
+                    assertEquals(state + 1, getState())
+                    reduce(getState() - 1)
+                    assertEquals(state, getState())
+                    reduce(getState() + 2)
+                    assertEquals(state + 2, getState())
+                }
             }
             reduce<Increment> { state + 1 }
             reduce<Decrement> { state - 1 }
@@ -201,9 +208,9 @@ class BlocThunkExecutionTests : BaseTestClass() {
         lifecycleRegistry.onCreate()
         lifecycleRegistry.onStart()
 
-        testState(bloc, Increment, 2)
-        testState(bloc, Increment, 3)
-        testState(bloc, Increment, 4)
+        testState(bloc, Increment, 7)
+        testState(bloc, Increment, 13)
+        testState(bloc, Increment, 19)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
@@ -230,6 +237,39 @@ class BlocThunkExecutionTests : BaseTestClass() {
             assertEquals(state + 1, getState())
             dispatch(Decrement)
             assertEquals(state, getState())
+        }
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+    
+    @Test
+    fun `test thunk execution - with getState and dispatch and reduce - MVVM+ style`() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, Unit>(context, 1) {
+            reduce<Increment> { state + 1 }
+            reduce<Decrement> { state - 1 }
+        }
+
+        assertEquals(1, bloc.value)
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        bloc.thunk {
+            val state = getState()
+            dispatch(Increment)
+            assertEquals(state + 1, getState())
+            dispatch(Decrement)
+            assertEquals(state, getState())
+            reduce(getState() + 1)
+            assertEquals(state + 1, getState())
+            reduce(getState() - 1)
+            assertEquals(state, getState())
+            reduce(getState() + 2)
+            assertEquals(state + 2, getState())
         }
 
         lifecycleRegistry.onStop()
