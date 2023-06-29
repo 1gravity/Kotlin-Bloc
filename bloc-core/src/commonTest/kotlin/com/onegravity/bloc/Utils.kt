@@ -95,9 +95,10 @@ fun <State : Any, Action : Any, SideEffect : Any> collectSideEffects(
 suspend fun <State : Any, Action : Any, SideEffect : Any> testState(
     bloc: Bloc<State, Action, SideEffect>,
     action: Action?,
-    expected: State
+    expected: State,
+    delay: Long = 10
 ) {
     if (action != null) bloc.send(action)
-    delay(100)
+    delay(delay)
     assertEquals(expected, bloc.value)
 }

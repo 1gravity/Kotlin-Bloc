@@ -26,11 +26,11 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
         lifecycleRegistry.onCreate()
         assertEquals(1, bloc.value)
-        bloc.send(3)
-        assertEquals(1, bloc.value)
+        testState(bloc, 3, 1)
 
         lifecycleRegistry.onStart()
         assertEquals(1, bloc.value)
+        testState(bloc, 3, 4)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
@@ -101,7 +101,7 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
         delay(200)
         testState(bloc, null, 2)
-        testState(bloc, Increment, 3)
+        testState(bloc, Increment, 3, 75)
 
         lifecycleRegistry.onStop()
         lifecycleRegistry.onDestroy()
