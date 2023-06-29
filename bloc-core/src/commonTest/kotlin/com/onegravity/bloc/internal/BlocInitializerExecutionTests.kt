@@ -68,6 +68,31 @@ class BlocInitializerExecutionTests : BaseTestClass() {
         lifecycleRegistry.onDestroy()
     }
 
+    @Test
+    fun `test initializer with reduce and dispatch to reducer`() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        bloc<Int, Int, Unit>(context, 1) {
+            onCreate {
+                repeat(10) {
+                    val newState = getState() + 3
+                    reduce(newState)
+                    assertEquals(newState, getState())
+                    dispatch(3)
+                    assertEquals(newState + 3, getState())
+                }
+            }
+            reduce { state + action }
+        }
+
+        lifecycleRegistry.onCreate()
+        delay(50)
+        lifecycleRegistry.onStart()
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
     /**
      * Test regular initializer that triggers a thunk
      */
@@ -285,38 +310,6 @@ class BlocInitializerExecutionTests : BaseTestClass() {
 
         val bloc = bloc<Int, Int, Unit>(context, 1) {
             onCreate { dispatch(2) }
-            reduce { state + action }
-        }
-
-        // initializer executes and reduces the state
-        lifecycleRegistry.onCreate()
-        delay(50)
-        assertEquals(3, bloc.value)
-
-        // this action however will be ignored
-        bloc.send(3)
-        delay(50)
-        assertEquals(3, bloc.value)
-
-        // only after onStart are "regular" reducers being executed
-        lifecycleRegistry.onStart()
-        bloc.send(3)
-        delay(50)
-        assertEquals(6, bloc.value)
-
-        lifecycleRegistry.onStop()
-        lifecycleRegistry.onDestroy()
-    }
-
-    @Test
-    fun testInitializerReduce() = runTests {
-        val lifecycleRegistry = LifecycleRegistry()
-        val context = BlocContextImpl(lifecycleRegistry)
-
-        val bloc = bloc<Int, Int, Unit>(context, 1) {
-            onCreate {
-                reduce(getState() + 2)
-            }
             reduce { state + action }
         }
 
