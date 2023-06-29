@@ -10,7 +10,35 @@ import kotlin.test.Test
 class BlocSideEffectTests : BaseTestClass() {
 
     @Test
-    fun testSideEffects() = runTests {
+    fun `test side effects - catch all`() = runTests {
+        val lifecycleRegistry = LifecycleRegistry()
+        val context = BlocContextImpl(lifecycleRegistry)
+
+        val bloc = bloc<Int, Action, SideEffect>(context, 1) {
+            sideEffect<Increment> { Open }
+            sideEffect<Decrement> { Close }
+            sideEffect { Something }
+        }
+
+        lifecycleRegistry.onCreate()
+        lifecycleRegistry.onStart()
+
+        testCollectSideEffects(
+            bloc,
+            listOf(Something, Something, Something, Something, Something)
+        ) {
+            repeat(5) {
+                bloc.send(Whatever)
+                delay(10)
+            }
+        }
+
+        lifecycleRegistry.onStop()
+        lifecycleRegistry.onDestroy()
+    }
+
+    @Test
+    fun `test side effects - action and catch all`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -29,23 +57,10 @@ class BlocSideEffectTests : BaseTestClass() {
                 delay(10)
             }
         }
-
-        testCollectSideEffects(
-            bloc,
-            listOf(Something, Something, Something, Something, Something)
-        ) {
-            repeat(5) {
-                bloc.send(Whatever)
-                delay(10)
-            }
-        }
-
-        lifecycleRegistry.onStop()
-        lifecycleRegistry.onDestroy()
     }
 
     @Test
-    fun testMultipleSideEffects() = runTests {
+    fun `test side effects - multiple actions and catch all`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -75,7 +90,7 @@ class BlocSideEffectTests : BaseTestClass() {
     }
 
     @Test
-    fun testThunksAndSideEffects() = runTests {
+    fun `test side effects - thunks and actions and catch all`() = runTests {
         val lifecycleRegistry = LifecycleRegistry()
         val context = BlocContextImpl(lifecycleRegistry)
 
@@ -90,7 +105,10 @@ class BlocSideEffectTests : BaseTestClass() {
         lifecycleRegistry.onCreate()
         lifecycleRegistry.onStart()
 
-        testCollectSideEffects(bloc, listOf(Close, Something, Close, Something, Close, Something)) {
+        testCollectSideEffects(
+            bloc,
+            listOf(Close, Something, Close, Something, Close, Something)
+        ) {
             repeat(3) {
                 bloc.send(Increment)
                 delay(10)
