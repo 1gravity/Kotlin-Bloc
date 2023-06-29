@@ -26,7 +26,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 private const val QUEUE_INITIAL_SIZE = 10
@@ -76,9 +75,21 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         reducers = reducers
     )
 
-    // this reducer emits the proposal directly to the BlocState, no reduce functionality
-    private val reducer: (proposal: Proposal) -> Unit = { proposal ->
-        reduceProcessor.reduce { Effect(proposal, emptyList()) }
+    /**
+     *  Function that sends the proposal directly to the BlocState and waits for the process to
+     *  finish by suspending execution.
+     */
+    private val reducer: suspend (proposal: Proposal) -> Unit = { proposal ->
+        suspendCoroutine { continuation ->
+            reduceProcessor.reduce({ Effect(proposal, emptyList()) }, continuation)
+        }
+    }
+
+    /**
+     * Reduces the given action by suspending the coroutine until the action has been processed.
+     */
+    private suspend fun reduce(action: Action) = suspendCoroutine { continuation ->
+        reduceProcessor.send(action, continuation)
     }
 
     private val thunkProcessor = ThunkProcessor(
@@ -101,13 +112,6 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
         },
         reduce = reducer
     )
-
-    /**
-     * Reduces the given action by suspending the coroutine until the action has been processed.
-     */
-    private suspend fun reduce(action: Action) = suspendCoroutine { continuation ->
-        reduceProcessor.send(action) { continuation.resume(Unit) }
-    }
 
     init {
         blocLifecycle.subscribe(onStart = {
@@ -146,7 +150,7 @@ internal class BlocImpl<State : Any, Action : Any, SideEffect : Any, Proposal : 
             blocLifecycle.isStarted() -> {
                 val processed = thunkProcessor.send(action)
                 if (processed.not()) {
-                    // reducers run synchronously -> usinh runBlocking here is OK
+                    // reducers are meant to run on the main thread -> using runBlocking here is OK
                     runBlocking {
                         reduce(action)
                     }

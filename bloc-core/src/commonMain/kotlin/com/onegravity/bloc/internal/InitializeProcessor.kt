@@ -19,7 +19,7 @@ internal class InitializeProcessor<State : Any, Action : Any, Proposal : Any>(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private var initializer: Initializer<State, Action, Proposal>? = null,
     private val dispatch: suspend (Action) -> Unit,
-    private val reduce: (proposal: Proposal) -> Unit
+    private val reduce: suspend (proposal: Proposal) -> Unit
 ) {
 
     /**

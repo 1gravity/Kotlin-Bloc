@@ -16,6 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
 
 /**
  * The ReduceProcessor is responsible for processing the reduce { }, reduceAnd { } and
@@ -73,8 +75,10 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
 
         coroutineHelper.launch {
             for (element in reduceChannel) {
-                element.action?.let(::runReducers)
-                element.reducer?.let(::runReducer)
+                // reducers triggered by actions
+                element.action?.let { runReducers(it, element.continuation) }
+                // reducers triggered MVVM+ style
+                element.reducer?.let { runReducer(it, element.continuation) }
             }
         }
     }
@@ -83,25 +87,27 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
      * BlocDSL:
      * reduce { } -> run a Reducer Redux style
      */
-    internal fun send(action: Action, onFinished: () -> Unit) {
+    internal fun send(action: Action, continuation: Continuation<Unit>) {
         logger.d("received reducer with action ${action.trimOutput()}")
-        reduceChannel.trySend(ReducerContainer(action = action to onFinished))
+        reduceChannel.trySend(ReducerContainer(action = action, continuation = continuation))
     }
 
     /**
      * BlocExtension interface implementation:
      * reduce { } -> run a Reducer MVVM+ style
      */
-    internal fun reduce(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
+    internal fun reduce(
+        reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>,
+        continuation: Continuation<Unit>? = null
+    ) {
         logger.d("received reducer without action")
-        reduceChannel.trySend(ReducerContainer(reducer = reduce))
+        reduceChannel.trySend(ReducerContainer(reducer = reduce, continuation = continuation))
     }
 
     /**
      * Triggered to execute reducers with a matching Action
      */
-    private fun runReducers(actionOnFinished: Pair<Action, () -> Unit>) {
-        val (action, onFinished) = actionOnFinished
+    private fun runReducers(action: Action, continuation: Continuation<Unit>?) {
         logger.d("run reducers for action ${action.trimOutput()}")
         getMatchingReducers(action).fold(false) { proposalEmitted, matcherReducer ->
             val (_, reducer, expectsProposal) = matcherReducer
@@ -123,7 +129,7 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
                 else -> proposalEmitted
             }
         }
-        onFinished()
+        continuation?.resume(Unit)
     }
 
     private fun getMatchingReducers(action: Action) = reducers
@@ -146,11 +152,15 @@ internal class ReduceProcessor<State : Any, Action : Any, SideEffect : Any, Prop
     /**
      * Triggered to execute a specific reducer (dispatched MVVM+ style)
      */
-    private fun runReducer(reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>) {
+    private fun runReducer(
+        reduce: ReducerNoAction<State, Effect<Proposal, SideEffect>>,
+        continuation: Continuation<Unit>?
+    ) {
         val context = ReducerContextNoAction(state.value, coroutineHelper::launch)
         val (proposal, sideEffects) = context.reduce()
         proposal?.let(state::send)
         sideEffects.forEach(sideEffectChannel::trySend)
+        continuation?.resume(Unit)
     }
 
 }
